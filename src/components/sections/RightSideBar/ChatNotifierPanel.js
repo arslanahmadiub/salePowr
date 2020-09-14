@@ -1,11 +1,10 @@
 import React from "react"
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline"
 import Button from "../../CustomComponents/Button"
-import Grid from "@material-ui/core/Grid"
 
 const ChatNotifierPanel = props => {
 
-    return <div style={{ borderRadius: "10px", background: "#E7EEFA", height: "60px", padding: "10px" }}>
+    return <div style={{ borderRadius: "10px", background: "#E7EEFA", height: "50px", padding: "10px" }}>
         <div style={{ display: "flex", justifyContent: "space-evenly", lineHeight: "60px" }}>
             <div style={{ width: "50px" }}>
                 <Button secondary>
