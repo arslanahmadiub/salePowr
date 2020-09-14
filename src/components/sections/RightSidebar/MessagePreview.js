@@ -14,7 +14,9 @@ const MessagePreview = props => {
                 </Grid>
                 <Grid item xs={3}>
                     <small style={{ color: "rgba(124, 127, 132, 0.4)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "170px", display: "inline-block" }}>
+
                         {props?.message}
+
                     </small>
                 </Grid>
             </Grid>
