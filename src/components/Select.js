@@ -15,7 +15,7 @@ const Main = styled("div")`
     border-left: 20px solid transparent;
     position: absolute;
     top:${props => props.open ? "-10px" : "10px"};
-    //bottom: ${props => !props.open ? "0" : "150px"};
+    bottom: ${props => !props.open ? "0" : "150px"};
     right: 5px;
     z-index:10;      
     }
@@ -65,7 +65,7 @@ const ListItem = styled("li")`
   }
 `;
 
-const options = ["Option 1", "Option 2", "Option 3", 'Option 4', 'Option 5', 'Option 6', 'Option 7', 'Option 8'];
+//const options = ["Option 1", "Option 2", "Option 3", 'Option 4', 'Option 5', 'Option 6', 'Option 7', 'Option 8'];
 
 const defaultValue = "Select and option..."
 
@@ -80,6 +80,8 @@ const Select = props => {
         setIsOpen(false);
     };
 
+    const options = props.options ? props.options : [];
+
     return (
         <Main open={isOpen}>
             <DropDownContainer onClick={toggling}>
@@ -90,7 +92,7 @@ const Select = props => {
                 {isOpen && (
                     <DropDownListContainer>
                         <DropDownList>
-                            {options.map(option => (
+                            {options?.map(option => (
                                 <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
                                     {option}
                                 </ListItem>
