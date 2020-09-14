@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatNotifierPanel from "./components/sections/ChatNotifierPanel"
+import ChatNotifierPanel from "./components/sections/RightSidebar/ChatNotifierPanel"
 import Home from './components/sections/Home';
 
 const messages = [
