@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid"
 import Add from "@material-ui/icons/Add"
 import Remove from "@material-ui/icons/Remove"
 import Input from "../Input"
-import Button from "../Button"
+import Button from "../CustomComponents/Button"
 
 const PaymentForm = props => {
     const [state, setState] = React.useState({ quantity: 1 })

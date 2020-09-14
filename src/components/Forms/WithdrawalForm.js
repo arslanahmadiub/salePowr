@@ -1,9 +1,9 @@
 import React from "react";
 //import styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
-import Select from "../Select"
-import Input from "../Input"
-import Button from "../Button"
+import Select from "../CustomComponents/Select"
+import Input from "../CustomComponents/Input"
+import Button from "../CustomComponents/Button"
 
 const WithdrawalForm = props => {
 

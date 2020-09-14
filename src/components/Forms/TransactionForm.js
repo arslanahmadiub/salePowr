@@ -8,10 +8,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import FormLabel from "@material-ui/core/FormLabel"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import Radio from "@material-ui/core/Radio"
-import Select from "../Select"
-import Input from "../Input"
+import Select from "../CustomComponents/Select"
+import Input from "../CustomComponents/Input"
 import TextArea from "../TextArea"
-import Button from "../Button"
+import Button from "../CustomComponents/Button"
 
 const TransactionForm = props => {
     const [state, setState] = React.useState({ delivery: "24hrs" })
