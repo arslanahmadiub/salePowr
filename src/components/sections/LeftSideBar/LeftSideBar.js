@@ -8,7 +8,7 @@ import { navItems } from "../../../DummyData/DummyData"
 
 
 const LeftSideBar = prop => {
-    return <div style={{ position: "relative", height: "100vh", padding: "60px 30px" }}>
+    return <div style={{ position: "relative", height: "100vh", padding: "60px 15px" }}>
         <Grid container direction="column" spacing={4}>
             <Grid item>
                 <img height="40" src={logo} alt="Powrsale logo" />

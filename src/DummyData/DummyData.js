@@ -21,11 +21,20 @@ const navItems = [
 ]
 
 
+const barchart = [
+    { percentage: 80, label: "Mon" },
+    { percentage: 5, label: "Tue" },
+    { percentage: 30, label: "Wed" },
+    { percentage: 30, label: "Thur" },
+    { percentage: 70, label: "Fri" }]
+
+
+
 const profilePercent = "";
 
 
 
 export {
     messages, banks, profilePercent,
-    navItems,
+    navItems, barchart,
 }

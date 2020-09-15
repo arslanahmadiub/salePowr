@@ -6,10 +6,11 @@ border: 1px solid #979FAA;
 box-sizing: border-box;
 border-radius: 10px;
 line-height: 19px;
-height: 50px;
+height: 40px;
 width: 100%;
 padding:5px;
 font-size: 16px;
+text-align: center;
 color:#000;
 &::placeholder{
     color:#979FAA;
