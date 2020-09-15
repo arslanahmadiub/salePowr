@@ -5,7 +5,7 @@ const TextAreaInput = styled.textarea`
 border: 1px solid #979FAA;
 box-sizing: border-box;
 border-radius: 10px;
-border-bottom-right-radius: 0px;
+resize: none;
 width: 100%;
 padding:10px;
 font-size: 16px;
@@ -25,7 +25,7 @@ const TextArea = props => {
         wrap={props.wrap || true}
         id={props.id}
         name={props.name || props.id || ""}
-        rows={props.row || 5}
+        rows={props.rows || 5}
         disabled={props.disabled != null}
         maxLength={props.maxLength || null}
         readOnly={props.readOnly != null}
