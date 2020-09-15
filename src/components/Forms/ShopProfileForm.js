@@ -1,22 +1,14 @@
 import React from "react";
 //import styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
-import IconButton from "@material-ui/core/IconButton"
-import Sync from "@material-ui/icons/Sync"
-import FormControl from "@material-ui/core/FormControl"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import FormLabel from "@material-ui/core/FormLabel"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import Radio from "@material-ui/core/Radio"
-import Select from "../CustomComponents/Select"
-import Input from "../CustomComponents/Input"
-import TextArea from "../TextArea"
+import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
+import Input from "../CustomComponents/Input"
+import Select from "../CustomComponents/Select"
+import FilePicker from "../CustomComponents/FilePicker";
+import { banks } from "../../DummyData/DummyData";
 
 const ShopProfileForm = props => {
-    const [state, setState] = React.useState({ delivery: "24hrs" })
-    const transactionTypes = ["Sell", "Buy",]
-    const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
 
     const uploadFile = event => {
         event.preventDefault();
@@ -38,13 +30,13 @@ const ShopProfileForm = props => {
                 <Input />
             </Grid>
             <Grid item xs={12} sm={6} md={4} >
-                <Input />
+                <Select />
             </Grid>
             <Grid item xs={12} sm={6} md={4} >
-                <Input />
+                <Select />
             </Grid>
             <Grid item xs={12} sm={6} md={4} >
-                <Input />
+                <Select options={banks} />
             </Grid>
             <Grid item xs={12} sm={6} md={4} >
                 <Input />
@@ -59,7 +51,7 @@ const ShopProfileForm = props => {
                 <TextArea rows={3} />
             </Grid>
             <Grid item xs={12} sm={5}>
-                <Input type="file" />
+                <FilePicker />
             </Grid>
             <Grid item xs={12} sm={2} md={3}>
                 <Input />
