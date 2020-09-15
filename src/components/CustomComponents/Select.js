@@ -1,3 +1,4 @@
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -5,25 +6,11 @@ const Main = styled("div")`
   font-family: sans-serif;
   width: 100%;
   position: relative;
-  &:after{
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-top:18px solid ${props => props.open ? "transparent" : "rgba(0, 0, 0, 0.65)"};
-    border-bottom:20px solid ${props => !props.open ? "transparent" : "rgba(0, 0, 0, 0.65)"};
-    border-right: 20px solid transparent;
-    border-left: 20px solid transparent;
-    position: absolute;
-    top:${props => props.open ? "-10px" : "10px"};
-    bottom: ${props => !props.open ? "0" : "150px"};
-    right: 5px;
-    z-index:10;      
-    }
 `;
 
 const DropDownContainer = styled("div")`
   width: 100%;
-  margin: 0 auto;
+  margin: 0 0;
   border: 1px solid #979FAA;
   box-sizing: border-box;
   border-radius: 10px;
@@ -38,21 +25,41 @@ const DropDownHeader = styled("div")`
 `;
 
 const DropDownListContainer = styled("div")`
-    border: 0px  grey;
+    border: 0px solid grey;
     box-sizing: border-box;
+    border-top: 0;
     border-radius: 10px;
+    width: 100.5%;
+    left: -1px;
+    top: 38px;
+   
+    position: absolute;
+    z-index: 100;
+
 `;
+const DropDownIcon = styled(ExpandMore)`
+position: absolute;
+top: 20%;
+right: 1%;
+`
 
 const DropDownList = styled("ul")`
   padding: 0;
   margin: 0;
+  width: 100%;
   padding-left: 1em;
   background: #ffffff;
-  border-top: 1px solid grey;
+  border-right: 1px solid grey;
   box-sizing: border-box;
-
+  z-index: 100;  
+  
   &:first-child {
-    padding-top: 0.8em;
+    padding-top: 0;
+    border: 1px solid grey;
+    border-top: 0px solid grey;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: 100;
   }
 `;
 
@@ -61,7 +68,8 @@ const ListItem = styled("li")`
   margin-bottom: 0.8em;
   cursor: pointer;
   &:hover{
-      background:grey;
+      background:#979FAA;
+      opacity: 0.5;
   }
 `;
 
@@ -89,6 +97,7 @@ const Select = props => {
                     {selectedOption || defaultValue}
 
                 </DropDownHeader>
+                <DropDownIcon />
                 {isOpen && (
                     <DropDownListContainer>
                         <DropDownList>
