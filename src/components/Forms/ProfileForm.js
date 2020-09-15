@@ -1,19 +1,21 @@
 import React from "react";
 //import styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
-import Select from "../Select"
-import Input from "../Input"
-import Button from "../Button"
+import Select from "../CustomComponents/Select"
+import Input from "../CustomComponents/Input"
+import Button from "../CustomComponents/Button"
+import DatePicker from "../CustomComponents/DatePicker"
+import PasswordInput from "../CustomComponents/PasswordInput";
 
 const ProfileForm = props => {
 
     const countries = ["Ghana", "Nigeria", "Gambia", "Cameroon", "Togo"]
     const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
 
-    const processWidrawal = event => {
+    const saveProfile = event => {
         event.preventDefault();
     }
-    return <form onSubmit={processWidrawal}>
+    return <form onSubmit={saveProfile}>
         <Grid container direction="row" spacing={5}>
             <Grid item xs={12} sm={6}>
                 <Input />
@@ -25,7 +27,7 @@ const ProfileForm = props => {
                 <Input />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type="date" />
+                <DatePicker />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Input type="email" />
@@ -34,13 +36,13 @@ const ProfileForm = props => {
                 <Input type="tel" />
             </Grid>
             <Grid item xs={12}>
-                <h2>Change password</h2>
+                <h2 style={{ fontSize: "22px", fontWeight: "500", padding: "0", margin: "0" }}>Change password</h2>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type="password" />
+                <PasswordInput />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type="password" />
+                <PasswordInput />
             </Grid>
 
             <Grid item xs={12}>
