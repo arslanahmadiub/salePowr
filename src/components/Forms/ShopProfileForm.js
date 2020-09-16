@@ -21,58 +21,87 @@ const ShopProfileForm = props => {
 
     }
     return <form onSubmit={saveShopProfile}>
-        <Grid container direction="row" spacing={5}>
+        <Grid container direction="column" spacing={6}>
 
-            <Grid item xs={12} sm={6} md={4} >
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} >
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} >
-                <Select />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} >
-                <Select />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} >
-                <Select options={banks} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} >
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={5}>
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={7}>
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={7}>
-                <TextArea rows={3} />
-            </Grid>
-            <Grid item xs={12} sm={5}>
-                <FilePicker />
-            </Grid>
-            <Grid item xs={12} sm={2} md={3}>
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={2} md={3}>
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={2} md={3}>
-                <Input />
-            </Grid>
-            <Grid item xs={12} sm={2} md={3}>
-                <Input />
+            <Grid item>
+                <Grid container direction="row" spacing={3}>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Select />
+                    </Grid>
+                </Grid>
             </Grid>
 
-
-
-            <Grid item xs={12} sm={4} md={2}>
-                <Button type="submit">
-                    Save
-                </Button>
+            <Grid item>
+                <Grid container direction="row" spacing={3}>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Select />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Select options={banks} />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Input />
+                    </Grid>
+                </Grid>
             </Grid>
+
+            <Grid item>
+                <Grid container direction="row" spacing={3}>
+
+                    <Grid item xs={12} sm={5}>
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={7}>
+                        <Input />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid item>
+                <Grid container direction="row" spacing={3}>
+                    <Grid item xs={12} sm={7}>
+                        <TextArea rows={3} />
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <FilePicker />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid item>
+                <Grid container direction="row" spacing={3}>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid item>
+                <Grid item xs={12} sm={4} md={3}>
+                    <Button type="submit">
+                        Save
+                    </Button>
+                </Grid>
+            </Grid>
+
+
+
+
         </Grid>
 
     </form>

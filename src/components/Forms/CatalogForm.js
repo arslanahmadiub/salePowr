@@ -1,22 +1,25 @@
 import React from "react";
-//import styled from "styled-components";
+import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
-import IconButton from "@material-ui/core/IconButton"
-import Sync from "@material-ui/icons/Sync"
-import FormControl from "@material-ui/core/FormControl"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import FormLabel from "@material-ui/core/FormLabel"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import Radio from "@material-ui/core/Radio"
-import Select from "../Select"
-import Input from "../Input"
-import TextArea from "../TextArea"
-import Button from "../Button"
+import Input from "../CustomComponents/Input"
+import TextArea from "../CustomComponents/TextArea"
+import Button from "../CustomComponents/Button"
+import apple from "../../assets/images/apple.png"
+import MiniFilePicker from "../CustomComponents/MiniFilePicker";
+
+const ImageContainer = Styled.div`
+    height: 100px;
+    border: 1px grey dashed;
+    padding: 2px;
+    position: relative;
+`
+const Img = Styled.img`
+    height: 100px;
+    width: 100px;
+`
 
 const CatalogForm = props => {
     const [state, setState] = React.useState({ delivery: "24hrs" })
-    const transactionTypes = ["Sell", "Buy",]
-    const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
 
     const processWidrawal = event => {
         event.preventDefault();
@@ -34,14 +37,19 @@ const CatalogForm = props => {
     }
     return <div>
         <form onSubmit={processWidrawal}>
-            <Grid container direction="column" spacing={5}>
+            <Grid container direction="column" spacing={4}>
                 <Grid item xs={12}>
-                    <Input type="file" />
+                    <ImageContainer>
+                        <Img src={apple} />
+                        <Img src={apple} />
+                        <MiniFilePicker />
+                    </ImageContainer>
+
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={3} direction="row">
                         <Grid item xs={12} md={4}>
-                            <Grid container spacing={5} direction="column">
+                            <Grid container spacing={2} direction="column">
                                 <Grid item xs={12}>
                                     <Input />
                                 </Grid>
@@ -51,46 +59,40 @@ const CatalogForm = props => {
                             </Grid>
                         </Grid>
                         <Grid item xs={12} md={8}>
-                            <TextArea />
-                        </Grid>
-                    </Grid>
-
-                </Grid>
-                <Grid container direction="column" spacing={-5}>
-                    <Grid item xs={12}>
-                        <Grid container direction="row" spacing={3}>
-                            <Grid item xs={8} sm={5}>
-                                <small><b>Note: </b> Powrsale service charge is 2%</small>
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <h4>$10.00</h4>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container direction="row" spacing={3}>
-                            <Grid item xs={8} sm={5}>
-                                <p>Delivery charge</p>
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <h4>$20.00</h4>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Grid container direction="row" spacing={3}>
-                            <Grid item xs={8} sm={5}>
-                                <h3>Total amount payable</h3>
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <h4>$210.00</h4>
-                            </Grid>
+                            <TextArea rows={3} />
                         </Grid>
                     </Grid>
 
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item>
+                    <Grid container direction="column" spacing={0}>
+                        <Grid item>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <small style={{ fontWeight: "normal", fontSize: "12px" }}><span style={{ color: "#979FAA" }}>Note: </span> Powrsale service charge is 2%</small>
+                                <div>$210.00</div>
+                            </div>
+                        </Grid>
+                        <Grid item>
+                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", margin: "10px 0" }}>
+                                <div style={{ fontWeight: "500" }}>Delivery Charge</div>
+                                <div style={{ fontWeight: "600", border: "1px #010101 solid", borderRadius: "10px", padding: "3px" }}>$210.00</div>
+                            </div>
+                        </Grid>
+                        <Grid item>
+                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "24px", fontWeight: "bold", margin: "10px 0" }}>
+                                <div>
+                                    Total amount payable
+                                </div>
+                                <div>
+                                    $210.00
+                                </div>
+                            </div>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button type="submit">
                         SEND REQUEST
                 </Button>
@@ -103,10 +105,10 @@ const CatalogForm = props => {
         </form>
         <Grid container direction="column">
             <Grid item xs={12}>
-                <hr />
+                <hr style={{ border: ".31px solid", margin: "25px 0" }} />
             </Grid>
             <Grid item xs={12}>
-                <Grid container spacing={5} direction="row">
+                <Grid container spacing={2} direction="row">
                     <Grid item xs={6} md={3}>
                         <Button white>
                             Shop Preview

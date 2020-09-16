@@ -1,5 +1,5 @@
 import React from "react";
-//import styled from "styled-components";
+import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
 import Sync from "@material-ui/icons/Sync"
@@ -10,8 +10,17 @@ import RadioGroup from "@material-ui/core/RadioGroup"
 import Radio from "@material-ui/core/Radio"
 import Select from "../CustomComponents/Select"
 import Input from "../CustomComponents/Input"
-import TextArea from "../TextArea"
+import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
+
+
+
+const FlexContainer = Styled.div`
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.5px;
+`
+
 
 const TransactionForm = props => {
     const [state, setState] = React.useState({ delivery: "24hrs" })
@@ -36,24 +45,21 @@ const TransactionForm = props => {
         <Grid container direction="row" spacing={2}>
 
             <Grid item xs={12}>
-                <Grid container spacing={3} direction>
-                    <Grid item xs={12} sm={3}>
+                <FlexContainer>
+                    <div style={{ width: "180px" }}>
                         <Select options={transactionTypes} />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
+                    </div>
+                    <div style={{ width: "150px" }}>
                         <Input />
-                    </Grid>
-                </Grid>
+                    </div>
 
+                </FlexContainer>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <Grid container spacing={3} direction="row">
                     <Grid item xs={12}><h4>Sellre info</h4></Grid>
-                    <Grid item xs={10} >
+                    <Grid item xs={12} md={10} >
                         <Grid container spacing={3} direction="row">
                             <Grid item xs={12}>
                                 <Input />
@@ -66,8 +72,8 @@ const TransactionForm = props => {
                     </Grid>
 
                     <Grid item xs={2} >
-                        <IconButton onClick={refreshSellerInfo}>
-                            <Sync fontSize="large" />
+                        <IconButton onClick={refreshSellerInfo} style={{ background: "#F18F6C" }}>
+                            <Sync fontSize="large" style={{ color: "#FFF" }} />
                         </IconButton>
                     </Grid>
 
@@ -76,7 +82,7 @@ const TransactionForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <Grid container direction="row" spacing={1}>
+                <Grid container direction="row" spacing={3}>
 
                     <Grid item xs={12}>
                         <h4>Transaction info</h4>
@@ -87,11 +93,11 @@ const TransactionForm = props => {
                     <Grid item xs={12} sm={6}>
                         <Select placehoder="item name" />
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextArea />
-                    </Grid>
-
                 </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+                <TextArea />
             </Grid>
 
             <Grid item xs={12}>
@@ -106,39 +112,34 @@ const TransactionForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <Grid container direction="row" spacing={3}>
-                    <Grid item xs={8} sm={5}>
-                        <small><b>Note: </b> Powrsale service charge is 2%</small>
+                <Grid container direction="column" spacing={0}>
+                    <Grid item>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <small style={{ fontWeight: "normal", fontSize: "12px" }}><span style={{ color: "#979FAA" }}>Note: </span> Powrsale service charge is 2%</small>
+                            <div>$210.00</div>
+                        </div>
                     </Grid>
-                    <Grid item xs={4} sm={3}>
-                        <h4>$10.00</h4>
+                    <Grid item>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", margin: "10px 0" }}>
+                            <div style={{ fontWeight: "500" }}>Delivery Charge</div>
+                            <div style={{ fontWeight: "600", border: "1px #010101 solid", borderRadius: "10px", padding: "3px" }}>$210.00</div>
+                        </div>
                     </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <Grid container direction="row" spacing={3}>
-                    <Grid item xs={8} sm={5}>
-                        <p>Delivery charge</p>
-                    </Grid>
-                    <Grid item xs={4} sm={3}>
-                        <h4>$20.00</h4>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <Grid container direction="row" spacing={3}>
-                    <Grid item xs={8} sm={5}>
-                        <h3>Total amount payable</h3>
-                    </Grid>
-                    <Grid item xs={4} sm={3}>
-                        <h4>$210.00</h4>
+                    <Grid item>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "24px", fontWeight: "bold", margin: "10px 0" }}>
+                            <div>
+                                Total amount payable
+                                </div>
+                            <div>
+                                $210.00
+                                </div>
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-                <Button type="submit">
-                    SEND REQUEST
+            <Grid item xs={12} sm={6}>
+                <Button>
+                    Send Request
                 </Button>
             </Grid>
         </Grid>

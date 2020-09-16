@@ -6,6 +6,8 @@ const Main = styled("div")`
   font-family: sans-serif;
   width: 100%;
   position: relative;
+  cursor: pointer;
+  height: 40px;
 `;
 
 const DropDownContainer = styled("div")`
@@ -41,6 +43,7 @@ const DropDownIcon = styled(ExpandMore)`
 position: absolute;
 top: 20%;
 right: 1%;
+z-index: 100;
 `
 
 const DropDownList = styled("ul")`
@@ -75,7 +78,7 @@ const ListItem = styled("li")`
 
 //const options = ["Option 1", "Option 2", "Option 3", 'Option 4', 'Option 5', 'Option 6', 'Option 7', 'Option 8'];
 
-const defaultValue = "Select and option..."
+const defaultValue = "Select option..."
 
 const Select = props => {
     const [isOpen, setIsOpen] = useState(false);

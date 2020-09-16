@@ -22,7 +22,6 @@ const TextArea = props => {
     return <TextAreaInput
         required={props.required != null}
         placeholder={props.placeholder || "Type here..."}
-        wrap={props.wrap || true}
         id={props.id}
         name={props.name || props.id || ""}
         rows={props.rows || 5}
