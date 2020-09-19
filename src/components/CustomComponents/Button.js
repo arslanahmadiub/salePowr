@@ -12,9 +12,9 @@ background: ${props => props.white ? "#FFFFFF" : props.grey ? "#01010" : props.f
 font-family: Inter;
 line-height: ${props => props.slim ? "15px" : ""};
 font-style: normal;
-font-weight: 500;
+font-weight: normal;
 letter-spacing: -1px;
-font-size: 14px;
+font-size: 16px;
 text-align: center;
 text-transform: none;
 padding: ${props => props.slim ? "15px" : ""};

@@ -5,17 +5,24 @@ import { Facebook, Instagram, Twitter, WhatsApp } from '@material-ui/icons'
 import Product from './Product'
 import companyLogo from "../../../assets/images/company-logo.png"
 import RenderProducts from './RenderProducts'
-import { products } from '../../../DummyData/DummyData'
+import { brandDetails, products } from '../../../DummyData/DummyData'
+import { Hidden } from '@material-ui/core'
+import TopRowMobile from './TopRowMobile'
+import TopRowDesktop from './TopRowDesktop'
 
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
-background: #E7EEFA;
+background: #F5F8FD;
 min-height: 80%;
+@media (max-width: 960px){
+    padding: 20px 10px;
+}
 `
 const FlexContainer = Styled.div`
 display: flex;
-justify-content: space-between;
+width: 100%;
+justify-content:${p => p.justify ? p.justify : "space-between"};
 `
 const Brand = Styled.div`
 
@@ -36,7 +43,7 @@ const BrandSlogan = Styled.div`
 
 const ShopId = Styled.div`
     color: #31BDF4;
-    font-size: 12px;
+    font-size: 16px;
 `
 
 const BrandBrief = Styled.div`
@@ -55,85 +62,25 @@ const Contact = Styled.div`
     font-weight: 600;
 `
 
-const ProductDisplayTopRow = props => {
+const CompanyLogo = Styled.img`
+    display: block;
+    height: 150px;
+    width: 150px;    
+`
 
-    return <div>
+const ProductDisplay = props => {
 
-        <FlexContainer>
-            <Brand>
-                <BrandName>
-                    GoPare
-        </BrandName>
-                <BrandSlogan>
-                    Electronic Gadgets
-        </BrandSlogan>
-            </Brand>
+    return <Container>
+        <Hidden smDown>
+            <TopRowDesktop data={brandDetails} />
+        </Hidden>
 
-            <ShopId>
-                shop id: #325655
-        </ShopId>
-        </FlexContainer>
-        <BrandBrief>
-            In consequat officia duis Lorem culpa aliqua tempor proident incididunt magna est fugiat dolore eu. Qui esse eu sit amet velit eiusmod velit. Quis enim aute enim consequat nulla labore aute consequat non dolor deserunt qui reprehenderit. Lorem id laborum cupidatat commodo dolor consectetur qui veniam.
-        </BrandBrief>
-
-        <Grid container direction="row" spacing={3}>
-            <Grid item xs={6} md={3}>
-                <ContactLabel>
-                    Address
-                </ContactLabel>
-
-                <Contact>
-                    some address here
-                </Contact>
-            </Grid>
-            <Grid item xs={6} md={3}>
-                <ContactLabel>
-                    Address
-                </ContactLabel>
-
-                <Contact>
-                    some address here
-                </Contact>
-            </Grid>
-            <Grid item xs={6} md={3}>
-                <ContactLabel>
-                    Address
-                </ContactLabel>
-
-                <Contact>
-                    some address here
-                </Contact>
-            </Grid>
-            <Grid item xs={6} md={3}>
-                <ContactLabel>
-                    Address
-                </ContactLabel>
-
-                <Contact>
-                    <FlexContainer style={{ width: "100px" }}>
-                        <Facebook />
-                        <Twitter />
-                        <Instagram />
-                        <WhatsApp />
-
-                    </FlexContainer>
-                </Contact>
-            </Grid>
-
-        </Grid>
-    </div>
-}
+        <Hidden mdUp>
+            <TopRowMobile data={brandDetails} />
+        </Hidden>
 
 
-const ProductDisplayProductLine = props => {
-
-
-
-    return (
-        <div style={{
-            margin: "15px 0"
-        }}>
+        <div style={{ marginBottom: "30px" }}>
             <FlexContainer>
                 <BrandName>
                     Product
@@ -142,7 +89,7 @@ const ProductDisplayProductLine = props => {
                     width: "100px"
                 }}>
                     <FlexContainer>
-                        <BrandSlogan>
+                        <BrandSlogan style={{ color: "#31BDF4" }}>
                             All
                 </BrandSlogan>
                         <BrandSlogan>
@@ -152,24 +99,6 @@ const ProductDisplayProductLine = props => {
                 </div>
             </FlexContainer>
         </div>
-    );
-}
-
-
-const ProductDisplay = props => {
-
-    return <Container>
-        <div style={{ borderBottom: "0.5px solid", paddingBottom: "20px" }}>
-            <FlexContainer>
-                <img src={companyLogo} style={{ height: "150px", width: "300px", marginRight: "25px" }} alt="company logo" />
-                <ProductDisplayTopRow />
-            </FlexContainer>
-        </div>
-
-
-
-        <ProductDisplayProductLine />
-
         <RenderProducts products={products} />
     </Container>
 }

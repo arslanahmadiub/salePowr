@@ -1,4 +1,5 @@
 
+import { Grid, Hidden } from '@material-ui/core';
 import { ExpandLess, ExpandMore, FileCopy } from '@material-ui/icons';
 import React from 'react'
 import Styled from "styled-components";
@@ -9,6 +10,9 @@ const FlexContainer = Styled.div`
     display: flex;
     justify-content: space-between;
     letter-spacing: 0.5px;
+    @media (min-width: 960px){
+        
+    }
 `
 
 const Title = Styled.div`
@@ -22,6 +26,9 @@ const Description = Styled.div`
     color: #979FAA;
     font-size: 18px;
     letter-spacing: 0.5px;
+    @media (max-width: 960px){
+        margin: 15px 0;
+    }
 `
 const Amount = Styled.div`
     font-weight: 600;
@@ -50,7 +57,6 @@ const TransactionId = Styled.div`
 const TransactionStatus = Styled.div`
     color: #31BDF4;
     font-size: 18px;
-    font-weight: bold; 
     right: 10px;
     padding: 12px 0;
 `
@@ -67,8 +73,9 @@ const TranstionItem = props => {
                     <FileCopy style={{ height: "20px", width: "20px", marginRight: "10px" }} />
                     <Title>{data.title && data.title}</Title>
                 </FlexContainer>
-
-                <Description>{data.description && data.description}</Description>
+                <Hidden smDown>
+                    <Description>{data.description && data.description}</Description>
+                </Hidden>
                 <FlexContainer>
                     <Amount>{data.amount && data.amount}</Amount>
                     <div>
@@ -85,6 +92,8 @@ const TranstionItem = props => {
             </FlexContainer>
             <DateRow>{data.date && data.date} at {data.time && data.time}</DateRow>
 
+            <Description>{data.description && data.description}</Description>
+
             <div style={{ display: show ? "block" : "none", }}>
 
                 <FlexContainer>
@@ -92,11 +101,21 @@ const TranstionItem = props => {
                     <TransactionStatus>{data.status && data.status}</TransactionStatus>
                 </FlexContainer>
 
+                <Grid container direction="row">
+                    <Grid item xs={6} md={4}>
+                        <Grid container direction="row" spacing={5}>
+                            <Grid item xs={6} md={3}>
+                                <Button slim >Open Dispute</Button>
+                            </Grid>
+                            <Grid item xs={6} md={3}>
+                                <Button secondary slim>Chat</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
 
-                <div style={{ display: "flex", width: "30%", justifyContent: "space-between" }}>
-                    <Button noExpand slim>Open Dispute</Button>
-                    <Button secondary noExpand slim>Chat</Button>
-                </div>
+
+
             </div>
         </Container >
 }

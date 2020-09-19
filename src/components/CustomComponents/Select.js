@@ -1,3 +1,4 @@
+import { ClickAwayListener } from "@material-ui/core";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -22,8 +23,8 @@ const DropDownContainer = styled("div")`
 `;
 
 const DropDownHeader = styled("div")`
-  margin-bottom: 0.8em;
-  padding: 0.4em 2em 0.4em 1em;
+  font-size: 12px;
+  padding: 10px;
 `;
 
 const DropDownListContainer = styled("div")`
@@ -78,7 +79,7 @@ const ListItem = styled("li")`
 
 //const options = ["Option 1", "Option 2", "Option 3", 'Option 4', 'Option 5', 'Option 6', 'Option 7', 'Option 8'];
 
-const defaultValue = "Select option..."
+
 
 const Select = props => {
     const [isOpen, setIsOpen] = useState(false);
@@ -92,8 +93,8 @@ const Select = props => {
     };
 
     const options = props.options ? props.options : [];
-
-    return (
+    const defaultValue = props.placeholder || "Select option..."
+    return <ClickAwayListener onClickAway={() => setIsOpen(false)}>
         <Main open={isOpen}>
             <DropDownContainer onClick={toggling}>
                 <DropDownHeader >
@@ -114,7 +115,8 @@ const Select = props => {
                 )}
             </DropDownContainer>
         </Main>
-    );
+
+    </ClickAwayListener>
 }
 
 export default Select;

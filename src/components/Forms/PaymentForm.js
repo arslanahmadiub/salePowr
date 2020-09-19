@@ -1,10 +1,23 @@
 import React from "react";
-//import styled from "styled-components";
+import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
 import Add from "@material-ui/icons/Add"
 import Remove from "@material-ui/icons/Remove"
-import Input from "../Input"
+import Input from "../CustomComponents/Input"
 import Button from "../CustomComponents/Button"
+import PurchaseSummary from "../CustomComponents/PurchaseSummary";
+
+const Quatnity = Styled.div`
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 50px;
+`
+
+const ChangeButton = Styled.div`
+    height: 60px;
+    width: 60px;
+`
+
 
 const PaymentForm = props => {
     const [state, setState] = React.useState({ quantity: 1 })
@@ -15,31 +28,32 @@ const PaymentForm = props => {
 
     const changeQuanty = value => event => setState({ ...state, quantity: state.quantity + value || 1 })
 
-    return <Grid container direction="column" spacing={5}>
+    return <Grid container direction="column" spacing={3}>
         <Grid item xs={12} sm={6} md={4}>
-            <Grid container direction="row" spacing={2}>
-                <Grid item xs={4}><Button onClick={changeQuanty(-1)} grey><Remove fontSize="large" /></Button></Grid>
-                <Grid item xs={4}><h2>{state.quantity}</h2></Grid>
-                <Grid item xs={4}><Button onClick={changeQuanty(1)} grey><Add fontSize="large" /></Button></Grid>
-            </Grid>
+            how many?
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <ChangeButton><Button onClick={changeQuanty(-1)} grey><Remove fontSize="large" /></Button></ChangeButton>
+                <Quatnity>{state.quantity}</Quatnity>
+                <ChangeButton><Button onClick={changeQuanty(1)} grey><Add fontSize="large" /></Button></ChangeButton>
+            </div>
         </Grid>
         <Grid item >
-            <form onSubmit={processPayment}>
-                <Grid container direction="row" spacing={5}>
+            <form onSubmit={processPayment} style={{ borderBottom: "0.5px solid #000", paddingBottom: "30px" }}>
+                <Grid container direction="row" spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <Input />
+                        <Input placeholder="First name" label="First name" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input />
+                        <Input placeholder="Last name" label="Last name" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input type={"email"} />
+                        <Input type={"email"} placeholder="Email address" label="Email address" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input type={"tel"} />
+                        <Input type={"tel"} placeholder="Phone number" label="Phone number" />
                     </Grid>
                     <Grid item xs={12} sm={3} md={2}>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit">Continue</Button>
                     </Grid>
 
                 </Grid>
@@ -47,38 +61,7 @@ const PaymentForm = props => {
             </form>
         </Grid>
         <Grid item >
-            <hr />
-        </Grid>
-        <Grid item >
-
-            <Grid container direction="row" spacing={3}>
-                <Grid item xs={8} sm={5}>
-                    <small><b>Note: </b> Powrsale service charge is 2%</small>
-                </Grid>
-                <Grid item xs={4} sm={3}>
-                    <h4>$10.00</h4>
-                </Grid>
-            </Grid>
-
-
-            <Grid container direction="row" spacing={3}>
-                <Grid item xs={8} sm={5}>
-                    <p>Delivery charge</p>
-                </Grid>
-                <Grid item xs={4} sm={3}>
-                    <h4>$20.00</h4>
-                </Grid>
-            </Grid>
-
-            <Grid container direction="row" spacing={3}>
-                <Grid item xs={8} sm={5}>
-                    <h3>Total amount payable</h3>
-                </Grid>
-                <Grid item xs={4} sm={3}>
-                    <h4>$210.00</h4>
-                </Grid>
-            </Grid>
-
+            <PurchaseSummary data={{ item: "Apple", itemCost: 40, totalCost: "54", deliveryCharge: 14 }} />
         </Grid>
     </Grid>
 }

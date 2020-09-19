@@ -9,7 +9,7 @@ const TabHeader = Styled.div`
     position: relative;
     `
 const TabLabelItem = Styled.div`
-    font-size: 22px;
+    font-size: 20px;
     line-height: 50px;
     cursor: pointer;
     font-weight: 500;

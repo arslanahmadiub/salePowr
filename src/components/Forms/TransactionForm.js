@@ -12,6 +12,10 @@ import Select from "../CustomComponents/Select"
 import Input from "../CustomComponents/Input"
 import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
+import FlatSelect from "../CustomComponents/FlatSelect";
+import SearchBox from "../CustomComponents/SearchBox";
+import { Hidden } from "@material-ui/core";
+import PurchaseSummary from "../CustomComponents/PurchaseSummary";
 
 
 
@@ -19,6 +23,24 @@ const FlexContainer = Styled.div`
     display: flex;
     justify-content: space-between;
     letter-spacing: 0.5px;
+
+`
+
+
+const Title = Styled.div`
+    font-size: 30px;
+    font-weight: 600;
+    float: left;
+    text-align: left;
+    margin:0 0 20px 0;
+`
+const SubTitle = Styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    float: left;
+    text-align: left;
+    margin:25px 0 5px 0;
+    display: block;
 `
 
 
@@ -43,30 +65,36 @@ const TransactionForm = props => {
     }
     return <form onSubmit={processWidrawal}>
         <Grid container direction="row" spacing={2}>
-
+            <Hidden smDown>
+                <Grid item xs={12}>
+                    <Title>Transactions</Title>
+                </Grid>
+            </Hidden>
             <Grid item xs={12}>
-                <FlexContainer>
-                    <div style={{ width: "180px" }}>
-                        <Select options={transactionTypes} />
-                    </div>
-                    <div style={{ width: "150px" }}>
-                        <Input />
-                    </div>
+                <Grid container direction="row" spacing={5}>
+                    <Grid item xs={6}>
+                        <FlatSelect bg list={["Selling", "Buying"]} />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <SearchBox placeholder="Search by Id" />
+                    </Grid>
 
-                </FlexContainer>
+                </Grid>
+
             </Grid>
 
             <Grid item xs={12} md={6}>
+                <SubTitle>Sellre info</SubTitle>
                 <Grid container spacing={3} direction="row">
-                    <Grid item xs={12}><h4>Sellre info</h4></Grid>
+
                     <Grid item xs={12} md={10} >
                         <Grid container spacing={3} direction="row">
                             <Grid item xs={12}>
-                                <Input />
+                                <Input placeholder="Email address" type="email" required />
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Input />
+                                <Input placeholder="Phone number" type="tel" required />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -82,27 +110,25 @@ const TransactionForm = props => {
             </Grid>
 
             <Grid item xs={12}>
+                <SubTitle>Transaction info</SubTitle>
                 <Grid container direction="row" spacing={3}>
 
-                    <Grid item xs={12}>
-                        <h4>Transaction info</h4>
+                    <Grid item xs={12} sm={6}>
+                        <Input placeholder="Item name" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Input />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Select placehoder="item name" />
+                        <Select placeholder="Item name" />
                     </Grid>
                 </Grid>
             </Grid>
 
             <Grid item xs={12}>
-                <TextArea />
+                <TextArea placeholder="Description" />
             </Grid>
 
             <Grid item xs={12}>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend"><h4>Delivery Terms</h4></FormLabel>
+                    <FormLabel component="legend"><SubTitle>Delivery Terms</SubTitle></FormLabel>
                     <RadioGroup aria-label="delivery options" name="delivery options" value={state.delivery} onChange={handleRadioChange} row>
                         <FormControlLabel value="24hrs" control={<Radio color="primary" />} label="24hrs" />
                         <FormControlLabel value="3days" control={<Radio color="primary" />} label="3 Days" />
@@ -112,30 +138,8 @@ const TransactionForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <Grid container direction="column" spacing={0}>
-                    <Grid item>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <small style={{ fontWeight: "normal", fontSize: "12px" }}><span style={{ color: "#979FAA" }}>Note: </span> Powrsale service charge is 2%</small>
-                            <div>$210.00</div>
-                        </div>
-                    </Grid>
-                    <Grid item>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", margin: "10px 0" }}>
-                            <div style={{ fontWeight: "500" }}>Delivery Charge</div>
-                            <div style={{ fontWeight: "600", border: "1px #010101 solid", borderRadius: "10px", padding: "3px" }}>$210.00</div>
-                        </div>
-                    </Grid>
-                    <Grid item>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "24px", fontWeight: "bold", margin: "10px 0" }}>
-                            <div>
-                                Total amount payable
-                                </div>
-                            <div>
-                                $210.00
-                                </div>
-                        </div>
-                    </Grid>
-                </Grid>
+                <PurchaseSummary data={{ item: "Apple", itemCost: 40, totalCost: "54", deliveryCharge: 14 }} />
+
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Button>

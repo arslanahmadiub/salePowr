@@ -5,6 +5,7 @@ import ChatNotifierPanel from "./ChatNotifierPanel"
 import Grid from "@material-ui/core/Grid";
 import { messages, profilePercent } from "../../../DummyData/DummyData"
 import woman from "../../../assets/images/woman-avatar.jpg"
+import LogoutButton from "../../CustomComponents/LogoutButton";
 const RigthSideBar = props => {
 
     return <div style={{ background: "#ffffff", padding: "24px" }}>
@@ -18,7 +19,11 @@ const RigthSideBar = props => {
             <Grid item>
                 <Messages messages={messages} />
             </Grid>
+
+            <LogoutButton />
         </Grid>
+
+
     </div>
 }
 

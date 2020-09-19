@@ -1,27 +1,35 @@
 import React from 'react';
+import "./App.css"
 import Home from "./components/sections/Home"
+import { dashboardData, barchartData, walletBalance } from './DummyData/DummyData';
+import Wallet from './components/sections/Wallet/Wallet';
 import ShopProfileEdit from './components/sections/ShopProfile/ShopProfileEdit';
-import Transactions from './components/sections/Transactions/Transactions';
-import CreateTransaction from './components/sections/Transactions/CreateTransaction';
-import ProductDisplay from './components/sections/ProductDisplay/ProductDisplay';
-import ProductDetails from './components/sections/ProductDisplay/ProductDetails';
-import { products } from './DummyData/DummyData';
+import Transactions from "./components/sections/Transactions/Transactions"
+import CreateTransaction from "./components/sections/Transactions/CreateTransaction"
+import Dashboard from './components/sections/Dashboard/Dashboard';
+import VerticalBar from './components/sections/Dashboard/VerticalBar';
+import BarChart from "./components/sections/Dashboard/BarChart"
+import TradingVolume from './components/sections/Dashboard/TradingVolume';
+import ProductDisplay from "./components/sections/ProductDisplay/ProductDisplay"
+
+
+
+
 function App() {
   return (
     <div className="App">
 
-      <ProductDetails product={products[0]} />
+      {/* <Wallet balance={walletBalance} /> */}
+      {/* <ProductDetails product={products[0]} /> */}
       {/* <ProductDisplay /> */}
 
-      {/* <Home>
+      <Home>
         <CreateTransaction />
-        <h1>Overveiw will be here</h1>
+        <Dashboard data={dashboardData} />
         <ShopProfileEdit key={2} name="Ebenezer Ghanney" />
         <Transactions />
-        <h1>analytics will be here</h1>
-        <h1>Wallet will be here</h1>
-        <h1>Delivery will be here</h1>
-      </Home> */}
+        <Wallet balance={walletBalance} />
+      </Home>
 
     </div>
   );

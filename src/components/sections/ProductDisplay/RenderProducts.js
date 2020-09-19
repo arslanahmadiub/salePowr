@@ -11,7 +11,7 @@ const RenderProducts = props => {
         {
             products && products.map(product => {
                 return <Grid item xs={6} sm={4} md={2} lg={2}>
-                    <Product image={product.image} description={product.description} price={product.price} />
+                    <Product key={product.name} details={product} />
                 </Grid>
 
             })

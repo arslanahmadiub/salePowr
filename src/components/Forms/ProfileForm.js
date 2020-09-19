@@ -1,7 +1,6 @@
 import React from "react";
 //import styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
-import Select from "../CustomComponents/Select"
 import Input from "../CustomComponents/Input"
 import Button from "../CustomComponents/Button"
 import DatePicker from "../CustomComponents/DatePicker"
@@ -9,8 +8,6 @@ import PasswordInput from "../CustomComponents/PasswordInput";
 
 const ProfileForm = props => {
 
-    const countries = ["Ghana", "Nigeria", "Gambia", "Cameroon", "Togo"]
-    const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
 
     const saveProfile = event => {
         event.preventDefault();
@@ -18,35 +15,35 @@ const ProfileForm = props => {
     return <form onSubmit={saveProfile}>
         <Grid container direction="row" spacing={5}>
             <Grid item xs={12} sm={6}>
-                <Input />
+                <Input placeholder="Enter first name" label="First name" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input />
+                <Input placeholder="Enter last name" label="Last Name" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input />
+                <Input placeholder="Other name(s)" label="Other name(s)" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <DatePicker />
+                <DatePicker placeholder="Dadte of birth" label="Date of Birth" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type="email" />
+                <Input type="email" placeholder="Enter email address" label="Email address" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type="tel" />
+                <Input placeholder="Phone number" label="Phone number" required type="tel" />
             </Grid>
             <Grid item xs={12}>
                 <h2 style={{ fontSize: "22px", fontWeight: "500", padding: "0", margin: "0" }}>Change password</h2>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <PasswordInput />
+                <PasswordInput placeholder="New password" label="New password" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <PasswordInput />
+                <PasswordInput placeholder="Confirm password" label="Confirm password" required />
             </Grid>
 
             <Grid item xs={12}>
-                <p>* By continuing, you agree to Powrsale's <a href="#">terms</a> and  <a href="#">privacy notice</a></p>
+                <p style={{ textAlign: "center" }}>* By continuing, you agree to Powrsale's <a href="#">terms</a> and  <a href="#">privacy notice</a></p>
             </Grid>
 
             <Grid item xs={12}>

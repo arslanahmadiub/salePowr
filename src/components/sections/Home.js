@@ -7,62 +7,176 @@ import ShopProfileEdit from './ShopProfile/ShopProfileEdit'
 import NewTransactionPanel from "./LeftSideBar/NewTransationPanel"
 import NavItem from "./LeftSideBar/NavItem"
 import logo from "../../assets/images/logo.png"
-import { navItems } from "../../DummyData/DummyData"
+import { navItems, profile } from "../../DummyData/DummyData"
 import SelectedShop from "./LeftSideBar/SelectedShop"
+import { Dialog, DialogActions, DialogTitle, Drawer, Hidden, Modal, } from "@material-ui/core"
+import Menu from "@material-ui/icons/Menu"
+import Styled from "styled-components"
+import { ArrowBack, ArrowBackIos, ArrowLeft, Close, EventNote, } from "@material-ui/icons"
+import Button from "../CustomComponents/Button"
+
+
+const DrawerContainer = Styled.div`
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    };
+    overflow-x: hidden;
+    overflow-y: scroll;
+`
+
+const CloseDrawer = Styled(Close)`
+position:absolute;
+right: 15px;
+top: 30px;
+cursor: pointer;
+`
+
+
+const FlexContainer = Styled.div`
+    display: flex;
+    justify-content: space-between;
+    position:relative;
+    margin: 30px 20px;
+`
+const ButtonContainer = Styled.div`
+    width: 50px;
+    heigth: 50px;
+`
+
+const Title = Styled.div`
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 0 15px;
+    line-height: 51px;
+`
 
 
 
 const Home = props => {
-    const [selectedNav, setSelectedNav] = React.useState(0)
-
+    const [selectedNav, setSelectedNav] = React.useState(1)
+    const [drawerOpen, toggleDrawerOpen] = React.useState(false)
+    const [modal, setModal] = React.useState(false)
     const changeSelected = index => event => {
         event.stopPropagation();
         setSelectedNav(index)
-
     }
+    const toggleModal = event => {
+        setModal(!modal)
+    }
+    const drawer = <div style={{ position: "relative", height: "100vh", padding: "60px 15px" }}>
+        <Grid container direction="column" spacing={4}>
+            <Grid item>
+                <img height="40" src={logo} alt="Powrsale logo" />
+            </Grid>
+            <Grid item>
+                <div onClick={changeSelected(0)} style={{ cursor: "pointer" }}>
+                    <NewTransactionPanel />
+                </div>
+            </Grid>
+            <Grid item>
+                {
+                    navItems && navItems.map((item, index) => {
+                        return <div key={item.text} onClick={changeSelected(index + 1)}>
+                            <NavItem text={item.text} icon={item.icon} selected={selectedNav === index + 1} />
+                        </div>
 
-    console.log(props.children)
+                    })
+                }
+            </Grid>
+
+        </Grid>
+        <div style={{ position: "absolute", bottom: "0", width: "100%" }}>
+            <SelectedShop shop={{ name: "Techshop" }} />
+        </div>
+    </div>
+
 
     return <Grid container direction="row">
 
+        {/* MOBILE TEMPORARY SIDEBAR */}
+        <Drawer
+            //container={container}
+            variant="temporary"
+            anchor={'left'}
+            open={drawerOpen}
+            onClose={() => toggleDrawerOpen(!drawerOpen)}
+            // classes={{
+            //     paper: classes.drawerPaper,
+            // }}
+            ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+            }}
+        >
+            <DrawerContainer onClick={(event) => {
+                event.stopPropagation();
+                toggleDrawerOpen(!drawerOpen)
+            }}>
+                <CloseDrawer />
+                {drawer}
+            </DrawerContainer>
+
+        </Drawer>
+
+
+
+
         {/* THE LEFT SIDE BAR */}
-        <Grid item md={2} >
-            <div style={{ position: "relative", height: "100vh", padding: "60px 15px" }}>
-                <Grid container direction="column" spacing={4}>
-                    <Grid item>
-                        <img height="40" src={logo} alt="Powrsale logo" />
-                    </Grid>
-                    <Grid item>
-                        <div onClick={changeSelected(0)} style={{ cursor: "pointer" }}>
-                            <NewTransactionPanel />
-                        </div>
-                    </Grid>
-                    <Grid item>
-                        {
-                            navItems && navItems.map((item, index) => {
-                                return <div key={item.text} onClick={changeSelected(index + 1)}>
-                                    <NavItem text={item.text} icon={item.icon} selected={selectedNav === index + 1} />
-                                </div>
-
-                            })
-                        }
-                    </Grid>
-
-                </Grid>
-                <SelectedShop shop={{ name: "Techshop" }} />
-            </div>
-        </Grid>
-
+        <Hidden smDown>
+            <Grid item md={2} >
+                {drawer}
+            </Grid>
+        </Hidden>
         {/* THE MAIN CONTENT */}
-        <Grid item md={7}>
+        <Grid item xs={12} md={7} lg={7}>
+            {/*    MOBILE TOP ROW */}
+            <Hidden mdUp>
+                <div style={{}}>
+                    <FlexContainer>
+                        <FlexContainer>
+                            <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
+                                <Button white><Menu fontSize="large" /></Button>
+                            </ButtonContainer>
+                            <Title>
+                                {
+                                    navItems[selectedNav].text
+                                }
+                            </Title>
+                        </FlexContainer>
+                        <FlexContainer>
+                            <ButtonContainer>
+                                <Button white><EventNote fontSize="large" style={{ color: "#5A36CC" }} /></Button>
+                            </ButtonContainer>
+                            <ButtonContainer onClick={toggleModal}>
+                                <Button white><img width="100%" height="100%" src={profile.image} alt={profile.name} /></Button>
+                            </ButtonContainer>
+                        </FlexContainer>
+                    </FlexContainer>
+                </div>
+            </Hidden>
             {props.children[selectedNav]}
         </Grid>
 
-        {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
-        <Grid item md={3}>
+        <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
+            <DialogTitle>
+                <div style={{ display: "flex", lineHeight: "50px" }}>
+                    <ButtonContainer onClick={toggleModal}>
+                        <ArrowBack />
+                    </ButtonContainer>
+                    <Title>Profile</Title>
+                </div>
+            </DialogTitle>
             <RightSideBar />
-        </Grid>
-    </Grid>
+        </Dialog>
+
+        {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
+        <Hidden smDown>
+            <Grid item md={3}>
+                <RightSideBar />
+            </Grid>
+        </Hidden>
+    </Grid >
 }
 
 export default Home;

@@ -16,16 +16,16 @@ const WithdrawalForm = props => {
     return <form onSubmit={processWidrawal}>
         <Grid container direction="row" spacing={5}>
             <Grid item xs={12} sm={6}>
-                <Select options={countries} />
+                <Select options={countries} label="Country" placeholder="Select country" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Select options={banks} />
+                <Select options={banks} label="Bank name" placeholder="Select bank" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type={"number"} />
+                <Input type={"number"} label="Bank account number" placeholder="Enter bank account number" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Input type={"number"} />
+                <Input type={"number"} label="Bank branch" placeholder="Enter bank branch" required />
             </Grid>
             <Grid item xs={12} sm={3}>
                 <Button type="submit">Submit</Button>

@@ -1,17 +1,49 @@
 import React from "react"
+import Styled from "styled-components"
 
+const Label = Styled.div`
+    font-size: 12px;
+    color: #979FAA;
+    text-align: center;
+    line-height: 20px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    `
+
+const InnerBar = Styled.div`
+    background: #5A36CC;
+    position: absolute;
+    border-radius: 3px;
+    bottom: 0px;
+    width: 100%;
+    height:${p => Number(p.percent) ? Number(p.percent) : 10}%;
+    `
+const OutterBar = Styled.div`
+    position: absolute;
+    background: #F5F8FD;
+    border-radius: 3px;
+    width: 15px;
+    bottom: 20px;
+    height: 95%;
+    `
+
+const Container = Styled.div`
+    width: 15px;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+`
 
 const VerticalBar = props => {
-    const percentage = props.percentage || 10;
-    const label = props.label;
-    return <div style={{ height: "100%", position: "relative" }}>
-        <div style={{ position: `${"relative"}`, bottom: "25px", background: "#F5F8FD", borderRadius: "3px", height: `${label ? "95%" : "100%"}`, width: "30px" }}>
-            <div style={{ position: "absolute", background: "#5A36CC", borderRadius: "3px", height: `${label ? percentage * 0.95 : percentage}%`, width: "30px", bottom: 0 }}>        </div>
-        </div>
-        <div style={{ position: "absolute", bottom: 0, color: "#979FAA", fontSize: "12px", }}>
-            {label}
-        </div>
-    </div>
+
+    return <Container>
+        <OutterBar>
+            <InnerBar percent={props.percent && props.percent} />
+        </OutterBar>
+        <Label>{props.label && props.label}</Label>
+    </Container>
+
 }
 
 export default VerticalBar;

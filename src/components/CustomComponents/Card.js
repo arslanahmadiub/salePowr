@@ -1,13 +1,20 @@
 import React from "react";
-import styled from "styled-components";
+import Styled from "styled-components";
+
+const Container = Styled.div`
+    padding: 10px 10px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+`
 
 
 const Card = props => {
-    return <div style={{ padding: "20px", borderRadius: "25px", background: `${props.background ? props.background : "#FFFFFF"}`, width: "100%", height: "100%" }}>
-        <div style={{ height: "100%" }}>
-            {props.children}
-        </div>
-    </div>
+    return <Container>
+        {props.children}
+    </Container>
 };
 
 export default Card;

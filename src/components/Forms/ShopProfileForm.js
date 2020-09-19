@@ -24,49 +24,49 @@ const ShopProfileForm = props => {
         <Grid container direction="column" spacing={6}>
 
             <Grid item>
-                <Grid container direction="row" spacing={3}>
+                <Grid container direction="row" spacing={1}>
                     <Grid item xs={12} sm={6} md={4} >
-                        <Input />
+                        <Input placeholder="Enter shop name" label="Business/Shop name" required />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} >
-                        <Input />
+                        <Input placeholder="Enter Shop ID" label="Shop ID" required />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} >
-                        <Select />
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            <Grid item>
-                <Grid container direction="row" spacing={3}>
-                    <Grid item xs={12} sm={6} md={4} >
-                        <Select />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} >
-                        <Select options={banks} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} >
-                        <Input />
+                        <Select placeholder="Select business type" label="Business type" required />
                     </Grid>
                 </Grid>
             </Grid>
 
             <Grid item>
-                <Grid container direction="row" spacing={3}>
+                <Grid container direction="row" spacing={1}>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Select placeholder="Select country" label="Country" required />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Select placeholder="Select City" label="City" required options={banks} />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} >
+                        <Input placeholder="Enter Shop Address" label="Address" required />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid item>
+                <Grid container direction="row" spacing={1}>
 
                     <Grid item xs={12} sm={5}>
-                        <Input />
+                        <Input type="tel" placeholder="Enter phone number" label="Business Phone" required />
                     </Grid>
                     <Grid item xs={12} sm={7}>
-                        <Input />
+                        <Input type="email" placeholder="Enter Email address" label="Business email" required />
                     </Grid>
                 </Grid>
             </Grid>
 
             <Grid item>
-                <Grid container direction="row" spacing={3}>
+                <Grid container direction="row" spacing={1}>
                     <Grid item xs={12} sm={7}>
-                        <TextArea rows={3} />
+                        <TextArea placeholder="Enter shop bio" label="Shop bio" required rows={3} />
                     </Grid>
                     <Grid item xs={12} sm={5}>
                         <FilePicker />
@@ -75,18 +75,18 @@ const ShopProfileForm = props => {
             </Grid>
 
             <Grid item>
-                <Grid container direction="row" spacing={3}>
+                <Grid container direction="row" spacing={1}>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Input />
+                        <Input placeholder="Enter username" label="Instagram" />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Input />
+                        <Input placeholder="Enter username" label="Facebook" />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Input />
+                        <Input placeholder="Enter username" label="Twitter" />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Input />
+                        <Input placeholder="Enter username" label="Whatsapp" />
                     </Grid>
                 </Grid>
             </Grid>

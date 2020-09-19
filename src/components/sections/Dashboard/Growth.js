@@ -1,14 +1,10 @@
-import React from "react";
+import React from 'react'
 import Styled from "styled-components"
-import Card from "../../CustomComponents/Card"
+import Grid from "@material-ui/core/Grid"
+import Card from '../../CustomComponents/Card'
+import ArcProgressBar from '../../CustomComponents/ArcProgressBar'
 
-const LargeBoldText = Styled.div`
-    color: #31BDF4;
-    font-weight: bolder;
-    margin: ${props => props.margin ? props.margin : "0"}px;
-    font-size: ${props => props.size ? props.size : 20}px;
-    text-align: center;
-`
+
 
 const SmallFadedLabel = Styled.div`
     font-size: 12px;
@@ -28,26 +24,18 @@ const SmallFadedLabel = Styled.div`
     border-left: ${props => props.borderLeft ? "0.5px solid #979FAA" : "none"};
 `
 
-const NewOrders = props => {
-    const [value, setValue] = React.useState(0);
-    const val = props.value;
-    // React.useEffect(() => {
-    //     if (value < val) {
-    //         setInterval(() => {
-    //             if (value < val) {
-    //                 setValue(value + 1);
-    //             }
-    //         }, 200)
-    //     }
-    // }, [val])
+const Growth = props => {
     return <Card>
-        <LargeBoldText margin={5} size={40}>
-            {val}
-        </LargeBoldText>
+
+        <ArcProgressBar percent={50}>
+            78%
+        </ArcProgressBar>
+
         <SmallFadedLabel>
-            New Orders
+            Growth this week
         </SmallFadedLabel>
+
     </Card>
 }
 
-export default NewOrders;
+export default Growth

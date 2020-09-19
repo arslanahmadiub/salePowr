@@ -1,9 +1,13 @@
+import { Dialog, DialogTitle } from "@material-ui/core";
+import { ArrowBackIos } from "@material-ui/icons";
 import React from "react";
 import Styled from "styled-components"
 import apple from "../../../assets/images/apple.png"
+import BreadCrumbs from "./BreadCrumbs";
+import ProductDetails from "./ProductDetails"
 
 const Container = Styled.div`
- 
+    cursor: pointer;
 `
 const ImageContainer = Styled.div`
     height: 170px;
@@ -30,23 +34,54 @@ const Description = Styled.div`
     text-overflow: ellipsis;
 `
 
+const Title = Styled.div`
+    font-size: 18px;
+    font-weight:;
+    margin: 0 0 0 5px;
+    line-height: 25px;    
+`
+
+const ButtonContainer = Styled.div`
+    width: 50px;
+    heigth: 50px;
+`
+
 const Product = props => {
-    const description = props.description;
-    const price = props.price;
-    const image = props.image;
-    return <Container>
-        <ImageContainer>
-            <Img src={image} alt="apple" />
-        </ImageContainer>
+    const [dialog, setDialog] = React.useState(false)
+    const { description, image, price, tiles, delivery, name, } = props.details;
 
-        <Description>
-            {description && description}
-        </Description>
-        <Price>
-            $ {price && price}
-        </Price>
+    let details = props.details;
 
-    </Container>
+    const toggleDialog = event => setDialog(!dialog)
+
+
+
+    return <>
+        <Container onClick={toggleDialog}>
+            <ImageContainer>
+                <Img src={image} alt="apple" />
+            </ImageContainer>
+
+            <Description>
+                {description && description}
+            </Description>
+            <Price>
+                $ {price && price}
+            </Price>
+
+        </Container>
+        <Dialog open={dialog} fullScreen fullWidth onClose={toggleDialog} style={{ background: "#F5F8FD" }}>
+            <DialogTitle style={{ background: "#F5F8FD" }}>
+                <div style={{ display: "flex", lineHeight: "50px", background: "#F5F8FD" }}>
+                    <ButtonContainer onClick={toggleDialog}>
+                        <ArrowBackIos />
+                    </ButtonContainer>
+                    <Title>Back</Title>
+                </div>
+            </DialogTitle>
+            <BreadCrumbs details={details} />
+        </Dialog>
+    </>
 }
 
 export default Product;

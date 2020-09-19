@@ -4,18 +4,20 @@ import companyLogo from "../../../assets/images/company-logo.png"
 import Styled from "styled-components";
 import Button from "../../CustomComponents/Button"
 
-import ShopBrand from './ShopBrand';
+import ShopBrand, { ShopBrandMobile } from './ShopBrand';
+import { Security } from '@material-ui/icons';
+import { Hidden } from '@material-ui/core';
 
 
 
 const Container = Styled.div`
     background: #F5F8FD;
-    padding: 0 15px;
-    height: 100vh;
+    padding: 0 15px 0px 15px;
+    min-height: 100vh;
 `
 const DetailsContainer = Styled.div`
     background: #F5F8FD;
-    padding: 15px 0;
+    padding: 0px 0;
     min-height: 50vh;
 `
 
@@ -43,10 +45,10 @@ const ContactLabel = Styled.div`
     font-size: 14px;
     color: #979FAA;
 `
-const Contact = Styled.div`
-    font-size: 16px;
-    color: #010101;
-    font-weight: 600;
+const TermsAndConditions = Styled.div`
+    font-size: 12px;
+    color: #31BDF4;
+    font-weight: ;
 `
 
 const TiledImage = Styled.img`
@@ -55,29 +57,44 @@ const TiledImage = Styled.img`
     background: #FFFFFF;
     border-radius: 15px;
     margin: auto;
+    padding: 10px;
+    @media (max-width: 960px){
+        height: 80px;
+        width: 80px;
+        padding: 5px;
+    }
 `
 
 const CoverImage = Styled.img`
     height: 330px;
-    width: 350px;
+    width: 300px;
     background: #FFFFFF;
     border-radius: 15px;
-    margin: auto 0 0 5px;
+    //margin: 0 0 0 5px;
+    padding: 15px;
+    @media (max-width: 960px){
+        height: 250px;
+        width: 220px;
+    }
+`
 
+const CopyRight = Styled.div`
+    padding: 15px 0;
+    border-top: 0.5px solid #979FAA;
+    text-align: center;
 `
 
 const ProductDetails = props => {
-    const tiles = props.product.tiles;
-    const image = props.product.image;
-    const details = props.product;
+
+    const { description, image, price, tiles, delivery, name, } = props.details;
 
     return <Container>
-        <div style={{ margin: "20px" }}>
+        <div >
 
 
-            <Grid container direction="row" spacing={3}>
-                <Grid item xs={4} md={1}>
-                    <Grid container direction="column" spacing={1}>
+            <Grid container direction="row" spacing={0}>
+                <Grid item xs={4} sm={2} md={2}>
+                    <Grid container direction="column" spacing={0}>
                         <Grid item>
                             <TiledImage src={tiles.first_tile} alt="First tile" />
                         </Grid>
@@ -94,39 +111,106 @@ const ProductDetails = props => {
                 </Grid>
                 <Grid item xs={12} md={5}>
                     <DetailsContainer>
-                        <ProductName>
-                            {details && details.name}
-                        </ProductName>
-                        <Description>
-                            {details && details.description}
-                        </Description>
-
-                        <Price>
-                            GHS {details && details.price}
-                        </Price>
-                        <Button noExpand slim>
-                            Buy Now
+                        <Grid container direction="column" spacing={0}>
+                            <Grid item xs={12}>
+                                <ProductName>
+                                    {name && name}
+                                </ProductName>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Description>
+                                    {description && description}
+                                </Description>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Price>
+                                    GHS {price && price}
+                                </Price>
+                            </Grid>
+                            <Grid item xs={12} sm={2}></Grid>
+                            <Grid container direction='row'>
+                                <Grid item xs={12} sm={4}>
+                                    <Button>
+                                        Buy Now
                 </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
 
-                        <Delivery>
-                            Delivery terms
+                            <Delivery>
+                                Delivery terms
                 </Delivery>
-                        <Description>
-                            {details && details.delivery}
-                        </Description>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Description>
+                                {delivery && delivery}
+                            </Description>
+                        </Grid>
+
                     </DetailsContainer>
                 </Grid>
 
-            </Grid>
+            </Grid >
 
+        </div >
+
+        <div style={{ margin: "30px 0", borderTop: "0.5px solid #979FAA" }}>
+            <Hidden smDown>
+                <ShopBrand logo={companyLogo} name={"GoPare"} slogan={"Electronic"} shopid={"#3455354"} />
+            </Hidden>
+            <Hidden mdUp>
+                <ShopBrandMobile logo={companyLogo} name={"GoPare"} slogan={"Electronic"} shopid={"#3455354"} />
+            </Hidden>
         </div>
 
-        <div style={{ margin: "30px 0 100px", borderTop: "0.5px solid" }}>
+        <Hidden smDown>
+            <CopyRight>
+                <Grid container direction="row" spacing={5}>
+                    <Grid item xs={6} md={2}>
+                        <a href="#">Terms {"&"} </a>
+                        <a href="#">Conditions</a>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                        <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This purchase is protected by <a href="https://powrsale.com">Powrsale.com.</a> Your funds are escrow protected
+                </Grid>
+                    <Grid item xs={6} md={3}>
 
-            <ShopBrand logo={companyLogo} name={"GoPare"} slogan={"Electronic"} shopid={"#3455354"} />
-        </div>
+                        <a href="#">Create your Profile</a>
+
+                    </Grid>
+
+                    <Grid item xs={12} md={4}></Grid>
+                </Grid>
+            </CopyRight>
+        </Hidden>
+
+        <Hidden mdUp>
+            <CopyRight>
+                <Grid container direction="row" spacing={5}>
+
+                    <Grid item xs={12} md={7}>
+                        <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This purchase is protected by <a href="https://powrsale.com">Powrsale.com.</a> Your funds are escrow protected
+                </Grid>
+
+                    <Grid item xs={6} md={2}>
+                        <a href="#">Terms {"&"} </a>
+                        <a href="#">Conditions</a>
+                    </Grid>
+
+                    <Grid item xs={6} md={3}>
+
+                        <a href="#">Create your Profile</a>
+
+                    </Grid>
+
+                    <Grid item xs={12} md={4}></Grid>
+                </Grid>
+            </CopyRight>
+        </Hidden>
 
 
-    </Container>
+
+    </Container >
 }
 export default ProductDetails;

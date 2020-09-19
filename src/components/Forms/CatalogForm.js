@@ -48,18 +48,18 @@ const CatalogForm = props => {
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={3} direction="row">
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={6}>
                             <Grid container spacing={2} direction="column">
                                 <Grid item xs={12}>
-                                    <Input />
+                                    <Input placeholder="Enter product name" label="Name of product" required />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Input />
+                                    <Input placeholder="Price" label="Price" required />
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12} md={8}>
-                            <TextArea rows={3} />
+                        <Grid item xs={12} md={6}>
+                            <TextArea placeholder="Enter description" label="Description" rows={3} required />
                         </Grid>
                     </Grid>
 

@@ -3,6 +3,8 @@ import React from "react"
 import Styled from "styled-components";
 import TransactionHistory from "./TransactionHistory"
 import { transactionGroups } from "../../../DummyData/DummyData";
+import FlatSelect from "../../CustomComponents/FlatSelect";
+import { Hidden } from "@material-ui/core";
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -33,12 +35,14 @@ const Body = Styled.div`
 const Transactions = props => {
 
     return <Container>
-        <TopRow>
-            <div>Transactions</div>
-            <RenderButtons>
-                Date range
-            </RenderButtons>
-        </TopRow>
+        <Hidden smDown>
+            <TopRow>
+                <div>Transactions</div>
+                <RenderButtons>
+                    <FlatSelect bg />
+                </RenderButtons>
+            </TopRow>
+        </Hidden>
 
         <Body>
             <Tabs headers={["History", "Upcoming"]}>
