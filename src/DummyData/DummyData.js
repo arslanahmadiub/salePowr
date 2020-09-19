@@ -88,7 +88,7 @@ const creditCardInfo = {
 const dashboardData = {
     username: "Ebenezer Ghanney",
     profilePercent: 20,
-    growth: 564,
+    growth: 40,
     dayVolume: 23,
     newOrders: 79,
     shipped: 89,
@@ -103,10 +103,30 @@ const profile = {
     image: woman,
 }
 
+const transactionStatusData = {
+    delivered: {
+        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+        total: 16,
+    },
+    completed: {
+        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+        total: 76,
+    },
+    shipped: {
+        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+        total: 69,
+    },
+
+}
+
+const activityData = [
+    { x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }
+]
 
 export {
     messages, banks, profilePercent, products,
     navItems, barchartData, transactions, transactionGroups,
     walletBalance, creditCardInfo, dashboardData,
     transactionVolumeData, woman, profile, brandDetails,
+    transactionStatusData, activityData,
 }

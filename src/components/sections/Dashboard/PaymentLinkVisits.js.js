@@ -12,6 +12,10 @@ const Selector = Styled.div`
     border: 0.5px solid #979FAA;
     color: #979FAA;
     width: 100%;
+    margin: auto;
+    @media (max-width: 960px){
+        width: 50%;
+    }
 `
 const SmallFadedLabel = Styled.div`
     font-size: 12px;

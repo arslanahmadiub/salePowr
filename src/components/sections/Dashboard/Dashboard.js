@@ -9,11 +9,12 @@ import PaymentLinkVisits from './PaymentLinkVisits.js'
 import Growth from './Growth'
 import TransactionStatus from './TransactionStatus'
 import NewOrders from './NewOrders'
-import { barchartData } from '../../../DummyData/DummyData'
+import { activityData, barchartData, transactionStatusData } from '../../../DummyData/DummyData'
 import CircularProgress from '../../CustomComponents/CircularProgress'
 import Card from '../../CustomComponents/Card'
 import FlatSelect from '../../CustomComponents/FlatSelect'
 import { Hidden } from '@material-ui/core'
+import ArcProgressBar from '../../CustomComponents/ArcProgressBar'
 
 
 const Container = Styled.div`
@@ -35,7 +36,7 @@ const SubText = Styled.div`
         font-size: 12px;
     }
 `
-const SmallLabel = Styled.div`
+const SmallLabel = Styled.text`
     color: #979FAA;
     font-size: 12px;
     position: absolute;
@@ -89,23 +90,20 @@ const Dashboard = props => {
             </Grid>
 
             <Grid item>
-                <Grid container spacing={3} direction="row">
-                    <Grid xs={12} md={4} item>
-                        <ActivityGraph />
+                <Grid container spacing={2} direction="row">
+                    <Grid xs={12} md={6} item>
+                        <ActivityGraph data={activityData} />
                     </Grid>
-                    <Grid xs={12} md={4} item>
+                    <Grid xs={12} md={3} item>
                         <PaymentLinkVisits />
                     </Grid>
-                    <Grid xs={12} md={4} item>
-                        <Grid container spacing={3} direction="row">
+                    <Grid xs={12} md={3} item>
+                        <Grid container spacing={2} direction="row">
                             <Grid xs={6} md={12} item>
                                 <Card>
-                                    <CircularProgress thickness={10} percent={5} SelectedShop secondary arc>
-                                        70
-                                    </CircularProgress>
-                                    <SmallLabel>
-                                        Growth this week
-                                    </SmallLabel>
+                                    <ArcProgressBar label={"Growth this week"} thickness={10} percent={growth} SelectedShop secondary arc>
+                                        {growth}
+                                    </ArcProgressBar>
                                 </Card>
                             </Grid>
                             <Grid xs={6} md={12} item>
@@ -121,7 +119,7 @@ const Dashboard = props => {
                         <TradingVolume data={barchartData} />
                     </Grid>
                     <Grid xs={12} md={6} item>
-                        <TransactionStatus />
+                        <TransactionStatus data={transactionStatusData} />
                     </Grid>
                 </Grid>
             </Grid>

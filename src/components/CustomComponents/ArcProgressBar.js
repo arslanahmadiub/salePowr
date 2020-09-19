@@ -3,9 +3,8 @@ import Styled from "styled-components"
 
 const SVG = Styled.svg`
     position: relative;
-    width: 100%;
-    height: 100%;
     z-index: 100;
+    
 `
 const Circle = Styled.circle`
     margin: auto;
@@ -15,7 +14,6 @@ const Circle = Styled.circle`
     stroke: #5A36CC;
     stroke-width:10;
     stroke-linecap: round;
-    transform: translate(15px, 15px);
     stroke-dasharray: ${props => props.percent ? `${(314 * props.percent / 100)} ${(314 * (100 - props.percent) / 100)}` : 314};
     stroke-dashoffset: 157;
     `
@@ -27,17 +25,40 @@ const Circle1 = Styled.circle`
     stroke: #F5F8FD;
     stroke-width:10;
     stroke-linecap: round;
-    transform: translate(15px, 15px);
     stroke-dasharray: 157 157;
     stroke-dashoffset: 157;
     `
 
+const Text = Styled.text`
+    font-size: 20px;
+    font-weight: 500;
+    stroke: #010101;
+    text-align: center;
+    postion: absolute;
+
+`
+
+const SmallLabel = Styled.text`
+    fill: #979FAA;
+    font-size: 12px;
+    text-align: center;
+    
+`
+
 const ArcProgressBar = props => {
-    const percent = props.percent;
-    return <SVG>
-        <Circle1 cx="50" cy="50" r="50" />
-        <Circle cx="50" cy="50" r="50" percent={percent} />
-        <div></div>
+    const percent = 0.5 * props.percent;
+    const label = props.label;
+    return <SVG width={111} height={80}>
+        <Circle1 cx="55" cy="54" r="50" />
+        <Circle cx="55" cy="54" r="50" percent={percent} />
+        <Text x="30%" y="70%">
+            {props.children}%
+        </Text>
+        <SmallLabel x="10%" y="100%">
+            {label}
+        </SmallLabel>
+
+
     </SVG>
 }
 
