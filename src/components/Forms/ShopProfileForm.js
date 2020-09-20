@@ -21,10 +21,10 @@ const ShopProfileForm = props => {
 
     }
     return <form onSubmit={saveShopProfile}>
-        <Grid container direction="column" spacing={2}>
+        <Grid container direction="column" spacing={3}>
 
             <Grid item>
-                <Grid container direction="row" spacing={2}>
+                <Grid container direction="row" spacing={3}>
                     <Grid item xs={12} sm={6} md={4} >
                         <Input placeholder="Enter shop name" label="Business/Shop name" required />
                     </Grid>
@@ -66,7 +66,7 @@ const ShopProfileForm = props => {
             </Grid>
 
             <Grid item>
-                <Grid container direction="row" spacing={1}>
+                <Grid container direction="row" spacing={2}>
                     <Grid item xs={12} sm={6} md={3}>
                         <Input placeholder="Enter username" label="Instagram" />
                     </Grid>

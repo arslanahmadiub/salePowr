@@ -62,14 +62,14 @@ right: 5px;
 
 const Container = styled.div`
   position: relative;
+  height: 60px;
   cursor: pointer;
-  padding: 20px 0;
 `
 
 const Label = styled.label`
     font-size: 13px;
-    position:absolute; 
-    margin: 15 0px;
+    position:relative; 
+    padding: 15 0px;
     top: -5px;
 `
 

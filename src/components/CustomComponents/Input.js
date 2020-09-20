@@ -25,14 +25,14 @@ const Asterisk = Styled.span`
 `
 const Label = Styled.label`
     font-size: 13px;
-    position:absolute; 
-    margin: 15 0px;
+    position:relative; 
+    padding: 15 0px;
     top: -5px;
 `
 
 const Container = Styled.div`
     position: relative;
-    padding: 20px 0;
+    height: 60px;
 `
 
 
