@@ -16,20 +16,23 @@ color:#000;
     color:#979FAA;
 }
 `
-
-const Label = Styled.label`
-font-size: 18px;
-margin: 20px 0;
-padding: 20px 0;
-position: relative; 
+const Asterisk = Styled.span`
+    color: red;
+    font-size: 16px;
+    font-weight: 600;
+    display: ${props => props.show === true ? "" : "none"}
 
 `
-const Asterisk = Styled.span`
-color: red;
-font-size: 16px;
-font-weight: 600;
-display: ${props => props.show === true ? "" : "none"}
+const Label = Styled.label`
+    font-size: 13px;
+    position:absolute; 
+    margin: 15 0px;
+    top: -5px;
+`
 
+const Container = Styled.div`
+    position: relative;
+    padding: 20px 0;
 `
 
 
@@ -38,7 +41,7 @@ const Input = props => {
     const showLabel = props.label && props.required;
 
 
-    return <div>
+    return <Container>
         <Label for={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
         <GeneralInput
             required={props.required != null}
@@ -47,7 +50,7 @@ const Input = props => {
             id={props.id || "textbox"}
             name={props.name || props.id || ""}
         />
-    </div>
+    </Container>
 }
 
 

@@ -59,7 +59,7 @@ const Title = Styled.div`
 // `
 
 const Home = props => {
-    const [selectedNav, setSelectedNav] = React.useState(1)
+    const [selectedNav, setSelectedNav] = React.useState(2)
     const [drawerOpen, toggleDrawerOpen] = React.useState(false)
     const [modal, setModal] = React.useState(false)
     const changeSelected = index => event => {

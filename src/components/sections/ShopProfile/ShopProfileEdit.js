@@ -21,9 +21,8 @@ width: 35%;
 `
 
 const Container = Styled.div`
-padding: 50px 30px;
+//padding: 50px 30px;
 border-radius: 25px;
-background: #E7EEFA;
 min-height: 80%;
 @media (max-width: 960px){
     padding: 20px 10px;

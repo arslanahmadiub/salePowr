@@ -7,6 +7,7 @@ import ShopProfileEdit from './components/sections/ShopProfile/ShopProfileEdit';
 import Transactions from "./components/sections/Transactions/Transactions"
 import CreateTransaction from "./components/sections/Transactions/CreateTransaction"
 import Dashboard from './components/sections/Dashboard/Dashboard';
+import Select from './components/CustomComponents/Select';
 
 
 

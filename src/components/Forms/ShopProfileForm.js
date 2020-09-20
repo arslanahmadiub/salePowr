@@ -21,10 +21,10 @@ const ShopProfileForm = props => {
 
     }
     return <form onSubmit={saveShopProfile}>
-        <Grid container direction="column" spacing={6}>
+        <Grid container direction="column" spacing={2}>
 
             <Grid item>
-                <Grid container direction="row" spacing={1}>
+                <Grid container direction="row" spacing={2}>
                     <Grid item xs={12} sm={6} md={4} >
                         <Input placeholder="Enter shop name" label="Business/Shop name" required />
                     </Grid>
@@ -34,11 +34,7 @@ const ShopProfileForm = props => {
                     <Grid item xs={12} sm={6} md={4} >
                         <Select placeholder="Select business type" label="Business type" required />
                     </Grid>
-                </Grid>
-            </Grid>
 
-            <Grid item>
-                <Grid container direction="row" spacing={1}>
                     <Grid item xs={12} sm={6} md={4} >
                         <Select placeholder="Select country" label="Country" required />
                     </Grid>
@@ -52,7 +48,7 @@ const ShopProfileForm = props => {
             </Grid>
 
             <Grid item>
-                <Grid container direction="row" spacing={1}>
+                <Grid container direction="row" spacing={3}>
 
                     <Grid item xs={12} sm={5}>
                         <Input type="tel" placeholder="Enter phone number" label="Business Phone" required />
@@ -60,11 +56,6 @@ const ShopProfileForm = props => {
                     <Grid item xs={12} sm={7}>
                         <Input type="email" placeholder="Enter Email address" label="Business email" required />
                     </Grid>
-                </Grid>
-            </Grid>
-
-            <Grid item>
-                <Grid container direction="row" spacing={1}>
                     <Grid item xs={12} sm={7}>
                         <TextArea placeholder="Enter shop bio" label="Shop bio" required rows={3} />
                     </Grid>
