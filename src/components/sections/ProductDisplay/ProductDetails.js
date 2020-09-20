@@ -7,6 +7,7 @@ import Button from "../../CustomComponents/Button"
 import ShopBrand, { ShopBrandMobile } from './ShopBrand';
 import { Security } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
+import CustomLink from '../../CustomComponents/CustomLink';
 
 
 
@@ -41,15 +42,15 @@ const Delivery = Styled.div`
     margin-top: 20px;
     
 `
-const ContactLabel = Styled.div`
-    font-size: 14px;
-    color: #979FAA;
-`
-const TermsAndConditions = Styled.div`
-    font-size: 12px;
-    color: #31BDF4;
-    font-weight: ;
-`
+// const ContactLabel = Styled.div`
+//     font-size: 14px;
+//     color: #979FAA;
+// `
+// const TermsAndConditions = Styled.div`
+//     font-size: 12px;
+//     color: #31BDF4;
+//     font-weight: ;
+// `
 
 const TiledImage = Styled.img`
     height: 100px;
@@ -168,15 +169,15 @@ const ProductDetails = props => {
             <CopyRight>
                 <Grid container direction="row" spacing={5}>
                     <Grid item xs={6} md={2}>
-                        <a href="#">Terms {"&"} </a>
-                        <a href="#">Conditions</a>
+                        <CustomLink>Terms {"&"} </CustomLink>
+                        <CustomLink>Conditions</CustomLink>
                     </Grid>
                     <Grid item xs={12} md={7}>
                         <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This purchase is protected by <a href="https://powrsale.com">Powrsale.com.</a> Your funds are escrow protected
                 </Grid>
                     <Grid item xs={6} md={3}>
 
-                        <a href="#">Create your Profile</a>
+                        <CustomLink>Create your Profile</CustomLink>
 
                     </Grid>
 
@@ -194,13 +195,13 @@ const ProductDetails = props => {
                 </Grid>
 
                     <Grid item xs={6} md={2}>
-                        <a href="#">Terms {"&"} </a>
-                        <a href="#">Conditions</a>
+                        <CustomLink>Terms {"&"} </CustomLink>
+                        <CustomLink>Conditions</CustomLink>
                     </Grid>
 
                     <Grid item xs={6} md={3}>
 
-                        <a href="#">Create your Profile</a>
+                        <CustomLink>Create your Profile</CustomLink>
 
                     </Grid>
 

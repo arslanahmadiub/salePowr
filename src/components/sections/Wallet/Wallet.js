@@ -6,7 +6,7 @@ import BannerContainer from '../../CustomComponents/BannerContainer'
 import BulletedText from '../../CustomComponents/BulletedText'
 import CircularProgress from '../../CustomComponents/CircularProgress'
 import WithdrawalForm from "../../Forms/WithdrawalForm"
-import CreditCard, { MoMoCard } from './CreditCard'
+import { MoMoCard } from './CreditCard'
 import { creditCardInfo } from '../../../DummyData/DummyData'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer'
 import { Hidden } from '@material-ui/core'

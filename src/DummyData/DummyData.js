@@ -1,7 +1,7 @@
 import woman from "../assets/images/woman-avatar.jpg"
 import apple from "../assets/images/apple.png"
 import companyLogo from "../assets/images/company-logo.png"
-import { AccountBalanceWallet, Redeem, LocalMall, Dashboard, PieChart, BarChart, } from "@material-ui/icons/"
+import { AccountBalanceWallet, Redeem, LocalMall, Dashboard, BarChart, } from "@material-ui/icons/"
 const banks = ["Stanbic Bank", "First Atlantic", "Ecobank", "Cal Bank", "First National Bank"]
 const transactionTypes = ["Sell", "Buy",]
 
@@ -133,6 +133,7 @@ const paymentLinkVisitsData = {
 export {
     messages, banks, profilePercent, products,
     navItems, barchartData, transactions, transactionGroups,
+    transactionTypes,
     walletBalance, creditCardInfo, dashboardData,
     transactionVolumeData, woman, profile, brandDetails,
     transactionStatusData, activityData, paymentLinkVisitsData,

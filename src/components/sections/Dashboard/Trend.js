@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
     XYPlot,
-    LineSeries,
     AreaSeries,
     makeWidthFlexible
 } from 'react-vis';

@@ -1,6 +1,5 @@
 import React from 'react'
 import Styled from "styled-components"
-import Grid from "@material-ui/core/Grid"
 import Card from '../../CustomComponents/Card'
 import ArcProgressBar from '../../CustomComponents/ArcProgressBar'
 
@@ -27,9 +26,8 @@ const SmallFadedLabel = Styled.div`
 const Growth = props => {
     return <Card>
 
-        <ArcProgressBar percent={50}>
-            78%
-        </ArcProgressBar>
+        <ArcProgressBar percent={50} />
+
 
         <SmallFadedLabel>
             Growth this week

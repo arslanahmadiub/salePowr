@@ -5,6 +5,7 @@ import Input from "../CustomComponents/Input"
 import Button from "../CustomComponents/Button"
 import DatePicker from "../CustomComponents/DatePicker"
 import PasswordInput from "../CustomComponents/PasswordInput";
+import CustomLink from "../CustomComponents/CustomLink";
 
 const ProfileForm = props => {
 
@@ -43,7 +44,7 @@ const ProfileForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <p style={{ textAlign: "center" }}>* By continuing, you agree to Powrsale's <a href="#">terms</a> and  <a href="#">privacy notice</a></p>
+                <p style={{ textAlign: "center" }}>* By continuing, you agree to Powrsale's <CustomLink>terms</CustomLink> and  <CustomLink>privacy notice</CustomLink></p>
             </Grid>
 
             <Grid item xs={12}>

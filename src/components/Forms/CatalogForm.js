@@ -19,22 +19,22 @@ const Img = Styled.img`
 `
 
 const CatalogForm = props => {
-    const [state, setState] = React.useState({ delivery: "24hrs" })
+    //const [state, setState] = React.useState({ delivery: "24hrs" })
 
     const processWidrawal = event => {
         event.preventDefault();
     }
 
-    const refreshSellerInfo = event => {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    const handleRadioChange = event => {
-        event.preventDefault();
-        event.stopPropagation();
+    // const refreshSellerInfo = event => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    // }
+    // const handleRadioChange = event => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
 
-        setState({ ...state, delivery: event.target.value })
-    }
+    //     setState({ ...state, delivery: event.target.value })
+    // }
     return <div>
         <form onSubmit={processWidrawal}>
             <Grid container direction="column" spacing={4}>

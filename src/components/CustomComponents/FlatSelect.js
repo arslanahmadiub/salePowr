@@ -1,5 +1,5 @@
 import { ClickAwayListener } from '@material-ui/core'
-import { CalendarToday, EventNote, ExpandLess, ExpandMore } from '@material-ui/icons'
+import { EventNote, ExpandLess, ExpandMore } from '@material-ui/icons'
 import React from 'react'
 import Styled from "styled-components"
 
@@ -83,14 +83,14 @@ const FlatSelect = props => {
         <Container onClick={() => toggleShow(!show)} bg={props.bg}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {props.icon ? <Icon /> : <></>}
-                <SelectText>{props.list && props.list[selected] || "No Options to select"}</SelectText>
+                <SelectText>{props?.list[selected] || "No Options to select"}</SelectText>
                 {show ? <DropUpIcon /> : <DropdownIcon />
                 }
             </div>
 
             <List show={show}>
                 {
-                    props.list && props.list.map((item, index) => {
+                    props?.list.map((item, index) => {
                         return <ListItem key={index} onClick={selectItem(index)}>{item}</ListItem>
                     })
                 }

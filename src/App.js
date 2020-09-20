@@ -1,16 +1,12 @@
 import React from 'react';
 import "./App.css"
 import Home from "./components/sections/Home"
-import { dashboardData, barchartData, walletBalance } from './DummyData/DummyData';
+import { dashboardData, walletBalance } from './DummyData/DummyData';
 import Wallet from './components/sections/Wallet/Wallet';
 import ShopProfileEdit from './components/sections/ShopProfile/ShopProfileEdit';
 import Transactions from "./components/sections/Transactions/Transactions"
 import CreateTransaction from "./components/sections/Transactions/CreateTransaction"
 import Dashboard from './components/sections/Dashboard/Dashboard';
-import VerticalBar from './components/sections/Dashboard/VerticalBar';
-import BarChart from "./components/sections/Dashboard/BarChart"
-import TradingVolume from './components/sections/Dashboard/TradingVolume';
-import ProductDisplay from "./components/sections/ProductDisplay/ProductDisplay"
 
 
 

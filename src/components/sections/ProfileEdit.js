@@ -1,21 +1,21 @@
-import { Avatar, Badge, Dialog, DialogTitle, Hidden, IconButton } from "@material-ui/core";
-import { ArrowBack, Edit } from "@material-ui/icons";
+import { Avatar, Badge, Hidden, IconButton } from "@material-ui/core";
+import { Edit } from "@material-ui/icons";
 import React from "react";
 import woman from "../../assets/images/woman-avatar.jpg"
 import ProfileForm from "../Forms/ProfileForm"
-import Styled from "styled-components"
+// import Styled from "styled-components"
 
-const Title = Styled.div`
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0 0 0 15px;
-    line-height: 51px;    
-`
+// const Title = Styled.div`
+//     font-size: 18px;
+//     font-weight: 600;
+//     margin: 0 0 0 15px;
+//     line-height: 51px;    
+// `
 
-const ButtonContainer = Styled.div`
-    width: 50px;
-    heigth: 50px;
-`
+// const ButtonContainer = Styled.div`
+//     width: 50px;
+//     heigth: 50px;
+// `
 
 
 const ProfileEdit = props => {

@@ -1,18 +1,15 @@
 import React from "react"
 import Grid from "@material-ui/core/Grid"
-import LeftSideBar from "./LeftSideBar/LeftSideBar"
 import RightSideBar from "./RightSideBar/RightSideBar"
-import ProfileEdit from "./ProfileEdit"
-import ShopProfileEdit from './ShopProfile/ShopProfileEdit'
 import NewTransactionPanel from "./LeftSideBar/NewTransationPanel"
 import NavItem from "./LeftSideBar/NavItem"
 import logo from "../../assets/images/logo.png"
 import { navItems, profile } from "../../DummyData/DummyData"
 import SelectedShop from "./LeftSideBar/SelectedShop"
-import { Dialog, DialogActions, DialogTitle, Drawer, Hidden, Modal, } from "@material-ui/core"
+import { Dialog, DialogTitle, Drawer, Hidden, } from "@material-ui/core"
 import Menu from "@material-ui/icons/Menu"
 import Styled from "styled-components"
-import { ArrowBack, ArrowBackIos, ArrowLeft, Close, EventNote, } from "@material-ui/icons"
+import { ArrowBack, Close, EventNote, } from "@material-ui/icons"
 import Button from "../CustomComponents/Button"
 
 
@@ -33,26 +30,33 @@ top: 30px;
 cursor: pointer;
 `
 
-
 const FlexContainer = Styled.div`
     display: flex;
     justify-content: space-between;
     position:relative;
-    margin: 30px 20px;
+    margin: 30px 0px;
+    @media (max-width: 960px){
+        margin: 10px 0px;
+    }
 `
+
 const ButtonContainer = Styled.div`
     width: 50px;
     heigth: 50px;
+    margin: 0 5px;
 `
 
 const Title = Styled.div`
     font-size: 18px;
     font-weight: 600;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 0px;
     line-height: 51px;
 `
 
-
+// const MainContainer = Styled.div`
+//     background: #E7EEFA;
+//     //margin:0 50px;
+// `
 
 const Home = props => {
     const [selectedNav, setSelectedNav] = React.useState(1)
@@ -124,36 +128,36 @@ const Home = props => {
 
         {/* THE LEFT SIDE BAR */}
         <Hidden smDown>
-            <Grid item md={2} >
+            <Grid item md={2} style={{ background: "#fff" }}>
                 {drawer}
             </Grid>
         </Hidden>
         {/* THE MAIN CONTENT */}
-        <Grid item xs={12} md={7} lg={7}>
+        <Grid item xs={12} md={7} lg={7} style={{ padding: "30px", background: "#F5F8FD" }}>
             {/*    MOBILE TOP ROW */}
             <Hidden mdUp>
-                <div style={{}}>
+
+                <FlexContainer>
                     <FlexContainer>
-                        <FlexContainer>
-                            <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
-                                <Button white><Menu fontSize="large" /></Button>
-                            </ButtonContainer>
-                            <Title>
-                                {
-                                    navItems[selectedNav].text
-                                }
-                            </Title>
-                        </FlexContainer>
-                        <FlexContainer>
-                            <ButtonContainer>
-                                <Button white><EventNote fontSize="large" style={{ color: "#5A36CC" }} /></Button>
-                            </ButtonContainer>
-                            <ButtonContainer onClick={toggleModal}>
-                                <Button white><img width="100%" height="100%" src={profile.image} alt={profile.name} /></Button>
-                            </ButtonContainer>
-                        </FlexContainer>
+                        <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
+                            <Button white><Menu fontSize="large" /></Button>
+                        </ButtonContainer>
+                        <Title>
+                            {
+                                navItems[selectedNav].text
+                            }
+                        </Title>
                     </FlexContainer>
-                </div>
+                    <FlexContainer>
+                        <ButtonContainer>
+                            <Button white><EventNote fontSize="large" style={{ color: "#5A36CC" }} /></Button>
+                        </ButtonContainer>
+                        <ButtonContainer onClick={toggleModal}>
+                            <Button white><img width="100%" height="100%" src={profile.image} alt={profile.name} /></Button>
+                        </ButtonContainer>
+                    </FlexContainer>
+                </FlexContainer>
+
             </Hidden>
             {props.children[selectedNav]}
         </Grid>
@@ -176,7 +180,7 @@ const Home = props => {
                 <RightSideBar />
             </Grid>
         </Hidden>
-    </Grid >
+    </Grid>
 }
 
 export default Home;

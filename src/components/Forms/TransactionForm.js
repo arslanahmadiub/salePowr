@@ -19,12 +19,12 @@ import PurchaseSummary from "../CustomComponents/PurchaseSummary";
 
 
 
-const FlexContainer = Styled.div`
-    display: flex;
-    justify-content: space-between;
-    letter-spacing: 0.5px;
+// const FlexContainer = Styled.div`
+//     display: flex;
+//     justify-content: space-between;
+//     letter-spacing: 0.5px;
 
-`
+// `
 
 
 const Title = Styled.div`
@@ -46,9 +46,6 @@ const SubTitle = Styled.div`
 
 const TransactionForm = props => {
     const [state, setState] = React.useState({ delivery: "24hrs" })
-    const transactionTypes = ["Sell", "Buy",]
-    const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
-
     const processWidrawal = event => {
         event.preventDefault();
     }

@@ -59,7 +59,6 @@ const CircularProgress = props => {
     const centerAt = width / 2;
 
     const sec = props.secondary;
-    const arc = props.arc;
 
     return <Container>
         <SVG width={width}>

@@ -5,13 +5,13 @@ import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate"
 
 
 const MiniFilePicker = props => {
-    const [file, setFile] = React.useState(null)
+    // const [file, setFile] = React.useState(null)
     const pickFile = event => {
         document.querySelector("#filepicker").click();
     }
     const getFile = event => {
 
-        setFile(event.target.files[0]);
+        // setFile(event.target.files[0]);
     }
     return <div style={{ display: "inline-block", position: "absolute", height: "100%", }}>
         <input id="filepicker" multiple={props.multiple ? true : false} onChange={getFile} type="file" style={{ display: "none" }} />

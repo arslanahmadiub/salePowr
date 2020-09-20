@@ -1,28 +1,20 @@
 import React from 'react'
 import Styled from "styled-components"
 import Grid from "@material-ui/core/Grid"
-import SelectedShop from '../LeftSideBar/SelectedShop'
 import BannerContainer from '../../CustomComponents/BannerContainer'
 import TradingVolume from './TradingVolume'
 import ActivityGraph from './ActivityGraph'
 import PaymentLinkVisits from './PaymentLinkVisits.js'
-import Growth from './Growth'
 import TransactionStatus from './TransactionStatus'
 import NewOrders from './NewOrders'
 import { activityData, barchartData, transactionStatusData, paymentLinkVisitsData } from '../../../DummyData/DummyData'
-import CircularProgress from '../../CustomComponents/CircularProgress'
 import Card from '../../CustomComponents/Card'
 import FlatSelect from '../../CustomComponents/FlatSelect'
 import { Hidden } from '@material-ui/core'
 import ArcProgressBar from '../../CustomComponents/ArcProgressBar'
 
 
-const Container = Styled.div`
-padding: 50px 30px;
-border-radius: 0;
-background: #E7EEFA;
-min-height: 80vh;
-`
+
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -36,12 +28,12 @@ const SubText = Styled.div`
         font-size: 12px;
     }
 `
-const SmallLabel = Styled.text`
-    color: #979FAA;
-    font-size: 12px;
-    position: absolute;
-    
-`
+// const SmallLabel = Styled.text`
+//     color: #979FAA;
+//     font-size: 12px;
+//     position: absolute;
+
+// `
 
 const Title = Styled.div`
     color: ${props => props.plain ? "#FFF" : "#010101"};
@@ -59,13 +51,13 @@ const Dashboard = props => {
     const { username,
         profilePercent,
         growth,
-        dayVolume,
-        newOrders,
-        shipped,
-        delivered,
-        completed, } = props.data;
 
-    return <Container>
+        newOrders,
+
+
+    } = props.data;
+
+    return <>
         <Grid container direction='column' spacing={5}>
             <Hidden smDown>
                 <Grid item>
@@ -125,7 +117,7 @@ const Dashboard = props => {
             </Grid>
             <Grid item></Grid>
         </Grid>
-    </Container>
+    </>
 }
 
 export default Dashboard;

@@ -10,9 +10,9 @@ import { banks } from "../../DummyData/DummyData";
 
 const ShopProfileForm = props => {
 
-    const uploadFile = event => {
-        event.preventDefault();
-    }
+    // const uploadFile = event => {
+    //     event.preventDefault();
+    // }
 
 
     const saveShopProfile = event => {

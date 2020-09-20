@@ -15,9 +15,6 @@ justify-content: space-between;
         margin: auto;  
     }
 `
-const Brand = Styled.div`
-
-`
 
 
 const BrandName = Styled.div`

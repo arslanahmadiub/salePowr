@@ -1,9 +1,5 @@
 import React from 'react'
 import Styled from "styled-components"
-import Grid from "@material-ui/core/Grid"
-import { Facebook, Instagram, Twitter, WhatsApp } from '@material-ui/icons'
-import Product from './Product'
-import companyLogo from "../../../assets/images/company-logo.png"
 import RenderProducts from './RenderProducts'
 import { brandDetails, products } from '../../../DummyData/DummyData'
 import { Hidden } from '@material-ui/core'
@@ -24,9 +20,7 @@ display: flex;
 width: 100%;
 justify-content:${p => p.justify ? p.justify : "space-between"};
 `
-const Brand = Styled.div`
-
-`
+// const Brand = Styled.div``
 
 
 const BrandName = Styled.div`
@@ -41,32 +35,32 @@ const BrandSlogan = Styled.div`
     
 `
 
-const ShopId = Styled.div`
-    color: #31BDF4;
-    font-size: 16px;
-`
+// const ShopId = Styled.div`
+//     color: #31BDF4;
+//     font-size: 16px;
+// `
 
-const BrandBrief = Styled.div`
-    font-size: 16px;
-    color: #010101;
-    margin: 15px 0;
-`
+// const BrandBrief = Styled.div`
+//     font-size: 16px;
+//     color: #010101;
+//     margin: 15px 0;
+// `
 
-const ContactLabel = Styled.div`
-    font-size: 14px;
-    color: #979FAA;
-`
-const Contact = Styled.div`
-    font-size: 16px;
-    color: #010101;
-    font-weight: 600;
-`
+// const ContactLabel = Styled.div`
+//     font-size: 14px;
+//     color: #979FAA;
+// `
+// const Contact = Styled.div`
+//     font-size: 16px;
+//     color: #010101;
+//     font-weight: 600;
+// `
 
-const CompanyLogo = Styled.img`
-    display: block;
-    height: 150px;
-    width: 150px;    
-`
+// const CompanyLogo = Styled.img`
+//     display: block;
+//     height: 150px;
+//     width: 150px;    
+// `
 
 const ProductDisplay = props => {
 

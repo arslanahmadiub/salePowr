@@ -29,17 +29,9 @@ const SmallFadedLabel = Styled.div`
 `
 
 const NewOrders = props => {
-    const [value, setValue] = React.useState(0);
+    //const [value, setValue] = React.useState(0);
     const val = props.value;
-    // React.useEffect(() => {
-    //     if (value < val) {
-    //         setInterval(() => {
-    //             if (value < val) {
-    //                 setValue(value + 1);
-    //             }
-    //         }, 200)
-    //     }
-    // }, [val])
+
     return <Card>
         <LargeBoldText margin={5} size={40}>
             {val}
