@@ -9,7 +9,7 @@ import PaymentLinkVisits from './PaymentLinkVisits.js'
 import Growth from './Growth'
 import TransactionStatus from './TransactionStatus'
 import NewOrders from './NewOrders'
-import { activityData, barchartData, transactionStatusData } from '../../../DummyData/DummyData'
+import { activityData, barchartData, transactionStatusData, paymentLinkVisitsData } from '../../../DummyData/DummyData'
 import CircularProgress from '../../CustomComponents/CircularProgress'
 import Card from '../../CustomComponents/Card'
 import FlatSelect from '../../CustomComponents/FlatSelect'
@@ -95,7 +95,7 @@ const Dashboard = props => {
                         <ActivityGraph data={activityData} />
                     </Grid>
                     <Grid xs={12} md={3} item>
-                        <PaymentLinkVisits />
+                        <PaymentLinkVisits data={paymentLinkVisitsData} />
                     </Grid>
                     <Grid xs={12} md={3} item>
                         <Grid container spacing={2} direction="row">

@@ -123,10 +123,17 @@ const activityData = [
     { x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }
 ]
 
+
+const paymentLinkVisitsData = {
+    day: 34,
+    week: 78,
+    month: 224,
+}
+
 export {
     messages, banks, profilePercent, products,
     navItems, barchartData, transactions, transactionGroups,
     walletBalance, creditCardInfo, dashboardData,
     transactionVolumeData, woman, profile, brandDetails,
-    transactionStatusData, activityData,
+    transactionStatusData, activityData, paymentLinkVisitsData,
 }

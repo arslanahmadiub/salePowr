@@ -45,7 +45,7 @@ const LargeBlackBoldText = Styled.div`
 
 const PaymentLinkVisits = props => {
     const [index, setIndex] = React.useState(0);
-
+    const data = [props?.data?.day, props?.data?.week, props?.data?.month]
     const changeIndex = index => event => {
         event.stopPropagation();
         setIndex(index)
@@ -57,7 +57,7 @@ const PaymentLinkVisits = props => {
             <SmallFadedLabel borderRightRadius onClick={changeIndex(2)} padding={6} selected={index === 2}>Month</SmallFadedLabel>
         </Selector>
         <LargeBlackBoldText margin={35} size={50}>
-            556
+            {data[index] || 0}
         </LargeBlackBoldText>
 
         <SmallFadedLabel>Payment link visits</SmallFadedLabel>
