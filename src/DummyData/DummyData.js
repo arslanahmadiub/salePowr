@@ -109,7 +109,7 @@ const transactionStatusData = {
         total: 16,
     },
     completed: {
-        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+        data: [{ x: 1, y: 0 }, { x: 2, y: 1 }, { x: 3, y: 3 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
         total: 76,
     },
     shipped: {
@@ -120,7 +120,7 @@ const transactionStatusData = {
 }
 
 const activityData = [
-    { x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }
+    { x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2 }, { x: 6, y: 1 }, { x: 7, y: 2 }
 ]
 
 

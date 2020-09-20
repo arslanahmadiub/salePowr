@@ -4,9 +4,14 @@ import Grid from "@material-ui/core/Grid"
 import Card from '../../CustomComponents/Card'
 import Trends from './Trend'
 
-
+const Title = Styled.div`
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+`
 const ActivityGraph = props => {
     return <Card>
+        <Title>Transaction Status</Title>
         <Trends data={props?.data || []} />
         <div style={{ display: "flex", justifyContent: "space-evenly", fontSize: "12px", color: "#979FAA" }}>
             <div>Sun</div>
