@@ -14,8 +14,7 @@ export default function Trends(props) {
         <Flexible height={props.height || 150}>
             <LineSeries
                 style={{ strokeWidth: "3", fill: "none", }}
-                stroke="#31BDF4"
-                fill="blue"
+                stroke={props?.color || "#31BDF4"}
                 className="area-series-example"
                 curve="curveNatural"
                 data={props?.data || []}

@@ -23,15 +23,15 @@ const TransactionStatus = props => {
         <Grid container direction="row" spacing={0}>
             <Grid xs={4} item>
                 <Value>{shipped && shipped.total}</Value>
-                <Trends data={shipped && shipped.data} height={80} />
+                <Trends data={shipped && shipped.data} height={80} color="#F18FC6" />
             </Grid>
             <Grid xs={4} item>
                 <Value>{completed && completed.total}</Value>
-                <Trends data={completed && completed.data} height={80} />
+                <Trends data={completed && completed.data} height={80} color="#31BDF4" />
             </Grid>
             <Grid xs={4} item>
                 <Value>{delivered && delivered.total}</Value>
-                <Trends data={delivered && delivered.data} height={80} />
+                <Trends data={delivered && delivered.data} height={80} color="#5A36CC" />
             </Grid>
         </Grid>
         <div style={{ display: "flex", justifyContent: "space-evenly", fontSize: "12px", color: "#979FAA" }}>
