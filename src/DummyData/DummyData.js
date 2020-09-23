@@ -14,6 +14,7 @@ const messages = [
 ]
 
 const navItems = [
+
     { text: "Overview", icon: Dashboard },
     { text: "Shop", icon: LocalMall },
     { text: "Transactions", icon: BarChart },
@@ -58,7 +59,6 @@ const profilePercent = "";
 
 
 const products = [
-
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
@@ -125,15 +125,21 @@ const activityData = [
 
 
 const paymentLinkVisitsData = {
-    day: 34,
-    week: 78,
-    month: 224,
+    day: 54,
+    week: 178,
+    month: 2024,
 }
+
+const purchaseSummaryData = {
+    item: "Sweet Apple", itemCost: 100, deliveryCharge: 5, totalCost: 105
+}
+
+const shopsData = ["GoPare", "SanAndres"]
 
 export {
     messages, banks, profilePercent, products,
     navItems, barchartData, transactions, transactionGroups,
-    transactionTypes,
+    transactionTypes, purchaseSummaryData, shopsData,
     walletBalance, creditCardInfo, dashboardData,
     transactionVolumeData, woman, profile, brandDetails,
     transactionStatusData, activityData, paymentLinkVisitsData,

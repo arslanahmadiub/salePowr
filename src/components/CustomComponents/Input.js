@@ -21,7 +21,6 @@ const Asterisk = Styled.span`
     font-size: 16px;
     font-weight: 600;
     display: ${props => props.show === true ? "" : "none"}
-
 `
 const Label = Styled.label`
     font-size: 13px;

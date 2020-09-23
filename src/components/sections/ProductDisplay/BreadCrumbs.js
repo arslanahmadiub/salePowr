@@ -35,7 +35,7 @@ const Container = Styled.div`
 `
 
 const BreadCrumbs = props => {
-    const [step, setStep] = React.useState(2)
+    const [step, setStep] = React.useState(0)
     const seleectedStep = index => {
         switch (index) {
             case 0:

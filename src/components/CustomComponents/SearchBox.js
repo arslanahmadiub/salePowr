@@ -10,7 +10,10 @@ const OutterBox = Styled.input`
     position: relative;
     color: #979FAA;
     font-size: 16px;
+    text-align: center;
     padding: 1px 5px;
+    height: 40px;
+    width: 100%;
     // @media (max-width: 960px){
     //     max-width: 50%;
     //     float: left;
@@ -29,16 +32,20 @@ const Icon = Styled(SearchIcon)`
     right: 5px;
 `
 
+const Container = Styled.div`
+    position: relative;
+`
+
 
 const SearchBox = props => {
 
-    return <div style={{ display: "flex", position: "relative" }}>
+    return <Container>
 
         <OutterBox placeholder={props.placeholder && props.placeholder} />
         <Icon />
 
 
-    </div>
+    </Container>
 }
 
 export default SearchBox

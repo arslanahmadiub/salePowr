@@ -3,10 +3,7 @@ import Styled from 'styled-components'
 import TransactionForm from "../../Forms/TransactionForm";
 
 const Container = Styled.div`
-padding: 50px 30px;
-border-radius: 0;
-background: #E7EEFA;
-min-height: 80%;
+
 `
 
 const CreateTransaction = props => {

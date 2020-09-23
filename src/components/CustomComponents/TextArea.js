@@ -16,19 +16,42 @@ color:#000;
 `
 
 
+const Container = styled.div`
+
+`
+
+const Label = styled.label`
+    font-size: 13px;
+    position:relative; 
+    padding: 15 0px;
+    top: -5px;
+`
+
+const Asterisk = styled.span`
+    color: red;
+    font-size: 16px;
+    font-weight: 600;
+    display: ${props => props.show === true ? "" : "none"}
+`
+
+
 const TextArea = props => {
 
+    const showLabel = props.label && props.required;
+    return <Container>
+        <Label for={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
 
-    return <TextAreaInput
-        required={props.required != null}
-        placeholder={props.placeholder || "Type here..."}
-        id={props.id}
-        name={props.name || props.id || ""}
-        rows={props.rows || 5}
-        disabled={props.disabled != null}
-        maxLength={props.maxLength || null}
-        readOnly={props.readOnly != null}
-    />
+        <TextAreaInput
+            required={props.required != null}
+            placeholder={props.placeholder || "Type here..."}
+            id={props.id}
+            name={props.name || props.id || ""}
+            rows={props.rows || 5}
+            disabled={props.disabled != null}
+            maxLength={props.maxLength || null}
+            readOnly={props.readOnly != null}
+        />
+    </Container>
 }
 
 

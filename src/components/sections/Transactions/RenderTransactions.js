@@ -2,7 +2,7 @@ import React from 'react'
 import TransactionGroup from './TransactionGroup';
 
 
-const TransactionHistory = props => {
+const RenderTransactions = props => {
     const transactions = props.transactions;
     return transactions && transactions.map(group => {
         return <TransactionGroup title={group.title} transactions={group.data} />
@@ -10,4 +10,4 @@ const TransactionHistory = props => {
 
 }
 
-export default TransactionHistory;
+export default RenderTransactions;

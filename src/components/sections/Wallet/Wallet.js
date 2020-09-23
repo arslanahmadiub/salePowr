@@ -12,10 +12,7 @@ import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrol
 import { Hidden } from '@material-ui/core'
 
 const Container = Styled.div`
-padding: 50px 30px;
-border-radius: 0;
-background: #E7EEFA;
-min-height: 80vh;
+
 `
 
 const Title = Styled.div`
@@ -80,10 +77,11 @@ const Wallet = props => {
             <Grid item>
                 <BannerContainer>
                     <BulletedText title={"Available"} value={`${balance.currency} ${balance.available}`} primary />
-                    <BulletedText title={"Funds in escrow"} value={`${balance.currency} ${balance.escrow}`} />
                     <Hidden smDown>
                         <CircularProgress thickness={15} radius={40} percent={Math.round(value)} />
                     </Hidden>
+                    <BulletedText title={"Funds in escrow"} value={`${balance.currency} ${balance.escrow}`} />
+
                 </BannerContainer>
             </Grid>
 

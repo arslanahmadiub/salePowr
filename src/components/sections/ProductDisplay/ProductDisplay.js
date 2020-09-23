@@ -20,7 +20,6 @@ display: flex;
 width: 100%;
 justify-content:${p => p.justify ? p.justify : "space-between"};
 `
-// const Brand = Styled.div``
 
 
 const BrandName = Styled.div`
@@ -34,33 +33,6 @@ const BrandSlogan = Styled.div`
     color: #979FAA;
     
 `
-
-// const ShopId = Styled.div`
-//     color: #31BDF4;
-//     font-size: 16px;
-// `
-
-// const BrandBrief = Styled.div`
-//     font-size: 16px;
-//     color: #010101;
-//     margin: 15px 0;
-// `
-
-// const ContactLabel = Styled.div`
-//     font-size: 14px;
-//     color: #979FAA;
-// `
-// const Contact = Styled.div`
-//     font-size: 16px;
-//     color: #010101;
-//     font-weight: 600;
-// `
-
-// const CompanyLogo = Styled.img`
-//     display: block;
-//     height: 150px;
-//     width: 150px;    
-// `
 
 const ProductDisplay = props => {
 

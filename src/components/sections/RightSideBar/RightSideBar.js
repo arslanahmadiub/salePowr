@@ -8,7 +8,7 @@ import woman from "../../../assets/images/woman-avatar.jpg"
 import LogoutButton from "../../CustomComponents/LogoutButton";
 const RigthSideBar = props => {
 
-    return <div style={{ background: "#ffffff", padding: "24px" }}>
+    return <div style={{ background: "#ffffff", padding: "20px" }}>
         <Grid container direction="column" spacing={4}>
             <Grid item>
                 <ProfileSection image={woman} percentage={profilePercent} />

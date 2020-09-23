@@ -4,7 +4,7 @@ import RightSideBar from "./RightSideBar/RightSideBar"
 import NewTransactionPanel from "./LeftSideBar/NewTransationPanel"
 import NavItem from "./LeftSideBar/NavItem"
 import logo from "../../assets/images/logo.png"
-import { navItems, profile } from "../../DummyData/DummyData"
+import { navItems, profile, shopsData } from "../../DummyData/DummyData"
 import SelectedShop from "./LeftSideBar/SelectedShop"
 import { Dialog, DialogTitle, Drawer, Hidden, } from "@material-ui/core"
 import Menu from "@material-ui/icons/Menu"
@@ -41,14 +41,17 @@ const FlexContainer = Styled.div`
 `
 
 const ButtonContainer = Styled.div`
-    width: 50px;
-    heigth: 50px;
-    margin: 0 5px;
+    width: 40px;
+    heigth: 30px;
+    padding: 0;
+    display: flex; 
+    justify-content: left;
+    margin: 0 5px 0 0;
 `
 
 const Title = Styled.div`
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     margin: 0 0 0 0px;
     line-height: 51px;
 `
@@ -92,7 +95,7 @@ const Home = props => {
 
         </Grid>
         <div style={{ position: "absolute", bottom: "0", width: "100%" }}>
-            <SelectedShop shop={{ name: "Techshop" }} />
+            <SelectedShop shops={shopsData} />
         </div>
     </div>
 
@@ -133,14 +136,14 @@ const Home = props => {
             </Grid>
         </Hidden>
         {/* THE MAIN CONTENT */}
-        <Grid item xs={12} md={7} lg={7} style={{ padding: "30px", background: "#F5F8FD" }}>
+        <Grid item xs={12} md={7} lg={7} style={{ padding: "20px", background: "#F5F8FD" }}>
             {/*    MOBILE TOP ROW */}
             <Hidden mdUp>
 
                 <FlexContainer>
                     <FlexContainer>
                         <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
-                            <Button white><Menu fontSize="large" /></Button>
+                            <Button white><Menu /></Button>
                         </ButtonContainer>
                         <Title>
                             {
@@ -150,7 +153,7 @@ const Home = props => {
                     </FlexContainer>
                     <FlexContainer>
                         <ButtonContainer>
-                            <Button white><EventNote fontSize="large" style={{ color: "#5A36CC" }} /></Button>
+                            <Button white><EventNote fontSize="" style={{ color: "#5A36CC" }} /></Button>
                         </ButtonContainer>
                         <ButtonContainer onClick={toggleModal}>
                             <Button white><img width="100%" height="100%" src={profile.image} alt={profile.name} /></Button>

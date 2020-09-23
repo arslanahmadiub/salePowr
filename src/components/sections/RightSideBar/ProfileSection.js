@@ -64,7 +64,7 @@ const ProfileSection = props => {
                     <Title>Edit Profile</Title>
                 </div>
             </DialogTitle>
-            <ProfileEdit name="Natasha Glass" />
+            <ProfileEdit name="Natasha Emmanuella Glass" />
         </Dialog>
     </Grid>
 

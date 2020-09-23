@@ -4,7 +4,7 @@ import NavItem from "./NavItem"
 import NewTransactionPanel from "./NewTransationPanel"
 import logo from "../../../assets/images/logo.png"
 import SelectedShop from "./SelectedShop"
-import { navItems } from "../../../DummyData/DummyData"
+import { navItems, shopsData } from "../../../DummyData/DummyData"
 
 
 const LeftSideBar = prop => {
@@ -36,7 +36,7 @@ const LeftSideBar = prop => {
             </Grid>
 
         </Grid>
-        <SelectedShop shop={{ name: "Techshop" }} />
+        <SelectedShop shops={shopsData} />
     </div>
 }
 

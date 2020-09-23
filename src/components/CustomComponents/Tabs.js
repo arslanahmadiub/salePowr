@@ -4,7 +4,7 @@ import Styled from "styled-components";
 const TabHeader = Styled.div`
     display: flex;
     height: 50px;
-    border-bottom: .5px solid grey;
+    // border-bottom: .05px solid grey;
     width: 100%;
     position: relative;
     `
@@ -16,13 +16,15 @@ const TabLabelItem = Styled.div`
     position: relative;
     color: ${props => props.selected ? "#31BDF4" : "#010101"};
     padding: 0px 20px;
-    border-bottom: ${props => props.selected ? "2px solid #31BDF4" : 0}
+    border-bottom: ${props => props.selected ? "2px solid #31BDF4" : 0};
+    @media (max-width: 960px){
+        font-size: 16px;
+    }
 `
 
 const TabBody = Styled.div`
     position: relative;
-    height: 90%;
-    top: 15px;
+    top: 25px;
 
 `
 

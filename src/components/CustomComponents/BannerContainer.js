@@ -12,7 +12,8 @@ align-items: center;
 justify-content: ${props => props.even ? "space-evenly" : props.centered ? "center" : "space-between"};
 @media (max-width: 960px){
     padding: 15px 20px; 
-    border-radius: 20px;
+    border-radius: 10px;
+    justify-content: space-evenly;
 }
 `
 

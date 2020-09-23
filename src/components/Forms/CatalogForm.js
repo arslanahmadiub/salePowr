@@ -6,6 +6,8 @@ import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
 import apple from "../../assets/images/apple.png"
 import MiniFilePicker from "../CustomComponents/MiniFilePicker";
+import PurchaseSummary from "../CustomComponents/PurchaseSummary";
+import { purchaseSummaryData } from "../../DummyData/DummyData";
 
 const ImageContainer = Styled.div`
     height: 100px;
@@ -14,8 +16,8 @@ const ImageContainer = Styled.div`
     position: relative;
 `
 const Img = Styled.img`
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
 `
 
 const CatalogForm = props => {
@@ -36,7 +38,7 @@ const CatalogForm = props => {
     //     setState({ ...state, delivery: event.target.value })
     // }
     return <div>
-        <form onSubmit={processWidrawal}>
+        <form onSubmit={processWidrawal} style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}>
             <Grid container direction="column" spacing={4}>
                 <Grid item xs={12}>
                     <ImageContainer>
@@ -66,31 +68,7 @@ const CatalogForm = props => {
                 </Grid>
 
                 <Grid item>
-                    <Grid container direction="column" spacing={0}>
-                        <Grid item>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <small style={{ fontWeight: "normal", fontSize: "12px" }}><span style={{ color: "#979FAA" }}>Note: </span> Powrsale service charge is 2%</small>
-                                <div>$210.00</div>
-                            </div>
-                        </Grid>
-                        <Grid item>
-                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", margin: "10px 0" }}>
-                                <div style={{ fontWeight: "500" }}>Delivery Charge</div>
-                                <div style={{ fontWeight: "600", border: "1px #010101 solid", borderRadius: "10px", padding: "3px" }}>$210.00</div>
-                            </div>
-                        </Grid>
-                        <Grid item>
-                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "24px", fontWeight: "bold", margin: "10px 0" }}>
-                                <div>
-                                    Total amount payable
-                                </div>
-                                <div>
-                                    $210.00
-                                </div>
-                            </div>
-                        </Grid>
-
-                    </Grid>
+                    <PurchaseSummary data={purchaseSummaryData} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <Button type="submit">
@@ -103,25 +81,7 @@ const CatalogForm = props => {
             </Grid>
 
         </form>
-        <Grid container direction="column">
-            <Grid item xs={12}>
-                <hr style={{ border: ".31px solid", margin: "25px 0" }} />
-            </Grid>
-            <Grid item xs={12}>
-                <Grid container spacing={2} direction="row">
-                    <Grid item xs={6} md={3}>
-                        <Button white>
-                            Shop Preview
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Button >
-                            Publish a shop
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Grid>
+
     </div>
 
 

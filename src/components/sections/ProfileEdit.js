@@ -30,16 +30,16 @@ const ProfileEdit = props => {
     const setProfileImage = event => {
         event.stopPropagation();
     }
-    return <div style={{ background: "#F5F8FD", borderRadius: "25px", padding: "15px" }}>
+    return <div style={{ background: "#F5F8FD", borderRadius: "25px", }}>
 
         <Hidden smDown>
             <div style={{ fontSize: "30px", color: "#010101", fontWeight: "bold" }}>
                 Edit Profile
         </div>
         </Hidden>
-        <div style={{ padding: "50px" }}>
-            <div style={{ display: "flex", padding: "0 0px 20px 0px" }}>
-                <div style={{ height: "150px", width: "150px", margin: "auto" }}>
+        <div style={{ padding: "15px" }}>
+            <div style={{}}>
+                <div style={{ height: "150px", width: "150px", margin: "auto", display: "block" }}>
                     <input onChange={setProfileImage} type="file" style={{ display: "none" }} id="profileimageselector" />
                     <Badge
                         overlap="circle"
@@ -56,7 +56,7 @@ const ProfileEdit = props => {
                         <Avatar src={woman} alt={name} style={{ height: "150px", width: "150px" }} />
                     </Badge>
                 </div>
-                <div style={{ fontSize: "30px", fontWeight: '500', lineHeight: "145px", padding: "15px", display: "block" }}>
+                <div style={{ fontSize: "20px", fontWeight: '500', padding: "30px", textAlign: "center", }}>
                     {name}
                 </div>
             </div>

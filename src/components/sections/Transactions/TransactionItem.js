@@ -28,6 +28,7 @@ const Description = Styled.div`
     letter-spacing: 0.5px;
     @media (max-width: 960px){
         margin: 15px 0;
+        font-size: 12px;
     }
 `
 const Amount = Styled.div`
@@ -50,13 +51,13 @@ const DateRow = Styled.div`
 
 const TransactionId = Styled.div`
     color: #F18F6C;
-    fontSize: 18px;
+    fontSize: 14px;
     fontWeight: 600; 
     padding: 12px 0;
 `
 const TransactionStatus = Styled.div`
     color: #31BDF4;
-    font-size: 18px;
+    font-size: 14px;
     right: 10px;
     padding: 12px 0;
 `
@@ -101,18 +102,16 @@ const TranstionItem = props => {
                     <TransactionStatus>{data.status && data.status}</TransactionStatus>
                 </FlexContainer>
 
-                <Grid container direction="row">
-                    <Grid item xs={6} md={4}>
-                        <Grid container direction="row" spacing={5}>
-                            <Grid item xs={6} md={3}>
-                                <Button slim >Open Dispute</Button>
-                            </Grid>
-                            <Grid item xs={6} md={3}>
-                                <Button secondary slim>Chat</Button>
-                            </Grid>
-                        </Grid>
+
+                <Grid container direction="row" spacing={3}>
+                    <Grid item xs={6} sm={3}>
+                        <Button slim>Open Dispute</Button>
+                    </Grid>
+                    <Grid item xs={3} sm={3}>
+                        <Button secondary slim>Chat</Button>
                     </Grid>
                 </Grid>
+
 
 
 

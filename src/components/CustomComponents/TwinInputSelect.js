@@ -5,28 +5,44 @@ import Styled from "styled-components"
 
 
 
+const FlatContainer = Styled.div`
+    postion: relative;
+    height: 40px;
+    cursor: pointer;
+    padding: 0px;
+    width: 100%;
+    border-right: 0.5px solid grey;
+    border-radius: 10px;
+    line-height: 40px;
+    background:#FFFFFF;
+`
 const Container = Styled.div`
     postion: relative;
-    height: 20px;
+    height: 40px;
+    display: flex;
+    justify-content:space-between;
     cursor: pointer;
-    padding: 10px;
+    border: 0.5px solid #979FAA;
     border-radius: 10px;
     background: ${p => p.bg ? "#FFFFFF" : ""}
 `
+
+
 const SelectText = Styled.div`
     color: #979FAA;
-    font-size: 11px;
+    font-size: 14px;
+    text-align: center;
 `
 
 const DropdownIcon = Styled(ExpandMore)`
     position: relative;
-    top:-5px;
+    top:5px;
     width: 20px;
     color: #979FAA;
 `
 const DropUpIcon = Styled(ExpandLess)`
     position: relative;
-    top:-5px;
+    top:5px;
     width: 20px;
     color: #979FAA;
 `
@@ -43,8 +59,9 @@ const List = Styled.ul`
     padding: 2px;
     z-index: 100;
     overflow: hidden;
-    width: 100%;
-    top: -15px;
+    float: right;
+    width: %;
+    top: -20px;
     right: 10px;
     text-align: center;
     border-bottom-right-radius: 15px;
@@ -79,25 +96,39 @@ const FlatSelect = props => {
     }
 
     const list = props.list || []
-
     return <ClickAwayListener onClickAway={() => toggleShow(false)}>
-        <Container onClick={() => toggleShow(!show)} bg={props.bg}>
+        <FlatContainer onClick={() => toggleShow(!show)} bg={props.bg}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {props.icon ? <Icon /> : <></>}
-                <SelectText>{list.length > 0 ? list[selected] : "No Options"}</SelectText>
+                <SelectText>{list.length > 0 ? list[selected] : ""}</SelectText>
                 {show ? <DropUpIcon /> : <DropdownIcon />
                 }
             </div>
 
             <List show={show}>
                 {
-                    props && props.list && props.list.map((item, index) => {
+                    list.map((item, index) => {
                         return <ListItem key={index} onClick={selectItem(index)}>{item}</ListItem>
                     })
                 }
             </List>
-        </Container>
+        </FlatContainer>
     </ClickAwayListener>
 }
 
-export default FlatSelect;
+const Input = Styled.input`
+    border: 0;
+    border-radius: 10px;
+`
+
+
+
+const TwinInputSelet = props => {
+
+    return <Container>
+        <FlatSelect list={props.list} />
+        <Input />
+    </Container>
+}
+
+export default TwinInputSelet;

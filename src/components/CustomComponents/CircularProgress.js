@@ -8,38 +8,33 @@ const Container = Styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 500px;
     
 `
 
 const SVG = Styled.svg`
     position: relative;
-    width: ${props => 1.5 * props.width}px;
-    height: ${props => 1.5 * props.width}px;
-    padding: -15px;
+    // width: ${props => 1.5 * props.width}px;
+    // height: ${props => 1.5 * props.width}px;
+    // padding: -15px;
     z-index: 100;
 `
 const Circle = Styled.circle`
     margin: auto;
-    width: 100%;
-    heigth: 100%;
     fill: none;
     stroke: ${p => p.secondary ? "#5A36CC" : "#31BDF4"};
     stroke-width:${props => props.thickness ? props.thickness : 1}%;
     stroke-linecap: round;
-    transform: translate(5px, 5px);
+    transform: translate(0px, 0px);
     stroke-dasharray: ${p => p.percent ? `${(p.cfx * p.percent / 100)} ${(p.cfx * (100 - p.percent) / 100)}` : p.cfx};
     stroke-dashoffset: 157;
 
     `
 const BgCircle = Styled.circle`
-    width: 100%;
-    heigth: 100%;
     fill: none;
     stroke: #F5F8FD;
     stroke-width:${props => props.thickness ? props.thickness : 1}%;
     stroke-linecap: round;
-    transform: translate(5px, 5px);
+    transform: translate(0px, 0px);
     stroke-dashoffset: 157;
     stroke-dasharray: ${p => p.arc ? `${p.cfx / 2} ${p.cfx / 2}` : p.cfx}
     `

@@ -16,6 +16,7 @@ import FlatSelect from "../CustomComponents/FlatSelect";
 import SearchBox from "../CustomComponents/SearchBox";
 import { Hidden } from "@material-ui/core";
 import PurchaseSummary from "../CustomComponents/PurchaseSummary";
+import TwinInputSelet from "../CustomComponents/TwinInputSelect";
 
 
 
@@ -91,14 +92,14 @@ const TransactionForm = props => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Input placeholder="Phone number" type="tel" required />
+                                <TwinInputSelet list={["+233", "+234", "+255", "+225"]} placeholder="Phone number" type="tel" required />
                             </Grid>
                         </Grid>
                     </Grid>
 
                     <Grid item xs={2} >
-                        <IconButton onClick={refreshSellerInfo} style={{ background: "#F18F6C" }}>
-                            <Sync fontSize="large" style={{ color: "#FFF" }} />
+                        <IconButton onClick={refreshSellerInfo} style={{ background: "#F18F6C", textAlign: "center", width: "40px", height: "40px" }}>
+                            <Sync style={{ color: "#FFF", width: "30px", height: "30px" }} />
                         </IconButton>
                     </Grid>
 
@@ -114,7 +115,7 @@ const TransactionForm = props => {
                         <Input placeholder="Item name" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Select placeholder="Item name" />
+                        <TwinInputSelet placeholder="Select" />
                     </Grid>
                 </Grid>
             </Grid>
