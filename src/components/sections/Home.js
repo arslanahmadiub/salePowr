@@ -56,18 +56,15 @@ const Title = Styled.div`
     line-height: 51px;
 `
 
-// const MainContainer = Styled.div`
-//     background: #E7EEFA;
-//     //margin:0 50px;
-// `
 
 const Home = props => {
-    const [selectedNav, setSelectedNav] = React.useState(2)
+    const [selectedNav, setSelectedNav] = React.useState(0)
     const [drawerOpen, toggleDrawerOpen] = React.useState(false)
     const [modal, setModal] = React.useState(false)
     const changeSelected = index => event => {
         event.stopPropagation();
-        setSelectedNav(index)
+        if (index < props.children.length)
+            setSelectedNav(index);
     }
     const toggleModal = event => {
         setModal(!modal)
@@ -147,7 +144,7 @@ const Home = props => {
                         </ButtonContainer>
                         <Title>
                             {
-                                navItems[selectedNav].text
+                                selectedNav > props.children.length - 1 ? <></> : navItems[selectedNav].text
                             }
                         </Title>
                     </FlexContainer>

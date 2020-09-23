@@ -17,10 +17,6 @@ function App() {
   return (
     <div className="App">
 
-      {/* <Wallet balance={walletBalance} /> */}
-      {/* <ProductDetails product={products[0]} /> */}
-      {/* <ProductDisplay /> */}
-
       <Home>
         <CreateTransaction />
         <Dashboard data={dashboardData} />

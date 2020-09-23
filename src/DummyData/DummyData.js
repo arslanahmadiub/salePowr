@@ -19,7 +19,6 @@ const navItems = [
     { text: "Shop", icon: LocalMall },
     { text: "Transactions", icon: BarChart },
     { text: "Wallet", icon: AccountBalanceWallet },
-    { text: "Delivery", icon: Redeem },
 ]
 
 const transactions = [

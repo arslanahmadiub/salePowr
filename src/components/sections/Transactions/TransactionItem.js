@@ -92,8 +92,9 @@ const TranstionItem = props => {
                 </FlexContainer>
             </FlexContainer>
             <DateRow>{data.date && data.date} at {data.time && data.time}</DateRow>
-
-            <Description>{data.description && data.description}</Description>
+            <Hidden mdUp>
+                <Description>{data.description && data.description}</Description>
+            </Hidden>
 
             <div style={{ display: show ? "block" : "none", }}>
 
