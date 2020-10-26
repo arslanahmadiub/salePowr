@@ -4,9 +4,13 @@ import TransactionGroup from './TransactionGroup';
 
 const RenderTransactions = props => {
     const transactions = props.transactions;
-    return transactions && transactions.map(group => {
-        return <TransactionGroup title={group.title} transactions={group.data} />
-    })
+    return <div>
+        {
+            transactions && transactions.map(group => {
+                return <TransactionGroup title={group.title} transactions={group.data} />
+            })
+        }
+    </div>
 
 }
 

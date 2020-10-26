@@ -48,7 +48,7 @@ const ProfileForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <Button type="submit">Submit</Button>
+                <Button type="submit">{props.buttonText || "Submit"}</Button>
             </Grid>
         </Grid>
 

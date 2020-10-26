@@ -1,6 +1,6 @@
 import React from "react"
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline"
-import Button from "../../CustomComponents/Button"
+import Button from "../../../CustomComponents/Button"
 import Styled from "styled-components"
 
 

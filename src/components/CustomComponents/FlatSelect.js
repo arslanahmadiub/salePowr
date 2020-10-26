@@ -16,6 +16,7 @@ const Container = Styled.div`
 const SelectText = Styled.div`
     color: #979FAA;
     font-size: 11px;
+    text-align: center;
 `
 
 const DropdownIcon = Styled(ExpandMore)`
@@ -71,14 +72,18 @@ const FlatSelect = props => {
     const [show, toggleShow] = React.useState(false)
     const [selected, setSelected] = React.useState(0)
 
+    const onSelectionChange = props.onSelectionChange;
+
     const selectItem = index => event => {
         event.stopPropagation();
         setSelected(index)
+        onSelectionChange(list[index].toLowerCase())
         toggleShow(!show)
 
     }
 
     const list = props.list || []
+
 
     return <ClickAwayListener onClickAway={() => toggleShow(false)}>
         <Container onClick={() => toggleShow(!show)} bg={props.bg}>

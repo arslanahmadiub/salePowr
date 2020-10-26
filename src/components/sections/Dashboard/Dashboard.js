@@ -75,7 +75,7 @@ const Dashboard = props => {
                             Hi, {username && username}
                         </Title>
                         <SubText>
-                            Welcome to Powrsale Dashboard
+                            Welcome to Powrsale Dashboard. Setup your shop and make your first transaction.
                     </SubText>
                     </div>
                 </BannerContainer>

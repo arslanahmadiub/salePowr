@@ -85,17 +85,12 @@ const Select = props => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const toggling = () => setIsOpen(!isOpen);
-
     const chooseOption = value => () => {
         setSelectedOption(value);
         toggleDropDown()
     };
 
     const onChange = props.onChange ? props.onChange : () => { };
-    const handleChange = event => {
-        event.stopPropagation();
-    }
 
     const options = props?.options || [];
     const defaultValue = props.placeholder || "Select option..."

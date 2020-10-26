@@ -2,9 +2,7 @@ import { Dialog, DialogTitle } from "@material-ui/core";
 import { ArrowBackIos } from "@material-ui/icons";
 import React from "react";
 import Styled from "styled-components"
-import apple from "../../../assets/images/apple.png"
 import BreadCrumbs from "./BreadCrumbs";
-import ProductDetails from "./ProductDetails"
 
 const Container = Styled.div`
     cursor: pointer;
@@ -23,7 +21,6 @@ const Img = Styled.img`
 const Price = Styled.div`
     font-size: 20px;
     font-weight: 600;
-    
 `
 const Description = Styled.div`
     font-size: 14px;
@@ -48,9 +45,8 @@ const ButtonContainer = Styled.div`
 
 const Product = props => {
     const [dialog, setDialog] = React.useState(false)
-    const { description, image, price, tiles, delivery, name, } = props.details;
 
-    let details = props.details;
+    const details = props.details;
 
     const toggleDialog = event => setDialog(!dialog)
 
@@ -59,14 +55,14 @@ const Product = props => {
     return <>
         <Container onClick={toggleDialog}>
             <ImageContainer>
-                <Img src={image} alt="apple" />
+                <Img src={details.image} alt="apple" />
             </ImageContainer>
 
             <Description>
-                {description && description}
+                {details.description && details.description}
             </Description>
             <Price>
-                $ {price && price}
+                $ {details.price && details.price}
             </Price>
 
         </Container>

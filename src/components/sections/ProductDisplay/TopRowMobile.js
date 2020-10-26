@@ -3,21 +3,12 @@ import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
 import { Facebook, Instagram, Twitter, WhatsApp } from '@material-ui/icons';
 
-
-const Container = Styled.div`
-padding: 50px 30px;
-border-radius: 0;
-background: #F5F8FD;
-min-height: 80%;
-`
 const FlexContainer = Styled.div`
 display: flex;
 width: 100%;
 justify-content:${p => p.justify ? p.justify : "space-between"};
 `
-const Brand = Styled.div`
 
-`
 
 
 const BrandName = Styled.div`
@@ -125,6 +116,7 @@ const TopRowMobile = props => {
                 </ContactLabel>
 
                 <Contact>
+                    {social}
                     <FlexContainer style={{ width: "80px" }}>
                         <Facebook style={{ width: "20px" }} />
                         <Twitter style={{ width: "20px" }} />

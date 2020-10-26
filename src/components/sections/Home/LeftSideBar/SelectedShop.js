@@ -43,7 +43,7 @@ const SelectedShop = props => {
     React.useEffect(() => {
         if (props && props.shops && !selected)
             setSelected(props.shops[0]);
-    })
+    }, [props, selected])
 
     return props.shops && props.shops.length > 0 ? <ClickAwayListener onClickAway={() => setShow(false)}>
         <div style={{ padding: "0  0 0 0px", position: "absolute", bottom: "0px", width: "80%" }}>

@@ -1,7 +1,7 @@
 import woman from "../assets/images/woman-avatar.jpg"
 import apple from "../assets/images/apple.png"
 import companyLogo from "../assets/images/company-logo.png"
-import { AccountBalanceWallet, Redeem, LocalMall, Dashboard, BarChart, } from "@material-ui/icons/"
+import { AccountBalanceWallet, LocalMall, Dashboard, BarChart, } from "@material-ui/icons/"
 const banks = ["Stanbic Bank", "First Atlantic", "Ecobank", "Cal Bank", "First National Bank"]
 const transactionTypes = ["Sell", "Buy",]
 
@@ -54,8 +54,6 @@ const brandDetails = {
     social: { fb: "", ig: "", wp: "", tt: "" }, contacts: { phone: 123456780, email: "someone@exmaple.com", address: "some business location, midtown ave." }, description: "Electronics", shopId: "#345244"
 }
 
-const profilePercent = "";
-
 
 const products = [
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
@@ -97,9 +95,17 @@ const dashboardData = {
 
 }
 
-const profile = {
-    name: "Person name",
-    image: woman,
+const profileInfo = {
+    firstName: "Ebenezer",
+    lastName: "Ghanney",
+    otherName: "",
+    dateOfBirth: "25/09/1990",
+    username: "Ebenezer Ghanney",
+    phone: "0123456789",
+    email: "someone@example.com",
+    profilePhoto: woman,
+    profileComplete: false,
+    profilePercent: 60,
 }
 
 const transactionStatusData = {
@@ -135,11 +141,14 @@ const purchaseSummaryData = {
 
 const shopsData = ["GoPare", "SanAndres"]
 
+
+
 export {
-    messages, banks, profilePercent, products,
+
+    messages, banks, products,
     navItems, barchartData, transactions, transactionGroups,
     transactionTypes, purchaseSummaryData, shopsData,
     walletBalance, creditCardInfo, dashboardData,
-    transactionVolumeData, woman, profile, brandDetails,
+    transactionVolumeData, woman, profileInfo, brandDetails,
     transactionStatusData, activityData, paymentLinkVisitsData,
 }

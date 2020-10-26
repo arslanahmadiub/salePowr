@@ -3,15 +3,7 @@ import { Facebook, Instagram, Twitter, WhatsApp } from '@material-ui/icons'
 import React from 'react'
 import Styled from "styled-components"
 
-const Container = Styled.div`
-padding: 50px 30px;
-border-radius: 0;
-background: #F5F8FD;
-min-height: 80%;
-@media (max-width: 960px){
-    padding: 20px 10px;
-}
-`
+
 const FlexContainer = Styled.div`
 display: flex;
 width: 100%;
@@ -126,6 +118,7 @@ const TopRowDesktop = props => {
 
                         <Contact>
                             <FlexContainer style={{ width: "80px" }}>
+                                {social}
                                 <Facebook style={{ width: "20px" }} />
                                 <Twitter style={{ width: "20px" }} />
                                 <Instagram style={{ width: "20px" }} />

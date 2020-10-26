@@ -9,9 +9,9 @@ const OutterBox = Styled.input`
     border: none;
     position: relative;
     color: #979FAA;
-    font-size: 16px;
-    text-align: center;
-    padding: 1px 5px;
+    font-size: 14px;
+    
+    padding: 5px 10px;
     height: 40px;
     width: 100%;
     // @media (max-width: 960px){
@@ -38,11 +38,35 @@ const Container = Styled.div`
 
 
 const SearchBox = props => {
+    const [text, setText] = React.useState("")
 
-    return <Container>
+    const onSubmit = props.onSubmit;
+    const onChange = props.onChange;
 
-        <OutterBox placeholder={props.placeholder && props.placeholder} />
-        <Icon />
+    const onEnterPress = event => {
+        event.stopPropagation();
+        event.preventDefault();
+
+
+        if (text !== "") {
+            onSubmit && onSubmit(text.trim())
+        }
+
+
+    }
+    const handleChange = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        setText(e.target.value);
+        onChange && onChange(e.target.value.trim())
+    }
+
+    return <Container >
+        <form onSubmit={onEnterPress}>
+            <OutterBox value={text} onChange={handleChange} placeholder={props.placeholder && props.placeholder} />
+            <Icon />
+        </form>
+
 
 
     </Container>

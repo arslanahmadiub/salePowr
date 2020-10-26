@@ -7,7 +7,7 @@ import Tabs from "../../CustomComponents/Tabs"
 import React from "react"
 import Styled from "styled-components";
 import { Dialog, DialogContent, DialogTitle, Grid, Hidden, IconButton, } from "@material-ui/core";
-import { Cancel, Close } from "@material-ui/icons";
+import Close from "@material-ui/icons/Close";
 import { brandDetails } from "../../../DummyData/DummyData";
 import ProductDisplay from "../ProductDisplay/ProductDisplay";
 
@@ -18,12 +18,6 @@ const TopRow = Styled.div`
     font-size: 30px;
     font-weight: 500;
     color: #010101;
-`
-const RenderButtons = Styled.div`
-
-width: 20%;
-
-
 `
 
 const Container = Styled.div`
