@@ -18,6 +18,13 @@ const LeftSideBar = props => {
         var cleaned = item.text.toLowerCase().trim().replace(" ", "-");
         history.push(`/${cleaned}`);
     }
+
+    const handleShopToggle = newShop => {
+        // You will recieve their current selected shop
+        // as an obj. You may do something with it
+        // For just alert it as follows
+        alert("You changed Shop to:\n " + newShop.name);
+    }
     return <div style={{ position: "relative", height: "100vh", padding: "0px 0 0 0px" }}>
         <Grid container direction="column" spacing={3}>
             <Grid item style={{ cursor: "pointer" }}>
@@ -39,7 +46,7 @@ const LeftSideBar = props => {
             </Grid>
 
         </Grid>
-        <SelectedShop shops={shopsData} />
+        <SelectedShop onShopSelected={handleShopToggle} shops={shopsData} />
     </div>
 }
 

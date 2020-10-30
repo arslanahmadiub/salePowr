@@ -139,7 +139,16 @@ const purchaseSummaryData = {
     item: "Sweet Apple", itemCost: 100, deliveryCharge: 5, totalCost: 105
 }
 
-const shopsData = ["GoPare", "SanAndres"]
+const shopsData = [
+    {
+        id: "ihqwiore2iu0sdcu8",
+        name: "GoPare"
+    },
+    {
+        id: "ie28I3i4r9fn48",
+        name: "SanAndres"
+    }
+]
 
 
 
