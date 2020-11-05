@@ -48,6 +48,7 @@ const Input = props => {
             type={props.type || "text"}
             id={props.id || "textbox"}
             name={props.name || props.id || ""}
+            onChange={props.onChange && props.onChange}
         />
     </Container>
 }

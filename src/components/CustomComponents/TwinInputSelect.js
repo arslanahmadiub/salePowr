@@ -9,10 +9,12 @@ const FlatContainer = Styled.div`
     postion: relative;
     height: 40px;
     cursor: pointer;
-    padding: 0px;
+    padding: 0 5px 0 0;
     width: 100%;
-    border-right: 0.5px solid grey;
-    border-radius: 10px;
+    max-width: 80px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-right: 0.5px dashed grey;
     line-height: 40px;
     background:#FFFFFF;
 `
@@ -24,6 +26,7 @@ const Container = Styled.div`
     cursor: pointer;
     border: 0.5px solid #979FAA;
     border-radius: 10px;
+
     background: ${p => p.bg ? "#FFFFFF" : ""}
 `
 
@@ -32,7 +35,9 @@ const SelectText = Styled.div`
     color: #979FAA;
     font-size: 14px;
     text-align: center;
-`
+    width: 100%;
+    margin: auto auto;
+    `
 
 const DropdownIcon = Styled(ExpandMore)`
     position: relative;
@@ -58,10 +63,11 @@ const List = Styled.ul`
     position:relative;
     padding: 2px;
     z-index: 100;
-    overflow: hidden;
+    transform: translate(15px, -0px);
+    margin: auto;
+    box-shadow: 1px 1px 4px lightgrey; 
     float: right;
-    width: %;
-    top: -20px;
+    width: 80%;
     right: 10px;
     text-align: center;
     border-bottom-right-radius: 15px;
@@ -92,8 +98,13 @@ const FlatSelect = props => {
         event.stopPropagation();
         setSelected(index)
         toggleShow(!show)
+        if (props.onSelectionChange != null) props.onSelectionChange(list[selected])
 
     }
+
+    React.useEffect(() => {
+        if (props.onSelectionChange != null) props.onSelectionChange(list[selected])
+    }, [])
 
     const list = props.list || []
     return <ClickAwayListener onClickAway={() => toggleShow(false)}>
@@ -118,17 +129,26 @@ const FlatSelect = props => {
 
 const Input = Styled.input`
     border: 0;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    width: 100%;
 `
 
 
 
-const TwinInputSelet = props => {
+export default function TwinInputSelect(props) {
+    const [data, setData] = React.useState(null);
 
+    const getSelection = (item) => {
+        setData({ ...data, prefix: item });
+    }
+
+    React.useEffect(() => {
+        if (props.onChange != null) props.onChange(data)
+    }, [data, props])
     return <Container>
-        <FlatSelect list={props.list} />
-        <Input />
+        <FlatSelect onSelectionChange={getSelection} list={props.list} />
+        <Input placeholder={props.placeholder || ''} required={props.required} type={props.type || 'text'} onChange={(event) => setData({ ...data, value: event.target.value })} />
     </Container>
 }
-
-export default TwinInputSelet;

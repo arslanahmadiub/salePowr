@@ -151,6 +151,9 @@ const shopsData = [
 ]
 
 
+export const countryCodes = ["+233", "+234", "+255", "+225"];
+
+
 
 export {
 

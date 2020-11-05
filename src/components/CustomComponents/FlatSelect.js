@@ -15,8 +15,9 @@ const Container = Styled.div`
 `
 const SelectText = Styled.div`
     color: #979FAA;
-    font-size: 11px;
+    font-size: 12px;
     text-align: center;
+    width: 100%;
 `
 
 const DropdownIcon = Styled(ExpandMore)`
@@ -72,21 +73,36 @@ const FlatSelect = props => {
     const [show, toggleShow] = React.useState(false)
     const [selected, setSelected] = React.useState(0)
 
-    const onSelectionChange = props.onSelectionChange;
+    const list = props.list || []
+
+
 
     const selectItem = index => event => {
         event.stopPropagation();
         setSelected(index)
-        onSelectionChange(list[index].toLowerCase())
         toggleShow(!show)
+        if (props.onSelectionChange != null) {
+            props.onSelectionChange(list[selected].toLowerCase())
+        }
 
     }
 
-    const list = props.list || []
 
+
+    const toggleDropDown = event => {
+        if (list.length === 2) {
+            setSelected((selected + 1) % 2)
+            if (props.onSelectionChange != null) {
+                props.onSelectionChange(list[selected].toLowerCase())
+            }
+        }
+        else {
+            toggleShow(!show)
+        }
+    }
 
     return <ClickAwayListener onClickAway={() => toggleShow(false)}>
-        <Container onClick={() => toggleShow(!show)} bg={props.bg}>
+        <Container onClick={toggleDropDown} bg={props.bg}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {props.icon ? <Icon /> : <></>}
                 <SelectText>{list.length > 0 ? list[selected] : "No Options"}</SelectText>

@@ -12,9 +12,10 @@ import Button from "../CustomComponents/Button"
 import FlatSelect from "../CustomComponents/FlatSelect";
 import SearchBox from "../CustomComponents/SearchBox";
 import { Dialog, DialogActions, DialogContent, DialogContentText, Hidden } from "@material-ui/core";
-import TwinInputSelet from "../CustomComponents/TwinInputSelect";
+import TwinInputSelect from "../CustomComponents/TwinInputSelect";
 import FlexContainer from "../CustomComponents/FlexContainer";
 import { Close } from "@material-ui/icons";
+import { countryCodes } from "../../DummyData/DummyData";
 
 
 
@@ -80,14 +81,7 @@ const TransactionForm = props => {
 
     }
 
-    const getOption = option => {
-        alert(option)
-        setState({ ...state, currency: option })
-    }
 
-    const getValue = value => {
-        setState({ ...state, amount: value })
-    }
     return <form onSubmit={processRequest}>
         <Grid container direction="row" spacing={2}>
             <Hidden smDown>
@@ -119,7 +113,7 @@ const TransactionForm = props => {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <TwinInputSelet list={["+233", "+234", "+255", "+225"]} placeholder="Phone number" type="tel" required />
+                            <TwinInputSelect list={countryCodes} placeholder="Phone number" type="tel" required />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -134,7 +128,7 @@ const TransactionForm = props => {
                         <Input placeholder="Item name" required />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TwinInputSelet list={["GHS", "NGN", "USD", "CAD"]} onOptionSelect={getOption} placeholder="Price" onValue={getValue} required />
+                        <TwinInputSelect required list={["GHS", "NGN", "USD", "CAD"]} placeholder="Price" />
                     </Grid>
                 </Grid>
             </Grid>
