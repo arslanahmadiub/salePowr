@@ -1,18 +1,20 @@
 import React from 'react'
-import { AuthContext } from './AuthContext'
-import { ThemeContext } from './ThemeContext'
+import AuthContextProvider from './AuthContext'
+import ThemeContextProvider from './ThemeContext'
+import ShopContextProvider from './ShopContext'
 
-export const UnifiedContext = React.createContext()
 
-export default function UnifiedContextProvider(props) {
-    const theme_context = React.useContext(ThemeContext)
-    const auth_context = React.useContext(AuthContext)
-    const context = {
+export default function UnifiedContextProviderProvider(props) {
 
-    }
 
-    return <UnifiedContext.Provider value={{ theme: theme_context, user: auth_context }}>
-        {props.children}
-    </UnifiedContext.Provider>
+    return (
+        <AuthContextProvider>
+            <ThemeContextProvider>
+                <ShopContextProvider>
+                    {props.children}
+                </ShopContextProvider>
+            </ThemeContextProvider>
+        </AuthContextProvider>
+    )
 
 }

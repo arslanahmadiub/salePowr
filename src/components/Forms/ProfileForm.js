@@ -44,7 +44,7 @@ const ProfileForm = props => {
             </Grid>
 
             <Grid item xs={12}>
-                <p style={{ textAlign: "center" }}>* By continuing, you agree to Powrsale's <CustomLink>terms</CustomLink> and  <CustomLink>privacy notice</CustomLink></p>
+                <span style={{ textAlign: "center" }}>* By continuing, you agree to Powrsale's <CustomLink>terms</CustomLink> and  <CustomLink>privacy notice</CustomLink></span>
             </Grid>
 
             <Grid item xs={12}>

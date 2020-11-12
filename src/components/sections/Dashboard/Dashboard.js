@@ -7,7 +7,7 @@ import ActivityGraph from './ActivityGraph'
 import PaymentLinkVisits from './PaymentLinkVisits.js'
 import TransactionStatus from './TransactionStatus'
 import NewOrders from './NewOrders'
-import { activityData, barchartData, transactionStatusData, paymentLinkVisitsData } from '../../../DummyData/DummyData'
+import { activityData, barchartData, transactionStatusData, paymentLinkVisitsData, dashboardData } from '../../../DummyData/DummyData'
 import Card from '../../CustomComponents/Card'
 import FlatSelect from '../../CustomComponents/FlatSelect'
 import { Hidden } from '@material-ui/core'
@@ -46,16 +46,20 @@ const Title = Styled.div`
 `
 
 const Dashboard = props => {
+    const [data, setData] = React.useState(null)
 
-
-    const { username,
+    const {
+        username,
         profilePercent,
         growth,
-
         newOrders,
+    } = data || {};
 
-
-    } = props.data;
+    React.useEffect(() => {
+        // Fet data from the server here
+        // then update the data as follows
+        setData(dashboardData)
+    }, [data])
 
     return <>
         <Grid container direction='column' spacing={5}>

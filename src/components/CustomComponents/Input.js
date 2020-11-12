@@ -41,7 +41,7 @@ const Input = props => {
 
 
     return <Container>
-        <Label for={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
+        <Label htmlFor={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
         <GeneralInput
             required={props.required != null}
             placeholder={props.placeholder || props.label || ""}

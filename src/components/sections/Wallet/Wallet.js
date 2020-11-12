@@ -7,7 +7,7 @@ import BulletedText from '../../CustomComponents/BulletedText'
 import CircularProgress from '../../CustomComponents/CircularProgress'
 import WithdrawalForm from "../../Forms/WithdrawalForm"
 import { MoMoCard } from './CreditCard'
-import { creditCardInfo } from '../../../DummyData/DummyData'
+import { creditCardInfo, walletBalance } from '../../../DummyData/DummyData'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer'
 import { Hidden } from '@material-ui/core'
 
@@ -52,8 +52,11 @@ const Edit = Styled.div`
 
 
 const Wallet = props => {
-    const balance = props.balance;
-    var progressPercent = Math.abs(100 * (Number(balance.available) - Number(balance.escrow)) / (Number(balance.available) + Number(balance.escrow)))
+
+    const [balance, setBalance] = React.useState(null);
+    const [cards, setCards] = React.useState(null);
+
+    var progressPercent = balance ? Math.abs(100 * (Number(balance.available) - Number(balance.escrow)) / (Number(balance.available) + Number(balance.escrow))) : 0;
     const value = progressPercent > 100 ? progressPercent - 100 : progressPercent
 
     const addnewCard = event => {
@@ -63,6 +66,19 @@ const Wallet = props => {
     const editWallet = event => {
         alert("Soon you can edit")
     }
+
+    React.useEffect(() => {
+        // MAKE YOU API CALL HERE THEN
+        // SET BALANCE AS follows
+        setBalance(walletBalance)
+    }, [balance])
+    React.useEffect(() => {
+        // MAKE YOU API CALL HERE THEN
+        // TO GET THE EXISTING PAYMENT METHODS
+        // THEN SET THE CARDS LIKE THIS
+        setCards(walletBalance)
+    }, [cards])
+
     return <Container>
         <Grid container spacing={8} direction="column">
             <Hidden smDown>
@@ -76,11 +92,11 @@ const Wallet = props => {
             </Hidden>
             <Grid item>
                 <BannerContainer>
-                    <BulletedText title={"Available"} value={`${balance.currency} ${balance.available}`} primary />
+                    <BulletedText title={"Available"} value={balance ? `${balance.currency} ${balance.available}` : 0} primary />
                     <Hidden smDown>
                         <CircularProgress thickness={15} radius={40} percent={Math.round(value)} />
                     </Hidden>
-                    <BulletedText title={"Funds in escrow"} value={`${balance.currency} ${balance.escrow}`} />
+                    <BulletedText title={"Funds in escrow"} value={balance ? `${balance.currency} ${balance.escrow}` : 0} />
 
                 </BannerContainer>
             </Grid>

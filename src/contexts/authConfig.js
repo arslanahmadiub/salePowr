@@ -10,6 +10,6 @@ export default function authConfig(data) {
         email: "someone@example.com",
         profilePhoto: '',
         profileComplete: false,
-        profilePercent: 60,
+        profilePercent: 100,
     }
 }

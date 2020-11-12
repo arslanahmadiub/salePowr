@@ -11,12 +11,23 @@ import Verifications from '../../Helpers/Verifications'
 import Authentication from '../../Helpers/Authentication'
 import GoogleLogo from '../CustomComponents/GoogleLogo';
 import { AuthContext } from '../../contexts/AuthContext';
+import snapshot from './../../assets/images/snapshot.svg'
+import { Link } from 'react-router-dom';
 
 
 
 const useStyles = makeStyles((theme) => ({
     container: {
-
+        padding: '25px',
+    },
+    emptyContainer: {
+        color: '#553560',
+        backgroundImage: `url(${snapshot})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        width: '100%',
     },
     text: {
         textAlign: 'center',
@@ -24,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     },
     error: {
         color: "red"
+    },
+    heading: {
+        textAlign: 'center',
+
     },
     signInButton: {
         color: props => props.white,
@@ -79,7 +94,7 @@ export default function AuthenticationPage(props) {
 
         if (wantsToSignIn && usePhoneSignIn) {
             // PLEASE DO NOT ALTER THE FUNCTION UNLESS YOU ABSOLUTELY NEED TO.
-            // THE CHANGE THE LOGIC OF SIGN IN, GO THE AUTHENTICATION CLASS
+            // To CHANGE THE SIGNIN LOGIC, GO THE AUTHENTICATION CLASS
             // AND MAKE CHAGES WILL AUTO APPLY HERE IF YOU DON'T ALTER THE FUNCTION
             // FUNCTION NAME
 
@@ -130,62 +145,69 @@ export default function AuthenticationPage(props) {
         setErrorMessage(null)
     }, [usePhoneSignIn, wantsToSignIn])
     return (
-        <div className={styles.container}>
-            <div style={styles.logo}>
-                <img src={logo} />
-            </div>
-            <h1 className={styles.heading}>
-                {pageHeader}
-            </h1>
+        <Grid container spacing={0}>
+            <Grid item xs={12} sm={4}>
+                <div className={styles.container}>
+                    <div style={styles.logo}>
+                        <img src={logo} alt="google logo" />
+                    </div>
+                    <h1 className={styles.heading}>
+                        {pageHeader}
+                    </h1>
 
-            <form onSubmit={authenticateUser}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} style={{ display: usePhoneSignIn ? '' : 'none' }}>
-                        <TwinInputSelect list={countryCodes} placeholder="Phone Number" onChange={handlePhoneInput} />
-                    </Grid>
-                    <Grid item xs={12} style={{ display: usePhoneSignIn ? 'none' : '' }}>
-                        <Input placeholder="Email" type="email" onChange={handleEmailInput} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <PasswordInput placeholder="Password" onChange={handlePasswordInput} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DialogContentText className={`${styles.text} ${styles.error}`}>
-                            {errorMessage}
-                        </DialogContentText>
-                    </Grid>
+                    <form onSubmit={authenticateUser}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} style={{ display: usePhoneSignIn ? '' : 'none' }}>
+                                <TwinInputSelect list={countryCodes} placeholder="Phone Number" onChange={handlePhoneInput} />
+                            </Grid>
+                            <Grid item xs={12} style={{ display: usePhoneSignIn ? 'none' : '' }}>
+                                <Input placeholder="Email" type="email" onChange={handleEmailInput} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PasswordInput placeholder="Password" onChange={handlePasswordInput} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DialogContentText className={`${styles.text} ${styles.error}`}>
+                                    {errorMessage}
+                                </DialogContentText>
+                            </Grid>
 
-                    <Grid item xs={12}>
-                        <MaterialButton type="submit" className={styles.signInButton} fullWidth>Sign In</MaterialButton>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DialogContentText className={styles.text}>Or</DialogContentText>
-                    </Grid>
-                    <Grid item xs={12} style={{ display: usePhoneSignIn ? '' : 'none' }}>
-                        <MaterialButton onClick={toggleAuthMethod} className={styles.button} fullWidth variant='outlined' startIcon={<Email />}>Sign In with Email</MaterialButton>
-                    </Grid>
-                    <Grid item xs={12} style={{ display: usePhoneSignIn ? 'none' : '' }}>
-                        <MaterialButton onClick={toggleAuthMethod} className={styles.button} fullWidth variant='outlined' startIcon={<Phone />}> Sign In With Phone</MaterialButton>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <MaterialButton onClick={Authentication.signInWithFacebook} className={styles.button} fullWidth variant='outlined' startIcon={<Facebook />}>Sign In with Facebook </MaterialButton>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <MaterialButton onClick={Authentication.signInWithGoogle} className={styles.button} fullWidth variant='outlined' startIcon={<GoogleLogo />}>Sign In With Google</MaterialButton>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DialogContentText className={styles.text}>
-                            * By signing up, I agree to Powrsale <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
-                        </DialogContentText>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DialogContentText className={styles.text}>
-                            {wantsToSignIn ? "Don't have an account?" : 'Have an account?'} <MaterialButton onClick={toggleAuthType} className={styles.authToggle}>{wantsToSignIn ? 'Create' : "Sign In"}</MaterialButton>
-                        </DialogContentText>
-                    </Grid>
+                            <Grid item xs={12}>
+                                <MaterialButton type="submit" className={styles.signInButton} fullWidth>Sign In</MaterialButton>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DialogContentText className={styles.text}>Or</DialogContentText>
+                            </Grid>
+                            <Grid item xs={12} style={{ display: usePhoneSignIn ? '' : 'none' }}>
+                                <MaterialButton onClick={toggleAuthMethod} className={styles.button} fullWidth variant='outlined' startIcon={<Email />}>Sign In with Email</MaterialButton>
+                            </Grid>
+                            <Grid item xs={12} style={{ display: usePhoneSignIn ? 'none' : '' }}>
+                                <MaterialButton onClick={toggleAuthMethod} className={styles.button} fullWidth variant='outlined' startIcon={<Phone />}> Sign In With Phone</MaterialButton>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MaterialButton onClick={Authentication.signInWithFacebook} className={styles.button} fullWidth variant='outlined' startIcon={<Facebook />}>Sign In with Facebook </MaterialButton>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MaterialButton onClick={Authentication.signInWithGoogle} className={styles.button} fullWidth variant='outlined' startIcon={<GoogleLogo />}>Sign In With Google</MaterialButton>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DialogContentText className={styles.text}>
+                                    * By signing up, I agree to Powrsale <Link to="/terms">Terms</Link> and <Link to="/privacy-policy">Privacy Policy</Link>
+                                </DialogContentText>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DialogContentText className={styles.text}>
+                                    {wantsToSignIn ? "Don't have an account?" : 'Have an account?'} <MaterialButton onClick={toggleAuthType} className={styles.authToggle}>{wantsToSignIn ? 'Create' : "Sign In"}</MaterialButton>
+                                </DialogContentText>
+                            </Grid>
 
-                </Grid>
-            </form>
-        </div>
+                        </Grid>
+                    </form>
+                </div>
+            </Grid>
+            <Grid item xs={false} sm={8}>
+                <div className={styles.emptyContainer} />
+            </Grid>
+        </Grid>
     )
 }

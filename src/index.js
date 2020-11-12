@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ThemeContextProvider from './contexts/ThemeContext';
-import AuthContextProvider from './contexts/AuthContext';
+import UnifiedContextProvider from './contexts/unifiedContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <ThemeContextProvider>
-        <App />
-      </ThemeContextProvider>
-    </AuthContextProvider>
+    <UnifiedContextProvider>
+      <App />
+    </UnifiedContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
