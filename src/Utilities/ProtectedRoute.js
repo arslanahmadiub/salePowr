@@ -7,16 +7,18 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
 
     const { user } = React.useContext(AuthContext);
 
-    console.log(user)
 
-    return user != null ? <Route
+    return <Route
         {...rest}
-        render={(props) => {
+        render={({ location }) =>
+            user != null ? <Component />
+                :
+                <Redirect to={{
+                    pathname: '/user-authentication',
+                    state: { from: location },
 
-            return <Component {...props} />
-        }}
+                }} />
+        }
     />
-
-        : <Redirect to="/user-authentication" />
 
 }
