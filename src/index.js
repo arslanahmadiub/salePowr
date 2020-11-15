@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import UnifiedContextProvider from './contexts/unifiedContext';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <UnifiedContextProvider>
-      <App />
-    </UnifiedContextProvider>
+    <BrowserRouter>
+      <UnifiedContextProvider>
+        <App />
+      </UnifiedContextProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
