@@ -39,7 +39,7 @@ const VerticalBar = props => {
 
     return <Container>
         <OutterBar>
-            <InnerBar percent={props.percent && props.percent} />
+            <InnerBar percent={(props && props.percent && props.percent) || 0} />
         </OutterBar>
         <Label>{props.label && props.label}</Label>
     </Container>

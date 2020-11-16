@@ -5,10 +5,10 @@ import NavItem from "./NavItem"
 import NewTransactionPanel from "./NewTransationPanel"
 import logo from "../../../../assets/images/logo.png"
 import SelectedShop from "./SelectedShop"
-import { navItems, shopsData } from "../../../../DummyData/DummyData"
+import { navItems } from "../../../../DummyData/DummyData"
 
 
-const LeftSideBar = props => {
+export default function LeftSideBar(props) {
 
     const history = useHistory();
 
@@ -19,12 +19,6 @@ const LeftSideBar = props => {
         history.push(`/${cleaned}`);
     }
 
-    const handleShopToggle = newShop => {
-        // You will recieve their current selected shop
-        // as an obj. You may do something with it
-        // For just alert it as follows
-        alert("You changed Shop to:\n " + newShop.name);
-    }
     return <div style={{ position: "relative", height: "100vh", padding: "0px 0 0 0px" }}>
         <Grid container direction="column" spacing={3}>
             <Grid item style={{ cursor: "pointer" }}>
@@ -46,8 +40,7 @@ const LeftSideBar = props => {
             </Grid>
 
         </Grid>
-        <SelectedShop onShopSelected={handleShopToggle} shops={shopsData} />
+        <SelectedShop />
     </div>
 }
 
-export default LeftSideBar;

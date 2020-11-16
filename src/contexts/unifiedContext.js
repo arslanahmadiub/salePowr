@@ -3,6 +3,7 @@ import AuthContextProvider from './AuthContext'
 import ThemeContextProvider from './ThemeContext'
 import ShopContextProvider from './ShopContext'
 import RightSideBarContextProvider from './RightSideBarContext'
+import DataContextProvider from './DataContext'
 
 
 export default function UnifiedContextProviderProvider(props) {
@@ -13,7 +14,9 @@ export default function UnifiedContextProviderProvider(props) {
             <RightSideBarContextProvider>
                 <ThemeContextProvider>
                     <ShopContextProvider>
-                        {props.children}
+                        <DataContextProvider>
+                            {props.children}
+                        </DataContextProvider>
                     </ShopContextProvider>
                 </ThemeContextProvider>
             </RightSideBarContextProvider>

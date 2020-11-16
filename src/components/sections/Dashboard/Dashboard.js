@@ -7,11 +7,12 @@ import ActivityGraph from './ActivityGraph'
 import PaymentLinkVisits from './PaymentLinkVisits.js'
 import TransactionStatus from './TransactionStatus'
 import NewOrders from './NewOrders'
-import { activityData, barchartData, transactionStatusData, paymentLinkVisitsData, dashboardData } from '../../../DummyData/DummyData'
+import { dashboardData } from '../../../DummyData/DummyData'
 import Card from '../../CustomComponents/Card'
 import FlatSelect from '../../CustomComponents/FlatSelect'
 import { Hidden } from '@material-ui/core'
 import ArcProgressBar from '../../CustomComponents/ArcProgressBar'
+import { AuthContext } from '../../../contexts/AuthContext'
 
 
 
@@ -46,27 +47,29 @@ const Title = Styled.div`
 `
 
 const Dashboard = props => {
-    const [data, setData] = React.useState(null)
+    const [dataSet, changeDataSet] = React.useState(null)
 
-    const {
-        username,
-        profilePercent,
-        growth,
-        newOrders,
-    } = data || {};
+    const { user } = React.useContext(AuthContext)
+
 
     React.useEffect(() => {
         // Fet data from the server here
         // then update the data as follows
-        setData(dashboardData)
-    }, [data])
+        // Please remember to combine the profile info
+        // with the dashboardData as below
+
+        changeDataSet(dashboardData)
+    }, [dataSet])
+
+    const data = { ...dataSet, ...user }
+
 
     return <>
         <Grid container direction='column' spacing={5}>
             <Hidden smDown>
                 <Grid item>
                     <TopRow>
-                        <Title>{profilePercent || 0} % completed</Title>
+                        <Title>{(data && data.profilePercent) || 0}% completed</Title>
                         <FlatSelect list={["Jan - Feb, 2020", "Mar - Apr, 2020", "May - Jun, 2020", "Jul - Aug, 2020", "Sep - Oct, 2020"]} bg />
                     </TopRow>
                 </Grid>
@@ -76,7 +79,7 @@ const Dashboard = props => {
                 <BannerContainer centered>
                     <div>
                         <Title plain>
-                            Hi, {username && username}
+                            Hi, {data && data.username && data.username}
                         </Title>
                         <SubText>
                             Welcome to Powrsale Dashboard. Setup your shop and make your first transaction.
@@ -88,22 +91,22 @@ const Dashboard = props => {
             <Grid item>
                 <Grid container spacing={2} direction="row">
                     <Grid xs={12} md={6} item>
-                        <ActivityGraph data={activityData} />
+                        <ActivityGraph data={data && data.activityData} />
                     </Grid>
                     <Grid xs={12} md={3} item>
-                        <PaymentLinkVisits data={paymentLinkVisitsData} />
+                        <PaymentLinkVisits data={data && data.paymentLinkVisitsData} />
                     </Grid>
                     <Grid xs={12} md={3} item>
                         <Grid container spacing={2} direction="row">
                             <Grid xs={6} md={12} item>
                                 <Card>
-                                    <ArcProgressBar label={"Growth this week"} thickness={10} percent={growth} SelectedShop secondary arc>
-                                        {growth}
+                                    <ArcProgressBar label={"Growth this week"} thickness={10} percent={(data && data.growth && data.growth) || 0} SelectedShop secondary arc>
+                                        {(data && data.growth && data.growth) || 0}
                                     </ArcProgressBar>
                                 </Card>
                             </Grid>
                             <Grid xs={6} md={12} item>
-                                <NewOrders value={newOrders} />
+                                <NewOrders value={(data && data.newOrders && data.newOrders) || 0} />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -112,10 +115,10 @@ const Dashboard = props => {
             <Grid item>
                 <Grid container spacing={3} direction="row">
                     <Grid xs={12} md={6} item>
-                        <TradingVolume data={barchartData} />
+                        <TradingVolume data={data && data.transactionVolume} />
                     </Grid>
                     <Grid xs={12} md={6} item>
-                        <TransactionStatus data={transactionStatusData} />
+                        <TransactionStatus data={data && data.transactionStatusData} />
                     </Grid>
                 </Grid>
             </Grid>

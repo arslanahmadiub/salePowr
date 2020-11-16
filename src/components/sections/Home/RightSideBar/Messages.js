@@ -4,7 +4,7 @@ import MessagePreview from "./MessagePreview"
 
 
 const Messages = props => {
-    const messages = props?.messages;
+    const messages = props?.messages || [];
     return <Grid container direction="column" spacing={5}>
         <Grid item>
             <div style={{ display: "flex", justifyContent: "space-between" }}>

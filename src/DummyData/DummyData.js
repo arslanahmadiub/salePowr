@@ -30,21 +30,6 @@ const transactions = [
     { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Pending" },
 ]
 
-const transactionGroups = [
-    { title: "Today", data: transactions },
-    { title: "Yesterday", data: transactions }
-]
-
-
-const barchartData = [
-    { percent: 80, label: "Sun" },
-    { percent: 95, label: "Mon" },
-    { percent: 5, label: "Tue" },
-    { percent: 30, label: "Wed" },
-    { percent: 30, label: "Thur" },
-    { percent: 70, label: "Fri" },
-    { percent: 60, label: "Fri" },
-]
 
 const transactionVolumeData = ["last 7 days", "last 30 days", "last 90 days", "last 6 months"]
 
@@ -64,13 +49,7 @@ const products = [
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
     { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
+
 ]
 
 const walletBalance = { escrow: 23434, available: 3453, currency: "GHS" }
@@ -83,16 +62,50 @@ const creditCardInfo = {
 }
 
 const dashboardData = {
-    username: "Ebenezer Ghanney",
-    profilePercent: 20,
     growth: 40,
     dayVolume: 23,
     newOrders: 79,
     shipped: 89,
     delivered: 90,
     completed: 344,
+    transactionStatusData: {
+        delivered: {
+            data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+            total: 16,
+        },
+        completed: {
+            data: [{ x: 1, y: 0 }, { x: 2, y: 1 }, { x: 3, y: 3 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+            total: 76,
+        },
+        shipped: {
+            data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
+            total: 69,
+        },
 
+    },
 
+    activityData: [
+        { x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2 }, { x: 6, y: 1 }, { x: 7, y: 2 }
+    ],
+
+    paymentLinkVisitsData: {
+        day: 54,
+        week: 178,
+        month: 2024,
+    },
+    transactionVolume: [
+        { percent: 80, label: "Sun" },
+        { percent: 95, label: "Mon" },
+        { percent: 5, label: "Tue" },
+        { percent: 30, label: "Wed" },
+        { percent: 30, label: "Thur" },
+        { percent: 70, label: "Fri" },
+        { percent: 60, label: "Fri" },
+    ],
+}
+
+const purchaseSummaryData = {
+    item: "Sweet Apple", itemCost: 100, deliveryCharge: 5, totalCost: 105
 }
 
 const profileInfo = {
@@ -106,37 +119,6 @@ const profileInfo = {
     profilePhoto: woman,
     profileComplete: false,
     profilePercent: 60,
-}
-
-const transactionStatusData = {
-    delivered: {
-        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
-        total: 16,
-    },
-    completed: {
-        data: [{ x: 1, y: 0 }, { x: 2, y: 1 }, { x: 3, y: 3 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
-        total: 76,
-    },
-    shipped: {
-        data: [{ x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 1 }, { x: 5, y: 3 }, { x: 6, y: 1 }, { x: 7, y: 0 }],
-        total: 69,
-    },
-
-}
-
-const activityData = [
-    { x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2 }, { x: 6, y: 1 }, { x: 7, y: 2 }
-]
-
-
-const paymentLinkVisitsData = {
-    day: 54,
-    week: 178,
-    month: 2024,
-}
-
-const purchaseSummaryData = {
-    item: "Sweet Apple", itemCost: 100, deliveryCharge: 5, totalCost: 105
 }
 
 const shopsData = [
@@ -158,9 +140,8 @@ export const countryCodes = ["+233", "+234", "+255", "+225"];
 export {
 
     messages, banks, products,
-    navItems, barchartData, transactions, transactionGroups,
+    navItems, transactions,
     transactionTypes, purchaseSummaryData, shopsData,
     walletBalance, creditCardInfo, dashboardData,
     transactionVolumeData, woman, profileInfo, brandDetails,
-    transactionStatusData, activityData, paymentLinkVisitsData,
 }

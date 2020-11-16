@@ -7,7 +7,7 @@ const DatePicker = props => {
     const openPicker = event => {
         // event.preventDefault();
         // event.stopPropagation();
-        //alert();
+
         document.querySelector("input").click();
     }
     return <div style={{ position: "relative" }}>

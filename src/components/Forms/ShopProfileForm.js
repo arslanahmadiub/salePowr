@@ -6,13 +6,18 @@ import Button from "../CustomComponents/Button"
 import Input from "../CustomComponents/Input"
 import Select from "../CustomComponents/Select"
 import FilePicker from "../CustomComponents/FilePicker";
-import { banks } from "../../DummyData/DummyData";
+import { DataContext } from '../../contexts/DataContext'
 
 const ShopProfileForm = props => {
+
+
+    const { countryNames } = React.useContext(DataContext);
 
     // const uploadFile = event => {
     //     event.preventDefault();
     // }
+
+
 
 
     const saveShopProfile = event => {
@@ -20,6 +25,8 @@ const ShopProfileForm = props => {
         event.stopPropagation();
 
     }
+
+
     return <form onSubmit={saveShopProfile}>
         <Grid container direction="column" spacing={3}>
 
@@ -29,19 +36,16 @@ const ShopProfileForm = props => {
                         <Input placeholder="Enter shop name" label="Business/Shop name" required />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} >
-                        <Input placeholder="Enter Shop ID" label="Shop ID" required />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} >
                         <Select placeholder="Select business type" label="Business type" required />
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={4} >
-                        <Select placeholder="Select country" label="Country" required />
+                        <Select list={countryNames} placeholder="Select country" label="Country" required />
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} >
-                        <Select placeholder="Select City" label="City" required options={banks} />
+                        <Input placeholder="Enter city name" label="City" required />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4} >
+                    <Grid item xs={12} md={8} >
                         <Input placeholder="Enter Shop Address" label="Address" required />
                     </Grid>
                 </Grid>
@@ -60,6 +64,7 @@ const ShopProfileForm = props => {
                         <TextArea placeholder="Enter shop bio" label="Shop bio" required rows={3} />
                     </Grid>
                     <Grid item xs={12} sm={5}>
+                        {' .'}
                         <FilePicker />
                     </Grid>
                 </Grid>
@@ -89,10 +94,6 @@ const ShopProfileForm = props => {
                     </Button>
                 </Grid>
             </Grid>
-
-
-
-
         </Grid>
 
     </form>

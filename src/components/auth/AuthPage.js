@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, makeStyles, Button as MaterialButton, DialogContentText } from '@material-ui/core';
 import PasswordInput from '../CustomComponents/PasswordInput';
 import Input from '../CustomComponents/Input';
+import { Redirect } from 'react-router-dom'
 import TwinInputSelect from '../CustomComponents/TwinInputSelect';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { countryCodes } from '../../DummyData/DummyData';
@@ -67,55 +68,59 @@ export default function AuthenticationPage(props) {
     const [data, setData] = React.useState({ phone: null, email: null, password: null });
     const [usePhoneSignIn, setPhoneSignIn] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState(null);
+    const [RedirectToReferrer, setRedirectToReferrer] = React.useState(false)
+    const [userInfo, setUserInfo] = React.useState(null);
 
     const theme = React.useContext(ThemeContext);
+    const { from } = props.location || { from: { pathname: '/' } };
+
 
     // THIS IS WILL GIVE US A WAY TO SET THE USER OBJECT THROUGH THE CONTEXT.
     const { setUser } = React.useContext(AuthContext);
-
     const styles = useStyles(theme);
 
-    function authenticateUser(event) {
+
+    async function authenticateUser(event) {
         event.preventDefault();
         event.stopPropagation();
+
+        // alert("Clicked")
+
 
         const { phone, email, password } = data;
 
         if (usePhoneSignIn && (!phone || !Verifications.verifyPhone(phone))) {
-            return setErrorMessage('Type a valid 10 or 9 digit number no additional country code')
+            return setErrorMessage('Type a 10/9-digit number without country code')
         } else if (!usePhoneSignIn && (!email || !Verifications.verifyEmail(email))) {
             return setErrorMessage('Please type a valid email address')
         } else if (!password || !Verifications.verifyPassword(password)) {
-            return setErrorMessage("Use secure password at least 7 characters long")
+            return setErrorMessage("Use a secure password of at least 7 characters")
         }
         else {
             setErrorMessage(null);
         }
 
-        if (wantsToSignIn && usePhoneSignIn) {
+        const auth = new Authentication(data);
+
+        if (wantsToSignIn) { // they want to sign in
             // PLEASE DO NOT ALTER THE FUNCTION UNLESS YOU ABSOLUTELY NEED TO.
-            // To CHANGE THE SIGNIN LOGIC, GO THE AUTHENTICATION CLASS
-            // AND MAKE CHAGES WILL AUTO APPLY HERE IF YOU DON'T ALTER THE FUNCTION
-            // FUNCTION NAME
+            // To CHANGE THE SIGNIN LOGIC, GO THE AUTHENTICATION CLASS AND MAKE CHAGES.
+            // YOUR CHANGES WILL AUTO APPLY HERE IF YOU DON'T ALTER THE FUNCTION NAMES
+            // IF YOU ALTER ANY METHOD NAMES, THEN MAKE THE NECESSARY CHANGE
 
-            return setUser(Authentication.signInWitPhoneAndPassword(phone, password))
+            setUserInfo(await auth.signIn(usePhoneSignIn ? 'phone' : 'email'));
 
-        } else if (wantsToSignIn && !usePhoneSignIn) { // they are using email and
-
-            // SAME COMMENTS AS THOSE ABOVE.
-            return setUser(Authentication.signInWithEmailAndPassword(email, password))
-
-        } else if (!wantsToSignIn && usePhoneSignIn) { // they are signing up with phone
+        } else if (!wantsToSignIn) { // they are creating an account
 
             // SAME COMMENTS AS THOSE ABOVE.
-            return setUser(Authentication.signUpWithPhoneAndPassword(phone, password))
-
-        } else if (!wantsToSignIn && !usePhoneSignIn) { // they are signing up with email
-
-            // SAME COMMENTS AS THOSE ABOVE.
-            return setUser(Authentication.signUpWithEmailAndPassword(email, password))
-
+            setUserInfo(await auth.signUp(usePhoneSignIn ? 'phone' : 'email'));
         }
+
+        if (userInfo) {
+            setUser(userInfo);
+            setRedirectToReferrer(true)
+        }
+
     }
 
     const toggleAuthType = () => {
@@ -144,9 +149,15 @@ export default function AuthenticationPage(props) {
     React.useEffect(() => {
         setErrorMessage(null)
     }, [usePhoneSignIn, wantsToSignIn])
+
+    if (RedirectToReferrer === true) {
+        return <Redirect to={from} />
+
+    }
+
     return (
         <Grid container spacing={0}>
-            <Grid item xs={12} sm={4}>
+            <Grid item sm={12} md={4}>
                 <div className={styles.container}>
                     <div style={styles.logo}>
                         <img src={logo} alt="google logo" />
@@ -173,7 +184,7 @@ export default function AuthenticationPage(props) {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <MaterialButton type="submit" className={styles.signInButton} fullWidth>Sign In</MaterialButton>
+                                <MaterialButton type="submit" className={styles.signInButton} fullWidth>{wantsToSignIn ? 'Sign In' : 'Create Free Account'}</MaterialButton>
                             </Grid>
                             <Grid item xs={12}>
                                 <DialogContentText className={styles.text}>Or</DialogContentText>
@@ -205,7 +216,7 @@ export default function AuthenticationPage(props) {
                     </form>
                 </div>
             </Grid>
-            <Grid item xs={false} sm={8}>
+            <Grid item sm={false} md={8}>
                 <div className={styles.emptyContainer} />
             </Grid>
         </Grid>

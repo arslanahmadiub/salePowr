@@ -39,7 +39,7 @@ const TextArea = props => {
 
     const showLabel = props.label && props.required;
     return <Container>
-        <Label for={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
+        <Label htmFor={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
 
         <TextAreaInput
             required={props.required != null}

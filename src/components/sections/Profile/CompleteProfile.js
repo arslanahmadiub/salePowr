@@ -1,13 +1,12 @@
 import React from 'react'
-import { Dialog, DialogContent } from "@material-ui/core"
 import { AuthContext } from '../../../contexts/AuthContext'
-import ProfileForm from '../../Forms/ProfileForm'
 import './Profile.css'
+import ProfileEdit from './ProfileEdit'
+import { Modal } from 'antd'
 
 
 
 const CompleteProfile = props => {
-    const [open, setOpen] = React.useState(false)
 
     const { user } = React.useContext(AuthContext)
 
@@ -15,16 +14,19 @@ const CompleteProfile = props => {
         // Check if user has completed their profile
 
 
-        setOpen(user && user.profilePercent && user.profilePercent !== 100)
+        //setOpen(user && user.profilePercent && user.profilePercent !== 1000)
 
     }, [user])
 
-    return <Dialog className="dialog" open={open} onClose={() => setOpen(false)} maxWidth="md">
+    console.log(user && user.profilePercent)
 
-        <DialogContent style={{ padding: "5%" }}>
-            <ProfileForm />
-        </DialogContent>
-    </Dialog>
+    return <Modal
+        visible={!!!(user && user.profilePercent && user.profilePercent !== 100)}
+        onOk={() => null}
+        onCancel={() => null}
+    >
+        <ProfileEdit />
+    </Modal>
 }
 
 export default CompleteProfile;

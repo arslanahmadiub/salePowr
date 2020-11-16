@@ -118,7 +118,6 @@ const TopRowDesktop = props => {
 
                         <Contact>
                             <FlexContainer style={{ width: "80px" }}>
-                                {social}
                                 <Facebook style={{ width: "20px" }} />
                                 <Twitter style={{ width: "20px" }} />
                                 <Instagram style={{ width: "20px" }} />

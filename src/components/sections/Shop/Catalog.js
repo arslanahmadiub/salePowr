@@ -1,10 +1,10 @@
 import React from 'react'
 import Styled from "styled-components"
-import RenderProducts from './RenderProducts'
-import { brandDetails, products } from '../../../DummyData/DummyData'
+import RenderProducts from './Catalog/RenderProducts'
+import { products } from '../../../DummyData/DummyData'
 import { Hidden } from '@material-ui/core'
-import TopRowMobile from './TopRowMobile'
-import TopRowDesktop from './TopRowDesktop'
+import TopRowMobile from './Catalog/TopRowMobile'
+import TopRowDesktop from './Catalog/TopRowDesktop'
 
 const Container = Styled.div`
 padding: 50px 30px;
@@ -34,33 +34,26 @@ const BrandSlogan = Styled.div`
     
 `
 
-const ProductDisplay = props => {
+export default function Catalog(props) {
 
     return <Container>
-        <Hidden smDown>
-            <TopRowDesktop data={brandDetails} />
-        </Hidden>
-
-        <Hidden mdUp>
-            <TopRowMobile data={brandDetails} />
-        </Hidden>
 
 
-        <div style={{ marginBottom: "30px" }}>
+        <div style={{ marginBottom: "0px", position: "relative" }}>
             <FlexContainer>
-                <BrandName>
-                    Product
-            </BrandName>
                 <div style={{
-                    width: "100px"
+                    width: "100px",
+                    right: "10px",
+                    top: "-30px",
+                    position: "absolute",
                 }}>
                     <FlexContainer>
-                        <BrandSlogan style={{ color: "#31BDF4" }}>
+                        <BrandSlogan style={{ color: "#31BDF4", cursor: "pointer" }}>
                             All
-                </BrandSlogan>
-                        <BrandSlogan>
+                        </BrandSlogan>
+                        <BrandSlogan style={{ cursor: "pointer" }}>
                             New
-                </BrandSlogan>
+                    </BrandSlogan>
                     </FlexContainer>
                 </div>
             </FlexContainer>
@@ -69,4 +62,3 @@ const ProductDisplay = props => {
     </Container>
 }
 
-export default ProductDisplay;

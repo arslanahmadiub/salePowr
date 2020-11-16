@@ -1,7 +1,7 @@
 import React from 'react'
 import Styled from "styled-components";
 import ProductDetails from './ProductDetails';
-import PaymentForm from '../../Forms/PaymentForm';
+import PaymentForm from '../../../Forms/PaymentForm';
 import { Breadcrumbs } from '@material-ui/core';
 import { ArrowRight } from '@material-ui/icons';
 

@@ -1,6 +1,8 @@
 import { ExitToApp } from '@material-ui/icons'
 import React from 'react'
 import Styled from "styled-components"
+import { AuthContext } from '../../contexts/AuthContext'
+import Authentication from '../../Helpers/Authentication'
 
 
 const Text = Styled.div`
@@ -26,10 +28,18 @@ cursor: pointer;
 
 
 const LogoutButton = props => {
-    const logoutFuntion = event => {
+    const { setUser } = React.useContext(AuthContext)
+
+
+
+    const logoutFuntion = async event => {
         event.stopPropagation();
 
-        alert("this will log you out")
+        alert("want to log out")
+
+        return await (new Authentication({}).logout(setUser))
+
+
     }
     return <Container onClick={logoutFuntion}>
         <Icon />

@@ -1,13 +1,13 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid"
-import companyLogo from "../../../assets/images/company-logo.png"
+import companyLogo from "../../../../assets/images/company-logo.png"
 import Styled from "styled-components";
-import Button from "../../CustomComponents/Button"
+import Button from "../../../CustomComponents/Button"
 
 import ShopBrand, { ShopBrandMobile } from './ShopBrand';
 import { Security } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
-import CustomLink from '../../CustomComponents/CustomLink';
+import CustomLink from '../../../CustomComponents/CustomLink';
 
 
 

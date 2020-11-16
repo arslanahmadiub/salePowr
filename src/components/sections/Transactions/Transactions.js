@@ -1,11 +1,10 @@
 import Tabs from "../../CustomComponents/Tabs"
 import React from "react"
 import Styled from "styled-components";
-import { transactionGroups } from "../../../DummyData/DummyData";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
-import RenderTransactions from "./RenderTransactions";
 import InProgress from "./InProgress";
+import History from "./History";
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -34,7 +33,7 @@ const Transactions = props => {
             <TopRow>
                 <div>Transactions</div>
                 <RenderButtons>
-                    <FlatSelect bg />
+                    <FlatSelect list={["Jan - Feb, 2020", "Mar - Apr, 2020", "May - Jun, 2020", "Jul - Aug, 2020", "Sep - Oct, 2020"]} bg />
                 </RenderButtons>
             </TopRow>
         </Hidden>
@@ -43,7 +42,7 @@ const Transactions = props => {
             <Tabs headers={["In Progress", "History"]}>
 
                 <InProgress />
-                <RenderTransactions transactions={transactionGroups} />
+                <History />
 
             </Tabs>
         </Body>

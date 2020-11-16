@@ -6,16 +6,17 @@ import BreadCrumbs from "./BreadCrumbs";
 
 const Container = Styled.div`
     cursor: pointer;
+    background: '#fff'
 `
 const ImageContainer = Styled.div`
-    height: 170px;
-    width: 170px;
-    background: #F3F3F3;
+    height: 150px;
+    width: 150px;
+    background: #FFFFFF;
     border-radius: 15px;
 `
 const Img = Styled.img`
-    height: 150px;
-    width: 150px;
+    height: 130px;
+    width: 130px;
     margin: auto;
 `
 const Price = Styled.div`
@@ -58,11 +59,13 @@ const Product = props => {
                 <Img src={details.image} alt="apple" />
             </ImageContainer>
 
+            <h4>{details.name}</h4>
+
             <Description>
                 {details.description && details.description}
             </Description>
             <Price>
-                $ {details.price && details.price}
+                GHS {details.price && details.price}
             </Price>
 
         </Container>

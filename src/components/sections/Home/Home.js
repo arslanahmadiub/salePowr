@@ -1,14 +1,13 @@
 import React from "react"
-import Grid from "@material-ui/core/Grid"
 import RightSideBar from "./RightSideBar/RightSideBar"
-import { profileInfo, } from "../../../DummyData/DummyData"
-import { Dialog, DialogTitle, Drawer, Hidden, } from "@material-ui/core"
-import Menu from "@material-ui/icons/Menu"
+import { Dialog, Grid, DialogTitle, Drawer, Hidden, } from "@material-ui/core"
 import Styled from "styled-components"
-import { ArrowBack, Close, EventNote, } from "@material-ui/icons"
+import { ArrowBack, Close, EventNote, Menu } from "@material-ui/icons"
 import Button from "../../CustomComponents/Button"
 import LeftSideBar from "./LeftSideBar/LeftSideBar"
-import CompleteProfile from "../Profile/CompleteProfile"
+import { AuthContext } from "../../../contexts/AuthContext"
+import { RightSideBarContext } from "../../../contexts/RightSideBarContext"
+import SideBarToggle from "../../CustomComponents/SideBarToggle"
 
 
 const DrawerContainer = Styled.div`
@@ -59,7 +58,8 @@ const Home = props => {
     const [drawerOpen, toggleDrawerOpen] = React.useState(false)
     const [modal, setModal] = React.useState(false)
 
-    const profile = props.profile || profileInfo;
+    const profile = React.useContext(AuthContext)
+    const { showRightSideBar, toggleRightSideBar } = React.useContext(RightSideBarContext)
 
 
     const toggleModal = event => {
@@ -107,7 +107,7 @@ const Home = props => {
             </Grid>
         </Hidden>
         {/* THE MAIN CONTENT */}
-        <Grid item xs={12} md={7} lg={7} style={{ padding: "20px", background: "#F5F8FD" }}>
+        <Grid item xs={12} md={showRightSideBar ? 7 : 10} style={{ padding: "20px", background: "#F5F8FD" }}>
             {/*    MOBILE TOP ROW */}
             <Hidden mdUp>
 
@@ -128,9 +128,13 @@ const Home = props => {
                 </FlexContainer>
 
             </Hidden>
+
             {props.children}
-            <CompleteProfile />
         </Grid>
+
+        <div onClick={() => toggleRightSideBar(true)} style={{ position: "fixed", right: "-25px", top: '10vh', display: showRightSideBar ? 'none' : '' }}>
+            <SideBarToggle />
+        </div>
 
         <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
             <DialogTitle>
@@ -146,7 +150,9 @@ const Home = props => {
 
         {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
         <Hidden smDown>
-            <Grid item md={3}>
+            <Grid item md={showRightSideBar === true ? 3 : false} style={{
+                display: showRightSideBar ? '' : 'none'
+            }}>
                 <RightSideBar />
             </Grid>
         </Hidden>
@@ -154,3 +160,5 @@ const Home = props => {
 }
 
 export default Home;
+
+

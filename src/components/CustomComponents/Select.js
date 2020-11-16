@@ -83,7 +83,7 @@ const Asterisk = styled.span`
 
 const Select = props => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState('');
 
     const chooseOption = value => () => {
         setSelectedOption(value);
@@ -92,7 +92,7 @@ const Select = props => {
 
     const onChange = props.onChange ? props.onChange : () => { };
 
-    const options = props?.options || [];
+    const options = props?.options || props?.list || [];
     const defaultValue = props.placeholder || "Select option..."
     const toggleDropDown = event => setIsOpen(!isOpen)
 
@@ -101,7 +101,7 @@ const Select = props => {
     return <ClickAwayListener onClickAway={() => setIsOpen(false)}>
         <Container>
             <>
-                <Label for={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
+                <Label htmlFor={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
                 <InputArea placeholder={defaultValue} onChange={onChange} value={selectedOption} onClick={toggleDropDown} />
                 {isOpen ? <DropUpIcon onClick={toggleDropDown} /> : <DropDownIcon onClick={toggleDropDown} />}
             </>

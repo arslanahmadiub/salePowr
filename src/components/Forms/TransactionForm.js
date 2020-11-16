@@ -1,12 +1,13 @@
 import React from "react";
 import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid"
+import { Input } from 'antd'
 import FormControl from "@material-ui/core/FormControl"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import FormLabel from "@material-ui/core/FormLabel"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import Radio from "@material-ui/core/Radio"
-import Input from "../CustomComponents/Input"
+// import Input from "../CustomComponents/Input"
 import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
 import FlatSelect from "../CustomComponents/FlatSelect";
@@ -109,7 +110,7 @@ const TransactionForm = props => {
                 <Grid item xs={12} md={10}>
                     <Grid container direction="column">
                         <Grid item xs={12}>
-                            <Input placeholder="Email address" type="email" required />
+                            <Input placeholder="Email address" type="email" required size="large" />
                         </Grid>
 
                         <Grid item xs={12}>

@@ -106,10 +106,10 @@ const TranstionItem = props => {
 
                 <Grid container direction="row" spacing={3}>
                     <Grid item xs={6} sm={3}>
-                        <Button slim>Open Dispute</Button>
+                        <Button onClick={() => { }}>{props && props.primaryButtonText}</Button>
                     </Grid>
                     <Grid item xs={3} sm={3}>
-                        <Button secondary slim>Chat</Button>
+                        <Button secondary onClick={() => null}>{props && props.secondaryButtonText}</Button>
                     </Grid>
                 </Grid>
 

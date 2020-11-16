@@ -28,7 +28,10 @@ const TransactionGroup = props => {
             {
                 transactions && transactions.map(item => {
                     return <div style={{ margin: "30px 0" }}>
-                        <TransactionItem data={item} />
+                        <TransactionItem
+                            secondaryButtonText={props.secondaryButtonText}
+                            primaryButtonText={props.primaryButtonText}
+                            data={item} />
                     </div>
 
                 })
