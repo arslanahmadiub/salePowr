@@ -4,6 +4,7 @@ import ThemeContextProvider from './ThemeContext'
 import ShopContextProvider from './ShopContext'
 import RightSideBarContextProvider from './RightSideBarContext'
 import DataContextProvider from './DataContext'
+import TransactionsContextProvider from './TransactionsContext'
 
 
 export default function UnifiedContextProviderProvider(props) {
@@ -14,9 +15,11 @@ export default function UnifiedContextProviderProvider(props) {
             <RightSideBarContextProvider>
                 <ThemeContextProvider>
                     <ShopContextProvider>
-                        <DataContextProvider>
-                            {props.children}
-                        </DataContextProvider>
+                        <TransactionsContextProvider>
+                            <DataContextProvider>
+                                {props.children}
+                            </DataContextProvider>
+                        </TransactionsContextProvider>
                     </ShopContextProvider>
                 </ThemeContextProvider>
             </RightSideBarContextProvider>
