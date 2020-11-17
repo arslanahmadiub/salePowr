@@ -10,6 +10,7 @@ import { MoMoCard } from './CreditCard'
 import { creditCardInfo, walletBalance } from '../../../DummyData/DummyData'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer'
 import { Hidden } from '@material-ui/core'
+import { Space } from 'antd'
 
 const Container = Styled.div`
 
@@ -101,17 +102,17 @@ const Wallet = props => {
                 </BannerContainer>
             </Grid>
 
-            <Grid item xs={12} md={6}>
-                <Title>Withdrawal Options</Title>
-                <Grid direction="row" spacing={5} container>
-                    <Grid item xs={7}>
-                        <Button faded>Mobile Money (Ghana only)</Button>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <Button>Bank (Global)</Button>
-                    </Grid>
-                </Grid>
-            </Grid>
+
+            <Title>Withdrawal Options</Title>
+
+            <Space size="large">
+
+                <Button>Mobile Money</Button>
+
+
+                <Button>Bank</Button>
+
+            </Space>
 
             <Grid item xs={12}>
                 <HorizontalScrollingContainer>
@@ -135,7 +136,7 @@ const Wallet = props => {
             <Grid item></Grid>
 
         </Grid>
-    </Container>
+    </Container >
 }
 
 
