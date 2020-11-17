@@ -20,7 +20,7 @@ export default function Buttton({ size, color, onClick, slim, ...props }) {
 
     return (
         <Space>
-            <AntButton style={styles} type="primary" onClick={onClick} props size="large" >
+            <AntButton style={styles} type="primary" onClick={onClick} props size={slim ? "middle" : "large"} >
                 {props.children}
             </AntButton>
         </Space>
