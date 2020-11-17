@@ -1,21 +1,8 @@
 import React from "react";
 import Styled from "styled-components"
+import { Input as AntInput } from 'antd'
 
-const GeneralInput = Styled.input`
-border: 1px solid #979FAA;
-box-sizing: border-box;
-border-radius: 10px;
-line-height: 19px;
-height: 40px;
-width: 100%;
-padding: 5px 15px;
-font-size: 16px;
-color:#000;
-}
-&::placeholder{
-    color:#979FAA;
-}
-`
+
 const Asterisk = Styled.span`
     color: red;
     font-size: 16px;
@@ -33,27 +20,27 @@ const Container = Styled.div`
     position: relative;
     height: 60px;
 `
+const styles = {
+    borderRadius: "10px",
+}
 
+export default function Input({ id, placeholder, onChange, label, required, type, ...props }) {
 
-const Input = props => {
-
-    const showLabel = props.label && props.required;
+    const showLabel = label && props.required;
 
 
     return <Container>
-        <Label htmlFor={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
-        <GeneralInput
+        <Label htmlFor={id}>{label && label} <Asterisk show={showLabel}>*</Asterisk></Label>
+        <AntInput
+            size='large'
+            style={styles}
             required={props.required != null}
-            placeholder={props.placeholder || props.label || ""}
-            type={props.type || "text"}
+            placeholder={placeholder || label || ""}
+            type={type || "text"}
             id={props.id || "textbox"}
             name={props.name || props.id || ""}
-            onChange={props.onChange && props.onChange}
+            onChange={onChange && onChange}
         />
     </Container>
 }
-
-
-
-export default Input;
 
