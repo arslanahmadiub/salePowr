@@ -1,9 +1,11 @@
 
 import { Grid, Hidden } from '@material-ui/core';
 import { ExpandLess, ExpandMore, FileCopy } from '@material-ui/icons';
+import { Modal, Space, Typography } from 'antd';
 import React from 'react'
 import Styled from "styled-components";
-import Button from '../../CustomComponents/Button';
+import { Button } from 'antd';
+import { TransactionsContext } from '../../../contexts/TransactionsContext';
 
 
 const FlexContainer = Styled.div`
@@ -47,6 +49,7 @@ const DateRow = Styled.div`
     letter-spacing: 0.5px;
     position: relative;
     top: 5px;
+    margin-left: 25px;
 `
 
 const TransactionId = Styled.div`
@@ -62,9 +65,23 @@ const TransactionStatus = Styled.div`
     padding: 12px 0;
 `
 
-const TranstionItem = props => {
+export default function TranstionItem(props) {
     const [show, toggleShow] = React.useState(false)
+    const [showModal, setShowModal] = React.useState(false)
 
+
+
+    function primaryAction() {
+        if (props.history) {
+
+        } else {
+            setShowModal(!showModal)
+        }
+
+    }
+    function secondaryAction() {
+
+    }
     const data = props.data;
 
     return !data ? <></> :
@@ -96,7 +113,7 @@ const TranstionItem = props => {
                 <Description>{data.description && data.description}</Description>
             </Hidden>
 
-            <div style={{ display: show ? "block" : "none", }}>
+            <div style={{ display: show ? "block" : "none", marginLeft: '25px' }}>
 
                 <FlexContainer>
                     <TransactionId>{data.id && data.id}</TransactionId>
@@ -104,20 +121,94 @@ const TranstionItem = props => {
                 </FlexContainer>
 
 
-                <Grid container direction="row" spacing={3}>
-                    <Grid item xs={6} sm={3}>
-                        <Button onClick={() => { }}>{props && props.primaryButtonText}</Button>
-                    </Grid>
-                    <Grid item xs={3} sm={3}>
-                        <Button secondary onClick={() => null}>{props && props.secondaryButtonText}</Button>
-                    </Grid>
-                </Grid>
+                <Space>
+                    <Button onClick={primaryAction} type="primary">{props && props.primaryButtonText}</Button>
+                    <Button onClick={secondaryAction}>{props && props.secondaryButtonText}</Button>
+                </Space>
 
 
 
+
+
+
+
+
+
+                <UpdateTransaction data={data} showModal={showModal} setShowModal={setShowModal} />
 
             </div>
         </Container >
 }
 
-export default TranstionItem;
+
+
+
+export function UpdateTransaction({ data, showModal, setShowModal }) {
+    const [errorMessage, setErrorMessage] = React.useState('')
+    const [loading, setLoading] = React.useState(false)
+    const [selected, setSelected] = React.useState(false)
+    const [status, setStatus] = React.useState('');
+
+
+    const { updateTransactionStatus } = React.useContext(TransactionsContext)
+
+
+    function toggleSelected(idx) {
+        setSelected(idx);
+        setErrorMessage('')
+        switch (idx) {
+            case 0:
+                return setStatus('shipped')
+            case 1:
+                return setStatus('delivered')
+            case 2:
+                return setStatus('cancelled')
+            default: return;
+        }
+    }
+
+
+    function updateStatus() {
+
+
+        if (status !== '') {
+            setLoading(true);
+
+            const state = updateTransactionStatus(data, status)
+
+            setTimeout(() => { if (state) setLoading(false); setShowModal(false) }, 2500)
+
+
+        } else {
+            setErrorMessage('Please select applicable status')
+        }
+
+    }
+
+    const { Title } = Typography;
+
+
+    return (
+        <Modal
+            title="Update Transaction Status"
+            visible={showModal}
+            centered
+            closable
+            destroyOnClose={true}
+            onCancel={() => setShowModal(false)}
+            confirmLoading={loading}
+            onOk={updateStatus}
+        >
+            <Space size="large" align="center">
+                <Button onClick={() => toggleSelected(0)} type={selected === 0 ? 'primary' : 'default'}>Shipped </Button>
+                <Button onClick={() => toggleSelected(1)} type={selected === 1 ? 'primary' : 'default'}>Delivered </Button>
+                <Button onClick={() => toggleSelected(2)} type={selected === 2 ? 'primary' : 'default'}>Cancelled </Button>
+
+            </Space>
+            <br />
+            <Title level={4} type="danger">{errorMessage}</Title>
+
+        </Modal>
+    )
+}
+

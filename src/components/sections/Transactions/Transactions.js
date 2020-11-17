@@ -3,8 +3,7 @@ import React from "react"
 import Styled from "styled-components";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
-import InProgress from "./InProgress";
-import History from "./History";
+import RenderTransactions from "./RenderTransactions";
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -41,8 +40,8 @@ const Transactions = props => {
         <Body>
             <Tabs headers={["In Progress", "History"]}>
 
-                <InProgress />
-                <History />
+                <RenderTransactions />
+                <RenderTransactions history />
 
             </Tabs>
         </Body>

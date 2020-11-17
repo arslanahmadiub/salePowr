@@ -26,11 +26,13 @@ const TransactionGroup = props => {
         <Title>{title && title}</Title>
         <Body>
             {
-                transactions && transactions.map(item => {
-                    return <div style={{ margin: "30px 0" }}>
+                transactions && transactions.map((item, index) => {
+                    return <div key={index} style={{ margin: "30px 0" }}>
                         <TransactionItem
+
                             secondaryButtonText={props.secondaryButtonText}
                             primaryButtonText={props.primaryButtonText}
+                            history={props.history}
                             data={item} />
                     </div>
 
