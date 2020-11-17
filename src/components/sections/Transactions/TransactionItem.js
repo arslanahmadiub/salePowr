@@ -1,10 +1,10 @@
 
-import { Grid, Hidden } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
 import { ExpandLess, ExpandMore, FileCopy } from '@material-ui/icons';
-import { Modal, Space, Typography } from 'antd';
+import { Button as AntButton, Modal, Space, Typography } from 'antd';
 import React from 'react'
 import Styled from "styled-components";
-import { Button } from 'antd';
+import Button from '../../CustomComponents/Button'
 import { TransactionsContext } from '../../../contexts/TransactionsContext';
 
 
@@ -120,19 +120,10 @@ export default function TranstionItem(props) {
                     <TransactionStatus>{data.status && data.status}</TransactionStatus>
                 </FlexContainer>
 
-
                 <Space>
-                    <Button onClick={primaryAction} type="primary" size="large">{props && props.primaryButtonText}</Button>
-                    <Button onClick={secondaryAction} size="large" type="secondary">{props && props.secondaryButtonText}</Button>
+                    <Button slim onClick={primaryAction} type="primary" size="large">{props && props.primaryButtonText}</Button>
+                    <Button slim onClick={secondaryAction} size="large" type="secondary">{props && props.secondaryButtonText}</Button>
                 </Space>
-
-
-
-
-
-
-
-
 
                 <UpdateTransaction data={data} showModal={showModal} setShowModal={setShowModal} />
 
@@ -200,9 +191,9 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
             onOk={updateStatus}
         >
             <Space size="large" align="center">
-                <Button onClick={() => toggleSelected(0)} type={selected === 0 ? 'primary' : 'default'}>Shipped </Button>
-                <Button onClick={() => toggleSelected(1)} type={selected === 1 ? 'primary' : 'default'}>Delivered </Button>
-                <Button onClick={() => toggleSelected(2)} type={selected === 2 ? 'primary' : 'default'}>Cancelled </Button>
+                <AntButton onClick={() => toggleSelected(0)} type={selected === 0 ? 'primary' : 'default'}>Shipped </AntButton>
+                <AntButton onClick={() => toggleSelected(1)} type={selected === 1 ? 'primary' : 'default'}>Delivered </AntButton>
+                <AntButton onClick={() => toggleSelected(2)} type={selected === 2 ? 'primary' : 'default'}>Cancelled </AntButton>
 
             </Space>
             <br />

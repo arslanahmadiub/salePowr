@@ -2,7 +2,7 @@ import React from 'react'
 import TransactionGroup from './TransactionGroup';
 import NoTransactionInProgressNote from './NoTransactionInProgressNote'
 import { TransactionsContext } from '../../../contexts/TransactionsContext';
-import { Spin } from 'antd';
+import { Space, Spin } from 'antd';
 
 
 const RenderTransactions = props => {
@@ -52,7 +52,9 @@ const RenderTransactions = props => {
 
         }
         {
-            data === null && <Spin size="large" />
+            data === null && <Space align="center">
+                <Spin size="large" />
+            </Space>
         }
 
 
