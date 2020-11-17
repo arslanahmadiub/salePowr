@@ -4,7 +4,7 @@ import Styled from "styled-components";
 const TabHeader = Styled.div`
     display: flex;
     height: 50px;
-    // border-bottom: .05px solid grey;
+    border-bottom: .05px solid lightgrey;
     width: 100%;
     position: relative;
     `
