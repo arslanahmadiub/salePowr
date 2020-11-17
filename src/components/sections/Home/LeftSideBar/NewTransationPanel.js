@@ -1,19 +1,26 @@
 import React from "react"
-import Add from "@material-ui/icons/Add"
-import Button from "../../../CustomComponents/Button"
+import { Button } from 'antd'
 import { useHistory } from "react-router-dom"
+import { ThemeContext } from "../../../../contexts/ThemeContext"
+import { PlusOutlined } from '@ant-design/icons'
 
 const NewTransactionPanel = props => {
+    const theme = React.useContext(ThemeContext)
     const history = useHistory();
 
-    return <div style={{ borderRadius: "10px", background: "#E7EEFA", height: "50px", lineHeight: "52px", padding: "10px", }}>
-        <div style={{ display: "flex", justifyContent: "space-between", lineHeight: "15px" }}>
-            <div style={{ color: "#979FAA", fontSize: "14px", overflow: "wrap", padding: 0, margin: "10px auto", height: "50px" }}>Create new transaction</div>
+    const style = {
+        background: theme.primaryGreen,
+        height: '40px',
+        width: '40px',
+        borderRadius: '10px'
+    }
 
-            <div style={{ width: "50px" }} onClick={() => history.push("/create-transaction")}>
-                <Button secondary>
-                    <Add fontSize="large" />
-                </Button>
+    return <div style={{ borderRadius: "10px", background: theme.lightGrey, height: "50px", lineHeight: "50px", padding: "10px", }}>
+        <div style={{ display: "flex", justifyContent: "space-between", lineHeight: "15px" }}>
+            <div style={{ color: theme.darkGrey, fontSize: "14px", overflow: "wrap", padding: 0, margin: " auto auto", height: "50px" }}>Create new transaction</div>
+
+            <div style={{ position: 'relative', width: "50px", bottom: '05px' }} onClick={() => history.push("/create-transaction")}>
+                <Button style={style} icon={<PlusOutlined style={{ color: "#FFF", fontSize: "24px", fontWeight: 900 }} />} />
             </div>
         </div>
     </div>
