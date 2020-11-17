@@ -122,8 +122,8 @@ export default function TranstionItem(props) {
 
 
                 <Space>
-                    <Button onClick={primaryAction} type="primary">{props && props.primaryButtonText}</Button>
-                    <Button onClick={secondaryAction}>{props && props.secondaryButtonText}</Button>
+                    <Button onClick={primaryAction} type="primary" size="large">{props && props.primaryButtonText}</Button>
+                    <Button onClick={secondaryAction} size="large" type="secondary">{props && props.secondaryButtonText}</Button>
                 </Space>
 
 
