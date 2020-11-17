@@ -6,7 +6,6 @@ import Home from "./components/sections/Home/Home"
 import Routes from './Utilities/Routes';
 import ProtectedRoute from './Utilities/ProtectedRoute';
 import AuthenticationPage from './components/auth/AuthPage';
-import TwinInputSelect from './components/CustomComponents/TwinInputSelect';
 
 
 

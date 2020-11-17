@@ -1,7 +1,7 @@
 import Wallet from '../components/sections/Wallet/Wallet';
 import ShopProfileEdit from '../components/sections/Shop/Shop';
 import Transactions from "../components/sections/Transactions/Transactions"
-import CreateTransaction from "../components/sections/Transactions/CreateTransaction"
+import TransactionForm from '../components/Forms/TransactionForm'
 import Dashboard from '../components/sections/Dashboard/Dashboard';
 import EditProfile from '../components/sections/Profile/ProfileEdit';
 import Shop from '../components/sections/Shop/Shop';
@@ -30,7 +30,7 @@ export default function () {
         {
             name: 'Create Transaction',
             path: '/create-transaction',
-            component: CreateTransaction,
+            component: TransactionForm,
         },
         {
             name: 'Shop Profile Edit',

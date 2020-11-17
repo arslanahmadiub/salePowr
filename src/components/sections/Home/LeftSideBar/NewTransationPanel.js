@@ -12,7 +12,7 @@ const NewTransactionPanel = props => {
         background: theme.primaryGreen,
         height: '40px',
         width: '40px',
-        borderRadius: '10px'
+        borderRadius: '10px',
     }
 
     return <div style={{ borderRadius: "10px", background: theme.lightGrey, height: "50px", lineHeight: "50px", padding: "10px", }}>
