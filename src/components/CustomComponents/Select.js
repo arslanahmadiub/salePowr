@@ -23,6 +23,9 @@ const List = styled.ul`
   margin: 0;
   top: -3px;
   width: 100%;
+  max-heigth: 200px;
+  height: 100px;
+  overflow-y: scroll;
   padding-left: 1em;
   background: #ffffff;
   border-top-right-radius: 0;

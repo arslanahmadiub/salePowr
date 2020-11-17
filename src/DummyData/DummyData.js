@@ -22,12 +22,10 @@ const navItems = [
 ]
 
 const transactions = [
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Successful" },
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Failed" },
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Pending" },
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Successful" },
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Failed" },
-    { id: "#334544", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Pending" },
+    { id: "nsl453tre44", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Successful" },
+    { id: "3kjaklfd4iP", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Failed" },
+    { id: "JJ78teuh6u", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Pending" },
+    { id: "ajh&8731,.mn", title: "Aliexpress", description: "Electronic gadget", amount: "-$2000.00", date: "11 Sept, 2020", time: "06:00", status: "Successful" },
 ]
 
 

@@ -27,7 +27,7 @@ function App() {
         </Route>
 
         <Home>
-          <TwinInputSelect />
+
           <Switch>
 
             {
