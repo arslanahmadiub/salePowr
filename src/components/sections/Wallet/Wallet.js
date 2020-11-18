@@ -1,20 +1,15 @@
-import Grid from '@material-ui/core/Grid'
-import React from 'react'
-import Styled from "styled-components"
-import Button from "../../CustomComponents/Button"
-import BannerContainer from '../../CustomComponents/BannerContainer'
-import BulletedText from '../../CustomComponents/BulletedText'
-import CircularProgress from '../../CustomComponents/CircularProgress'
-import WithdrawalForm from "../../Forms/WithdrawalForm"
+import React from 'react';
+import Styled from 'styled-components';
+import Button from '../../CustomComponents/Button';
+import BannerContainer from '../../CustomComponents/BannerContainer';
+import BulletedText from '../../CustomComponents/BulletedText';
+import CircularProgress from '../../CustomComponents/CircularProgress';
+import WithdrawalForm from '../../Forms/WithdrawalForm';
 import { MoMoCard } from './CreditCard'
-import { creditCardInfo, walletBalance } from '../../../DummyData/DummyData'
-import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer'
-import { Hidden } from '@material-ui/core'
-import { Space } from 'antd'
+import { creditCardInfo, walletBalance } from '../../../DummyData/DummyData';
+import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer';
+import { Row, Col, Space } from 'antd';
 
-const Container = Styled.div`
-
-`
 
 const Title = Styled.div`
     font-size: 22px;
@@ -33,39 +28,24 @@ const NewCardButton = Styled.div`
     border-radius: 12px;
 `
 
-const TopRow = Styled.div`
-    display: flex;
-    justify-content: space-between;
-    color: #010101;
-`
-const PageTitle = Styled.div`
-    font-size: 30px;
-    font-weight: bold;
-    
-`
-
-const Edit = Styled.div`
-    color: #31BDF4;
-    font-size: 16px;
-    cursor: pointer;
-`
-
-
-
 const Wallet = props => {
 
     const [balance, setBalance] = React.useState(null);
     const [cards, setCards] = React.useState(null);
+    const [stage, setStage] = React.useState(0);
+
+
+    function advanceStage() {
+        if (stage < 3) {
+            stage++;
+        }
+    }
 
     var progressPercent = balance ? Math.abs(100 * (Number(balance.available) - Number(balance.escrow)) / (Number(balance.available) + Number(balance.escrow))) : 0;
     const value = progressPercent > 100 ? progressPercent - 100 : progressPercent
 
     const addnewCard = event => {
         alert("You can add new card soon");
-    }
-
-    const editWallet = event => {
-        alert("Soon you can edit")
     }
 
     React.useEffect(() => {
@@ -80,63 +60,58 @@ const Wallet = props => {
         setCards(walletBalance)
     }, [cards])
 
-    return <Container>
-        <Grid container spacing={8} direction="column">
-            <Hidden smDown>
-                <Grid item>
-                    <TopRow>
-                        <PageTitle>Wallet</PageTitle>
-                        <Edit onClick={editWallet}>Edit</Edit>
-                    </TopRow>
+    return <Space direction="vertical">
+        <Row gutter={[0, 16]}>
 
-                </Grid>
-            </Hidden>
-            <Grid item>
+            <Col span={24}>
                 <BannerContainer>
                     <BulletedText title={"Available"} value={balance ? `${balance.currency} ${balance.available}` : 0} primary />
-                    <Hidden smDown>
-                        <CircularProgress thickness={15} radius={40} percent={Math.round(value)} />
-                    </Hidden>
+
+                    <CircularProgress thickness={15} radius={40} percent={Math.round(value)} />
+
                     <BulletedText title={"Funds in escrow"} value={balance ? `${balance.currency} ${balance.escrow}` : 0} />
 
                 </BannerContainer>
-            </Grid>
+            </Col>
+        </Row>
 
+        <Row gutter={[0, 16]}>
+            <Col span={24}>
+                <Title>Withdrawal Options</Title>
+            </Col>
+        </Row>
 
-            <Title>Withdrawal Options</Title>
+        <Row gutter={[16, 24]}>
 
-            <Space size="large">
-
+            <Space size='large'>
                 <Button>Mobile Money</Button>
-
-
                 <Button>Bank</Button>
-
             </Space>
 
-            <Grid item xs={12}>
+        </Row>
+
+        <Row gutter={[0, 24]}>
+            <Col span={24}>
                 <HorizontalScrollingContainer>
                     <MoMoCard data={creditCardInfo} />
                     <MoMoCard data={creditCardInfo} />
 
                     <NewCardButton onClick={addnewCard}>
-                        <div style={{ top: "50%", position: "relative" }}>
+                        <div style={{ top: "40%", position: "relative" }}>
                             Add new payment Card
                         </div>
                     </NewCardButton>
 
                 </HorizontalScrollingContainer>
+            </Col>
+        </Row>
 
-
-            </Grid>
-
-            <Grid item>
+        <Row gutter={[0, 16]}>
+            <Col span={24}>
                 <WithdrawalForm />
-            </Grid>
-            <Grid item></Grid>
-
-        </Grid>
-    </Container >
+            </Col>
+        </Row>
+    </Space >
 }
 
 
