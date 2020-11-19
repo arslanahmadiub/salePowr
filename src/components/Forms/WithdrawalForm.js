@@ -4,37 +4,51 @@ import Grid from "@material-ui/core/Grid"
 import Select from "../CustomComponents/Select"
 import Input from "../CustomComponents/Input"
 import Button from "../CustomComponents/Button"
+import { Form } from 'antd'
+import { DataContext } from "../../contexts/DataContext";
 
-const WithdrawalForm = props => {
+export default function WithdrawalForm({ type, externalFunction, ...props }) {
 
-    const countries = ["Ghana", "Nigeria", "Gambia", "Cameroon", "Togo"]
-    const banks = ["Ecobank", "Stanbick Bank", "First Atlantic", "Fidelity Bank", "First National Bank"]
+    const { countryList, bankList, mobileOperators } = React.useContext(DataContext)
 
-    const processWidrawal = event => {
-        event.preventDefault();
+
+    const processWidrawal = values => {
+        console.log(values)
+        alert("")
+        //externalFunction(0)
     }
-    return <form onSubmit={processWidrawal}>
+    return <Form onFinish={processWidrawal}>
         <Grid container direction="row" spacing={5}>
             <Grid item xs={12} sm={6}>
-                <Select options={countries} label="Country" placeholder="Select country" required />
+                <Select options={countryList} label="Country" placeholder="Select country" required />
             </Grid>
-            <Grid item xs={12} sm={6}>
-                <Select options={banks} label="Bank name" placeholder="Select bank" required />
+            {type === 'momo' && <Grid item xs={12} sm={6}>
+                <Select options={mobileOperators} label="Momo Network" placeholder="Select network" required />
             </Grid>
-            <Grid item xs={12} sm={6}>
-                <Input type={"number"} label="Bank account number" placeholder="Enter bank account number" required />
+            }
+            {type === 'bank' && <Grid item xs={12} sm={6}>
+                <Select options={bankList} label="Bank name" placeholder="Select bank" required />
             </Grid>
-            <Grid item xs={12} sm={6}>
-                <Input type={"number"} label="Bank branch" placeholder="Enter bank branch" required />
+            }
+            {type === 'bank' && <Grid item xs={12} sm={6}>
+                <Input label="Bank account number" placeholder="Enter bank account number" required />
             </Grid>
-            <Grid item xs={12} sm={3}>
-                <Button type="submit">Submit</Button>
+            }
+            {type === 'momo' && <Grid item xs={12} sm={6}>
+                <Input label="Momo number" placeholder="Enter the  momo account number" required />
+            </Grid>
+            }
+            {type === 'bank' && <Grid item xs={12} sm={6}>
+                <Input label="Bank branch" placeholder="Enter bank branch" required />
+            </Grid>
+            }
+            <Grid item xs={12}>
+                <Button htmlType="submit">Add Wallet</Button>
             </Grid>
 
         </Grid>
 
-    </form>
+    </Form>
 }
 
 
-export default WithdrawalForm;

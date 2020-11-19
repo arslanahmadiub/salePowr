@@ -26,6 +26,7 @@ const NewCardButton = Styled.div`
     color: #979FAA;
     background: #fff;
     border-radius: 12px;
+    cursor: pointer;
 `
 
 const Wallet = props => {
@@ -33,26 +34,24 @@ const Wallet = props => {
     const [balance, setBalance] = React.useState(null);
     const [cards, setCards] = React.useState(null);
     const [stage, setStage] = React.useState(0);
+    const [type, setType] = React.useState('');
 
 
     function advanceStage() {
         if (stage < 3) {
-            stage++;
+            setStage(stage + 1);
         }
     }
 
     var progressPercent = balance ? Math.abs(100 * (Number(balance.available) - Number(balance.escrow)) / (Number(balance.available) + Number(balance.escrow))) : 0;
     const value = progressPercent > 100 ? progressPercent - 100 : progressPercent
 
-    const addnewCard = event => {
-        alert("You can add new card soon");
-    }
-
     React.useEffect(() => {
         // MAKE YOU API CALL HERE THEN
         // SET BALANCE AS follows
         setBalance(walletBalance)
     }, [balance])
+
     React.useEffect(() => {
         // MAKE YOU API CALL HERE THEN
         // TO GET THE EXISTING PAYMENT METHODS
@@ -60,8 +59,8 @@ const Wallet = props => {
         setCards(walletBalance)
     }, [cards])
 
-    return <Space direction="vertical">
-        <Row gutter={[0, 16]}>
+    return <Space direction="vertical" size="large">
+        <Row gutter={[0, 24]}>
 
             <Col span={24}>
                 <BannerContainer>
@@ -75,28 +74,13 @@ const Wallet = props => {
             </Col>
         </Row>
 
-        <Row gutter={[0, 16]}>
-            <Col span={24}>
-                <Title>Withdrawal Options</Title>
-            </Col>
-        </Row>
-
-        <Row gutter={[16, 24]}>
-
-            <Space size='large'>
-                <Button>Mobile Money</Button>
-                <Button>Bank</Button>
-            </Space>
-
-        </Row>
-
         <Row gutter={[0, 24]}>
             <Col span={24}>
                 <HorizontalScrollingContainer>
                     <MoMoCard data={creditCardInfo} />
                     <MoMoCard data={creditCardInfo} />
 
-                    <NewCardButton onClick={addnewCard}>
+                    <NewCardButton onClick={advanceStage}>
                         <div style={{ top: "40%", position: "relative" }}>
                             Add new payment Card
                         </div>
@@ -106,11 +90,38 @@ const Wallet = props => {
             </Col>
         </Row>
 
-        <Row gutter={[0, 16]}>
-            <Col span={24}>
-                <WithdrawalForm />
-            </Col>
-        </Row>
+        {
+            stage > 0 && (
+                <>
+                    <Row gutter={[0, 16]}>
+                        <Col span={24}>
+                            <Title>Payout Options</Title>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={[16, 24]}>
+
+                        <Space size='large'>
+                            <Button onClick={() => { setType('momo'); advanceStage() }} faded={type !== 'momo'}>Mobile Money</Button>
+                            <Button onClick={() => { setType('bank'); advanceStage() }} faded={type !== 'bank'}>Bank</Button>
+                        </Space>
+
+                    </Row>
+                </>
+            )
+        }
+
+        {
+            stage > 1 && (
+                <>
+                    <Row gutter={[0, 16]}>
+                        <Col span={24}>
+                            <WithdrawalForm externalFunction={setStage} type={type} />
+                        </Col>
+                    </Row>
+                </>
+            )
+        }
     </Space >
 }
 
