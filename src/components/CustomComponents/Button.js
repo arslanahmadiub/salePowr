@@ -5,15 +5,15 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 
-export default function Buttton({ size, color, onClick, slim, ...props }) {
+export default function Buttton({ size, color, onClick, slim, faded, ...props }) {
 
     const theme = React.useContext(ThemeContext)
 
 
     const styles = {
-        color: '',
+        color: faded && '#31BDF4',
         borderRadius: '5px',
-        background: theme[color] || theme.primaryBlue,
+        background: theme[color] || (faded && 'rgba(49, 189, 244, 0.1)') || theme.primaryBlue,
         height: !slim && '50px',
         border: 'none'
     }
