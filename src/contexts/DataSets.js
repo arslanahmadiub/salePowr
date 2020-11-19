@@ -1,4 +1,4 @@
-export const countryNames = ['Bangladesh',
+export const countryList = ['Bangladesh',
     'Belgium',
     'Burkina Faso',
     'Bulgaria',
@@ -249,3 +249,13 @@ export const countryNames = ['Bangladesh',
     'Ukraine',
     'Qatar',
     'Mozambique',].sort();
+
+
+export const bankList = [
+    'Ecobank', 'Calbank', 'Atlantic bank', 'Access bank', 'First National bank'
+]
+
+
+export const mobileOperators = [
+    'MTN Ghana', 'MTN Nigeria', 'Vodafone Ghana', 'AirtelTigo', 'Glo',
+]

@@ -1,5 +1,5 @@
 import React from 'react'
-import { countryNames } from './DataSets'
+import { countryList, bankList, mobileOperators } from './DataSets'
 
 export const DataContext = React.createContext();
 
@@ -8,7 +8,7 @@ export default function DataContextProvider(props) {
 
 
     return (
-        <DataContext.Provider value={{ countryNames }}>
+        <DataContext.Provider value={{ countryList, bankList, mobileOperators }}>
             {props.children}
         </DataContext.Provider>
     )
