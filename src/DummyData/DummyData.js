@@ -50,14 +50,32 @@ const products = [
 
 ]
 
-const walletBalance = { escrow: 23434, available: 3453, currency: "GHS" }
+const walletBalance = { escrow: 23434, main: 3453, currency: "GHS" }
 
-const creditCardInfo = {
+const creditCards = [{
     name: "Mahmudul Hasan",
     country: "Ghana",
     number: "2334928048",
     date: "09/2020",
-}
+    type: 'momo'
+},
+{
+    name: "Ebenezer Ghanney",
+    country: "Ghana",
+    number: "353454245454424",
+    date: "09/2020",
+    cvv: '343',
+    type: 'bank'
+},
+{
+    name: "Ebenezer Ghanney Ebenezer Ghanney me",
+    country: "Ghana",
+    number: "353454245854424",
+    date: "09/2020",
+    cvv: '343',
+    type: 'bank'
+},
+]
 
 const dashboardData = {
     growth: 40,
@@ -140,6 +158,6 @@ export {
     messages, banks, products,
     navItems, transactions,
     transactionTypes, purchaseSummaryData, shopsData,
-    walletBalance, creditCardInfo, dashboardData,
+    walletBalance, creditCards, dashboardData,
     transactionVolumeData, woman, profileInfo, brandDetails,
 }
