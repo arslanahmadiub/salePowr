@@ -15,14 +15,11 @@ export default function TransactionsContextProvider(props) {
         let newTransactionsList = transactions;
         newTransactionsList[newTransactionsList.map((item, index) => [index, item]).filter((item) => item[1].id === transaction.id)[0][0]] = { ...transaction, status };
         setTransactions(newTransactionsList)
-        console.table(newTransactionsList)
         return true;
     }
     function deleteTransaction(transactionId) {
 
     }
-
-    console.table(transactions)
 
     React.useEffect(() => {
         /* Load transactions here then update the status like so... */
