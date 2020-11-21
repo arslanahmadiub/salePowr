@@ -19,14 +19,16 @@ const SecondaryElements = Styled.div`
 `
 
 
-export default function ({ title, secondaryElements, ...props }) {
+export default function (props) {
+
+    const { title } = props;
     return <Container>
         <Title>
             {title && title}
         </Title>
         <SecondaryElements>
             {
-                secondaryElements && secondaryElements.forEach(element => element)
+                props.children
             }
         </SecondaryElements>
 
