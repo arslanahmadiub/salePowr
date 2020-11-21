@@ -10,6 +10,7 @@ import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrol
 import { Row, Col, Space } from 'antd';
 import { WalletContext } from '../../../contexts/WalletContext';
 import Input from '../../CustomComponents/Input';
+import DesktopHeaderRow from '../../CustomComponents/DesktopHeaderRow';
 
 
 const Title = Styled.div`
@@ -54,7 +55,10 @@ const Wallet = props => {
 
     const percent = Math.round((100 * Number(main) / (Number(main) + Number(escrow))))
 
-    return <Space direction="vertical" size="large">
+    return <>
+        <Row gutter={[0, 8]}>
+            <DesktopHeaderRow title="Wallet" />
+        </Row>
         <Row gutter={[0, 24]}>
 
             <Col span={24}>
@@ -115,12 +119,19 @@ const Wallet = props => {
                                 <Input placeholder="Enter amount to withdraw" />
 
                             </Col>
-                            <Col span={24}>
-                                <Button>
-                                    Cashout
+                            <Row gutter={[0, 8]}>
+                                <Col span={12}>
+                                    <Button>
+                                        Cashout
+                                </Button>
+                                </Col>
+                                <Col span={12}>
+                                    <Button onClick={() => setSelectedCard(null)} outlined>
+                                        Cancel
                                 </Button>
 
-                            </Col>
+                                </Col>
+                            </Row>
                         </form>
                     </Col>
                 </Row>
@@ -160,7 +171,7 @@ const Wallet = props => {
                 </>
             )
         }
-    </Space >
+    </>
 }
 
 

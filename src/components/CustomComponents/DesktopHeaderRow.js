@@ -20,7 +20,6 @@ const SecondaryElements = Styled.div`
 
 
 export default function ({ title, secondaryElements, ...props }) {
-    alert(title)
     return <Container>
         <Title>
             {title && title}
