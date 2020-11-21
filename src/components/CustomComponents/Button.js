@@ -5,7 +5,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 
-export default function Buttton({ size, color, onClick, slim, faded, ...props }) {
+export default function Buttton({ size, outlined, color, onClick, slim, faded, ...props }) {
 
     const theme = React.useContext(ThemeContext)
 
@@ -13,14 +13,14 @@ export default function Buttton({ size, color, onClick, slim, faded, ...props })
     const styles = {
         color: faded && '#31BDF4',
         borderRadius: '5px',
-        background: theme[color] || (faded && 'rgba(49, 189, 244, 0.1)') || theme.primaryBlue,
+        background: theme[color] || (faded && 'rgba(49, 189, 244, 0.1)') || (outlined && '#fff') || theme.primaryBlue,
         height: !slim && '50px',
-        border: 'none'
+        border: !outlined && 'none'
     }
 
     return (
         <Space>
-            <AntButton style={styles} type="primary" onClick={onClick} {...props} size={slim ? "middle" : "large"} >
+            <AntButton style={styles} type={!outlined && "primary"} onClick={onClick} {...props} size={slim ? "middle" : "large"} >
                 {props.children}
             </AntButton>
         </Space>
