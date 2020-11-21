@@ -2,9 +2,8 @@ import React from 'react'
 import Styled from "styled-components"
 
 const Container = Styled.div`
-    overflow-y: hidden;
     overflow-x: scroll;
-    width: 95vw;
+    width: 100%;
     white-space: nowrap;
     display: flex;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -20,13 +19,15 @@ const Content = Styled.div`
 
 
 const HorizontalScrollingContainer = props => {
-    return <Container>
-        {props.children && props.children.map((item, index) => {
-            return <Content key={index}>
-                {item}
-            </Content>;
-        })}
-    </Container>
+    return <div>
+        <Container>
+            {props.children && props.children.map((item, index) => {
+                return <Content key={index}>
+                    {item}
+                </Content>;
+            })}
+        </Container>
+    </div>
 }
 
 export default HorizontalScrollingContainer;
