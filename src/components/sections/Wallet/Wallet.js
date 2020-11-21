@@ -5,10 +5,11 @@ import BannerContainer from '../../CustomComponents/BannerContainer';
 import BulletedText from '../../CustomComponents/BulletedText';
 import CircularProgress from '../../CustomComponents/CircularProgress';
 import WithdrawalForm from '../../Forms/WithdrawalForm';
-import { MoMoCard } from './CreditCard'
-import { creditCardInfo, walletBalance } from '../../../DummyData/DummyData';
+import CreditCard, { MoMoCard } from './CreditCard'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer';
 import { Row, Col, Space } from 'antd';
+import { WalletContext } from '../../../contexts/WalletContext';
+import Input from '../../CustomComponents/Input';
 
 
 const Title = Styled.div`
@@ -18,8 +19,8 @@ const Title = Styled.div`
 `
 
 const NewCardButton = Styled.div`
-    width: 250px;
-    height: 150px;
+    width: 300px;
+    height: 170px;
     text-align: center;
     font-size: 20px;
     font-weight: 500;
@@ -30,9 +31,7 @@ const NewCardButton = Styled.div`
 `
 
 const Wallet = props => {
-
-    const [balance, setBalance] = React.useState(null);
-    const [cards, setCards] = React.useState(null);
+    const [selectedCard, setSelectedCard] = React.useState(null)
     const [stage, setStage] = React.useState(0);
     const [type, setType] = React.useState('');
 
@@ -43,32 +42,28 @@ const Wallet = props => {
         }
     }
 
-    var progressPercent = balance ? Math.abs(100 * (Number(balance.available) - Number(balance.escrow)) / (Number(balance.available) + Number(balance.escrow))) : 0;
-    const value = progressPercent > 100 ? progressPercent - 100 : progressPercent
+    function selectThis(data) {
+        setSelectedCard(data);
+    }
+    const { balance, cards, } = React.useContext(WalletContext)
+    const { main, escrow } = balance || {};
 
-    React.useEffect(() => {
-        // MAKE YOU API CALL HERE THEN
-        // SET BALANCE AS follows
-        setBalance(walletBalance)
-    }, [balance])
+    function cashoutSomeMoney() {
+        alert("I will cash out some money!");
+    }
 
-    React.useEffect(() => {
-        // MAKE YOU API CALL HERE THEN
-        // TO GET THE EXISTING PAYMENT METHODS
-        // THEN SET THE CARDS LIKE THIS
-        setCards(walletBalance)
-    }, [cards])
+    const percent = Math.round((100 * Number(main) / (Number(main) + Number(escrow))))
 
     return <Space direction="vertical" size="large">
         <Row gutter={[0, 24]}>
 
             <Col span={24}>
                 <BannerContainer>
-                    <BulletedText title={"Available"} value={balance ? `${balance.currency} ${balance.available}` : 0} primary />
+                    {balance && balance.main && <BulletedText title={"Available"} value={`${balance.currency} ${balance.main || 0}`} primary />}
 
-                    <CircularProgress thickness={15} radius={40} percent={Math.round(value)} />
+                    {!isNaN(percent) && <CircularProgress thickness={10} radius={50} percent={percent} />}
 
-                    <BulletedText title={"Funds in escrow"} value={balance ? `${balance.currency} ${balance.escrow}` : 0} />
+                    {balance && balance.escrow && <BulletedText title={"Funds in escrow"} value={balance ? `${balance.currency} ${balance.escrow}` : 0} />}
 
                 </BannerContainer>
             </Col>
@@ -77,10 +72,25 @@ const Wallet = props => {
         <Row gutter={[0, 24]}>
             <Col span={24}>
                 <HorizontalScrollingContainer>
-                    <MoMoCard data={creditCardInfo} />
-                    <MoMoCard data={creditCardInfo} />
+                    {
+                        cards && cards.map((card, index) => {
+                            return <React.Fragment>
+                                {
+                                    card.type === 'momo' && <span onClick={() => selectThis(card)} key={card.number + index + card.number}>
+                                        <MoMoCard selected={selectedCard && selectedCard.number === card.number} data={card} />
+                                    </span>
+                                }
+                                {
+                                    card.type === 'bank' && <span onClick={() => selectThis(card)} key={card.number + index + card.number} >
+                                        <CreditCard selected={selectedCard && selectedCard.number === card.number} data={card} />
+                                    </span>
+                                }
+                            </React.Fragment>
+                        })
+                    }
 
-                    <NewCardButton onClick={advanceStage}>
+
+                    <NewCardButton key="nmsi8923nv-2092309" onClick={advanceStage}>
                         <div style={{ top: "40%", position: "relative" }}>
                             Add new payment Card
                         </div>
@@ -89,6 +99,34 @@ const Wallet = props => {
                 </HorizontalScrollingContainer>
             </Col>
         </Row>
+
+        {
+            selectedCard && <React.Fragment>
+                <Row gutter={[0, 8]}>
+                    <Col span={24}>
+                        <Title>Withdrawal Amount</Title>
+                    </Col>
+                </Row>
+
+                <Row gutter={[0, 8]}>
+                    <Col span={{ xs: 24, sm: 24, md: 12, lg: 12, }}>
+                        <form onSubmit={cashoutSomeMoney}>
+                            <Col span={24}>
+                                <Input placeholder="Enter amount to withdraw" />
+
+                            </Col>
+                            <Col span={24}>
+                                <Button>
+                                    Cashout
+                                </Button>
+
+                            </Col>
+                        </form>
+                    </Col>
+                </Row>
+
+            </React.Fragment>
+        }
 
         {
             stage > 0 && (
