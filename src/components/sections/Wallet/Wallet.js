@@ -7,10 +7,12 @@ import CircularProgress from '../../CustomComponents/CircularProgress';
 import WithdrawalForm from '../../Forms/WithdrawalForm';
 import CreditCard, { MoMoCard } from './CreditCard'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer';
-import { Row, Col, Space } from 'antd';
+import { Row, Col, Space, Form } from 'antd';
 import { WalletContext } from '../../../contexts/WalletContext';
 import Input from '../../CustomComponents/Input';
 import DesktopHeaderRow from '../../CustomComponents/DesktopHeaderRow';
+import TwinInputSelect from '../../CustomComponents/TwinInputSelect';
+import { DataContext } from '../../../contexts/DataContext';
 
 
 const Title = Styled.div`
@@ -49,11 +51,13 @@ const Wallet = props => {
     const { balance, cards, } = React.useContext(WalletContext)
     const { main, escrow } = balance || {};
 
-    function cashoutSomeMoney() {
-        alert("I will cash out some money!");
+    function cashoutSomeMoney(values) {
+        console.log(values);
     }
 
     const percent = Math.round((100 * Number(main) / (Number(main) + Number(escrow))))
+
+    const { currencies } = React.useContext(DataContext)
 
     return <>
         <Row gutter={[0, 8]}>
@@ -114,16 +118,20 @@ const Wallet = props => {
 
                 <Row gutter={[0, 8]}>
                     <Col span={{ xs: 24, sm: 24, md: 12, lg: 12, }}>
-                        <form onSubmit={cashoutSomeMoney}>
+                        <Form onFinish={cashoutSomeMoney}>
                             <Col span={24}>
-                                <Input placeholder="Enter amount to withdraw" />
+                                <Form.Item>
+                                    <TwinInputSelect list={currencies} placeholder='Please input the amount to withdraw' />
+                                </Form.Item>
 
                             </Col>
                             <Row gutter={[0, 8]}>
                                 <Col span={12}>
-                                    <Button>
-                                        Cashout
+                                    <Form.Item>
+                                        <Button htmlType='submit'>
+                                            Cashout
                                 </Button>
+                                    </Form.Item>
                                 </Col>
                                 <Col span={12}>
                                     <Button onClick={() => setSelectedCard(null)} outlined>
@@ -132,7 +140,7 @@ const Wallet = props => {
 
                                 </Col>
                             </Row>
-                        </form>
+                        </Form>
                     </Col>
                 </Row>
 
