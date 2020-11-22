@@ -1,73 +1,7 @@
-import { ClickAwayListener } from "@material-ui/core";
-import { ExpandLess } from "@material-ui/icons";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import React, { useState } from "react";
+import { Select as AntSelect } from 'antd'
+import React from "react";
 import styled from "styled-components";
 
-
-const InputArea = styled("input")`
-  width: 100%;
-  margin: 0 0;
-  height: 40px;
-  border: 1px solid #979FAA;
-  box-sizing: border-box;
-  border-radius: 10px;
-  z-index: 10;
-  position: relative;
-  padding: 0 5px;
-`;
-
-
-const List = styled.ul`
-  padding: 8px;
-  margin: 0;
-  top: -3px;
-  width: 100%;
-  max-heigth: 200px;
-  height: 100px;
-  overflow-y: scroll;
-  padding-left: 1em;
-  background: #ffffff;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  border-radius: 10px;
-  box-sizing: border-box;
-  position:absolute;
-  z-index: 100;  
-  display: ${p => !p.show ? "none" : ""}
-  
-`;
-
-const ListItem = styled.li`
-  list-style: none;
-  cursor: pointer;
-  padding: 2px;
-  &:hover{
-      background:#979FAA;
-      opacity: 0.5;
-  }
-`
-
-const DropDownIcon = styled(ExpandMore)`
-position: absolute;
-z-index: 100;
-color: #979FAA;
-top: 30px;
-right: 5px;
-`
-const DropUpIcon = styled(ExpandLess)`
-position: absolute;
-z-index: 100;
-color: #979FAA;
-top: 30px;
-right: 5px;
-`
-
-const Container = styled.div`
-  position: relative;
-  height: 60px;
-  cursor: pointer;
-`
 
 const Label = styled.label`
     font-size: 13px;
@@ -84,45 +18,22 @@ const Asterisk = styled.span`
 
 `
 
-const Select = props => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState('');
+const { Option } = Select;
 
-    const chooseOption = value => () => {
-        setSelectedOption(value);
-        toggleDropDown()
-    };
+export default function Select({ label, id, required, placeholder, list, onChange, ...props }) {
 
-    const onChange = props.onChange ? props.onChange : () => { };
+    const showLabel = label && required;
 
-    const options = props?.options || props?.list || [];
-    const defaultValue = props.placeholder || "Select option..."
-    const toggleDropDown = event => setIsOpen(!isOpen)
+    console.log(list)
 
-    const showLabel = props.label && props.required;
-
-    return <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-        <Container>
-            <>
-                <Label htmlFor={props.id}>{props.label && props.label} <Asterisk show={showLabel}>*</Asterisk></Label>
-                <InputArea placeholder={defaultValue} onChange={onChange} value={selectedOption} onClick={toggleDropDown} />
-                {isOpen ? <DropUpIcon onClick={toggleDropDown} /> : <DropDownIcon onClick={toggleDropDown} />}
-            </>
-            <Container>
-                <List show={isOpen} onClick={toggleDropDown}>
-                    {
-                        options?.map(option => {
-                            return <ListItem key={Math.random()} onClick={chooseOption(option)}>
-                                {option}
-                            </ListItem>
-                        })
-                    }
-                </List>
-            </Container>
-
-
-        </Container>
-    </ClickAwayListener>
+    return <>
+        <Label style={{ borderRadius: '10px', }} htmlFor={id}>{label && label} <Asterisk show={showLabel}>*</Asterisk></Label>
+        <AntSelect placeholder={placeholder || ''} onChange={onChange} size="large">
+            {
+                list && list.map(item => {
+                    return <Option key={item}>{item}</Option>
+                })
+            }
+        </AntSelect>
+    </>
 }
-
-export default Select;

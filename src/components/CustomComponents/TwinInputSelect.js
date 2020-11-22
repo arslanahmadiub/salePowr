@@ -3,8 +3,12 @@ import { Input, Select, } from 'antd';
 
 const { Option } = Select
 
+const styles = {
+    display: 'inline-block',
+}
 
-export default function TwinInputSelect(props) {
+
+export default function TwinInputSelect({ placeholder, onChange, required, id, value, list, ...props }) {
     const [data, setData] = React.useState(null);
 
     const getSelection = (item) => {
@@ -12,17 +16,17 @@ export default function TwinInputSelect(props) {
     }
 
     React.useEffect(() => {
-        if (props.onChange != null) props.onChange(data)
-    }, [data, props])
+        onChange && onChange(data)
+    }, [data, onChange])
 
-    return <Input.Group compact size="large">
-        <Select defaultValue={props && props.list && props.list[0]} onChange={getSelection}>
+    return <Input.Group compact size="large" style={{ width: '100%' }}>
+        <Select style={{ borderRadius: '5px' }} defaultValue={list && list[0]} onChange={getSelection}>
             {
-                props && props.list && props.list.map(option => (
+                list && list.map(option => (
                     <Option key={option} value={option}>{option}</Option>
                 ))
             }
         </Select>
-        <Input style={{ width: '50%' }} placeholder={props.placeholder || ''} required={props.required} type={props.type || 'text'} onChange={(event) => setData({ ...data, value: event.target.value })} />
+        <Input style={{ maxWidth: '70%', borderRadius: '5px' }} placeholder={placeholder || ''} required={required} onChange={(event) => setData({ ...data, value: event.target.value })} />
     </Input.Group>
 }

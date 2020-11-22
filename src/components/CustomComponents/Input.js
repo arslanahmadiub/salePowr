@@ -26,7 +26,7 @@ const styles = {
 
 export default function Input({ id, placeholder, onChange, label, required, type, ...props }) {
 
-    const showLabel = label && props.required;
+    const showLabel = label && required;
 
 
     return <Container>
@@ -34,7 +34,7 @@ export default function Input({ id, placeholder, onChange, label, required, type
         <AntInput
             size='large'
             style={styles}
-            required={props.required != null}
+            required={required}
             placeholder={placeholder || label || ""}
             type={type || "text"}
             id={props.id || "textbox"}

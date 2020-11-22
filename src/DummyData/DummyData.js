@@ -78,7 +78,7 @@ const creditCards = [{
 ]
 
 const dashboardData = {
-    growth: 40,
+    growth: 1,
     dayVolume: 23,
     newOrders: 79,
     shipped: 89,
