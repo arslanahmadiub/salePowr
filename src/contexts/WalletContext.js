@@ -70,9 +70,19 @@ export default function WalletContextProvider(props) {
         setBalance(walletBalance);
     }, [])
 
+    function checkOut(data) {
+        /**
+         * Data object will contain the ...
+         * amount, currrency, and userobject
+         * at the end update the balance
+         */
+        updateBalance('main', data.amount, 'debit');
+
+    }
+
 
     return (
-        <WalletContext.Provider value={{ cards, addNewCard, balance, updateBalance, }}>
+        <WalletContext.Provider value={{ cards, addNewCard, balance, updateBalance, checkOut }}>
             {props.children}
         </WalletContext.Provider>
     )

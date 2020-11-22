@@ -259,3 +259,9 @@ export const bankList = [
 export const mobileOperators = [
     'MTN Ghana', 'MTN Nigeria', 'Vodafone Ghana', 'AirtelTigo', 'Glo',
 ]
+
+export const businessTypes = ['Retail', 'Wholesale']
+
+
+
+export const currencies = ['USD', 'GHS', 'NGN', 'CFA']
