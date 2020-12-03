@@ -3,13 +3,10 @@ import Grid from "@material-ui/core/Grid"
 import companyLogo from "../../../../assets/images/company-logo.png"
 import Styled from "styled-components";
 import Button from "../../../CustomComponents/Button"
-
 import ShopBrand, { ShopBrandMobile } from './ShopBrand';
 import { Security } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
 import CustomLink from '../../../CustomComponents/CustomLink';
-
-
 
 const Container = Styled.div`
     background: #F5F8FD;
@@ -40,7 +37,17 @@ const Delivery = Styled.div`
     font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
+    
 `
+// const ContactLabel = Styled.div`
+//     font-size: 14px;
+//     color: #979FAA;
+// `
+// const TermsAndConditions = Styled.div`
+//     font-size: 12px;
+//     color: #31BDF4;
+//     font-weight: ;
+// `
 
 const TiledImage = Styled.img`
     height: 100px;
@@ -75,8 +82,9 @@ const CopyRight = Styled.div`
     text-align: center;
 `
 
-export default function ProductDetails({ description, image, price, tiles, delivery, name, ...props }) {
+const ProductDetails = props => {
 
+    const { description, image, price, tiles, delivery, name, } = props.details;
 
     return <Container>
         <div >
@@ -85,11 +93,15 @@ export default function ProductDetails({ description, image, price, tiles, deliv
             <Grid container direction="row" spacing={0}>
                 <Grid item xs={4} sm={2} md={2}>
                     <Grid container direction="column" spacing={0}>
-                        {tiles && tiles.map((tile, index) => (
-                            <Grid item>
-                                <TiledImage src={tile} alt={`tile-${index}`} />
-                            </Grid>
-                        ))}
+                        <Grid item>
+                            <TiledImage src={tiles.first_tile} alt="First tile" />
+                        </Grid>
+                        <Grid item>
+                            <TiledImage src={tiles && tiles.first_tile} alt="First tile" />
+                        </Grid>
+                        <Grid item>
+                            <TiledImage src={tiles.first_tile} alt="First tile" />
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={8} md={4}>
@@ -199,3 +211,4 @@ export default function ProductDetails({ description, image, price, tiles, deliv
 
     </Container >
 }
+export default ProductDetails;

@@ -2,9 +2,6 @@ import React from 'react'
 import Styled from "styled-components"
 import RenderProducts from './Catalog/RenderProducts'
 import { products } from '../../../DummyData/DummyData'
-import { Hidden } from '@material-ui/core'
-import TopRowMobile from './Catalog/TopRowMobile'
-import TopRowDesktop from './Catalog/TopRowDesktop'
 
 const Container = Styled.div`
 padding: 50px 30px;
@@ -19,13 +16,6 @@ const FlexContainer = Styled.div`
 display: flex;
 width: 100%;
 justify-content:${p => p.justify ? p.justify : "space-between"};
-`
-
-
-const BrandName = Styled.div`
-    font-size: 30px;
-    font-weight: bold;
-    color: #010101;
 `
 
 const BrandSlogan = Styled.div`

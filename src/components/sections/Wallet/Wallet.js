@@ -9,7 +9,6 @@ import CreditCard, { MoMoCard } from './CreditCard'
 import HorizontalScrollingContainer from '../../CustomComponents/HorizontalScrollingContainer';
 import { Row, Col, Space, Form } from 'antd';
 import { WalletContext } from '../../../contexts/WalletContext';
-import Input from '../../CustomComponents/Input';
 import DesktopHeaderRow from '../../CustomComponents/DesktopHeaderRow';
 import TwinInputSelect from '../../CustomComponents/TwinInputSelect';
 import { DataContext } from '../../../contexts/DataContext';

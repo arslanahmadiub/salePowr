@@ -1,16 +1,14 @@
-import woman from "../assets/images/woman-avatar.jpg"
-import apple from "../assets/images/apple.png"
 import companyLogo from "../assets/images/company-logo.png"
 import { AccountBalanceWallet, LocalMall, Dashboard, BarChart, } from "@material-ui/icons/"
 const banks = ["Stanbic Bank", "First Atlantic", "Ecobank", "Cal Bank", "First National Bank"]
 const transactionTypes = ["Sell", "Buy",]
 
 const messages = [
-    { id: "1", sender: "Anonymous Buyer", message: "Hi, I would like a quote for 16BTCs at a discounted price", image: woman },
-    { id: "2", sender: "Anonymous Buyer", message: "Hey anon seller, I would like a quote for 195BTCs at a discounted price", image: woman },
-    { id: "3", sender: "Anonymous Buyer", message: "You there, I would like a quote for 135BTCs at a discounted price", image: woman },
-    { id: "4", sender: "Anonymous Buyer", message: "I would like to order more, I would like a quote for 158BTCs at a discounted price", image: woman },
-    { id: "5", sender: "Anonymous Buyer", message: "Someone recomended you to me a quote for 154BTCs at a discounted price", image: woman },
+    { id: "1", sender: "Anonymous Buyer", message: "Hi, I would like a quote for 16BTCs at a discounted price", image: 'https://thispersondoesnotexist.com/' },
+    { id: "2", sender: "Anonymous Buyer", message: "Hey anon seller, I would like a quote for 195BTCs at a discounted price", image: 'https://thispersondoesnotexist.com/' },
+    { id: "3", sender: "Anonymous Buyer", message: "You there, I would like a quote for 135BTCs at a discounted price", image: 'https://thispersondoesnotexist.com/' },
+    { id: "4", sender: "Anonymous Buyer", message: "I would like to order more, I would like a quote for 158BTCs at a discounted price", image: 'https://thispersondoesnotexist.com/' },
+    { id: "5", sender: "Anonymous Buyer", message: "Someone recomended you to me a quote for 154BTCs at a discounted price", image: 'https://thispersondoesnotexist.com/' },
 ]
 
 const navItems = [
@@ -39,14 +37,14 @@ const brandDetails = {
 
 
 const products = [
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
-    { name: "Sweet apple", image: apple, description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: apple }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
+    { name: "Sweet apple", image: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png', description: "Anim ullamco eu exercitation reprehenderit minim.", price: 243, tiles: { first_tile: 'https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png' }, delivery: "24hrs" },
 
 ]
 
@@ -132,7 +130,7 @@ const profileInfo = {
     username: "Ebenezer Ghanney",
     phone: "0123456789",
     email: "someone@example.com",
-    profilePhoto: woman,
+    profilePhoto: 'http',
     profileComplete: false,
     profilePercent: 60,
 }
@@ -159,5 +157,5 @@ export {
     navItems, transactions,
     transactionTypes, purchaseSummaryData, shopsData,
     walletBalance, creditCards, dashboardData,
-    transactionVolumeData, woman, profileInfo, brandDetails,
+    transactionVolumeData, profileInfo, brandDetails,
 }

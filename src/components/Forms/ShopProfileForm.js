@@ -5,117 +5,112 @@ import Input from "../CustomComponents/Input"
 import Select from "../CustomComponents/Select"
 import FilePicker from "../CustomComponents/FilePicker";
 import { DataContext } from '../../contexts/DataContext'
-import { Col, Row, Form } from "antd";
+import Grid from '@material-ui/core/Grid'
+
 
 const ShopProfileForm = props => {
+    const [state, setState] = React.useState({})
 
 
     const { countryList, businessTypes } = React.useContext(DataContext);
-
-    // const uploadFile = event => {
-    //     event.preventDefault();
-    // }
-
-
-
-
     const saveShopProfile = event => {
         event.preventDefault();
-        event.stopPropagation();
+        console.log(state)
 
     }
 
+    const onChange = obj => event => {
+        event && console.log(`${event?.target?.id}: ${event?.target?.value}`)
+        event && setState({ ...state, [event?.target?.id]: event?.target?.value })
+        obj && setState({ ...state, ...obj })
+    }
 
-    return <Form onFinish={saveShopProfile}>
+    const {
+        name, type,
+        address, phone,
+        email, twitter,
+        facebook, instagram,
+        bio, city, country,
+        whatsapp,
+    } = state;
 
 
-        <Row gutter={[8, 24]}>
 
-            <Col span={{ xs: 24, sm: 12, md: 8 }} >
-                <Form.Item>
-                    <Input placeholder="Enter shop name" label="Business/Shop name" required />
-                </Form.Item>
-            </Col>
+    return <form onSubmit={saveShopProfile}>
+        <Grid container direction="row" spacing={5}>
+            <Grid item xs={12}>
+                <Grid container direction="row" spacing={5}>
 
-            <Col span={{ xs: 24, sm: 12, md: 8 }} >
-                <Form.Item>
-                    <Select list={businessTypes} placeholder="Select business type" label="Business type" required />
-                </Form.Item>
-            </Col>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Input id='name' value={name} onChange={onChange} type='text' placeholder="Enter shop name" label="Business/Shop name" required />
+                    </Grid>
 
-            <Col span={{ xs: 24, sm: 12, md: 8 }}>
-                <Form.Item>
-                    <Select list={countryList} placeholder="Select country" label="Country" required />
-                </Form.Item>
-            </Col>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Select id='type' value={type} onChange={onChange} list={businessTypes} placeholder="Select onChange={onChange} business type" label="Business type" required />
+                    </Grid>
 
-            <Col span={{ xs: 24, sm: 12, md: 8, }} >
-                <Form.Item>
-                    <Input placeholder="Enter city name" label="City" required />
-                </Form.Item>
-            </Col>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Select id='country' value={country} onChange={onChange} list={countryList} placeholder="Select onChange={onChange} country" label="Country" required />
+                    </Grid>
 
-            <Col span={{ xs: 24, sm: 12, md: 16, }}>
-                <Form.Item>
-                    <Input placeholder="Enter Shop Address" label="Address" required />
-                </Form.Item>
-            </Col>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Input id='city' value={city} onChange={onChange} type='text' placeholder="Enter city name" label="City" required />
+                    </Grid>
 
-        </Row>
+                    <Grid item xs={12} md={8}>
+                        <Input id='address' value={address} onChange={onChange} type='text' placeholder="Enter Shop Address" label="Address" required />
+                    </Grid>
+                </Grid>
+            </Grid>
 
-        <Row gutter={[8, 24]}>
-            <Col span={{ xs: 24, sm: 10 }}>
-                <Input type="tel" placeholder="Enter phone number" label="Business Phone" required />
-            </Col>
-            <Col span={{ xs: 24, sm: 14 }}>
-                <Input type="email" placeholder="Enter Email address" label="Business email" required />
-            </Col>
-            <Col span={{ xs: 24, sm: 14 }}>
-                <TextArea placeholder="Enter shop bio" label="Shop bio" required rows={3} />
-            </Col>
-            <Col span={{ xs: 24, sm: 10 }}>
-                {' .'}
-                <FilePicker />
-            </Col>
-        </Row>
+            <Grid item xs={12}>
+                <Grid container spacing={5} direction='row'>
+                    <Grid item xs={12} sm={6}>
+                        <Input id='phone' value={phone} onChange={onChange} type="tel" placeholder="Enter phone number" label="Business Phone" required />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Input id='email' value={email} onChange={onChange} type="email" placeholder="Enter Email address" label="Business email" required />
+                    </Grid>
+                </Grid>
+            </Grid>
 
-        <Row gutter={[8, 24]}>
+            <Grid item xs={12}>
+                <Grid container spacing={5} direction='row'>
+                    <Grid item xs={12} md={6}>
+                        <TextArea id='bio' value={bio} onChange={onChange} placeholder="Enter shop bio" label="Shop bio" required rows={3} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        {' .'}
+                        <FilePicker id='file' />
+                    </Grid>
+                </Grid>
+            </Grid>
 
-            <Col span={{ xs: 24, sm: 12, md: 6 }}>
-                <Form.Item>
-                    <Input placeholder="Enter username" label="Instagram" />
-                </Form.Item>
-            </Col>
-            <Col span={{ xs: 24, sm: 12, md: 6 }}>
-                <Form.Item>
-                    <Input placeholder="Enter username" label="Facebook" />
-                </Form.Item>
-            </Col>
-            <Col span={{ xs: 24, sm: 12, md: 6 }}>
-                <Form.Item>
-                    <Input placeholder="Enter username" label="Twitter" />
-                </Form.Item>
-            </Col>
-            <Col span={{ xs: 24, sm: 12, md: 6 }}>
-                <Form.Item>
-                    <Input placeholder="Enter username" label="Whatsapp" />
-                </Form.Item>
-            </Col>
+            <Grid item xs={12}>
+                <Grid container spacing={5} direction='row'>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input id='instagram' value={instagram} onChange={onChange} placeholder="Enter Instagram username" label="Instagram" />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input id='facebook' value={facebook} onChange={onChange} placeholder="Enter Facebook username" label="Facebook" />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input id='twitter' value={twitter} onChange={onChange} placeholder="Enter Twitter username" label="Twitter" />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Input id='whatsapp' value={whatsapp} onChange={onChange} placeholder="Enter Whatsapp number" type='tel' label="Whatsapp" />
+                    </Grid>
 
-        </Row>
-
-        <Row>
-            <Col>
-                <Form.Item>
-                    <Button htmlType="submit" block>
-                        Create
+                </Grid>
+            </Grid>
+            <Grid>
+                <Button type="submit">
+                    Create
                 </Button>
-                </Form.Item>
-            </Col>
-        </Row>
+            </Grid>
 
-
-    </Form>
+        </Grid>
+    </form>
 }
 
 export default ShopProfileForm;

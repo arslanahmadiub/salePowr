@@ -7,6 +7,7 @@ export const WalletContext = React.createContext()
 export default function WalletContextProvider(props) {
     const [cards, setCards] = React.useState(null)
     const [balance, setBalance] = React.useState(null)
+    const [currency, setCurrency] = React.useState('')
 
     const addNewCard = function (card) {
 
@@ -68,6 +69,7 @@ export default function WalletContextProvider(props) {
          * then set it below as follows
         */
         setBalance(walletBalance);
+        setCurrency(walletBalance.currency)
     }, [])
 
     function checkOut(data) {
@@ -82,7 +84,7 @@ export default function WalletContextProvider(props) {
 
 
     return (
-        <WalletContext.Provider value={{ cards, addNewCard, balance, updateBalance, checkOut }}>
+        <WalletContext.Provider value={{ currency, cards, addNewCard, balance, updateBalance, checkOut }}>
             {props.children}
         </WalletContext.Provider>
     )

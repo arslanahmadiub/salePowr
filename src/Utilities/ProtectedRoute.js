@@ -10,15 +10,16 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
 
     return <Route
         {...rest}
-        render={({ location }) =>
-            user != null ? <Component />
-                :
-                <Redirect to={{
-                    pathname: '/user-authentication',
-                    state: { from: location },
+        render={({ location }) => {
 
-                }} />
-        }
+            if (!!user) return <Component />
+
+            return <Redirect to={{
+                pathname: '/user-authentication',
+                state: { from: location },
+
+            }} />
+        }}
     />
 
 }

@@ -4,13 +4,12 @@ import Grid from "@material-ui/core/Grid"
 import Input from "../CustomComponents/Input"
 import TextArea from "../CustomComponents/TextArea"
 import Button from "../CustomComponents/Button"
-import apple from "../../assets/images/apple.png"
 import MiniFilePicker from "../CustomComponents/MiniFilePicker";
-import PurchaseSummary from "../CustomComponents/PurchaseSummary";
-import { purchaseSummaryData } from "../../DummyData/DummyData";
 import Select from "../CustomComponents/Select";
 import FlexContainer from "../CustomComponents/FlexContainer";
 import { Switch } from "antd";
+import { DataContext } from '../../contexts/DataContext';
+import { WalletContext } from "../../contexts/WalletContext";
 
 const ImageContainer = Styled.div`
     height: 100px;
@@ -18,19 +17,19 @@ const ImageContainer = Styled.div`
     padding: 2px;
     position: relative;
 `
-const Img = Styled.img`
-    height: 70px;
-    width: 70px;
-`
 
-function AddProductForm(props) {
+export default function AddProductForm(props) {
     const [state, setState] = React.useState({ delivery: "24hrs" })
+
+    const { countryList, currencies } = React.useContext(DataContext);
+    const { currency } = React.useContext(WalletContext);
+
     const processWidrawal = event => {
         event.preventDefault();
     };
 
-
     function ToggleInstagram() {
+        setState('')
 
     }
 
@@ -47,8 +46,6 @@ function AddProductForm(props) {
             <Grid container direction="row" spacing={4}>
                 <Grid item xs={12}>
                     <ImageContainer>
-                        <Img src={apple} />
-                        <Img src={apple} />
                         <MiniFilePicker />
                     </ImageContainer>
 
@@ -76,22 +73,22 @@ function AddProductForm(props) {
                 </Grid>
 
                 <Grid item xs={12} md={4}>
-                    <Select placeholder="Select country" label="Country" rows={5} required />
+                    <Select placeholder="Select country" list={countryList} label="Country" rows={5} required />
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <Input placeholder="Enter a city" label="City/Location" rows={5} required />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <Select placeholder="Currency" label="Currency" rows={5} required />
+                    <Select list={currencies} placeholder="Currency" label="Currency" rows={5} required />
                 </Grid>
 
                 <Grid item xs={12}>
                     <FlexContainer>
                         <div>
                             Note: Powrsale service charge is 5%
-            </div>
+                        </div>
                         <div style={{ fontWeight: "600", fontSize: "22px" }}>
-                            {state && state.currency && state.currency} {(state && state.amount) || 0}
+                            {`${currency} 0`}
                         </div>
                     </FlexContainer>
 
@@ -100,7 +97,7 @@ function AddProductForm(props) {
                             Total amount payable
             </div>
                         <div style={{ fontWeight: "600", fontSize: "24px" }}>
-                            {state && state.currency && state.currency} {(state && state.deliveryFee) || 0}
+                            {`${currency} 0`}
                         </div>
                     </FlexContainer>
                     <hr />
@@ -136,4 +133,3 @@ function AddProductForm(props) {
 
 }
 
-export default AddProductForm;

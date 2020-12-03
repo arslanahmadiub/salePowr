@@ -33,13 +33,7 @@ const LogoutButton = props => {
 
 
     const logoutFuntion = async event => {
-        event.stopPropagation();
-
-        alert("want to log out")
-
         return await (new Authentication({}).logout(setUser))
-
-
     }
     return <Container onClick={logoutFuntion}>
         <Icon />

@@ -18,6 +18,8 @@ export default function TransactionsContextProvider(props) {
         return true;
     }
     function deleteTransaction(transactionId) {
+        // make the api call to delete Transaction
+        // then update the local
 
     }
 

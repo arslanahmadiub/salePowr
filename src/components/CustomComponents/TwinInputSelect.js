@@ -3,11 +3,6 @@ import { Input, Select, } from 'antd';
 
 const { Option } = Select
 
-const styles = {
-    display: 'inline-block',
-}
-
-
 export default function TwinInputSelect({ placeholder, onChange, required, id, value, list, ...props }) {
     const [data, setData] = React.useState(null);
 
