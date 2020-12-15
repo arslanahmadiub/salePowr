@@ -1,10 +1,11 @@
-import React from 'react'
-import Styled from "styled-components"
-import RenderProducts from './RenderProducts'
-import { brandDetails, products } from '../../../../DummyData/DummyData'
-import { Hidden } from '@material-ui/core'
-import TopRowMobile from './TopRowMobile'
-import TopRowDesktop from './TopRowDesktop'
+import React from "react";
+import Styled from "styled-components";
+import RenderProducts from "./RenderProducts";
+import { brandDetails, products } from "../../../../DummyData/DummyData";
+import { Hidden } from "@material-ui/core";
+import TopRowMobile from "./TopRowMobile";
+import TopRowDesktop from "./TopRowDesktop";
+import { useSelector } from "react-redux";
 
 const Container = Styled.div`
 padding: 50px 30px;
@@ -14,26 +15,25 @@ min-height: 80%;
 @media (max-width: 960px){
     padding: 20px 10px;
 }
-`
+`;
 const FlexContainer = Styled.div`
 display: flex;
 width: 100%;
-justify-content:${p => p.justify ? p.justify : "space-between"};
-`
+justify-content:${(p) => (p.justify ? p.justify : "space-between")};
+`;
 // const Brand = Styled.div``
-
 
 const BrandName = Styled.div`
     font-size: 30px;
     font-weight: bold;
     color: #010101;
-`
+`;
 
 const BrandSlogan = Styled.div`
     font-size: 18px; 
     color: #979FAA;
     
-`
+`;
 
 // const ShopId = Styled.div`
 //     color: #31BDF4;
@@ -59,40 +59,40 @@ const BrandSlogan = Styled.div`
 // const CompanyLogo = Styled.img`
 //     display: block;
 //     height: 150px;
-//     width: 150px;    
+//     width: 150px;
 // `
 
-export default function ProductDisplay(props) {
+let ProductDisplay = (props) => {
+  const shopData = useSelector((state) => state.shopPreview);
 
-    return <Container>
-        <Hidden smDown>
-            <TopRowDesktop data={brandDetails} />
-        </Hidden>
+  return (
+    <Container>
+      <Hidden smDown>
+        <TopRowDesktop data={props.shopData} />
+      </Hidden>
 
-        <Hidden mdUp>
-            <TopRowMobile data={brandDetails} />
-        </Hidden>
+      <Hidden mdUp>
+        <TopRowMobile data={props.shopData} />
+      </Hidden>
 
-
-        <div style={{ marginBottom: "30px" }}>
+      {/* <div style={{ marginBottom: "30px" }}>
+        <FlexContainer>
+          <BrandName>Product</BrandName>
+          <div
+            style={{
+              width: "100px",
+            }}
+          >
             <FlexContainer>
-                <BrandName>
-                    Product
-            </BrandName>
-                <div style={{
-                    width: "100px"
-                }}>
-                    <FlexContainer>
-                        <BrandSlogan style={{ color: "#31BDF4" }}>
-                            All
-                </BrandSlogan>
-                        <BrandSlogan>
-                            New
-                </BrandSlogan>
-                    </FlexContainer>
-                </div>
+              <BrandSlogan style={{ color: "#31BDF4" }}>All</BrandSlogan>
+              <BrandSlogan>New</BrandSlogan>
             </FlexContainer>
-        </div>
-        <RenderProducts products={products} />
+          </div>
+        </FlexContainer>
+      </div>
+      <RenderProducts products={products} /> */}
     </Container>
-}
+  );
+};
+
+export default ProductDisplay;
