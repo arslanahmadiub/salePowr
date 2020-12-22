@@ -7,11 +7,11 @@ import FilePicker from "../CustomComponents/FilePicker";
 import { DataContext } from "../../contexts/DataContext";
 import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { apiEndPoint } from "../../config.json";
 import { shopPreview } from "../../action/shopAction";
 import { saveShopData } from "../../action/shopAction";
 import { shopPreviewDialog } from "../../action/shopAction";
-import { useDispatch } from "react-redux";
 import { clearFormData } from "../../action/shopAction";
 import { clearFilePicker } from "../../action/shopAction";
 

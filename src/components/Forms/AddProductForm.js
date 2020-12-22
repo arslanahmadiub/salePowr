@@ -85,12 +85,22 @@ export default function AddProductForm(props) {
     };
     deliveryTerms.push(dataObject);
     setLoading(true);
+    console.log(deliveryTerms);
     clearForm();
     let { data } = await addProduct(form_data);
+    console.log(data);
     if (data.Success) {
       let productId = data.ID;
-      let result = await productDeliveryTerm(deliveryTerms, productId);
-      setLoading(false);
+      console.log(productId);
+      try {
+        let result = await productDeliveryTerm(deliveryTerms, productId);
+        console.log(result.data);
+        setLoading(false);
+      } catch (ex) {
+        if (ex.response) {
+          console.log(ex.response.data);
+        }
+      }
     }
     setLoading(false);
   };

@@ -1,12 +1,11 @@
-import { Facebook, Instagram, Twitter, WhatsApp } from '@material-ui/icons'
-import React from 'react'
-import Styled from "styled-components"
-
+import { Facebook, Instagram, Twitter, WhatsApp } from "@material-ui/icons";
+import React from "react";
+import Styled from "styled-components";
 
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
-`
+`;
 const FlexContainer = Styled.div`
 display: flex;
 justify-content: space-between;
@@ -14,8 +13,7 @@ justify-content: space-between;
         text-align: center;
         margin: auto;  
     }
-`
-
+`;
 
 const BrandName = Styled.div`
     font-size: 30px;
@@ -27,7 +25,7 @@ const BrandName = Styled.div`
         padding: 15px;  
     }
     
-`
+`;
 
 const BrandSlogan = Styled.div`
     font-size: 18px; 
@@ -38,7 +36,7 @@ const BrandSlogan = Styled.div`
         padding: 15px; 
     }
     
-`
+`;
 
 const ShopId = Styled.div`
     color: #31BDF4;
@@ -51,7 +49,7 @@ const ShopId = Styled.div`
         padding: 15px; 
     }
 
-`
+`;
 
 const ContactLabel = Styled.div`
     font-size: 16px;
@@ -61,7 +59,7 @@ const ContactLabel = Styled.div`
         text-align: center;
         margin: auto;  
     }
-`
+`;
 
 const CompanyLogo = Styled.img`
     display: block;
@@ -72,76 +70,56 @@ const CompanyLogo = Styled.img`
         margin: auto;  
     }
     
-`
+`;
 
-const ShopBrandMobile = props => {
-    const { logo, name, slogan, shopid } = props;
+const ShopBrandMobile = (props) => {
+  const { logo, name, slogan, shopid } = props;
 
-    return <Container>
+  return (
+    <Container>
+      <CompanyLogo src={logo && logo} />
+      <div style={{ margin: "25px 15px" }}>
+        <BrandName>{name && name}</BrandName>
+        <BrandSlogan>{slogan && slogan}</BrandSlogan>
+        <ShopId>shop Id: {shopid}</ShopId>
 
+        <div style={{ width: "100px", marginTop: "50px" }}>
+          <ContactLabel>Social Media</ContactLabel>
+          <FlexContainer>
+            <Facebook />
+            <Instagram />
+            <Twitter />
+            <WhatsApp />
+          </FlexContainer>
+        </div>
+      </div>
+    </Container>
+  );
+};
+const ShopBrand = (props) => {
+  const { logo, name, slogan, shopid } = props;
+  return (
+    <Container>
+      <div style={{ display: "flex" }}>
         <CompanyLogo src={logo && logo} />
         <div style={{ margin: "25px 15px" }}>
-            <BrandName>
-                {name && name}
-            </BrandName>
-            <BrandSlogan>
-                {slogan && slogan}
-            </BrandSlogan>
-            <ShopId>
-                shop Id: {shopid}
-            </ShopId>
+          <BrandName>{name && name}</BrandName>
+          <BrandSlogan>{slogan && slogan}</BrandSlogan>
+          <ShopId>shop Id: {shopid}</ShopId>
 
-
-            <div style={{ width: "100px", marginTop: "50px" }}>
-                <ContactLabel>
-                    Social Media
-                    </ContactLabel>
-                <FlexContainer>
-                    <Facebook />
-                    <Instagram />
-                    <Twitter />
-                    <WhatsApp />
-                </FlexContainer>
-            </div>
+          <div style={{ width: "100px" }}>
+            <ContactLabel>Social Media</ContactLabel>
+            <FlexContainer>
+              <Facebook />
+              <Instagram />
+              <Twitter />
+              <WhatsApp />
+            </FlexContainer>
+          </div>
         </div>
-
-
-    </Container >
-}
-const ShopBrand = props => {
-
-    const { logo, name, slogan, shopid } = props;
-    return <Container>
-        <div style={{ display: "flex" }}>
-            <CompanyLogo src={logo && logo} />
-            <div style={{ margin: "25px 15px" }}>
-                <BrandName>
-                    {name && name}
-                </BrandName>
-                <BrandSlogan>
-                    {slogan && slogan}
-                </BrandSlogan>
-                <ShopId>
-                    shop Id: {shopid}
-                </ShopId>
-
-
-                <div style={{ width: "100px", marginTop: "50px" }}>
-                    <ContactLabel>
-                        Social Media
-                    </ContactLabel>
-                    <FlexContainer>
-                        <Facebook />
-                        <Instagram />
-                        <Twitter />
-                        <WhatsApp />
-                    </FlexContainer>
-                </div>
-            </div>
-        </div>
-
-
+      </div>
     </Container>
-}
-export { ShopBrandMobile, ShopBrand }
+  );
+};
+export { ShopBrandMobile, ShopBrand };
 export default ShopBrand;

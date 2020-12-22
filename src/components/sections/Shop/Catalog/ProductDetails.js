@@ -1,201 +1,154 @@
-import React from 'react';
-import Grid from "@material-ui/core/Grid"
-import companyLogo from "../../../../assets/images/company-logo.png"
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
-import Button from "../../../CustomComponents/Button"
+import Grid from "@material-ui/core/Grid";
+import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
+import Input from "../../../CustomComponents/Input";
+import Button from "../../../CustomComponents/Button";
+import PurchaseSummary from "../../../CustomComponents/PurchaseSummary";
+import { detailAction } from "../../../../action/checkoutAction";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import ShopBrand, { ShopBrandMobile } from './ShopBrand';
-import { Security } from '@material-ui/icons';
-import { Hidden } from '@material-ui/core';
-import CustomLink from '../../../CustomComponents/CustomLink';
-
-
-
-const Container = Styled.div`
-    background: #F5F8FD;
-    padding: 0 15px 0px 15px;
-    min-height: 100vh;
-`
-const DetailsContainer = Styled.div`
-    background: #F5F8FD;
-    padding: 0px 0;
-    min-height: 50vh;
-`
-
-const ProductName = Styled.div`
+const Quatnity = Styled.div`
     font-size: 30px;
     font-weight: 600;
-    margin: 20px 0;
-`
-const Description = Styled.div`
-    font-size: 14px;
-    font-weight: normal;
-`
-const Price = Styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    margin: 30px 0;
-`
-const Delivery = Styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 20px;
-`
+    line-height: 50px;
+`;
 
-const TiledImage = Styled.img`
-    height: 100px;
-    width: 100px;
-    background: #FFFFFF;
-    border-radius: 15px;
-    margin: auto;
-    padding: 10px;
-    @media (max-width: 960px){
-        height: 80px;
-        width: 80px;
-        padding: 5px;
-    }
-`
+const ChangeButton = Styled.div`
+    height: 60px;
+    width: 60px;
+`;
 
-const CoverImage = Styled.img`
-    height: 330px;
-    width: 300px;
-    background: #FFFFFF;
-    border-radius: 15px;
-    //margin: 0 0 0 5px;
-    padding: 15px;
-    @media (max-width: 960px){
-        height: 250px;
-        width: 220px;
-    }
-`
+const ProductDetails = (props) => {
+  const dispatch = useDispatch();
+  const [checkoutDetails, setCheckoutDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+  let { firstName, lastName, email, phone } = checkoutDetails;
+  const [state, setState] = React.useState({ quantity: 1 });
+  let [productPrice, setProductPrice] = useState(null);
+  let { delivery, description, image, name, price } = props.details;
+  const processPayment = (event) => {
+    event.preventDefault();
+    let userDetail = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      item: name,
+      itemCost: price,
+      totalCost: productPrice,
+      deliveryCharge: 14,
+    };
+    dispatch(detailAction(userDetail));
+    props.update(1);
+  };
 
-const CopyRight = Styled.div`
-    padding: 15px 0;
-    border-top: 0.5px solid #979FAA;
-    text-align: center;
-`
+  let handelInputChange = (e) => {
+    setCheckoutDetails({ ...checkoutDetails, [e.target.name]: e.target.value });
+  };
 
-export default function ProductDetails({ description, image, price, tiles, delivery, name, ...props }) {
+  useEffect(() => {
+    setProductPrice(price);
+  }, []);
+  useEffect(() => {
+    let newPrice = parseInt(price) * state.quantity;
+    setProductPrice(newPrice);
+  }, [state]);
 
+  const changeQuanty = (value) => (event) => {
+    setState({ ...state, quantity: state.quantity + value || 1 });
+  };
 
-    return <Container>
-        <div >
-
-
-            <Grid container direction="row" spacing={0}>
-                <Grid item xs={4} sm={2} md={2}>
-                    <Grid container direction="column" spacing={0}>
-                        {tiles && tiles.map((tile, index) => (
-                            <Grid item>
-                                <TiledImage src={tile} alt={`tile-${index}`} />
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Grid>
-                <Grid item xs={8} md={4}>
-                    <CoverImage src={image && image} alt="First tile" />
-                </Grid>
-                <Grid item xs={12} md={5}>
-                    <DetailsContainer>
-                        <Grid container direction="column" spacing={0}>
-                            <Grid item xs={12}>
-                                <ProductName>
-                                    {name && name}
-                                </ProductName>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Description>
-                                    {description && description}
-                                </Description>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Price>
-                                    GHS {price && price}
-                                </Price>
-                            </Grid>
-                            <Grid item xs={12} sm={2}></Grid>
-                            <Grid container direction='row'>
-                                <Grid item xs={12} sm={4}>
-                                    <Button>
-                                        Buy Now
-                </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <Delivery>
-                                Delivery terms
-                </Delivery>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Description>
-                                {delivery && delivery}
-                            </Description>
-                        </Grid>
-
-                    </DetailsContainer>
-                </Grid>
-
-            </Grid >
-
-        </div >
-
-        <div style={{ margin: "30px 0", borderTop: "0.5px solid #979FAA" }}>
-            <Hidden smDown>
-                <ShopBrand logo={companyLogo} name={"GoPare"} slogan={"Electronic"} shopid={"#3455354"} />
-            </Hidden>
-            <Hidden mdUp>
-                <ShopBrandMobile logo={companyLogo} name={"GoPare"} slogan={"Electronic"} shopid={"#3455354"} />
-            </Hidden>
+  return (
+    <Grid container direction="column" spacing={3}>
+      <Grid item xs={12} sm={6} md={4}>
+        how many?
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <ChangeButton>
+            <Button onClick={changeQuanty(-1)} grey>
+              <Remove fontSize="large" />
+            </Button>
+          </ChangeButton>
+          <Quatnity>{state.quantity}</Quatnity>
+          <ChangeButton>
+            <Button onClick={changeQuanty(1)} grey>
+              <Add fontSize="large" />
+            </Button>
+          </ChangeButton>
         </div>
+      </Grid>
+      <Grid item>
+        <form
+          onSubmit={processPayment}
+          style={{ borderBottom: "0.5px solid #000", paddingBottom: "30px" }}
+        >
+          <Grid container direction="row" spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Input
+                placeholder="First name"
+                label="First name"
+                name="firstName"
+                value={firstName}
+                onChange={handelInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Input
+                placeholder="Last name"
+                label="Last name"
+                name="lastName"
+                value={lastName}
+                onChange={handelInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Input
+                type={"email"}
+                placeholder="Email address"
+                label="Email address"
+                name="email"
+                value={email}
+                onChange={handelInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Input
+                type={"tel"}
+                placeholder="Phone number"
+                label="Phone number"
+                name="phone"
+                value={phone}
+                onChange={handelInputChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={3} md={2}>
+              <Button type="submit">Continue</Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
+      <Grid item>
+        <PurchaseSummary
+          data={{
+            item: name,
+            itemCost: price,
+            totalCost: productPrice,
+            deliveryCharge: 14,
+          }}
+        />
+      </Grid>
+    </Grid>
+  );
+};
 
-        <Hidden smDown>
-            <CopyRight>
-                <Grid container direction="row" spacing={5}>
-                    <Grid item xs={6} md={2}>
-                        <CustomLink>Terms {"&"} </CustomLink>
-                        <CustomLink>Conditions</CustomLink>
-                    </Grid>
-                    <Grid item xs={12} md={7}>
-                        <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This purchase is protected by <a href="https://powrsale.com">Powrsale.com.</a> Your funds are escrow protected
-                </Grid>
-                    <Grid item xs={6} md={3}>
-
-                        <CustomLink>Create your Profile</CustomLink>
-
-                    </Grid>
-
-                    <Grid item xs={12} md={4}></Grid>
-                </Grid>
-            </CopyRight>
-        </Hidden>
-
-        <Hidden mdUp>
-            <CopyRight>
-                <Grid container direction="row" spacing={5}>
-
-                    <Grid item xs={12} md={7}>
-                        <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This purchase is protected by <a href="https://powrsale.com">Powrsale.com.</a> Your funds are escrow protected
-                </Grid>
-
-                    <Grid item xs={6} md={2}>
-                        <CustomLink>Terms {"&"} </CustomLink>
-                        <CustomLink>Conditions</CustomLink>
-                    </Grid>
-
-                    <Grid item xs={6} md={3}>
-
-                        <CustomLink>Create your Profile</CustomLink>
-
-                    </Grid>
-
-                    <Grid item xs={12} md={4}></Grid>
-                </Grid>
-            </CopyRight>
-        </Hidden>
-
-
-
-    </Container >
-}
+export default ProductDetails;
