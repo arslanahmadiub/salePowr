@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import Button from "../../CustomComponents/Button";
 import BannerContainer from "../../CustomComponents/BannerContainer";
@@ -12,6 +12,7 @@ import { WalletContext } from "../../../contexts/WalletContext";
 import DesktopHeaderRow from "../../CustomComponents/DesktopHeaderRow";
 import TwinInputSelect from "../../CustomComponents/TwinInputSelect";
 import { DataContext } from "../../../contexts/DataContext";
+import { useSelector } from "react-redux";
 
 const Title = Styled.div`
     font-size: 22px;
@@ -35,7 +36,8 @@ const Wallet = (props) => {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [stage, setStage] = React.useState(0);
   const [type, setType] = React.useState("");
-
+  const walletCard = useSelector((state) => state.wallet.card);
+  const [walletErrorMessage, setWalletErrorMessage] = useState(null);
   function advanceStage() {
     if (stage < 3) {
       setStage(stage + 1);
@@ -58,6 +60,14 @@ const Wallet = (props) => {
 
   const { currencies } = React.useContext(DataContext);
 
+  let walletError = (val) => {
+    setWalletErrorMessage(val);
+    console.log(val);
+  };
+
+  useEffect(() => {
+    walletError();
+  }, [props.error]);
   return (
     <>
       <Row gutter={[0, 8]}>
@@ -91,10 +101,10 @@ const Wallet = (props) => {
       <Row gutter={[0, 24]}>
         <Col span={24}>
           <HorizontalScrollingContainer>
-            {cards &&
-              cards.map((card, index) => {
+            {walletCard &&
+              walletCard.map((card, index) => {
                 return (
-                  <React.Fragment>
+                  <React.Fragment key={index}>
                     {card.type === "momo" && (
                       <span
                         onClick={() => selectThis(card)}
@@ -207,8 +217,15 @@ const Wallet = (props) => {
       {stage > 1 && (
         <>
           <Row gutter={[0, 16]}>
+            <h3 style={{ color: "red" }}>
+              {walletErrorMessage !== null ? walletErrorMessage : ""}
+            </h3>
             <Col span={24}>
-              <WithdrawalForm externalFunction={setStage} type={type} />
+              <WithdrawalForm
+                externalFunction={setStage}
+                type={type}
+                error={(value) => walletError(value)}
+              />
             </Col>
           </Row>
         </>

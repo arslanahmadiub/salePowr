@@ -25,6 +25,7 @@ import { loginUser } from "../../services/authServices";
 import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import GoogleLogin from "react-google-login";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -69,6 +70,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AuthenticationPage(props) {
+  const history = useHistory();
+
   const [wantsToSignIn, setWantsToSignIn] = useState(true);
   const [data, setData] = useState({
     email: "",
@@ -249,6 +252,10 @@ export default function AuthenticationPage(props) {
       try {
         let { data } = await loginUser(loginData);
         console.log(data);
+        if (data.Status) {
+          localStorage.setItem("token", data.Token);
+          history.push("/dashboard");
+        }
       } catch (ex) {
         if (ex.response && ex.response.status === 401) {
           console.log(ex.response.data);
@@ -400,7 +407,7 @@ export default function AuthenticationPage(props) {
             <Grid item xs={12}>
               <FacebookLogin
                 appId="216041560133866"
-                autoLoad={true}
+                autoLoad={false}
                 fields="name,email,picture"
                 callback={responseFacebook}
                 id="facebookLoginButton"

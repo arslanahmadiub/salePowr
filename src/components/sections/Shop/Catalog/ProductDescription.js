@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import companyLogo from "../../../../assets/images/company-logo.png";
 import Styled from "styled-components";
@@ -8,6 +8,8 @@ import ShopBrand, { ShopBrandMobile } from "./ShopBrand";
 import { Security } from "@material-ui/icons";
 import { Hidden } from "@material-ui/core";
 import CustomLink from "../../../CustomComponents/CustomLink";
+import { getProductDetail } from "../../../../services/shopServices";
+import { imageEndPoint } from "../../../../config.json";
 
 const Container = Styled.div`
     background: #F5F8FD;
@@ -81,39 +83,67 @@ export default function ProductDescription({
   delivery,
   name,
   data,
+
   ...props
 }) {
   let handelBuyNow = () => {
     props.updateDialog(true);
-    props.updateValue(data);
+    props.updateValue(newData);
   };
 
+  useEffect(() => {
+    getDetailData();
+  }, []);
+
+  const [productDetail, setproductDetail] = useState(null);
+  const [sideUrl, setsideUrl] = useState(null);
+  let getDetailData = async () => {
+    let result = await getProductDetail(data.productId);
+    setproductDetail(result.data.Details);
+
+    let sideImageUrl = [];
+
+    result.data.Details[0].Images.map((item, index) => {
+      sideImageUrl.push(imageEndPoint + item.image);
+    });
+    setsideUrl(sideImageUrl);
+  };
+  let newData = {
+    delivery: "24hrs",
+    description: productDetail !== null ? productDetail[0].description : "",
+    price: productDetail !== null ? productDetail[0].price : "",
+    productId: productDetail !== null ? productDetail[0].product : "",
+    shop_id: productDetail !== null ? productDetail[0].shop_id : "",
+    name: productDetail !== null ? productDetail[0].product_name : "",
+  };
   return (
     <Container>
       <div>
         <Grid container direction="row" spacing={0}>
           <Grid item xs={4} sm={2} md={2}>
             <Grid container direction="column" spacing={0}>
-              {/* {tiles &&
-                tiles.map((tile, index) => (
-                  <Grid item>
-                    <TiledImage src={tile} alt={`tile-${index}`} />
-                    </Grid>
-                  ))} */}
-
-              <Grid item>
-                <TiledImage src={companyLogo} />
-              </Grid>
-              <Grid item>
-                <TiledImage src={companyLogo} />
-              </Grid>
-              <Grid item>
-                <TiledImage src={companyLogo} />
-              </Grid>
+              {sideUrl !== null
+                ? sideUrl.map((item, index) => {
+                    if (index === 0) {
+                      return null;
+                    } else {
+                      return (
+                        <Grid item key={index}>
+                          <TiledImage src={item} />
+                        </Grid>
+                      );
+                    }
+                  })
+                : null}
             </Grid>
           </Grid>
           <Grid item xs={8} md={4}>
-            <CoverImage src={data.image} alt="First tile" />
+            {productDetail !== null && productDetail[0].Images.length > 0 ? (
+              <CoverImage
+                src={imageEndPoint + productDetail[0].Images[0].image}
+                alt="First tile"
+              />
+            ) : null}
           </Grid>
           <Grid item xs={12} md={5}>
             <DetailsContainer>
@@ -155,7 +185,9 @@ export default function ProductDescription({
             logo={companyLogo}
             name={"GoPare"}
             slogan={"Electronic"}
-            shopid={"#3455354"}
+            shopid={
+              productDetail !== null ? "#" + productDetail[0].shop_id : ""
+            }
           />
         </Hidden>
         <Hidden mdUp>
@@ -163,7 +195,9 @@ export default function ProductDescription({
             logo={companyLogo}
             name={"GoPare"}
             slogan={"Electronic"}
-            shopid={"#3455354"}
+            shopid={
+              productDetail !== null ? "#" + productDetail[0].shop_id : ""
+            }
           />
         </Hidden>
       </div>

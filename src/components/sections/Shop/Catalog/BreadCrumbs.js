@@ -46,7 +46,12 @@ const BreadCrumbs = (props) => {
           />
         );
       case 1:
-        return <ShippingDetail update={(value) => handelUpdate(value)} />;
+        return (
+          <ShippingDetail
+            update={(value) => handelUpdate(value)}
+            productIdDetail={props.details}
+          />
+        );
       case 2:
         return <PaymentDetails />;
       default:

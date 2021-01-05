@@ -11,6 +11,11 @@ import { shipingAction } from "../../../../action/checkoutAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { DataContext } from "../../../../contexts/DataContext";
+import { checkOut } from "../../../../services/shippingServices";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+import Collapse from "@material-ui/core/Collapse";
+import { useHistory } from "react-router";
 
 const Quatnity = Styled.div`
     font-size: 30px;
@@ -27,25 +32,131 @@ const PaymentDetails = (props) => {
   const [state, setState] = React.useState({ quantity: 1 });
   const priceDetail = useSelector((state) => state.checkout.checkoutUserDetail);
   const { countryList, currencies } = React.useContext(DataContext);
+  let [loading, setLoading] = useState(false);
+  const [error, seterror] = useState(false);
 
-  let [selectedButton, setSelectedButton] = useState(true);
+  const checkOutUserDetail = useSelector(
+    (state) => state.checkout.checkoutUserDetail
+  );
+  const checkOutShippingDetail = useSelector(
+    (state) => state.checkout.checkoutShipingDetail
+  );
+  const history = useHistory();
 
-  const processPayment = (event) => {
+  const [mobileMoneyData, setMobileMoneyData] = useState({
+    momoNetwork: "",
+    mobileMoneyNumber: "",
+    mobileMoneyName: "",
+  });
+
+  const [cardData, setCardData] = useState({
+    cardNumber: "",
+    cardName: "",
+    expiryDate: "",
+    csv: "",
+  });
+
+  let { cardNumber, cardName, expiryDate, csv } = cardData;
+  let { momoNetwork, mobileMoneyNumber, mobileMoneyName } = mobileMoneyData;
+
+  let [selectedButton, setSelectedButton] = useState(false);
+
+  const processPayment = async (event) => {
     event.preventDefault();
+
+    let form_data = new FormData();
+    form_data.set("first_name", checkOutUserDetail.firstName);
+    form_data.set("last_name", checkOutUserDetail.lastName);
+    form_data.set("quantity", checkOutUserDetail.quantity.quantity);
+    form_data.set("email", checkOutUserDetail.email);
+    form_data.set("phone", checkOutUserDetail.phone);
+    form_data.set("country", checkOutShippingDetail.country);
+    form_data.set("delivery_location", checkOutShippingDetail.deliveryLocation);
+    form_data.set("buyer_address", checkOutShippingDetail.address);
+    form_data.set("additional_notes", checkOutShippingDetail.additionalNotes);
+    form_data.set("payment_option", "mobile_money");
+    form_data.set("product_id", checkOutUserDetail.productId);
+    form_data.set("shop_id", checkOutUserDetail.shopId);
+    // form_data.set("amount", checkOutShippingDetail.finalCostWithCharges);
+    form_data.set("amount", "1");
+    form_data.set("momo_network", "mtn");
+    form_data.set("mobile_money_number", "0546307943");
+    setLoading(true);
+    let { data } = await checkOut(form_data);
+    if (data.Success) {
+      setLoading(false);
+      history.push("/transactions");
+    } else {
+      setLoading(false);
+      seterror(true);
+    }
   };
 
   let handelMobileMoney = () => {
     setSelectedButton(false);
+    setCardData({
+      cardNumber: "",
+      cardName: "",
+      expiryDate: "",
+      csv: "",
+    });
   };
   let handelCard = () => {
     setSelectedButton(true);
+    setMobileMoneyData({
+      momoNetwork: "",
+      mobileMoneyNumber: "",
+      mobileMoneyName: "",
+    });
   };
 
+  let handelMobileChnage = (e) => {
+    setMobileMoneyData({ ...mobileMoneyData, [e.target.name]: e.target.value });
+  };
+  let handelCardChange = (e) => {
+    setCardData({ ...cardData, [e.target.name]: e.target.value });
+  };
+  const loadingStyle = {
+    zIndex: 50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "rgba(46, 5, 5, 0.44)",
+    width: "100%",
+    minHeight: "100%",
+    overflowY: "scroll",
+    position: "absolute",
+    top: "0",
+    left: "0",
+  };
+
+  const unLoadingStyle = {
+    zIndex: -50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "rgba(46, 5, 5, 0.44)",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    bottom: "0",
+    left: "0",
+  };
   return (
     <Grid container direction="column" spacing={3}>
       <Grid item>
         <h1>Payout Options</h1>
       </Grid>
+      <Grid item>
+        <Collapse in={error}>
+          <Alert variant="filled" severity="error">
+            Transition transition
+          </Alert>
+        </Collapse>
+      </Grid>
+      <div style={loading ? loadingStyle : unLoadingStyle}>
+        <CircularProgress color="inherit" />
+      </div>
       <Grid container direction="row" spacing={3}>
         <Grid item style={{ marginLeft: "1%" }}>
           {selectedButton ? (
@@ -81,6 +192,9 @@ const PaymentDetails = (props) => {
                   label="MoMo Network"
                   list={countryList}
                   required
+                  value={momoNetwork}
+                  name="momoNetwork"
+                  onChange={handelMobileChnage}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -88,6 +202,9 @@ const PaymentDetails = (props) => {
                   type={"text"}
                   placeholder="024571992"
                   label="Mobile Money Number"
+                  value={mobileMoneyNumber}
+                  name="mobileMoneyNumber"
+                  onChange={handelMobileChnage}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -95,6 +212,9 @@ const PaymentDetails = (props) => {
                   type={"text"}
                   placeholder="Full Name"
                   label="Mobile Money Name"
+                  name="mobileMoneyName"
+                  value={mobileMoneyName}
+                  onChange={handelMobileChnage}
                 />
               </Grid>
 
@@ -106,20 +226,31 @@ const PaymentDetails = (props) => {
           ) : (
             <Grid container direction="row" spacing={3}>
               <Grid item xs={12} sm={6}>
-                <DatePicker label="Epiry Date" />
+                <Input
+                  type={"number"}
+                  placeholder="0000 0000 0000 0000"
+                  label="Card Number"
+                  value={cardNumber}
+                  name="cardNumber"
+                  onChange={handelCardChange}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Input
                   type={"text"}
                   placeholder="Full Name"
                   label="Card Name"
+                  value={cardName}
+                  name="cardName"
+                  onChange={handelCardChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Input
-                  type={"number"}
-                  placeholder="0000 0000 0000 0000"
-                  label="Card Number"
+                <DatePicker
+                  label="Epiry Date"
+                  name="expiryDate"
+                  value={expiryDate}
+                  onChange={handelCardChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -127,6 +258,9 @@ const PaymentDetails = (props) => {
                   type={"number"}
                   placeholder="..."
                   label="CVV/ CSV"
+                  value={csv}
+                  name="csv"
+                  onChange={handelCardChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -141,8 +275,8 @@ const PaymentDetails = (props) => {
           data={{
             item: priceDetail.item,
             itemCost: priceDetail.itemCost,
-            totalCost: priceDetail.totalCost,
-            deliveryCharge: 14,
+            totalCost: checkOutShippingDetail.finalCostWithCharges,
+            deliveryCharge: checkOutShippingDetail.deliveryCharges,
           }}
         />
       </Grid>

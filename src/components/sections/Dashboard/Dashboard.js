@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import BannerContainer from "../../CustomComponents/BannerContainer";
 import TradingVolume from "./TradingVolume";
 import ActivityGraph from "./ActivityGraph";
+import NewActivityGraph from "./NewActivityGraph";
 import PaymentLinkVisits from "./PaymentLinkVisits.js";
 import TransactionStatus from "./TransactionStatus";
 import NewOrders from "./NewOrders";
@@ -15,6 +16,7 @@ import ArcProgressBar from "../../CustomComponents/ArcProgressBar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ImportantDevices } from "@material-ui/icons";
 import CompleteProfile from "../Profile/CompleteProfile";
+import { getDashboardData } from "../../../services/dashboardService";
 
 const TopRow = Styled.div`
     display: flex;
@@ -51,14 +53,68 @@ const Dashboard = (props) => {
 
   const { user } = React.useContext(AuthContext);
 
-  React.useEffect(() => {
-    // Fet data from the server here
-    // then update the data as follows
-    // Please remember to combine the profile info
-    // with the dashboardData as below
+  const [activityData, setactivityData] = useState([]);
+  const [profilePercent, setProfilePercent] = useState(null);
 
-    changeDataSet(dashboardData);
-  }, [dataSet]);
+  let dashboardDataGet = async () => {
+    let { data } = await getDashboardData();
+    console.log(data.transactionData);
+    // changeDataSet(data);
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let newTransactionVolume = [];
+
+    if (data.Success) {
+      setProfilePercent(data.Profile);
+      data.transactionVolume.map((item, index) => {
+        let transVolume = {
+          percent: item.y,
+          label: days[index],
+        };
+        newTransactionVolume.push(transVolume);
+      });
+
+      setactivityData(data.activityData);
+      let newDashboardData = {
+        growth: data.Growth,
+        dayVolume: 23,
+        newOrders: data.newOrders,
+        paymentLinkVisitsData: {
+          day: 54,
+          week: data.shopLinkVisitData.week,
+          month: 2024,
+        },
+        shipped: 89,
+        delivered: 90,
+        completed: 344,
+        // activityData: [
+        //   { x: 1, y: 1 },
+        //   { x: 2, y: 6 },
+        //   { x: 3, y: 7 },
+        //   { x: 4, y: 8 },
+        //   { x: 5, y: 4 },
+        //   { x: 6, y: 6 },
+        //   { x: 7, y: 2 },
+        // ],
+        transactionStatusData: data.transactionData,
+        transactionVolume: newTransactionVolume,
+      };
+
+      changeDataSet(newDashboardData);
+    }
+  };
+
+  useEffect(() => {
+    dashboardDataGet();
+  }, []);
+
+  // React.useEffect(() => {
+  //   // Fet data from the server here
+  //   // then update the data as follows
+  //   // Please remember to combine the profile info
+  //   // with the dashboardData as below
+
+  //   changeDataSet(dashboardData);
+  // }, [dataSet]);
 
   const data = { ...dataSet, ...user };
 
@@ -70,7 +126,9 @@ const Dashboard = (props) => {
         <Hidden smDown>
           <Grid item>
             <TopRow>
-              <Title>{(data && data.profilePercent) || 0}% completed</Title>
+              <Title>
+                {profilePercent !== null ? profilePercent : 0}% completed
+              </Title>
               <FlatSelect
                 list={[
                   "Jan - Feb, 2020",
@@ -100,7 +158,11 @@ const Dashboard = (props) => {
         <Grid item>
           <Grid container spacing={2} direction="row">
             <Grid xs={12} md={6} item>
-              <ActivityGraph data={data && data.activityData} />
+              {/* <ActivityGraph data={data && data.activityData} /> */}
+              <h3>Activity</h3>
+              <NewActivityGraph
+                data={activityData.length > 0 ? activityData : []}
+              />
             </Grid>
             <Grid xs={12} md={3} item>
               <PaymentLinkVisits data={data && data.paymentLinkVisitsData} />

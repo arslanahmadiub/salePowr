@@ -8,6 +8,7 @@ export default function ({
   color,
   onClick,
   slim,
+  disable,
   faded,
   ...props
 }) {
@@ -19,7 +20,7 @@ export default function ({
     background:
       theme[color] ||
       (faded && "rgba(49, 189, 244, 0.1)") ||
-      (outlined && "#fff") ||
+      (outlined && "#A9A9A9") ||
       theme.primaryBlue,
     height: !slim && "50px",
     border: !outlined && "none",
@@ -32,6 +33,7 @@ export default function ({
       onClick={onClick}
       {...props}
       size={slim ? "middle" : "large"}
+      disabled={disable}
     >
       {props.children}
     </Button>

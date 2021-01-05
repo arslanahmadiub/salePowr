@@ -67,7 +67,6 @@ const ProfileForm = (props) => {
           <Input
             placeholder="Enter first name"
             label="First name"
-            required
             name="firstName"
             value={firstName}
             onChange={handelProfileDataChange}
@@ -77,7 +76,6 @@ const ProfileForm = (props) => {
           <Input
             placeholder="Enter last name"
             label="Last Name"
-            required
             name="lastName"
             value={lastName}
             onChange={handelProfileDataChange}
@@ -106,7 +104,6 @@ const ProfileForm = (props) => {
             type="email"
             placeholder="Enter email address"
             label="Email address"
-            required
             name="email"
             value={email}
             onChange={handelProfileDataChange}
@@ -116,7 +113,6 @@ const ProfileForm = (props) => {
           <Input
             placeholder="Phone number"
             label="Phone number"
-            required
             type="tel"
             name="phone"
             value={phone}
@@ -139,7 +135,6 @@ const ProfileForm = (props) => {
           <PasswordInput
             placeholder="New password"
             label="New password"
-            required
             name="newPassword"
             value={newPassword}
             onChange={handelProfileDataChange}
@@ -149,7 +144,6 @@ const ProfileForm = (props) => {
           <PasswordInput
             placeholder="Confirm password"
             label="Confirm password"
-            required
             name="confirmPassword"
             value={confirmPassword}
             onChange={handelProfileDataChange}

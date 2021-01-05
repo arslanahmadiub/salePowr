@@ -4,6 +4,7 @@ import RenderProducts from "./Catalog/RenderProducts";
 import { products } from "../../../DummyData/DummyData";
 import { getCatalogData } from "../../../services/shopServices";
 import axios from "axios";
+import { imageEndPoint } from "../../../config.json";
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
@@ -30,6 +31,7 @@ export default function Catalog(props) {
 
   let getCatalog = async () => {
     let { data } = await getCatalogData();
+
     let result = data.Products;
 
     let freshData = [];
@@ -37,14 +39,16 @@ export default function Catalog(props) {
       let newData = {
         name: item.product_name,
         image:
-          "https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png",
+          item.thumbnail.length > 0
+            ? imageEndPoint + item.thumbnail[0].image
+            : "",
         description: item.description,
         price: item.price,
         tiles: {
-          first_tile:
-            "https://medilifefood.com/wp-content/uploads/2019/10/purepng.com-red-appleappleapplesfruitsweet-1701527180174lrnig-930x1024.png",
+          first_tile: "",
         },
         delivery: "24hrs",
+        productId: item.product,
       };
       freshData.push(newData);
     });

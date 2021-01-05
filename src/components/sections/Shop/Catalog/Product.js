@@ -54,7 +54,9 @@ const Product = (props) => {
 
   const details = props.details;
 
-  const toggleDialog = (event) => setDialog(!dialog);
+  const toggleDialog = (event) => {
+    setDialog(!dialog);
+  };
 
   let payDialogUpdate = (value) => {
     setPayDialog(value);

@@ -5,7 +5,8 @@ import { apiEndPoint } from "../config.json";
 let createUserUrl = apiEndPoint + "create_user";
 let loginUserUrl = apiEndPoint + "login";
 let completeUserProfileUrl = apiEndPoint + "complete_profile";
-let userToken = "fde1ecb257987d6f43d35391eb58f439c8c4290b";
+// let userToken = "92c6544f868181b32ad25533fc3633ec6d450d77";
+let userToken = localStorage.getItem("token");
 
 export async function createUser(data) {
   return await axios({

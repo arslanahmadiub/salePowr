@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Input from "../CustomComponents/Input";
@@ -15,6 +15,7 @@ import { addProduct } from "../../services/shopServices";
 import { showLoading } from "../../action/shopAction";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import DeliveryTerms from "./DeliveryTerms";
 
 const ImageContainer = Styled.div`
     height: 100px;
@@ -27,6 +28,9 @@ export default function AddProductForm(props) {
   const [state, setState] = React.useState({ delivery: "24hrs" });
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
+  let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
+  const [cityLocationData, setCityLocationData] = useState([]);
+  const [imagesData, setImagesData] = useState([]);
 
   let [data, setData] = useState({
     productName: "",
@@ -69,32 +73,70 @@ export default function AddProductForm(props) {
     });
   };
 
+  useEffect(() => {
+    getLocationData();
+  }, [props.getData]);
+
+  let addDeliveryItem = () => {
+    let index = deliveryTermNumber.length;
+    let newDeliveryTerm = [...deliveryTermNumber];
+    newDeliveryTerm.push(index + 1);
+    setDeliveryTermNumber(newDeliveryTerm);
+  };
+  let removeDeliveryItem = () => {
+    let index = deliveryTermNumber.length;
+    let newDeliveryTerm = [...deliveryTermNumber];
+    newDeliveryTerm.splice(-1, 1);
+
+    setDeliveryTermNumber(newDeliveryTerm);
+  };
+
   const processWidrawal = async (event) => {
     event.preventDefault();
     let form_data = new FormData();
-    form_data.append("shop", "nb3llsmwcn");
-    form_data.append("product_name", productName);
-    form_data.append("description", productDescription);
-    form_data.append("price", productPrice);
+    await form_data.set("shop", "b98vmyx4sk");
+    await form_data.set("product_name", productName);
+    await form_data.set("description", productDescription);
+    await form_data.set("price", productPrice);
+    imagesData.forEach((item, index) => {
+      form_data.append(index, item);
+    });
 
-    let deliveryTerms = [];
-    let dataObject = {
-      delivery_country: productCountry,
-      delivery_location: productCity,
-      delivery_price: productPrice,
-    };
-    deliveryTerms.push(dataObject);
-    setLoading(true);
-    console.log(deliveryTerms);
-    clearForm();
+    cityLocationData.splice(0, 1);
+    let newDeliveryTerm = [];
+
+    cityLocationData.map((item, index) => {
+      let newData = {
+        delivery_country: productCountry,
+        delivery_location: item.locationCurrency.location,
+        delivery_price: item.locationCurrency.currency,
+      };
+      newDeliveryTerm.push(newData);
+    });
+
+    // let deliveryTerms = [];
+    // let dataObject = {
+    //   delivery_country: productCountry,
+    //   delivery_location: productCity,
+    //   delivery_price: productPrice,
+    // };
+    // deliveryTerms.push(dataObject);
+    // setLoading(true);
+
+    // clearForm();
+
     let { data } = await addProduct(form_data);
     console.log(data);
     if (data.Success) {
       let productId = data.ID;
-      console.log(productId);
+
+      let finalData = {
+        product_id: productId,
+        delivery_terms: newDeliveryTerm,
+      };
       try {
-        let result = await productDeliveryTerm(deliveryTerms, productId);
-        console.log(result.data);
+        let result = await productDeliveryTerm(finalData);
+        console.log(result);
         setLoading(false);
       } catch (ex) {
         if (ex.response) {
@@ -103,6 +145,41 @@ export default function AddProductForm(props) {
       }
     }
     setLoading(false);
+
+    // console.log(imagesData);
+  };
+
+  let getImages = (value) => {
+    setImagesData(value);
+  };
+
+  useEffect(() => {
+    getImages();
+  }, [props.getFiles]);
+
+  let getLocationData = (event, id) => {
+    let data = cityLocationData;
+
+    if (data.length > 0) {
+      let newArray = data.filter(function (obj) {
+        return obj.id !== id;
+      });
+
+      let newObject = {
+        id: id,
+        locationCurrency: event,
+      };
+      newArray.push(newObject);
+      setCityLocationData(newArray);
+    } else {
+      let newData = [];
+      let newObject = {
+        id: id,
+        locationCurrency: event,
+      };
+      newData.push(newObject);
+      setCityLocationData(newData);
+    }
   };
 
   let ToggleInstagram = (e) => {
@@ -151,9 +228,7 @@ export default function AddProductForm(props) {
       >
         <Grid container direction="row" spacing={4}>
           <Grid item xs={12}>
-            <ImageContainer>
-              <MiniFilePicker />
-            </ImageContainer>
+            <MiniFilePicker getFiles={(value) => getImages(value)} />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={3} direction="row">
@@ -200,7 +275,6 @@ export default function AddProductForm(props) {
           <Grid item xs={12}>
             <h4>Delivery Terms</h4>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Select
               placeholder="Select country"
@@ -213,29 +287,22 @@ export default function AddProductForm(props) {
               value={productCountry}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Input
-              placeholder="Enter a city"
-              label="City/Location"
-              rows={5}
-              required
-              name="productCity"
-              onChange={onChange}
-              value={productCity}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              list={currencies}
-              placeholder="Currency"
-              label="Currency"
-              rows={5}
-              required
-              name="productCurrency"
-              onChange={onChange}
-              value={productCurrency}
-            />
-          </Grid>
+          <Grid item xs={12} md={8}></Grid>
+
+          {deliveryTermNumber.map((item, index) => {
+            return (
+              <DeliveryTerms
+                key={index}
+                itemIndex={index}
+                addItem={addDeliveryItem}
+                removeItem={removeDeliveryItem}
+                lengthOfItem={deliveryTermNumber}
+                getData={(value, value2) => getLocationData(value, value2)}
+              />
+            );
+          })}
+
+          {/* here is delivery Terms */}
 
           <Grid item xs={12}>
             <FlexContainer>

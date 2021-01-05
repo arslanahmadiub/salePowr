@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/user-authentication">
+        <Route exact path="/">
           <AuthenticationPage />
         </Route>
         <Route exact path="/page-not-found">
@@ -22,11 +22,20 @@ function App() {
 
         <Home>
           <Switch>
-            {routes.map((route) => {
+            {/* {routes.map((route) => {
               return (
                 <ProtectedRoute exact path={route.path} key={route.path}>
                   <route.component />
                 </ProtectedRoute>
+              );
+            })} */}
+            {routes.map((route) => {
+              return (
+                <ProtectedRoute
+                  exact
+                  path={route.path}
+                  component={route.component}
+                />
               );
             })}
 
@@ -41,3 +50,19 @@ function App() {
 }
 
 export default App;
+
+// import React from "react";
+// import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
+// // import Dashboard from "../components/sections/Dashboard/Dashboard";
+// import Dashboard from "./components/sections/Dashboard/Dashboard";
+// import "./App.css";
+
+// function App() {
+//   return (
+//     <Switch>
+//       <Route exact path="/" component={Dashboard} />
+//     </Switch>
+//   );
+// }
+
+// export default App;

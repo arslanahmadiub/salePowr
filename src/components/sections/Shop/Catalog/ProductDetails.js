@@ -23,6 +23,7 @@ const ChangeButton = Styled.div`
 
 const ProductDetails = (props) => {
   const dispatch = useDispatch();
+
   const [checkoutDetails, setCheckoutDetails] = useState({
     firstName: "",
     lastName: "",
@@ -43,7 +44,9 @@ const ProductDetails = (props) => {
       item: name,
       itemCost: price,
       totalCost: productPrice,
-      deliveryCharge: 14,
+      shopId: props.details.shop_id,
+      productId: props.details.productId,
+      quantity: state,
     };
     dispatch(detailAction(userDetail));
     props.update(1);
@@ -143,7 +146,7 @@ const ProductDetails = (props) => {
             item: name,
             itemCost: price,
             totalCost: productPrice,
-            deliveryCharge: 14,
+            deliveryCharge: "Depend Upon Shipping Details",
           }}
         />
       </Grid>

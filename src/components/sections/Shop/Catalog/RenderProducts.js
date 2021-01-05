@@ -13,7 +13,7 @@ const RenderProducts = (props) => {
       {products &&
         products.map((product, index) => {
           return (
-            <Grid item xs={6} sm={4} md={showRightSideBar ? 4 : 3}>
+            <Grid item xs={6} sm={4} md={showRightSideBar ? 4 : 3} key={index}>
               <Product
                 key={product.name + index.toString()}
                 details={product}
