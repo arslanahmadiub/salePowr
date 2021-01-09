@@ -44,7 +44,7 @@ export default function TwinInputSelect({
         style={{ maxWidth: "70%", borderRadius: "5px" }}
         placeholder={placeholder || ""}
         required={required}
-        onChange={getInput}
+        onChange={onChange}
       />
     </Input.Group>
   );

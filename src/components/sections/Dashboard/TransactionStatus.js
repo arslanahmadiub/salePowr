@@ -19,7 +19,7 @@ const Value = Styled.div`
 
 const TransactionStatus = (props) => {
   const { shipped, completed, delivered } = props?.data || {};
-  console.log(props);
+
   return (
     <Card>
       <Title>Transaction Status</Title>

@@ -7,6 +7,7 @@ import DatePicker from "../CustomComponents/DatePicker";
 import PasswordInput from "../CustomComponents/PasswordInput";
 import CustomLink from "../CustomComponents/CustomLink";
 import { completeUserProfile } from "../../services/authServices";
+import { getFullUserDetails } from "../../services/authServices";
 const ProfileForm = (props) => {
   let [profileData, setProfileData] = useState({
     firstName: "",
@@ -18,13 +19,6 @@ const ProfileForm = (props) => {
     newPassword: "",
     confirmPassword: "",
   });
-
-  let [profileAvatar, setProfielAvatar] = useState(props.profileImage);
-
-  useEffect(() => {
-    setProfielAvatar(props.profileImage);
-  }, [props.profileImage]);
-
   let {
     firstName,
     lastName,
@@ -35,6 +29,29 @@ const ProfileForm = (props) => {
     newPassword,
     confirmPassword,
   } = profileData;
+  let [profileAvatar, setProfielAvatar] = useState(props.profileImage);
+
+  useEffect(() => {
+    setProfielAvatar(props.profileImage);
+  }, [props.profileImage]);
+
+  let getProfileInfo = async () => {
+    let { data } = await getFullUserDetails();
+    console.log(data);
+    if (data.Success) {
+      // setProfileData(data.Details[0]);
+      setProfileData({ firstName: data.Details[0].first_name });
+      setProfileData({ lastName: data.Details[0].last_name });
+      setProfileData({ otherName: data.Details[0].other_names });
+      setProfileData({ dob: data.Details[0].dob });
+      setProfileData({ email: data.Details[0].email });
+      setProfileData({ phone: data.Details[0].phone });
+    }
+  };
+  useEffect(() => {
+    getProfileInfo();
+  }, []);
+  console.log(profileData);
 
   let handelProfileDataChange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
@@ -42,7 +59,7 @@ const ProfileForm = (props) => {
 
   const saveProfile = async (event) => {
     event.preventDefault();
-    console.log(dob);
+
     let profileData = new FormData();
     profileData.append("first_name", firstName);
     profileData.append("last_name", lastName);

@@ -1,11 +1,14 @@
-import React from "react"
-import Avatar from "@material-ui/core/Avatar"
-import ExpandMore from "@material-ui/icons/ExpandMore"
-import ExpandLess from "@material-ui/icons/ExpandLess"
-import { ShopContext } from '../../../../contexts/ShopContext'
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import { ShopContext } from "../../../../contexts/ShopContext";
 import Styled from "styled-components";
 import { ClickAwayListener } from "@material-ui/core";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { selectedShopId } from "../../../../action/shopAction";
+import { selectedShopName } from "../../../../action/shopAction";
 
 const List = Styled.ul`
     padding: 18px 8px;
@@ -22,7 +25,7 @@ const List = Styled.ul`
   z-index: 100;
   cursor: pointer;
   box-shadow: 1px 1px 2px 0px lightgrey;
-  display: ${p => !p.show ? "none" : ""};
+  display: ${(p) => (!p.show ? "none" : "")};
   
 `;
 const ListItem = Styled.li`
@@ -36,51 +39,87 @@ const ListItem = Styled.li`
       opacity: 0.5;
       color: #000;
   }
-`
+`;
 
+const SelectedShop = (props) => {
+  const [show, setShow] = React.useState(false);
+  //   const { shops, currentShop, changeShop } = React.useContext(ShopContext);
+  const shops = useSelector((state) => state.shopPreview.shopIdCollections);
+  const selectedShop = useSelector((state) => state.shopPreview.selectedShop);
+  let dispatch = useDispatch();
 
-const SelectedShop = props => {
+  function onChange(shop) {
+    dispatch(selectedShopId(shop.shop));
+    dispatch(selectedShopName(shop.shop_name));
+  }
 
-    const [show, setShow] = React.useState(false);
-    const { shops, currentShop, changeShop } = React.useContext(ShopContext);
-
-
-    function onChange(shop) {
-        changeShop(shop);
-    }
-
-    return <ClickAwayListener onClickAway={() => setShow(false)}>
-        <div style={{ padding: "0  0 0 0px", position: "absolute", bottom: "0px", width: "80%" }}>
-            <div style={{ fontSize: "18px", fontWeight: "500", color: "#010101", padding: "10px 5px" }}>
-                Selected shop
+  return (
+    <ClickAwayListener onClickAway={() => setShow(false)}>
+      <div
+        style={{
+          padding: "0  0 0 0px",
+          position: "absolute",
+          bottom: "0px",
+          width: "80%",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "18px",
+            fontWeight: "500",
+            color: "#010101",
+            padding: "10px 5px",
+          }}
+        >
+          Selected shop
         </div>
 
-            <div onClick={() => setShow(!!shops && !show)} style={{ display: "flex", justifyContent: "space-between", padding: "5px", position: "relative", cursor: "pointer" }}>
-                <div style={{ display: "flex", justifyContent: "normal", heigth: "" }}>
-                    <div>
-                        <Avatar alt={currentShop?.name}>{currentShop?.name[0]}</Avatar>
-                    </div>
-                    <div style={{ lineHeight: "40px", paddingLeft: "10px", fontSize: "16px", fontWeight: "500", color: "#979FAA" }}>
-                        {currentShop?.name}
-                    </div>
-
-                </div>
-                <div style={{ lineHeight: "55px", color: "#979FAA" }}>
-                    {show ? <ExpandLess /> : <ExpandMore />}
-                </div>
-
+        <div
+          onClick={() => setShow(!!shops && !show)}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "5px",
+            position: "relative",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            style={{ display: "flex", justifyContent: "normal", heigth: "" }}
+          >
+            <div>
+              {/* <Avatar>Lahore</Avatar> */}
+              {selectedShop}
             </div>
-            <List onClick={() => setShow(!!shops && !show)} show={shops && show}>
-                {
-                    shops != null && shops.map(shop => {
-                        return <ListItem key={shop?.id} onClick={() => onChange(shop)}>
-                            {shop?.name}
-                        </ListItem>
-                    })
-                }
-            </List>
+            {/* <div
+              style={{
+                lineHeight: "40px",
+                paddingLeft: "10px",
+                fontSize: "16px",
+                fontWeight: "500",
+                color: "#979FAA",
+              }}
+            >
+              {currentShop?.name}
+            </div> */}
+          </div>
+          <div style={{ lineHeight: "55px", color: "#979FAA" }}>
+            {show ? <ExpandLess /> : <ExpandMore />}
+          </div>
         </div>
+        <List onClick={() => setShow(!!shops && !show)} show={shops && show}>
+          {shops != null &&
+            shops.map((shop) => {
+              return (
+                <ListItem key={shop?.shop} onClick={() => onChange(shop)}>
+                  {shop?.shop_name}
+                </ListItem>
+              );
+            })}
+        </List>
+      </div>
     </ClickAwayListener>
-}
+  );
+};
 
 export default SelectedShop;

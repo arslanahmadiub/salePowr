@@ -32,7 +32,7 @@ function NewActivityGraph(props) {
       },
     ],
   };
-  console.log(graphData);
+
   return (
     <div>
       <div>

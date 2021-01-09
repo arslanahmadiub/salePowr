@@ -1,25 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Redirect, Route, Switch } from "react-router-dom";
 import PageNotFound from "./Utilities/PageNotFound";
 import Home from "./components/sections/Home/Home";
 import Routes from "./Utilities/Routes";
 import ProtectedRoute from "./Utilities/ProtectedRoute";
+import AdminRoute from "./Utilities/AdminRoute";
 import AuthenticationPage from "./components/auth/AuthPage";
+import PublicShop from "./components/sections/PublicShop/PublicShop";
+import { useDispatch } from "react-redux";
+import { selectedShopId } from "./action/shopAction";
+import { selectedShopName } from "./action/shopAction";
+import { shopIdsAction } from "./action/shopAction";
+import { profileDialogAction } from "./action/authAction";
+
+import { getShopIds } from "./services/dashboardService";
 
 function App() {
   const routes = Routes();
+  let dispatch = useDispatch();
+  useEffect(() => {
+    shopsIdsCollections();
+  }, []);
+  let shopsIdsCollections = async () => {
+    let { data } = await getShopIds();
 
+    if (data.Success) {
+      dispatch(shopIdsAction(data.Details));
+      dispatch(selectedShopId(data.Details[0].shop));
+      dispatch(selectedShopName(data.Details[0].shop_name));
+    }
+  };
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <AuthenticationPage />
-        </Route>
+        </Route> */}
+        <Route
+          exact
+          path="/"
+          render={(props) => {
+            if (localStorage.getItem("token") === null) {
+              return <AuthenticationPage {...props} />;
+            }
+            return <Redirect to="/dashboard" />;
+          }}
+        />
         <Route exact path="/page-not-found">
           <PageNotFound />
         </Route>
-
+        <Route path="/shopPreview">
+          <PublicShop />
+        </Route>
         <Home>
           <Switch>
             {/* {routes.map((route) => {

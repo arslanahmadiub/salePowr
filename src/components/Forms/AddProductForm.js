@@ -13,9 +13,12 @@ import { WalletContext } from "../../contexts/WalletContext";
 import { productDeliveryTerm } from "../../services/shopServices";
 import { addProduct } from "../../services/shopServices";
 import { showLoading } from "../../action/shopAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 import DeliveryTerms from "./DeliveryTerms";
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { LastIndexContext } from "antd/lib/space";
 
 const ImageContainer = Styled.div`
     height: 100px;
@@ -31,7 +34,9 @@ export default function AddProductForm(props) {
   let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
   const [cityLocationData, setCityLocationData] = useState([]);
   const [imagesData, setImagesData] = useState([]);
-
+  const selectedShopId = useSelector(
+    (state) => state.shopPreview.selectedShopId
+  );
   let [data, setData] = useState({
     productName: "",
     productPrice: "",
@@ -192,6 +197,10 @@ export default function AddProductForm(props) {
     setData({ ...data, twitter: e });
   };
 
+  let handelSharing = () => {
+    console.log("Done Sharing");
+  };
+
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -220,6 +229,13 @@ export default function AddProductForm(props) {
     bottom: "0",
     left: "0",
   };
+  let siteAddress = window.location.href;
+
+  let finalUrl =
+    siteAddress.slice(0, siteAddress.lastIndexOf("/") + 1) +
+    "/shopPreview/" +
+    selectedShopId;
+
   return (
     <div>
       <form
@@ -321,20 +337,50 @@ export default function AddProductForm(props) {
               </div>
             </FlexContainer>
             <hr />
+
             <p>Also share on social media</p>
-            <FlexContainer>
+            {/* <FlexContainer>
               <span>Instagram</span>
-              <Switch size="small" onChange={ToggleInstagram} />
-            </FlexContainer>
+              <InstapaperShareButton
+                title="Hello Here is Power sale"
+                via="I am admin arslan"
+                url="http://www.supersecure.site/"
+                // hashtag="#programing joke"
+                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
+                onClick={handelSharing}
+              >
+                <Switch size="small" onChange={ToggleTwitter} />
+              </InstapaperShareButton>
+            </FlexContainer> */}
             <FlexContainer>
               <span>Facebook</span>
-              <Switch size="small" onChange={ToggleFacebook} />
+              <FacebookShareButton
+                quote="Hello Here is Power sale"
+                url={finalUrl}
+                // hashtag="#programing joke"
+                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
+                onClick={handelSharing}
+              >
+                <Switch size="small" onChange={ToggleFacebook} />
+              </FacebookShareButton>
             </FlexContainer>
+
             <FlexContainer>
               <span>Twitter</span>
-              <Switch size="small" onChange={ToggleTwitter} />
+
+              <TwitterShareButton
+                title="Here is description of Product"
+                via="I am admin arslan"
+                url={finalUrl}
+                // hashtag="#programing joke"
+                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
+                onClick={handelSharing}
+              >
+                <Switch size="small" onChange={ToggleTwitter} />
+              </TwitterShareButton>
             </FlexContainer>
           </Grid>
+
           <Grid item xs={12} sm={6} md={4}>
             <Button type="submit">SEND REQUEST</Button>
           </Grid>

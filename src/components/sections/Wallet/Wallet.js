@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
+import { Button as AntButton } from "antd";
+
 import Button from "../../CustomComponents/Button";
 import BannerContainer from "../../CustomComponents/BannerContainer";
 import BulletedText from "../../CustomComponents/BulletedText";
@@ -13,6 +15,8 @@ import DesktopHeaderRow from "../../CustomComponents/DesktopHeaderRow";
 import TwinInputSelect from "../../CustomComponents/TwinInputSelect";
 import { DataContext } from "../../../contexts/DataContext";
 import { useSelector } from "react-redux";
+import { getWallet } from "../../../services/walletServices";
+import { cashOut } from "../../../services/walletServices";
 
 const Title = Styled.div`
     font-size: 22px;
@@ -36,8 +40,14 @@ const Wallet = (props) => {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [stage, setStage] = React.useState(0);
   const [type, setType] = React.useState("");
-  const walletCard = useSelector((state) => state.wallet.card);
+  // const walletCard = useSelector((state) => state.wallet.card);
   const [walletErrorMessage, setWalletErrorMessage] = useState(null);
+  const [walletId, setWalletId] = useState(null);
+  const [cashAmount, setCashAmount] = useState("");
+  const [cashLoading, setCashLoading] = useState(false);
+  const [walletCard, setWalletCard] = useState([]);
+  const [escrowAmount, setEscrowAmount] = useState("");
+  const [available, setAvailable] = useState("");
   function advanceStage() {
     if (stage < 3) {
       setStage(stage + 1);
@@ -46,8 +56,11 @@ const Wallet = (props) => {
 
   function selectThis(data) {
     setSelectedCard(data);
+
+    setWalletId(data.id);
   }
   const { balance, cards } = React.useContext(WalletContext);
+
   const { main, escrow } = balance || {};
 
   function cashoutSomeMoney(values) {
@@ -65,9 +78,56 @@ const Wallet = (props) => {
     console.log(val);
   };
 
+  let handelCashout = async () => {
+    let form_data = new FormData();
+    form_data.set("wallet_id", walletId);
+    form_data.set("amount", cashAmount);
+
+    try {
+      setCashLoading(true);
+      let { data } = await cashOut(form_data);
+    } catch (error) {
+      setCashLoading(false);
+
+      console.log(error.response);
+    }
+    setCashLoading(false);
+  };
+  let changeCashAmount = (e) => {
+    setCashAmount(e.target.value);
+  };
+
+  let getWalletData = async () => {
+    let { data } = await getWallet();
+
+    let walletArray = [];
+    if (data.Success) {
+      data.Details.Wallets.map((item) => {
+        let newWalletData = {
+          name: item.mobile_money_name,
+          country: "Ghana",
+          number: item.mobile_money_number,
+          date: "09/2024",
+          type: "momo",
+          id: item.id,
+          network: item.momo_network,
+        };
+        walletArray.push(newWalletData);
+        setEscrowAmount(data.Details.escrow);
+        setAvailable(data.Details.available);
+      });
+      setWalletCard(walletArray);
+    }
+  };
+
+  useEffect(() => {
+    getWalletData();
+  }, []);
+
   useEffect(() => {
     walletError();
   }, [props.error]);
+
   return (
     <>
       <Row gutter={[0, 8]}>
@@ -76,24 +136,20 @@ const Wallet = (props) => {
       <Row gutter={[0, 24]}>
         <Col span={24}>
           <BannerContainer>
-            {balance && balance.main && (
-              <BulletedText
-                title={"Available"}
-                value={`${balance.currency} ${balance.main || 0}`}
-                primary
-              />
-            )}
+            <BulletedText
+              title={"Available"}
+              value={`GHZ ${available}`}
+              primary
+            />
 
             {!isNaN(percent) && (
               <CircularProgress thickness={10} radius={50} percent={percent} />
             )}
 
-            {balance && balance.escrow && (
-              <BulletedText
-                title={"Funds in escrow"}
-                value={balance ? `${balance.currency} ${balance.escrow}` : 0}
-              />
-            )}
+            <BulletedText
+              title={"Funds in escrow"}
+              value={`GHZ ${escrowAmount}`}
+            />
           </BannerContainer>
         </Col>
       </Row>
@@ -101,39 +157,38 @@ const Wallet = (props) => {
       <Row gutter={[0, 24]}>
         <Col span={24}>
           <HorizontalScrollingContainer>
-            {walletCard &&
-              walletCard.map((card, index) => {
-                return (
-                  <React.Fragment key={index}>
-                    {card.type === "momo" && (
-                      <span
-                        onClick={() => selectThis(card)}
-                        key={card.number + index + card.number}
-                      >
-                        <MoMoCard
-                          selected={
-                            selectedCard && selectedCard.number === card.number
-                          }
-                          data={card}
-                        />
-                      </span>
-                    )}
-                    {card.type === "bank" && (
-                      <span
-                        onClick={() => selectThis(card)}
-                        key={card.number + index + card.number}
-                      >
-                        <CreditCard
-                          selected={
-                            selectedCard && selectedCard.number === card.number
-                          }
-                          data={card}
-                        />
-                      </span>
-                    )}
-                  </React.Fragment>
-                );
-              })}
+            {walletCard.map((card, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {card.type === "momo" && (
+                    <span
+                      onClick={() => selectThis(card)}
+                      key={card.number + index + card.number}
+                    >
+                      <MoMoCard
+                        selected={
+                          selectedCard && selectedCard.number === card.number
+                        }
+                        data={card}
+                      />
+                    </span>
+                  )}
+                  {card.type === "bank" && (
+                    <span
+                      onClick={() => selectThis(card)}
+                      key={card.number + index + card.number}
+                    >
+                      <CreditCard
+                        selected={
+                          selectedCard && selectedCard.number === card.number
+                        }
+                        data={card}
+                      />
+                    </span>
+                  )}
+                </React.Fragment>
+              );
+            })}
 
             <NewCardButton key="nmsi8923nv-2092309" onClick={advanceStage}>
               <div style={{ top: "40%", position: "relative" }}>
@@ -160,13 +215,28 @@ const Wallet = (props) => {
                     <TwinInputSelect
                       list={currencies}
                       placeholder="Please input the amount to withdraw"
+                      onChange={changeCashAmount}
                     />
                   </Form.Item>
                 </Col>
                 <Row gutter={[0, 8]}>
                   <Col span={12}>
                     <Form.Item>
-                      <Button htmlType="submit">Cashout</Button>
+                      {/* <Button onClick={handelCashout}>Cashout</Button> */}
+                      <AntButton
+                        type="primary"
+                        loading={cashLoading}
+                        onClick={handelCashout}
+                        style={{
+                          background: "#31BDF4",
+                          height: "50px",
+                          borderRadius: "5px",
+                          border: "none",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        CASHOUT
+                      </AntButton>
                     </Form.Item>
                   </Col>
                   <Col span={12}>

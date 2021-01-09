@@ -18,6 +18,10 @@ import { ImportantDevices } from "@material-ui/icons";
 import CompleteProfile from "../Profile/CompleteProfile";
 import { getDashboardData } from "../../../services/dashboardService";
 
+import { useDispatch } from "react-redux";
+
+import { profileDialogAction } from "../../../action/authAction";
+
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -50,6 +54,7 @@ const Title = Styled.div`
 
 const Dashboard = (props) => {
   const [dataSet, changeDataSet] = React.useState(null);
+  let dispatch = useDispatch();
 
   const { user } = React.useContext(AuthContext);
 
@@ -58,7 +63,7 @@ const Dashboard = (props) => {
 
   let dashboardDataGet = async () => {
     let { data } = await getDashboardData();
-    console.log(data.transactionData);
+
     // changeDataSet(data);
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let newTransactionVolume = [];
@@ -107,6 +112,10 @@ const Dashboard = (props) => {
     dashboardDataGet();
   }, []);
 
+  useEffect(() => {
+    showProfileDialog();
+  }, [profilePercent]);
+
   // React.useEffect(() => {
   //   // Fet data from the server here
   //   // then update the data as follows
@@ -117,6 +126,16 @@ const Dashboard = (props) => {
   // }, [dataSet]);
 
   const data = { ...dataSet, ...user };
+
+  let showProfileDialog = () => {
+    if (profilePercent) {
+      if (profilePercent === 100) {
+        dispatch(profileDialogAction(false));
+      } else {
+        dispatch(profileDialogAction(true));
+      }
+    }
+  };
 
   return (
     <>

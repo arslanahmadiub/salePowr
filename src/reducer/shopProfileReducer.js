@@ -19,6 +19,9 @@ const initalState = {
   formData: false,
   filePicker: false,
   loadingDialog: false,
+  shopIdCollections: [],
+  selectedShop: "",
+  selectedShopId: "",
 };
 
 export const shopProfileReducer = (state = initalState, action) => {
@@ -52,6 +55,21 @@ export const shopProfileReducer = (state = initalState, action) => {
       return {
         ...state,
         loadingDialog: action.payload,
+      };
+    case "SET_SHOP_IDS":
+      return {
+        ...state,
+        shopIdCollections: action.payload,
+      };
+    case "SELECTED_SHOP_ID":
+      return {
+        ...state,
+        selectedShopId: action.payload,
+      };
+    case "SELECTED_SHOP_NAME":
+      return {
+        ...state,
+        selectedShop: action.payload,
       };
     default:
       return state;

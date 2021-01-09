@@ -153,7 +153,7 @@ const ShopProfileForm = (props) => {
                 value={type}
                 onChange={onChange}
                 list={businessTypes}
-                placeholder="Select onChange={onChange} business type"
+                placeholder="Select Business Type"
                 label="Business type"
                 required
               />
@@ -165,7 +165,7 @@ const ShopProfileForm = (props) => {
                 value={country}
                 onChange={onChange}
                 list={countryList}
-                placeholder="Select onChange={onChange} country"
+                placeholder="Select Country"
                 label="Country"
                 required
               />

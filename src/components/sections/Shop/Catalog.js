@@ -3,7 +3,8 @@ import Styled from "styled-components";
 import RenderProducts from "./Catalog/RenderProducts";
 import { products } from "../../../DummyData/DummyData";
 import { getCatalogData } from "../../../services/shopServices";
-import axios from "axios";
+import { useSelector } from "react-redux";
+
 import { imageEndPoint } from "../../../config.json";
 const Container = Styled.div`
 padding: 50px 30px;
@@ -28,12 +29,14 @@ const BrandSlogan = Styled.div`
 
 export default function Catalog(props) {
   let [dumpData, setDumpData] = useState([]);
-
+  const selectedShopId = useSelector(
+    (state) => state.shopPreview.selectedShopId
+  );
   let getCatalog = async () => {
-    let { data } = await getCatalogData();
-
+    let { data } = await getCatalogData(selectedShopId);
+    console.log(data);
     let result = data.Products;
-
+    let shopResult = data.ShopDetails;
     let freshData = [];
     result.map((item) => {
       let newData = {
@@ -49,6 +52,9 @@ export default function Catalog(props) {
         },
         delivery: "24hrs",
         productId: item.product,
+        shopId: shopResult[0].shop,
+        shopName: shopResult[0].shop_name,
+        shopBio: shopResult[0].shop_bio,
       };
       freshData.push(newData);
     });
@@ -56,7 +62,7 @@ export default function Catalog(props) {
   };
   useEffect(() => {
     getCatalog();
-  }, []);
+  }, [selectedShopId]);
   return (
     <Container>
       <div style={{ marginBottom: "0px", position: "relative" }}>

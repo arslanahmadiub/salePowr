@@ -4,3 +4,10 @@ export const phoneSaveAction = (data) => {
     payload: data,
   };
 };
+
+export const profileDialogAction = (data) => {
+  return {
+    type: "SHOW_PROFILE_DIALOG",
+    payload: data,
+  };
+};

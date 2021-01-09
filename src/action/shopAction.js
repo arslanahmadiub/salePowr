@@ -35,3 +35,21 @@ export const showLoading = (data) => {
     payload: data,
   };
 };
+export const shopIdsAction = (data) => {
+  return {
+    type: "SET_SHOP_IDS",
+    payload: data,
+  };
+};
+export const selectedShopId = (data) => {
+  return {
+    type: "SELECTED_SHOP_ID",
+    payload: data,
+  };
+};
+export const selectedShopName = (data) => {
+  return {
+    type: "SELECTED_SHOP_NAME",
+    payload: data,
+  };
+};

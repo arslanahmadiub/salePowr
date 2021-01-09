@@ -1,19 +1,18 @@
 import React from "react";
-import Styled from "styled-components"
-
+import Styled from "styled-components";
 
 const Asterisk = Styled.span`
     color: red;
     font-size: 16px;
     font-weight: 600;
-    display: ${props => props.show === true ? "" : "none"}
-`
+    display: ${(props) => (props.show === true ? "" : "none")}
+`;
 const Label = Styled.label`
     font-size: 14px;
     position:relative; 
     padding: 15 0px;
     top: -5px;
-`
+`;
 
 const Input = Styled.input`
     display: block;
@@ -30,22 +29,30 @@ const Input = Styled.input`
         outline-width: 0px;
     }
 
-`
+`;
 
-export default function ({ value, id, placeholder, onChange, label, required, type, ...props }) {
-
-
-
-    return <Label htmlFor={id}>{label && label} <Asterisk show={!!required}>*</Asterisk>
-        <Input
-            value={value}
-            required={!!required}
-            placeholder={placeholder || label || ""}
-            type={type || "text"}
-            id={id}
-            name={props.name || id || ""}
-            onChange={onChange && onChange}
-        />
+export default function ({
+  value,
+  id,
+  placeholder,
+  onChange,
+  label,
+  required,
+  type,
+  ...props
+}) {
+  return (
+    <Label htmlFor={id}>
+      {label && label} <Asterisk show={!!required}>*</Asterisk>
+      <Input
+        value={value}
+        required={!!required}
+        placeholder={placeholder || label || ""}
+        type={type || "text"}
+        id={id}
+        name={props.name || id || ""}
+        onChange={onChange && onChange}
+      />
     </Label>
+  );
 }
-

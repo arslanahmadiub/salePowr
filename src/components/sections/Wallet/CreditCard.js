@@ -113,13 +113,13 @@ const CreditCard = ({ data, selected, ...props }) => {
 };
 
 const MoMoCard = ({ data, selected, ...props }) => {
-  const { name, country, number, date, type } = data;
+  const { name, country, number, date, type, network } = data;
   const styles = selected && { boxShadow: "3px 3px 5px 3px #a73737" };
   return (
     <MomoContainer style={styles || {}}>
       <HeaderRow>
         <Name>{name && name}</Name>
-        <Type>{type && type.toUpperCase()}</Type>
+        <Type>{network && network.toUpperCase()}</Type>
       </HeaderRow>
       <Country>{country && country}</Country>
       <Number>{number && number}</Number>

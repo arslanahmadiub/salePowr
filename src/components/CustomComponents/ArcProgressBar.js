@@ -60,7 +60,7 @@ const ArcProgressBar = (props) => {
         cx="55"
         cy="54"
         r="50"
-        percent={percent === 0 ? 1 : percent > 50 ? 50 : percent}
+        percent={percent === 0 || percent < 0 ? 1 : percent > 50 ? 50 : percent}
       />
       <Text x="30%" y="70%">
         {props.children}%

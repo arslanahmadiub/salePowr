@@ -13,6 +13,7 @@ export default function () {
       path: "/wallet",
       component: Wallet,
     },
+
     {
       name: "Transactions",
       path: "/transactions",

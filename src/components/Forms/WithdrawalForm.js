@@ -50,23 +50,26 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
 
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", momoNumber);
+    form_data.set("mobile_money_name", mobileMoneyClientName);
 
     console.log(momoNetwork);
     console.log(momoNumber);
-    let walletData = {
-      name: mobileMoneyClientName,
-      country: country,
-      number: momoNumber,
-      date: "09/2020",
-      type: "momo",
-    };
+    console.log(mobileMoneyClientName);
+    // let walletData = {
+    //   name: mobileMoneyClientName,
+    //   country: country,
+    //   number: momoNumber,
+    //   date: "09/2020",
+    //   type: "momo",
+    // };
 
-    dispatch(addCard(walletData));
+    // dispatch(addCard(walletData));
     try {
       let { data } = await addWallet(form_data);
       console.log(data);
     } catch (error) {
-      props.error(error.response.data.Errors.mobile_money_number[0]);
+      // props.error(error.response.data.Errors.mobile_money_number[0]);
+      console.log(error.response.data);
     }
   };
 

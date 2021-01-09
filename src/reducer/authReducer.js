@@ -1,5 +1,6 @@
 const initalState = {
   phoneNumber: {},
+  profileDialog: false,
 };
 
 export const authReducer = (state = initalState, action) => {
@@ -8,6 +9,11 @@ export const authReducer = (state = initalState, action) => {
       return {
         ...state,
         phoneNumber: action.payload,
+      };
+    case "SHOW_PROFILE_DIALOG":
+      return {
+        ...state,
+        profileDialog: action.payload,
       };
 
     default:

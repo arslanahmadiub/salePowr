@@ -3,6 +3,9 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import "./Profile.css";
 import ProfileEdit from "./ProfileEdit";
 import { Modal } from "antd";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { profileDialogAction } from "../../../action/authAction";
 
 const CompleteProfile = (props) => {
   // const { user } = React.useContext(AuthContext);
@@ -11,16 +14,16 @@ const CompleteProfile = (props) => {
   //   // Check if user has completed their profile
   //   //setOpen(user && user.profilePercent && user.profilePercent !== 1000)
   // }, [user]);
-
-  let [visiblity, setVisiblity] = useState(true);
+  const profileDialogValue = useSelector((state) => state.auth.profileDialog);
+  const dispatch = useDispatch();
 
   let handelCancel = () => {
-    setVisiblity(false);
+    dispatch(profileDialogAction(false));
   };
   return (
     <Modal
       //   visible={!!!(user && user.profilePercent && user.profilePercent !== 100)}
-      visible={visiblity}
+      visible={profileDialogValue}
       //   onOk={() => null}
       onCancel={handelCancel}
       width={1000}
