@@ -34,7 +34,6 @@ export default function Catalog(props) {
   );
   let getCatalog = async () => {
     let { data } = await getCatalogData(selectedShopId);
-    console.log(data);
     let result = data.Products;
     let shopResult = data.ShopDetails;
     let freshData = [];
@@ -82,6 +81,18 @@ export default function Catalog(props) {
               <BrandSlogan style={{ cursor: "pointer" }}>New</BrandSlogan>
             </FlexContainer>
           </div>
+          <br />
+          <h1
+            style={{
+              display: dumpData.length > 0 ? "none" : "flex",
+              textAlign: "center",
+              color: "#31BDF4",
+              marginTop: "10px",
+            }}
+          >
+            You have not any product. Click on Add Product tab and Add New
+            Products
+          </h1>
         </FlexContainer>
       </div>
       <RenderProducts products={dumpData} />

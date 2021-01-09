@@ -231,7 +231,7 @@ export default function AuthenticationPage(props) {
         } catch (ex) {
           if (ex.response && ex.response.status === 500) {
             let error = ex.response.data.Errors;
-            console.log(error);
+
             if ("email" in error) {
               setErrorMessage(error.email[0]);
             } else if ("password2" in error) {
@@ -249,7 +249,7 @@ export default function AuthenticationPage(props) {
       loginData.append("password", password);
       try {
         let { data } = await loginUser(loginData);
-        console.log(data);
+
         if (data.Status) {
           localStorage.setItem("token", data.Token);
           history.push("/dashboard");

@@ -4,10 +4,16 @@ import React, { useState } from "react";
 import ProfileForm from "../../Forms/ProfileForm";
 import { profileInfo } from "../../../DummyData/DummyData";
 import profilePhoto from "../../../assets/images/photo.jpg";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import { useSelector, useDispatch } from "react-redux";
 
 const ProfileEdit = (props) => {
   const profile = props.profile || profileInfo;
 
+  const profileLoading = useSelector(
+    (state) => state.dashboard.profileDataLoading
+  );
   let [profileAvatar, setProfileAvatar] = useState(null);
   let [profileAvatarObject, setProfileAvatarObject] = useState(null);
 
@@ -20,6 +26,11 @@ const ProfileEdit = (props) => {
     setProfileAvatar(newUrl);
     setProfileAvatarObject(event.target.files[0]);
   };
+
+  let setProfileImageFromServer = (value) => {
+    setProfileAvatar(value);
+  };
+
   return (
     <div style={{ background: "#F5F8FD", borderRadius: "25px" }}>
       <Hidden smDown>
@@ -27,6 +38,7 @@ const ProfileEdit = (props) => {
           Edit Profile
         </div>
       </Hidden>
+
       <div style={{ padding: "15px" }}>
         <div>
           <div
@@ -69,6 +81,11 @@ const ProfileEdit = (props) => {
                 style={{ height: "150px", width: "150px" }}
               />
             </Badge>
+            <Grid item>
+              <div style={{ display: profileLoading ? "flex" : "none" }}>
+                <CircularProgress />
+              </div>
+            </Grid>
           </div>
           {/* <div
             style={{
@@ -82,11 +99,16 @@ const ProfileEdit = (props) => {
           </div> */}
           <br />
         </div>
+        <br />
+
         <div style={{}}>
           <ProfileForm
             data={profileInfo}
             buttonText="SAVE PROFILE"
             profileImage={profileAvatarObject}
+            setProfileAvatar={(value) => {
+              setProfileImageFromServer(value);
+            }}
           />
         </div>
       </div>

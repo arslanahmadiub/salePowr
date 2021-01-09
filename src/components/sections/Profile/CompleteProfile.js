@@ -3,9 +3,11 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import "./Profile.css";
 import ProfileEdit from "./ProfileEdit";
 import { Modal } from "antd";
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { profileDialogAction } from "../../../action/authAction";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const CompleteProfile = (props) => {
   // const { user } = React.useContext(AuthContext);

@@ -8,11 +8,23 @@ import PasswordInput from "../CustomComponents/PasswordInput";
 import CustomLink from "../CustomComponents/CustomLink";
 import { completeUserProfile } from "../../services/authServices";
 import { getFullUserDetails } from "../../services/authServices";
+import { imageEndPoint } from "../../config.json";
+import {
+  shopProfileFetchLoading,
+  userProfileSaveLoading,
+} from "../../action/dashboardAction";
+import { profileDialogAction } from "../../action/authAction";
+import { useSelector, useDispatch } from "react-redux";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const ProfileForm = (props) => {
+  let dispatch = useDispatch();
+
   let [profileData, setProfileData] = useState({
-    firstName: "",
-    lastName: "",
-    otherName: "",
+    first_name: "",
+    last_name: "",
+    other_names: "",
     dob: "",
     email: "",
     phone: "",
@@ -20,9 +32,9 @@ const ProfileForm = (props) => {
     confirmPassword: "",
   });
   let {
-    firstName,
-    lastName,
-    otherName,
+    first_name,
+    last_name,
+    other_names,
     dob,
     email,
     phone,
@@ -31,27 +43,33 @@ const ProfileForm = (props) => {
   } = profileData;
   let [profileAvatar, setProfielAvatar] = useState(props.profileImage);
 
+  const profileLoading = useSelector(
+    (state) => state.dashboard.profileDataSaveLoading
+  );
+
+  const [userImage, setUserImage] = useState("");
+
   useEffect(() => {
     setProfielAvatar(props.profileImage);
   }, [props.profileImage]);
 
+  useEffect(() => {
+    props.setProfileAvatar(userImage);
+  }, [userImage]);
+
   let getProfileInfo = async () => {
+    dispatch(shopProfileFetchLoading(true));
     let { data } = await getFullUserDetails();
-    console.log(data);
+    dispatch(shopProfileFetchLoading(false));
+
     if (data.Success) {
-      // setProfileData(data.Details[0]);
-      setProfileData({ firstName: data.Details[0].first_name });
-      setProfileData({ lastName: data.Details[0].last_name });
-      setProfileData({ otherName: data.Details[0].other_names });
-      setProfileData({ dob: data.Details[0].dob });
-      setProfileData({ email: data.Details[0].email });
-      setProfileData({ phone: data.Details[0].phone });
+      setProfileData(data.Details[0]);
+      setUserImage(imageEndPoint + data.Details[0].profile_picture);
     }
   };
   useEffect(() => {
     getProfileInfo();
   }, []);
-  console.log(profileData);
 
   let handelProfileDataChange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
@@ -60,17 +78,20 @@ const ProfileForm = (props) => {
   const saveProfile = async (event) => {
     event.preventDefault();
 
-    let profileData = new FormData();
-    profileData.append("first_name", firstName);
-    profileData.append("last_name", lastName);
-    profileData.append("other_names", otherName);
-    profileData.append("dob", dob);
-    profileData.append("email", email);
-    profileData.append("phone", phone);
-    profileData.append("profile_picture", profileAvatar);
+    let profileDataForm = new FormData();
+    profileDataForm.set("first_name", first_name);
+    profileDataForm.set("last_name", last_name);
+    profileDataForm.set("other_names", "");
+    profileDataForm.set("dob", dob);
+    profileDataForm.set("email", email);
+    profileDataForm.set("phone", phone);
+    profileDataForm.set("profile_picture", profileAvatar);
     try {
-      let result = await completeUserProfile(profileData);
-      console.log(result);
+      dispatch(userProfileSaveLoading(true));
+      let result = await completeUserProfile(profileDataForm);
+
+      dispatch(userProfileSaveLoading(false));
+      dispatch(profileDialogAction(false));
     } catch (ex) {
       if (ex.response) {
         console.log(ex.response.data);
@@ -78,110 +99,130 @@ const ProfileForm = (props) => {
     }
   };
   return (
-    <form onSubmit={saveProfile}>
-      <Grid container direction="row" spacing={5}>
-        <Grid item xs={12} sm={6}>
-          <Input
-            placeholder="Enter first name"
-            label="First name"
-            name="firstName"
-            value={firstName}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Input
-            placeholder="Enter last name"
-            label="Last Name"
-            name="lastName"
-            value={lastName}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Input
-            placeholder="Other name(s)"
-            label="Other name(s)"
-            name="otherName"
-            value={otherName}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <DatePicker
-            placeholder="Dadte of birth"
-            label="Date of Birth"
-            name="dob"
-            value={dob}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Input
-            type="email"
-            placeholder="Enter email address"
-            label="Email address"
-            name="email"
-            value={email}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Input
-            placeholder="Phone number"
-            label="Phone number"
-            type="tel"
-            name="phone"
-            value={phone}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <h2
-            style={{
-              fontSize: "22px",
-              fontWeight: "500",
-              padding: "0",
-              margin: "0",
-            }}
+    <>
+      <form onSubmit={saveProfile}>
+        <Grid container direction="row" spacing={5}>
+          <Grid item xs={12} sm={6}>
+            <Input
+              placeholder="Enter first name"
+              label="First name"
+              name="first_name"
+              value={first_name}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              placeholder="Enter last name"
+              label="Last Name"
+              name="last_name"
+              value={last_name}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              placeholder="Other name(s)"
+              label="Other name(s)"
+              name="other_names"
+              value={other_names}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <DatePicker
+              placeholder="Dadte of birth"
+              label="Date of Birth"
+              name="dob"
+              value={dob}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              type="email"
+              placeholder="Enter email address"
+              label="Email address"
+              name="email"
+              value={email}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              placeholder="Phone number"
+              label="Phone number"
+              type="tel"
+              name="phone"
+              value={phone}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <h2
+              style={{
+                fontSize: "22px",
+                fontWeight: "500",
+                padding: "0",
+                margin: "0",
+              }}
+            >
+              Change password
+            </h2>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <PasswordInput
+              placeholder="New password"
+              label="New password"
+              name="newPassword"
+              value={newPassword}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <PasswordInput
+              placeholder="Confirm password"
+              label="Confirm password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={handelProfileDataChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <span style={{ textAlign: "center" }}>
+              * By continuing, you agree to Powrsale's{" "}
+              <CustomLink>terms</CustomLink> and{" "}
+              <CustomLink>privacy notice</CustomLink>
+            </span>
+          </Grid>
+          <Grid
+            container
+            spacing={0}
+            alignItems="center"
+            justify="center"
+            width="100%"
+            style={{}}
           >
-            Change password
-          </h2>
+            <Grid
+              item
+              style={{
+                display: profileLoading ? "flex" : "none",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress />
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" width="100%">
+              {props.buttonText || "Submit"}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <PasswordInput
-            placeholder="New password"
-            label="New password"
-            name="newPassword"
-            value={newPassword}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <PasswordInput
-            placeholder="Confirm password"
-            label="Confirm password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={handelProfileDataChange}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <span style={{ textAlign: "center" }}>
-            * By continuing, you agree to Powrsale's{" "}
-            <CustomLink>terms</CustomLink> and{" "}
-            <CustomLink>privacy notice</CustomLink>
-          </span>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Button type="submit" width="100%">
-            {props.buttonText || "Submit"}
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </>
   );
 };
 

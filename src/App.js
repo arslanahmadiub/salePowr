@@ -24,8 +24,7 @@ function App() {
   }, []);
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds();
-
-    if (data.Success) {
+    if (data.Success && data.Details.length > 0) {
       dispatch(shopIdsAction(data.Details));
       dispatch(selectedShopId(data.Details[0].shop));
       dispatch(selectedShopName(data.Details[0].shop_name));

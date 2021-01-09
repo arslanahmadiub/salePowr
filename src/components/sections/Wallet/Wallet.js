@@ -138,7 +138,7 @@ const Wallet = (props) => {
           <BannerContainer>
             <BulletedText
               title={"Available"}
-              value={`GHZ ${available}`}
+              value={`GHS ${available}`}
               primary
             />
 
@@ -148,7 +148,7 @@ const Wallet = (props) => {
 
             <BulletedText
               title={"Funds in escrow"}
-              value={`GHZ ${escrowAmount}`}
+              value={`GHS ${escrowAmount}`}
             />
           </BannerContainer>
         </Col>
