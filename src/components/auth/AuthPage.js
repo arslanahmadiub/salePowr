@@ -175,9 +175,7 @@ export default function AuthenticationPage(props) {
     console.log("Clcik");
   };
 
-  let responseGoogle = (res) => {
-    console.log(res);
-  };
+  let responseGoogle = (res) => {};
 
   let handelLoginClickAfterSignUp = () => {
     setWantsToSignIn(true);

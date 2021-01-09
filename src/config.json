@@ -1,4 +1,4 @@
 {
-  "apiEndPoint": "http://powrsale-env.eba-kba3bj4v.ap-south-1.elasticbeanstalk.com/api/",
+  "apiEndPoint": "https://dashboard.powrsale.com/api/",
   "imageEndPoint": "https://powrsalemedia.s3.ap-south-1.amazonaws.com/media/"
 }
