@@ -33,6 +33,11 @@ const MiniFilePicker = (props) => {
     props.getFiles(file);
   }, [file]);
 
+  let resetImageArray = () => {
+    setFile([]);
+    setfileUrl([]);
+  };
+
   const getFile = (event) => {
     let eventFile = [...file];
 
@@ -48,7 +53,11 @@ const MiniFilePicker = (props) => {
     urlData.push(urlObject);
     setfileUrl(urlData);
   };
-
+  useEffect(() => {
+    if (props.clearImages === true) {
+      resetImageArray();
+    }
+  }, [props.clearImages]);
   return (
     <Container>
       <div>

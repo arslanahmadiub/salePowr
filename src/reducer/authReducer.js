@@ -1,6 +1,7 @@
 const initalState = {
   phoneNumber: {},
   profileDialog: false,
+  profileUrl: null,
 };
 
 export const authReducer = (state = initalState, action) => {
@@ -14,6 +15,11 @@ export const authReducer = (state = initalState, action) => {
       return {
         ...state,
         profileDialog: action.payload,
+      };
+    case "PROFILE_IMAGE_URL":
+      return {
+        ...state,
+        profileUrl: action.payload,
       };
 
     default:

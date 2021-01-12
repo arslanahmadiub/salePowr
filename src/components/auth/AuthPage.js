@@ -82,7 +82,7 @@ export default function AuthenticationPage(props) {
 
   let { email, password, password2 } = data;
   const [usePhoneSignIn, setPhoneSignIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("Hello Message");
   const [RedirectToReferrer, setRedirectToReferrer] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
@@ -92,50 +92,6 @@ export default function AuthenticationPage(props) {
   // THIS IS WILL GIVE US A WAY TO SET THE USER OBJECT THROUGH THE CONTEXT.
   const { setUser } = React.useContext(AuthContext);
   const styles = useStyles(theme);
-
-  // async function authenticateUser(event) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-
-  //   // alert("Clicked")
-
-  //   const { phone, email, password } = data;
-
-  //   if (usePhoneSignIn && (!phone || !Verifications.verifyPhone(phone))) {
-  //     return setErrorMessage("Type a 10/9-digit number without country code");
-  //   } else if (
-  //     !usePhoneSignIn &&
-  //     (!email || !Verifications.verifyEmail(email))
-  //   ) {
-  //     return setErrorMessage("Please type a valid email address");
-  //   } else if (!password || !Verifications.verifyPassword(password)) {
-  //     return setErrorMessage("Use a secure password of at least 7 characters");
-  //   } else {
-  //     setErrorMessage(null);
-  //   }
-
-  //   const auth = new Authentication(data);
-
-  //   if (wantsToSignIn) {
-  //     // they want to sign in
-  //     // PLEASE DO NOT ALTER THE FUNCTION UNLESS YOU ABSOLUTELY NEED TO.
-  //     // To CHANGE THE SIGNIN LOGIC, GO THE AUTHENTICATION CLASS AND MAKE CHAGES.
-  //     // YOUR CHANGES WILL AUTO APPLY HERE IF YOU DON'T ALTER THE FUNCTION NAMES
-  //     // IF YOU ALTER ANY METHOD NAMES, THEN MAKE THE NECESSARY CHANGE
-
-  //     setUserInfo(await auth.signIn(usePhoneSignIn ? "phone" : "email"));
-  //   } else if (!wantsToSignIn) {
-  //     // they are creating an account
-
-  //     // SAME COMMENTS AS THOSE ABOVE.
-  //     setUserInfo(await auth.signUp(usePhoneSignIn ? "phone" : "email"));
-  //   }
-
-  //   if (userInfo) {
-  //     setUser(userInfo);
-  //     setRedirectToReferrer(true);
-  //   }
-  // }
 
   const toggleAuthType = () => {
     setWantsToSignIn(!wantsToSignIn);
@@ -257,6 +213,9 @@ export default function AuthenticationPage(props) {
       } catch (ex) {
         if (ex.response && ex.response.status === 401) {
           console.log(ex.response.data);
+          if (ex.response.data.Status === false) {
+            setErrorMessage(ex.response.data.Message);
+          }
         }
       }
     }

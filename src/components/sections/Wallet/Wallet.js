@@ -75,7 +75,6 @@ const Wallet = (props) => {
 
   let walletError = (val) => {
     setWalletErrorMessage(val);
-    console.log(val);
   };
 
   let handelCashout = async () => {

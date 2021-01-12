@@ -29,11 +29,13 @@ const ImageContainer = Styled.div`
 
 export default function AddProductForm(props) {
   const [state, setState] = React.useState({ delivery: "24hrs" });
+  const [clearImageData, setClearImageData] = useState(false);
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
   let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
   const [cityLocationData, setCityLocationData] = useState([]);
   const [imagesData, setImagesData] = useState([]);
+  const [clearFormData, setClearFormData] = useState(false);
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
   );
@@ -76,7 +78,13 @@ export default function AddProductForm(props) {
       facebook: false,
       twitter: false,
     });
+    setClearImageData(true);
+    setDeliveryTermNumber([1]);
+    setClearFormData(true);
   };
+
+  let shareAbleData =
+    productName + " " + productPrice + " " + productDescription;
 
   useEffect(() => {
     getLocationData();
@@ -99,7 +107,7 @@ export default function AddProductForm(props) {
   const processWidrawal = async (event) => {
     event.preventDefault();
     let form_data = new FormData();
-    await form_data.set("shop", "b98vmyx4sk");
+    await form_data.set("shop", selectedShopId);
     await form_data.set("product_name", productName);
     await form_data.set("description", productDescription);
     await form_data.set("price", productPrice);
@@ -128,10 +136,9 @@ export default function AddProductForm(props) {
     // deliveryTerms.push(dataObject);
     // setLoading(true);
 
-    // clearForm();
+    setLoading(true);
 
     let { data } = await addProduct(form_data);
-    console.log(data);
     if (data.Success) {
       let productId = data.ID;
 
@@ -141,7 +148,8 @@ export default function AddProductForm(props) {
       };
       try {
         let result = await productDeliveryTerm(finalData);
-        console.log(result);
+        clearForm();
+
         setLoading(false);
       } catch (ex) {
         if (ex.response) {
@@ -157,7 +165,6 @@ export default function AddProductForm(props) {
   let getImages = (value) => {
     setImagesData(value);
   };
-
   useEffect(() => {
     getImages();
   }, [props.getFiles]);
@@ -244,7 +251,10 @@ export default function AddProductForm(props) {
       >
         <Grid container direction="row" spacing={4}>
           <Grid item xs={12}>
-            <MiniFilePicker getFiles={(value) => getImages(value)} />
+            <MiniFilePicker
+              getFiles={(value) => getImages(value)}
+              clearImages={clearImageData}
+            />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={3} direction="row">
@@ -314,6 +324,7 @@ export default function AddProductForm(props) {
                 removeItem={removeDeliveryItem}
                 lengthOfItem={deliveryTermNumber}
                 getData={(value, value2) => getLocationData(value, value2)}
+                clearData={clearFormData}
               />
             );
           })}
@@ -321,21 +332,21 @@ export default function AddProductForm(props) {
           {/* here is delivery Terms */}
 
           <Grid item xs={12}>
-            <FlexContainer>
+            {/* <FlexContainer>
               <div>Note: Powrsale service charge is 5%</div>
               <div style={{ fontWeight: "600", fontSize: "22px" }}>
                 {`${currency} 0`}
               </div>
-            </FlexContainer>
+            </FlexContainer> */}
 
-            <FlexContainer>
+            {/* <FlexContainer>
               <div style={{ fontWeight: 600, fontSize: "24px" }}>
                 Total amount payable
               </div>
               <div style={{ fontWeight: "600", fontSize: "24px" }}>
                 {`${currency} 0`}
               </div>
-            </FlexContainer>
+            </FlexContainer> */}
             <hr />
 
             <p>Also share on social media</p>
@@ -355,7 +366,7 @@ export default function AddProductForm(props) {
             <FlexContainer>
               <span>Facebook</span>
               <FacebookShareButton
-                quote="Hello Here is Power sale"
+                quote={shareAbleData}
                 url={finalUrl}
                 // hashtag="#programing joke"
                 // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
@@ -370,7 +381,7 @@ export default function AddProductForm(props) {
 
               <TwitterShareButton
                 title="Here is description of Product"
-                via="I am admin arslan"
+                via={shareAbleData}
                 url={finalUrl}
                 // hashtag="#programing joke"
                 // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"

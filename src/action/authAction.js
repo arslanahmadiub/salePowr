@@ -11,3 +11,9 @@ export const profileDialogAction = (data) => {
     payload: data,
   };
 };
+export const setProfileImage = (data) => {
+  return {
+    type: "PROFILE_IMAGE_URL",
+    payload: data,
+  };
+};

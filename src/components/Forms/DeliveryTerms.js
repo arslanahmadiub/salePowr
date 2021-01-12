@@ -24,6 +24,18 @@ function DeliveryTerms(props) {
     location: "",
     currency: "",
   });
+  let clearData = () => {
+    setdeliveryData({
+      location: "",
+      currency: "",
+    });
+  };
+
+  useEffect(() => {
+    if (props.clearData === true) {
+      clearData();
+    }
+  }, [props.clearData]);
 
   useEffect(() => {
     props.getData(deliveryData, props.itemIndex);

@@ -20,6 +20,12 @@ import { getDashboardData } from "../../../services/dashboardService";
 
 import { useDispatch } from "react-redux";
 
+import { getFullUserDetails } from "../../../services/authServices";
+
+import { imageEndPoint } from "../../../config.json";
+
+import { setProfileImage } from "../../../action/authAction";
+
 import { profileDialogAction } from "../../../action/authAction";
 
 const TopRow = Styled.div`
@@ -60,6 +66,16 @@ const Dashboard = (props) => {
 
   const [activityData, setactivityData] = useState([]);
   const [profilePercent, setProfilePercent] = useState(null);
+
+  let getProfileInfo = async () => {
+    let { data } = await getFullUserDetails();
+
+    if (data.Success) {
+      dispatch(
+        setProfileImage(imageEndPoint + data.Details[0].profile_picture)
+      );
+    }
+  };
 
   let dashboardDataGet = async () => {
     let { data } = await getDashboardData();
@@ -110,6 +126,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     dashboardDataGet();
+    getProfileInfo();
   }, []);
 
   useEffect(() => {

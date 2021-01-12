@@ -29,6 +29,9 @@ const BrandSlogan = Styled.div`
 
 export default function Catalog(props) {
   let [dumpData, setDumpData] = useState([]);
+
+  let [showMessageNoProduct, setShowMessageNoProduct] = useState(false);
+
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
   );
@@ -54,19 +57,26 @@ export default function Catalog(props) {
         shopId: shopResult[0].shop,
         shopName: shopResult[0].shop_name,
         shopBio: shopResult[0].shop_bio,
+        shopLogo: shopResult[0].shop_logo,
       };
       freshData.push(newData);
     });
-    setDumpData(freshData);
+    if (freshData.length > 0) {
+      setDumpData(freshData);
+      setShowMessageNoProduct(false);
+    } else {
+      setShowMessageNoProduct(true);
+    }
   };
   useEffect(() => {
     getCatalog();
   }, [selectedShopId]);
+
   return (
     <Container>
       <div style={{ marginBottom: "0px", position: "relative" }}>
         <FlexContainer>
-          <div
+          {/* <div
             style={{
               width: "100px",
               right: "10px",
@@ -80,19 +90,17 @@ export default function Catalog(props) {
               </BrandSlogan>
               <BrandSlogan style={{ cursor: "pointer" }}>New</BrandSlogan>
             </FlexContainer>
-          </div>
-          <br />
-          <h1
-            style={{
-              display: dumpData.length > 0 ? "none" : "flex",
-              textAlign: "center",
-              color: "#31BDF4",
-              marginTop: "10px",
-            }}
-          >
-            You have not any product. Click on Add Product tab and Add New
-            Products
-          </h1>
+          </div> */}
+          {/* <br /> */}
+
+          {showMessageNoProduct ? (
+            <h2>
+              Sorry!!! you don’t have any products listed yet click on the
+              <span style={{ color: "#31BDF4" }}> “Add Product” </span>tab to
+              add products to your catalog. Once a product is added you can
+              start sharing your shop link or product link.
+            </h2>
+          ) : null}
         </FlexContainer>
       </div>
       <RenderProducts products={dumpData} />

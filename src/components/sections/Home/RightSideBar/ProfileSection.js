@@ -8,6 +8,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { RightSideBarContext } from "../../../../contexts/RightSideBarContext";
 import { useDispatch } from "react-redux";
 import { profileDialogAction } from "../../../../action/authAction";
+import { useSelector } from "react-redux";
 
 const ProfileSection = (props) => {
   let dispatch = useDispatch();
@@ -18,6 +19,7 @@ const ProfileSection = (props) => {
     profilePhoto,
   } = React.useContext(AuthContext);
   const { toggleRightSideBar } = React.useContext(RightSideBarContext);
+  const profileImage = useSelector((state) => state.auth.profileUrl);
 
   const history = useHistory();
 
@@ -38,7 +40,7 @@ const ProfileSection = (props) => {
             <small
               style={{ color: "#7C7F84", fontSize: "12px", opacity: "0.4" }}
             >
-              {percentage || 0}% completed
+              {/* {percentage || 0}% completed */}
             </small>
           </div>
           <div
@@ -59,7 +61,7 @@ const ProfileSection = (props) => {
                 width: "110px",
               }}
               alt={username}
-              src={profilePhoto}
+              src={profileImage}
             />
           </CircularProgress>
         </div>

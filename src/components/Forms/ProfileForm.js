@@ -14,6 +14,7 @@ import {
   userProfileSaveLoading,
 } from "../../action/dashboardAction";
 import { profileDialogAction } from "../../action/authAction";
+import { setProfileImage } from "../../action/authAction";
 import { useSelector, useDispatch } from "react-redux";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -65,6 +66,9 @@ const ProfileForm = (props) => {
     if (data.Success) {
       setProfileData(data.Details[0]);
       setUserImage(imageEndPoint + data.Details[0].profile_picture);
+      dispatch(
+        setProfileImage(imageEndPoint + data.Details[0].profile_picture)
+      );
     }
   };
   useEffect(() => {

@@ -11,6 +11,8 @@ import CustomLink from "../../../CustomComponents/CustomLink";
 import { getProductDetail } from "../../../../services/shopServices";
 import { imageEndPoint } from "../../../../config.json";
 
+import { useSelector } from "react-redux";
+
 const Container = Styled.div`
     background: #F5F8FD;
     padding: 0 15px 0px 15px;
@@ -90,13 +92,36 @@ export default function ProductDescription({
     props.updateDialog(true);
     props.updateValue(newData);
   };
+  const [productDetail, setproductDetail] = useState(null);
+  const [sideUrl, setsideUrl] = useState(null);
+  const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
+  const [userWithOwnShop, setUserWithOwnShop] = useState(false);
 
   useEffect(() => {
     getDetailData();
   }, []);
 
-  const [productDetail, setproductDetail] = useState(null);
-  const [sideUrl, setsideUrl] = useState(null);
+  useEffect(() => {
+    findShopId();
+  }, [productDetail]);
+
+  // if (productDetail !== null && productDetail.length > 0) {
+  //   console.log(productDetail[0].shop_id);
+  // }
+
+  let findShopId = () => {
+    if (productDetail !== null && productDetail.length > 0) {
+      let result = shopIds.filter(
+        (item) => item.shop === productDetail[0].shop_id
+      );
+      if (result.length > 0) {
+        setUserWithOwnShop(true);
+      } else {
+        setUserWithOwnShop(false);
+      }
+    }
+  };
+
   let getDetailData = async () => {
     let result = await getProductDetail(data.productId);
     setproductDetail(result.data.Details);
@@ -116,6 +141,20 @@ export default function ProductDescription({
     shop_id: productDetail !== null ? productDetail[0].shop_id : "",
     name: productDetail !== null ? productDetail[0].product_name : "",
   };
+
+  const [userAvailability, setUserAvailability] = useState(false);
+
+  let verifyUser = () => {
+    let user = localStorage.getItem("token");
+    if (user.length > 0) {
+      setUserAvailability(true);
+    } else {
+      setUserAvailability(false);
+    }
+  };
+  useEffect(() => {
+    verifyUser();
+  }, []);
   return (
     <Container>
       <div>
@@ -163,8 +202,30 @@ export default function ProductDescription({
                 <Grid item xs={12} sm={2}></Grid>
                 <Grid container direction="row">
                   <Grid item xs={12} sm={4}>
-                    <Button onClick={handelBuyNow}>Buy Now</Button>
+                    {userAvailability && userWithOwnShop === false ? (
+                      <Button onClick={handelBuyNow}>Buy Now</Button>
+                    ) : (
+                      <Button onClick={handelBuyNow} disable>
+                        Buy Now
+                      </Button>
+                    )}
                   </Grid>
+                </Grid>
+                <br />
+                <Grid item xs={12}>
+                  {userAvailability ? null : (
+                    <p style={{ fontSize: "15px" }}>
+                      Please <a href="/"> Login</a> Or{" "}
+                      <a href="/">Create Account</a> To Buy This Product
+                    </p>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  {userWithOwnShop ? (
+                    <p style={{ fontSize: "15px", color: "red" }}>
+                      You are not able to purchase from your own shop...
+                    </p>
+                  ) : null}
                 </Grid>
               </Grid>
               <Grid item xs={12}>
@@ -182,9 +243,9 @@ export default function ProductDescription({
       <div style={{ borderTop: "0.5px solid #979FAA" }}>
         <Hidden smDown>
           <ShopBrand
-            logo={companyLogo}
-            name={"GoPare"}
-            slogan={"Electronic"}
+            logo={imageEndPoint + data.shopLogo}
+            name={data.shopName}
+            slogan={data.shopBio}
             shopid={
               productDetail !== null ? "#" + productDetail[0].shop_id : ""
             }
