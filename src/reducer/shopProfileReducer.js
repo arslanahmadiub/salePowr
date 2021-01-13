@@ -22,6 +22,7 @@ const initalState = {
   shopIdCollections: [],
   selectedShop: "",
   selectedShopId: "",
+  selectedTab: 0,
 };
 
 export const shopProfileReducer = (state = initalState, action) => {
@@ -70,6 +71,11 @@ export const shopProfileReducer = (state = initalState, action) => {
       return {
         ...state,
         selectedShop: action.payload,
+      };
+    case "SELECTED_TAB_INDEX":
+      return {
+        ...state,
+        selectedTab: action.payload,
       };
     default:
       return state;

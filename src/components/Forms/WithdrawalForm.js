@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Select from "../CustomComponents/Select";
 import Input from "../CustomComponents/Input";
-import Button from "../CustomComponents/Button";
+// import Button from "../CustomComponents/Button";
+import { Button } from "antd";
+
 import { Form } from "antd";
 import { DataContext } from "../../contexts/DataContext";
 import { addCard } from "../../action/walletAction";
@@ -45,16 +47,14 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
     setMobileMoneyData({ ...mobileMoneyData, [e.target.name]: e.target.value });
   };
 
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loadingButton, setLoadingButton] = useState(false);
   let addWalletButton = async () => {
     let form_data = new FormData();
 
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", momoNumber);
     form_data.set("mobile_money_name", mobileMoneyClientName);
-
-    console.log(momoNetwork);
-    console.log(momoNumber);
-    console.log(mobileMoneyClientName);
     // let walletData = {
     //   name: mobileMoneyClientName,
     //   country: country,
@@ -65,12 +65,26 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
 
     // dispatch(addCard(walletData));
     try {
+      setErrorMessage(null);
+      setLoadingButton(true);
+
       let { data } = await addWallet(form_data);
-      console.log(data);
+      props.walletFunctionCall(true);
+      setMobileMoneyData({
+        country: "",
+        momoNetwork: "",
+        momoNumber: "",
+        mobileMoneyClientName: "",
+      });
+      setLoadingButton(false);
     } catch (error) {
-      // props.error(error.response.data.Errors.mobile_money_number[0]);
-      console.log(error.response.data);
+      if (error.response.data.Success === false) {
+        setLoadingButton(false);
+
+        setErrorMessage(error.response.data.Errors.mobile_money_number[0]);
+      }
     }
+    setLoadingButton(false);
   };
 
   return (
@@ -153,7 +167,25 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
           </Grid>
         )}
         <Grid item xs={12}>
-          <Button onClick={addWalletButton}>Add Wallet</Button>
+          <span style={{ color: "red", fontSize: "18px", marginTop: "0px" }}>
+            {errorMessage !== null ? errorMessage : ""}
+          </span>
+        </Grid>
+        <Grid item xs={12}>
+          {/* <Button onClick={addWalletButton}>Add Wallet</Button> */}
+          <Button
+            type="primary"
+            loading={loadingButton}
+            onClick={addWalletButton}
+            style={{
+              background: "#31BDF4",
+              border: "none",
+              height: "50px",
+              fontWeight: "bold",
+            }}
+          >
+            Add Wallet
+          </Button>
         </Grid>
       </Grid>
     </Form>

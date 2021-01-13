@@ -205,7 +205,7 @@ export default function ProductDescription({
                     {userAvailability && userWithOwnShop === false ? (
                       <Button onClick={handelBuyNow}>Buy Now</Button>
                     ) : (
-                      <Button onClick={handelBuyNow} disable>
+                      <Button onClick={handelBuyNow} disable faded>
                         Buy Now
                       </Button>
                     )}
@@ -220,13 +220,13 @@ export default function ProductDescription({
                     </p>
                   )}
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   {userWithOwnShop ? (
                     <p style={{ fontSize: "15px", color: "red" }}>
                       You are not able to purchase from your own shop...
                     </p>
                   ) : null}
-                </Grid>
+                </Grid> */}
               </Grid>
               <Grid item xs={12}>
                 <Delivery>Delivery Applicable</Delivery>

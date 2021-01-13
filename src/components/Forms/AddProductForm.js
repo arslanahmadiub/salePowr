@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Input from "../CustomComponents/Input";
@@ -127,15 +127,6 @@ export default function AddProductForm(props) {
       newDeliveryTerm.push(newData);
     });
 
-    // let deliveryTerms = [];
-    // let dataObject = {
-    //   delivery_country: productCountry,
-    //   delivery_location: productCity,
-    //   delivery_price: productPrice,
-    // };
-    // deliveryTerms.push(dataObject);
-    // setLoading(true);
-
     setLoading(true);
 
     let { data } = await addProduct(form_data);
@@ -158,8 +149,6 @@ export default function AddProductForm(props) {
       }
     }
     setLoading(false);
-
-    // console.log(imagesData);
   };
 
   let getImages = (value) => {

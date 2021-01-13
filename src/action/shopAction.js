@@ -53,3 +53,9 @@ export const selectedShopName = (data) => {
     payload: data,
   };
 };
+export const selectedTabIndex = (data) => {
+  return {
+    type: "SELECTED_TAB_INDEX",
+    payload: data,
+  };
+};

@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { selectedShopId } from "./action/shopAction";
 import { selectedShopName } from "./action/shopAction";
 import { shopIdsAction } from "./action/shopAction";
-import { profileDialogAction } from "./action/authAction";
 
 import { getShopIds } from "./services/dashboardService";
 
@@ -30,6 +29,7 @@ function App() {
       dispatch(selectedShopName(data.Details[0].shop_name));
     }
   };
+
   return (
     <div className="App">
       <Switch>

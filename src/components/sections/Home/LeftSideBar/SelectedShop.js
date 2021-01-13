@@ -59,8 +59,9 @@ const SelectedShop = (props) => {
         style={{
           padding: "0  0 0 0px",
           position: "absolute",
-          bottom: "0px",
+          bottom: "20%",
           width: "80%",
+          display: shops.length > 0 ? "" : "none",
         }}
       >
         <div
@@ -91,17 +92,6 @@ const SelectedShop = (props) => {
               {/* <Avatar>Lahore</Avatar> */}
               {selectedShop}
             </div>
-            {/* <div
-              style={{
-                lineHeight: "40px",
-                paddingLeft: "10px",
-                fontSize: "16px",
-                fontWeight: "500",
-                color: "#979FAA",
-              }}
-            >
-              {currentShop?.name}
-            </div> */}
           </div>
           <div style={{ lineHeight: "55px", color: "#979FAA" }}>
             {show ? <ExpandLess /> : <ExpandMore />}

@@ -100,12 +100,6 @@ const ShopProfileForm = (props) => {
     dispatch(saveShopData(state));
   };
 
-  // const onChange = obj => event => {
-  //     event && console.log(`${event?.target?.id}: ${event?.target?.value}`)
-  //     event && setState({ ...state, [event?.target?.id]: event?.target?.value })
-  //     obj && setState({ ...state, ...obj })
-  // }
-
   let onChange = (e) => {
     setState({ ...state, [e.target.id]: e.target.value });
   };

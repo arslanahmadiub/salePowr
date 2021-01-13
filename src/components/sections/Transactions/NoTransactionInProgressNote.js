@@ -9,12 +9,7 @@ const NoTransactionInProgressNote = (props) => {
           Oops! You don't have any transactions created yet. You have two
           options here:
         </p>
-        <li>
-          <p>
-            <Link to="/create-transaction">Click here</Link> to create a one-off
-            transaction or select "Create Transation" from the sidebar
-          </p>
-        </li>
+
         <li>
           <p>
             if you are a Seller/Merchant <Link to="/shop">Click Here</Link> or

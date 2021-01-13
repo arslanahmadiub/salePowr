@@ -119,6 +119,7 @@ const Wallet = (props) => {
     }
   };
 
+  const [walletCallData, setWalletCallData] = useState(false);
   useEffect(() => {
     getWalletData();
   }, []);
@@ -127,6 +128,17 @@ const Wallet = (props) => {
     walletError();
   }, [props.error]);
 
+  let walletCall = (value) => {
+    setWalletCallData(value);
+  };
+
+  useEffect(() => {
+    getWalletData();
+  }, [walletCallData]);
+
+  useEffect(() => {
+    walletCall();
+  }, [props.walletFunctionCall]);
   return (
     <>
       <Row gutter={[0, 8]}>
@@ -294,6 +306,7 @@ const Wallet = (props) => {
                 externalFunction={setStage}
                 type={type}
                 error={(value) => walletError(value)}
+                walletFunctionCall={(value) => walletCall(value)}
               />
             </Col>
           </Row>

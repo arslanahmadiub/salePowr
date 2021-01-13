@@ -65,6 +65,8 @@ export default function Catalog(props) {
       setDumpData(freshData);
       setShowMessageNoProduct(false);
     } else {
+      setDumpData(freshData);
+
       setShowMessageNoProduct(true);
     }
   };

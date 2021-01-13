@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
 import {
   Grid,
   makeStyles,
@@ -26,6 +26,7 @@ import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -84,7 +85,8 @@ export default function AuthenticationPage(props) {
   const [usePhoneSignIn, setPhoneSignIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("Hello Message");
   const [RedirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+
+  const [loadingShow, setLoadingShow] = useState(false);
 
   const theme = React.useContext(ThemeContext);
   const { from } = props.location || { from: { pathname: "/" } };
@@ -105,7 +107,9 @@ export default function AuthenticationPage(props) {
   const toggleAuthMethod = () => {
     setPhoneSignIn(!usePhoneSignIn);
   };
-  let passRef = createRef();
+
+  let widthRef = useRef();
+
   const handlePhoneInput = (phone) => {
     // if (phone && phone.prefix != null && phone.value != null)
     //   return setData({ ...data, phone: `${phone.prefix}${phone}` });
@@ -151,13 +155,11 @@ export default function AuthenticationPage(props) {
       } else {
         setErrorMessage("");
         try {
+          setLoadingShow(true);
           let { data } = await createUser(form_data);
+          setLoadingShow(false);
+
           if (data.Success) {
-            // setErrorMessage(
-            //   `User Registered success fully... for Login ${(
-            //     <a href="/overview">Click Here</a>
-            //   )}`
-            // );
             setErrorMessage(
               <div
                 style={{
@@ -186,6 +188,8 @@ export default function AuthenticationPage(props) {
           }
         } catch (ex) {
           if (ex.response && ex.response.status === 500) {
+            setLoadingShow(false);
+
             let error = ex.response.data.Errors;
 
             if ("email" in error) {
@@ -204,13 +208,18 @@ export default function AuthenticationPage(props) {
       loginData.append("email", email);
       loginData.append("password", password);
       try {
+        setLoadingShow(true);
+
         let { data } = await loginUser(loginData);
+        setLoadingShow(false);
 
         if (data.Status) {
           localStorage.setItem("token", data.Token);
           history.push("/dashboard");
         }
       } catch (ex) {
+        setLoadingShow(false);
+
         if (ex.response && ex.response.status === 401) {
           console.log(ex.response.data);
           if (ex.response.data.Status === false) {
@@ -219,6 +228,7 @@ export default function AuthenticationPage(props) {
         }
       }
     }
+    setLoadingShow(false);
   };
   const pageHeader = wantsToSignIn
     ? "Sign in to your Powrsale account"
@@ -232,8 +242,24 @@ export default function AuthenticationPage(props) {
     return <Redirect to={from} />;
   }
 
+  let containerRef = widthRef;
+
   return (
-    <Grid container spacing={0}>
+    <Grid container spacing={0} ref={widthRef}>
+      <div
+        style={{
+          display: loadingShow ? "flex" : "none",
+          background: "rgba(26, 180, 178, 0.32)",
+          minWidth: containerRef.current
+            ? containerRef.current.scrollWidth.toString() + "px"
+            : "",
+          minHeight: containerRef.current
+            ? containerRef.current.scrollHeight.toString() + "px"
+            : "",
+          position: "absolute",
+          zIndex: "10",
+        }}
+      ></div>
       <Grid item sm={12} md={4}>
         <div className={styles.container}>
           <div style={styles.logo}>
@@ -298,6 +324,19 @@ export default function AuthenticationPage(props) {
               >
                 {errorMessage}
               </div>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: loadingShow ? "flex" : "none",
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress style={{ color: "#1ab4b3" }} />
             </Grid>
 
             <Grid item xs={12}>

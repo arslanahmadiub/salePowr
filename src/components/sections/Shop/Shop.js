@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Button from "../../CustomComponents/Button";
 import ShopProfileForm from "../../Forms/ShopProfileForm";
 import AddProductForm from "../../Forms/AddProductForm";
@@ -15,16 +15,22 @@ import { useDispatch } from "react-redux";
 import { shopPreviewDialog } from "../../../action/shopAction";
 import { clearFormData } from "../../../action/shopAction";
 import { shopCreate } from "../../../services/shopServices";
+import { selectedShopId } from "../../../action/shopAction";
+import { selectedShopName } from "../../../action/shopAction";
+import { shopIdsAction } from "../../../action/shopAction";
+import { getShopIds } from "../../../services/dashboardService";
 
-export default function Shop() {
+export default function Shop(props) {
   // const [preview, togglePreview] = React.useState(false);
   const [publish, togglePublish] = React.useState(false);
   const [enable, setEnable] = useState(false);
   let [loading, setLoading] = useState(false);
 
   const [publishData, setPublishData] = useState({});
-  const shopData = useSelector((state) => state.shopPreview);
   const createShop = useSelector((state) => state.shopPreview.shopData);
+  const selectedTabIndex = useSelector(
+    (state) => state.shopPreview.selectedTab
+  );
   const createShopData = useSelector((state) => state.shopPreview);
   const preview = useSelector((state) => state.shopPreview.preview);
   const logoFile = useSelector((state) => state.logoImage.logoFile);
@@ -32,6 +38,8 @@ export default function Shop() {
   const loadingComponent = useSelector(
     (state) => state.shopPreview.loadingDialog
   );
+
+  let shopWidthRef = useRef();
 
   let dispatch = useDispatch();
 
@@ -46,6 +54,16 @@ export default function Shop() {
   let togglePreview = () => {
     dispatch(shopPreviewDialog(false));
   };
+
+  let shopsIdsCollections = async () => {
+    let { data } = await getShopIds();
+    if (data.Success && data.Details.length > 0) {
+      dispatch(shopIdsAction(data.Details));
+      dispatch(selectedShopId(data.Details[0].shop));
+      dispatch(selectedShopName(data.Details[0].shop_name));
+    }
+  };
+
   let handelPublishShop = async () => {
     if (Object.keys(createShop).length > 0) {
       setLoading(true);
@@ -99,6 +117,7 @@ export default function Shop() {
         togglePublish(true);
         setLoading(false);
         dispatch(clearFormData(true));
+        shopsIdsCollections();
       }
       setLoading(false);
     }
@@ -141,8 +160,14 @@ export default function Shop() {
     bottom: "0",
     left: "0",
   };
+
+  // let contianerRef = shopWidthRef;
+  // if (contianerRef.current) {
+  //   console.log(contianerRef);
+  // }
+
   return (
-    <>
+    <div ref={shopWidthRef}>
       <DesktopHeaderRow title="Shop">
         <Grid container spacing={5}>
           {/* <Grid item xs={6}> */}
@@ -154,7 +179,7 @@ export default function Shop() {
           <Grid item xs={12}>
             {/* <Button onClick={() => togglePublish(true)}>PUBLISH A SHOP</Button> */}
             {/* <Button onClick={handelPublishShop}>PUBLISH A SHOP</Button> */}
-            {publicButton()}
+            {selectedTabIndex === 0 ? publicButton() : null}
           </Grid>
         </Grid>
       </DesktopHeaderRow>
@@ -182,6 +207,6 @@ export default function Shop() {
         </DialogActions>
         <ProductDisplay shopData={publishData} />
       </Dialog>
-    </>
+    </div>
   );
 }

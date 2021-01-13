@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import RightSideBar from "./RightSideBar/RightSideBar";
 import { Dialog, Grid, DialogTitle, Drawer, Hidden } from "@material-ui/core";
 import Styled from "styled-components";
@@ -8,6 +8,7 @@ import LeftSideBar from "./LeftSideBar/LeftSideBar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { RightSideBarContext } from "../../../contexts/RightSideBarContext";
 import SideBarToggle from "../../CustomComponents/SideBarToggle";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const DrawerContainer = Styled.div`
     -ms-overflow-style: none;  /* IE and Edge */
@@ -56,6 +57,8 @@ const Home = (props) => {
   const [drawerOpen, toggleDrawerOpen] = React.useState(false);
   const [modal, setModal] = React.useState(false);
 
+  let proRef = useRef();
+
   const profile = React.useContext(AuthContext);
   const { showRightSideBar, toggleRightSideBar } = React.useContext(
     RightSideBarContext
@@ -73,115 +76,117 @@ const Home = (props) => {
   );
 
   return (
-    <Grid container direction="row">
-      {/* MOBILE TEMPORARY SIDEBAR */}
-      <Drawer
-        //container={container}
-        variant="temporary"
-        anchor={"left"}
-        open={drawerOpen}
-        onClose={() => toggleDrawerOpen(!drawerOpen)}
-        // classes={{
-        //     paper: classes.drawerPaper,
-        // }}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-      >
-        <DrawerContainer
-          onClick={(event) => {
-            event.stopPropagation();
-            //toggleDrawerOpen(!drawerOpen)
+    <>
+      <Grid container direction="row" ref={proRef}>
+        {/* MOBILE TEMPORARY SIDEBAR */}
+        <Drawer
+          //container={container}
+          variant="temporary"
+          anchor={"left"}
+          open={drawerOpen}
+          onClose={() => toggleDrawerOpen(!drawerOpen)}
+          // classes={{
+          //     paper: classes.drawerPaper,
+          // }}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
-          <CloseDrawer />
-          {drawer}
-        </DrawerContainer>
-      </Drawer>
+          <DrawerContainer
+            onClick={(event) => {
+              event.stopPropagation();
+              //toggleDrawerOpen(!drawerOpen)
+            }}
+          >
+            <CloseDrawer />
+            {drawer}
+          </DrawerContainer>
+        </Drawer>
 
-      {/* THE LEFT SIDE BAR */}
-      <Hidden smDown>
-        <Grid item md={2} style={{ background: "#fff" }}>
-          {drawer}
-        </Grid>
-      </Hidden>
-      {/* THE MAIN CONTENT */}
-      <Grid
-        item
-        xs={12}
-        md={showRightSideBar ? 7 : 10}
-        style={{ padding: "20px", background: "#F5F8FD" }}
-      >
-        {/*    MOBILE TOP ROW */}
-        <Hidden mdUp>
-          <FlexContainer>
-            <FlexContainer>
-              <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
-                <Button>
-                  <Menu />
-                </Button>
-              </ButtonContainer>
-            </FlexContainer>
-            <FlexContainer>
-              <ButtonContainer>
-                <Button>
-                  <EventNote style={{ color: "#5A36CC" }} />
-                </Button>
-              </ButtonContainer>
-              <ButtonContainer onClick={toggleModal}>
-                <Button>
-                  <img
-                    width="100%"
-                    height="100%"
-                    src={profile.profilePhoto}
-                    alt={profile.username}
-                  />
-                </Button>
-              </ButtonContainer>
-            </FlexContainer>
-          </FlexContainer>
+        {/* THE LEFT SIDE BAR */}
+        <Hidden smDown>
+          <Grid item md={2} style={{ background: "#fff" }}>
+            {drawer}
+          </Grid>
         </Hidden>
-
-        {props.children}
-      </Grid>
-
-      <div
-        onClick={() => toggleRightSideBar(true)}
-        style={{
-          position: "fixed",
-          right: "-25px",
-          top: "10vh",
-          display: showRightSideBar ? "none" : "",
-        }}
-      >
-        <SideBarToggle />
-      </div>
-
-      <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
-        <DialogTitle>
-          <div style={{ display: "flex", lineHeight: "50px" }}>
-            <ButtonContainer onClick={toggleModal}>
-              <ArrowBack />
-            </ButtonContainer>
-            <Title>Profile</Title>
-          </div>
-        </DialogTitle>
-        <RightSideBar />
-      </Dialog>
-
-      {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
-      <Hidden smDown>
+        {/* THE MAIN CONTENT */}
         <Grid
           item
-          md={showRightSideBar === true ? 3 : false}
+          xs={12}
+          md={showRightSideBar ? 7 : 10}
+          style={{ padding: "20px", background: "#F5F8FD" }}
+        >
+          {/*    MOBILE TOP ROW */}
+          <Hidden mdUp>
+            <FlexContainer>
+              <FlexContainer>
+                <ButtonContainer onClick={() => toggleDrawerOpen(!drawerOpen)}>
+                  <Button>
+                    <Menu />
+                  </Button>
+                </ButtonContainer>
+              </FlexContainer>
+              <FlexContainer>
+                <ButtonContainer>
+                  <Button>
+                    <EventNote style={{ color: "#5A36CC" }} />
+                  </Button>
+                </ButtonContainer>
+                <ButtonContainer onClick={toggleModal}>
+                  <Button>
+                    <img
+                      width="100%"
+                      height="100%"
+                      src={profile.profilePhoto}
+                      alt={profile.username}
+                    />
+                  </Button>
+                </ButtonContainer>
+              </FlexContainer>
+            </FlexContainer>
+          </Hidden>
+
+          {props.children}
+        </Grid>
+
+        <div
+          onClick={() => toggleRightSideBar(true)}
           style={{
-            display: showRightSideBar ? "" : "none",
+            position: "fixed",
+            right: "-25px",
+            top: "10vh",
+            display: showRightSideBar ? "none" : "",
           }}
         >
+          <SideBarToggle />
+        </div>
+
+        <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
+          <DialogTitle>
+            <div style={{ display: "flex", lineHeight: "50px" }}>
+              <ButtonContainer onClick={toggleModal}>
+                <ArrowBack />
+              </ButtonContainer>
+              <Title>Profile</Title>
+            </div>
+          </DialogTitle>
           <RightSideBar />
-        </Grid>
-      </Hidden>
-    </Grid>
+        </Dialog>
+
+        {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
+        <Hidden smDown>
+          <Grid
+            item
+            md={showRightSideBar === true ? 3 : false}
+            style={{
+              display: showRightSideBar ? "" : "none",
+            }}
+          >
+            <RightSideBar />
+          </Grid>
+        </Hidden>
+      </Grid>
+    </>
   );
 };
 

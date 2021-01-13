@@ -28,9 +28,9 @@ export default function LeftSideBar(props) {
             alt="Powrsale logo"
           />
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <NewTransactionPanel />
-        </Grid>
+        </Grid> */}
         <Grid item>
           {navItems &&
             navItems.map((item, index) => {
