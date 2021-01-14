@@ -31,25 +31,25 @@ export async function loginUser(data) {
   });
 }
 
-export async function completeUserProfile(data) {
+export async function completeUserProfile(data, token) {
   return await axios({
     method: "post",
     url: completeUserProfileUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function getFullUserDetails() {
+export async function getFullUserDetails(token) {
   return await axios({
     method: "get",
     url: getUserDetailUrl,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }

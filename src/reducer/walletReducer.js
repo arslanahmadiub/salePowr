@@ -14,6 +14,8 @@ export const walletReducer = (state = initalState, action) => {
         ...state,
         card: action.payload,
       };
+    case "RESET":
+      return initalState;
     default:
       return state;
   }

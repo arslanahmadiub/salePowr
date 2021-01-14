@@ -17,3 +17,8 @@ export const setProfileImage = (data) => {
     payload: data,
   };
 };
+export const resetUser = () => {
+  return {
+    type: "RESET",
+  };
+};

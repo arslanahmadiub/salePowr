@@ -43,7 +43,6 @@ const ShippingDetail = (props) => {
 
   let getShippingDetails = async () => {
     let { data } = await shippingDetailService(productId);
-
     setfullData(data.Details);
     let countries = [data.Details[0].delivery_country];
     let countriesLocation = [];
@@ -118,7 +117,7 @@ const ShippingDetail = (props) => {
             <Grid item xs={12} sm={6}>
               <Select
                 id="type"
-                placeholder="Select onChange={onChange} business type"
+                placeholder="Select Delivery Country"
                 label="Country"
                 list={shippingCountry !== null ? shippingCountry : []}
                 required
@@ -131,6 +130,7 @@ const ShippingDetail = (props) => {
               <Select
                 id="type"
                 label="Delivery Locations"
+                placeholder="Select Delivery Location"
                 required
                 list={shippingLocation !== null ? shippingLocation : []}
                 name="deliveryLocation"

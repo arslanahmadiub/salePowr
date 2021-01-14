@@ -21,6 +21,8 @@ export const authReducer = (state = initalState, action) => {
         ...state,
         profileUrl: action.payload,
       };
+    case "RESET":
+      return initalState;
 
     default:
       return state;

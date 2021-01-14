@@ -15,7 +15,8 @@ import { addProduct } from "../../services/shopServices";
 import { showLoading } from "../../action/shopAction";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DeliveryTerms from "./DeliveryTerms";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { LastIndexContext } from "antd/lib/space";
@@ -103,6 +104,15 @@ export default function AddProductForm(props) {
 
     setDeliveryTermNumber(newDeliveryTerm);
   };
+  let userToken = localStorage.getItem("token");
+
+  const emailToast = () => {
+    toast.success("Add Product Success Fully...", {
+      position: "top-right",
+      autoClose: 5000,
+      draggable: false,
+    });
+  };
 
   const processWidrawal = async (event) => {
     event.preventDefault();
@@ -129,7 +139,7 @@ export default function AddProductForm(props) {
 
     setLoading(true);
 
-    let { data } = await addProduct(form_data);
+    let { data } = await addProduct(form_data, userToken);
     if (data.Success) {
       let productId = data.ID;
 
@@ -138,9 +148,9 @@ export default function AddProductForm(props) {
         delivery_terms: newDeliveryTerm,
       };
       try {
-        let result = await productDeliveryTerm(finalData);
+        let result = await productDeliveryTerm(finalData, userToken);
         clearForm();
-
+        emailToast();
         setLoading(false);
       } catch (ex) {
         if (ex.response) {
@@ -267,6 +277,7 @@ export default function AddProductForm(props) {
                       placeholder="Price"
                       label="Price"
                       required
+                      type="number"
                       name="productPrice"
                       onChange={onChange}
                       value={productPrice}
@@ -386,6 +397,7 @@ export default function AddProductForm(props) {
           </Grid>
         </Grid>
       </form>
+      <ToastContainer />
     </div>
   );
 }

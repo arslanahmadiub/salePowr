@@ -77,6 +77,8 @@ export const shopProfileReducer = (state = initalState, action) => {
         ...state,
         selectedTab: action.payload,
       };
+    case "RESET":
+      return initalState;
     default:
       return state;
   }

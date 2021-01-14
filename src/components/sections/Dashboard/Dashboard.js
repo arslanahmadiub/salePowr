@@ -17,15 +17,14 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { ImportantDevices } from "@material-ui/icons";
 import CompleteProfile from "../Profile/CompleteProfile";
 import { getDashboardData } from "../../../services/dashboardService";
-
 import { useDispatch } from "react-redux";
-
 import { getFullUserDetails } from "../../../services/authServices";
-
 import { imageEndPoint } from "../../../config.json";
-
 import { setProfileImage } from "../../../action/authAction";
-
+import { getShopIds } from "../../../services/dashboardService";
+import { selectedShopId } from "../../../action/shopAction";
+import { selectedShopName } from "../../../action/shopAction";
+import { shopIdsAction } from "../../../action/shopAction";
 import { profileDialogAction } from "../../../action/authAction";
 
 const TopRow = Styled.div`
@@ -68,7 +67,7 @@ const Dashboard = (props) => {
   const [profilePercent, setProfilePercent] = useState(null);
 
   let getProfileInfo = async () => {
-    let { data } = await getFullUserDetails();
+    let { data } = await getFullUserDetails(userToken);
 
     if (data.Success) {
       dispatch(
@@ -76,58 +75,64 @@ const Dashboard = (props) => {
       );
     }
   };
+  let userToken = localStorage.getItem("token");
 
   let dashboardDataGet = async () => {
-    let { data } = await getDashboardData();
+    try {
+      let { data } = await getDashboardData(userToken);
 
-    // changeDataSet(data);
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let newTransactionVolume = [];
+      let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      let newTransactionVolume = [];
 
-    if (data.Success) {
-      setProfilePercent(data.Profile);
-      data.transactionVolume.map((item, index) => {
-        let transVolume = {
-          percent: item.y,
-          label: days[index],
+      if (data.Success) {
+        setProfilePercent(data.Profile);
+        data.transactionVolume.map((item, index) => {
+          let transVolume = {
+            percent: item.y,
+            label: days[index],
+          };
+          newTransactionVolume.push(transVolume);
+        });
+
+        setactivityData(data.activityData);
+        let newDashboardData = {
+          growth: data.Growth,
+          dayVolume: 23,
+          newOrders: data.newOrders,
+          paymentLinkVisitsData: {
+            day: 54,
+            week: data.shopLinkVisitData.week,
+            month: 2024,
+          },
+          shipped: 89,
+          delivered: 90,
+          completed: 344,
+
+          transactionStatusData: data.transactionData,
+          transactionVolume: newTransactionVolume,
         };
-        newTransactionVolume.push(transVolume);
-      });
 
-      setactivityData(data.activityData);
-      let newDashboardData = {
-        growth: data.Growth,
-        dayVolume: 23,
-        newOrders: data.newOrders,
-        paymentLinkVisitsData: {
-          day: 54,
-          week: data.shopLinkVisitData.week,
-          month: 2024,
-        },
-        shipped: 89,
-        delivered: 90,
-        completed: 344,
-        // activityData: [
-        //   { x: 1, y: 1 },
-        //   { x: 2, y: 6 },
-        //   { x: 3, y: 7 },
-        //   { x: 4, y: 8 },
-        //   { x: 5, y: 4 },
-        //   { x: 6, y: 6 },
-        //   { x: 7, y: 2 },
-        // ],
-        transactionStatusData: data.transactionData,
-        transactionVolume: newTransactionVolume,
-      };
-
-      changeDataSet(newDashboardData);
+        changeDataSet(newDashboardData);
+      }
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
 
   useEffect(() => {
-    dashboardDataGet();
     getProfileInfo();
+    dashboardDataGet();
+    shopsIdsCollections();
   }, []);
+
+  let shopsIdsCollections = async () => {
+    let { data } = await getShopIds(userToken);
+    if (data.Success && data.Details.length > 0) {
+      dispatch(shopIdsAction(data.Details));
+      dispatch(selectedShopId(data.Details[0].shop));
+      dispatch(selectedShopName(data.Details[0].shop_name));
+    }
+  };
 
   useEffect(() => {
     showProfileDialog();

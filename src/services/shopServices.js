@@ -11,38 +11,38 @@ let userToken = localStorage.getItem("token");
 // let shopDetailUrl = apiEndPoint + "get_shop_details/b98vmyx4sk";
 let shopDetailUrl = apiEndPoint + "get_shop_details/";
 
-export async function shopCreate(data) {
+export async function shopCreate(data, token) {
   return await axios({
     method: "post",
     url: createShopUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function addProduct(data) {
+export async function addProduct(data, token) {
   return await axios({
     method: "post",
     url: addProductUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function productDeliveryTerm(data) {
+export async function productDeliveryTerm(data, token) {
   return await axios({
     method: "post",
     url: addProductDeliveryTermUrl,
     data: data,
     headers: {
       "Content-Type": "application/json",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }

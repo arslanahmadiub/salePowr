@@ -7,24 +7,24 @@ let userToken = localStorage.getItem("token");
 let transistionProgressUrl = apiEndPoint + "get_transactions/inprogress";
 let updateDeliveryStatusUrl = apiEndPoint + "update_delivery_status";
 
-export async function getProgressTransistion() {
+export async function getProgressTransistion(token) {
   return await axios({
     method: "get",
     url: transistionProgressUrl,
     headers: {
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function updateDeliveryStatus(data) {
+export async function updateDeliveryStatus(data, token) {
   return await axios({
     method: "post",
     url: updateDeliveryStatusUrl,
     data: data,
     headers: {
       "Content-Type": "application/json",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }

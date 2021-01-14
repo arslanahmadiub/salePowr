@@ -51,12 +51,16 @@ export default function Shop(props) {
     }
   }, [loadingComponent]);
 
+  useEffect(() => {
+    shopsIdsCollections();
+  }, []);
+
   let togglePreview = () => {
     dispatch(shopPreviewDialog(false));
   };
-
+  let userToken = localStorage.getItem("token");
   let shopsIdsCollections = async () => {
-    let { data } = await getShopIds();
+    let { data } = await getShopIds(userToken);
     if (data.Success && data.Details.length > 0) {
       dispatch(shopIdsAction(data.Details));
       dispatch(selectedShopId(data.Details[0].shop));
@@ -97,7 +101,7 @@ export default function Shop(props) {
       form_data.append("twitter_link", twitter);
       form_data.append("whatsapp_number", whatsapp);
 
-      let { data } = await shopCreate(form_data);
+      let { data } = await shopCreate(form_data, userToken);
 
       if (data.Success) {
         let shopPreview = {

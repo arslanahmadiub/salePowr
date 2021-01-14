@@ -1,8 +1,9 @@
 import { Grid } from "@material-ui/core";
 import { Facebook, Instagram, Twitter, WhatsApp } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
@@ -81,6 +82,10 @@ const TopRowDesktop = (props) => {
     console.log(props);
   };
 
+  useEffect(() => {
+    showSucceessTag();
+  }, []);
+
   let showShopId = () => {
     if (props.data.shopId.length > 0) {
       return (
@@ -90,14 +95,22 @@ const TopRowDesktop = (props) => {
       );
     }
   };
+  const emailToast = () => {
+    toast.success("Your Shop Created Successfully...", {
+      position: "top-right",
+      autoClose: 5000,
+      draggable: false,
+    });
+  };
   let showSucceessTag = () => {
     if (props.data.shopId.length > 0) {
       return (
-        <div
-          style={{ display: "flex", width: "100%", justifyContent: "center" }}
-        >
-          <h1 style={{ color: "#28A745" }}>Shop Created Successfully...</h1>
-        </div>
+        // <div
+        //   style={{ display: "flex", width: "100%", justifyContent: "center" }}
+        // >
+        //   <h1 style={{ color: "#28A745" }}>Shop Created Successfully...</h1>
+        // </div>
+        emailToast()
       );
     }
   };
@@ -182,7 +195,7 @@ const TopRowDesktop = (props) => {
           </div>
         </FlexContainer>
       </div>
-      {showSucceessTag()}
+      <ToastContainer />
     </>
   );
 };

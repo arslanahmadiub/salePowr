@@ -4,6 +4,7 @@ import RenderProducts from "./Catalog/RenderProducts";
 import { products } from "../../../DummyData/DummyData";
 import { getCatalogData } from "../../../services/shopServices";
 import { useSelector } from "react-redux";
+import { Spin, Space } from "antd";
 
 import { imageEndPoint } from "../../../config.json";
 const Container = Styled.div`
@@ -32,10 +33,13 @@ export default function Catalog(props) {
 
   let [showMessageNoProduct, setShowMessageNoProduct] = useState(false);
 
+  const [loadingShow, setLoadingShow] = useState(false);
+
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
   );
   let getCatalog = async () => {
+    setLoadingShow(true);
     let { data } = await getCatalogData(selectedShopId);
     let result = data.Products;
     let shopResult = data.ShopDetails;
@@ -64,8 +68,10 @@ export default function Catalog(props) {
     if (freshData.length > 0) {
       setDumpData(freshData);
       setShowMessageNoProduct(false);
+      setLoadingShow(false);
     } else {
       setDumpData(freshData);
+      setLoadingShow(false);
 
       setShowMessageNoProduct(true);
     }
@@ -94,6 +100,18 @@ export default function Catalog(props) {
             </FlexContainer>
           </div> */}
           {/* <br /> */}
+          {loadingShow ? (
+            <Space
+              size="middle"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Spin size="large" />
+            </Space>
+          ) : null}
 
           {showMessageNoProduct ? (
             <h2>

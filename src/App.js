@@ -16,13 +16,16 @@ import { shopIdsAction } from "./action/shopAction";
 import { getShopIds } from "./services/dashboardService";
 
 function App() {
+  let userToken = localStorage.getItem("token");
+
   const routes = Routes();
   let dispatch = useDispatch();
   useEffect(() => {
     shopsIdsCollections();
   }, []);
+
   let shopsIdsCollections = async () => {
-    let { data } = await getShopIds();
+    let { data } = await getShopIds(userToken);
     if (data.Success && data.Details.length > 0) {
       dispatch(shopIdsAction(data.Details));
       dispatch(selectedShopId(data.Details[0].shop));

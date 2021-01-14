@@ -7,22 +7,22 @@ let userToken = localStorage.getItem("token");
 let dashboardUrl = apiEndPoint + "get_dashboard";
 let shopIdsUrl = apiEndPoint + "get_shops_user";
 
-export async function getDashboardData() {
+export async function getDashboardData(token) {
   return await axios({
     method: "get",
     url: dashboardUrl,
     headers: {
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function getShopIds() {
+export async function getShopIds(token) {
   return await axios({
     method: "get",
     url: shopIdsUrl,
     headers: {
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }

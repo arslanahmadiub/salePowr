@@ -42,6 +42,7 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
 
   let countryListNew = ["Ghana"];
   let networkListNew = ["vodafone", "mtn", "airtel"];
+  let userToken = localStorage.getItem("token");
 
   let handelMobileMoneyChange = (e) => {
     setMobileMoneyData({ ...mobileMoneyData, [e.target.name]: e.target.value });
@@ -68,7 +69,7 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
       setErrorMessage(null);
       setLoadingButton(true);
 
-      let { data } = await addWallet(form_data);
+      let { data } = await addWallet(form_data, userToken);
       props.walletFunctionCall(true);
       setMobileMoneyData({
         country: "",

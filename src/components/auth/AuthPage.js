@@ -214,7 +214,7 @@ export default function AuthenticationPage(props) {
         setLoadingShow(false);
 
         if (data.Status) {
-          localStorage.setItem("token", data.Token);
+          await localStorage.setItem("token", data.Token);
           history.push("/dashboard");
         }
       } catch (ex) {

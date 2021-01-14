@@ -57,10 +57,11 @@ const ProfileForm = (props) => {
   useEffect(() => {
     props.setProfileAvatar(userImage);
   }, [userImage]);
+  let userToken = localStorage.getItem("token");
 
   let getProfileInfo = async () => {
     dispatch(shopProfileFetchLoading(true));
-    let { data } = await getFullUserDetails();
+    let { data } = await getFullUserDetails(userToken);
     dispatch(shopProfileFetchLoading(false));
 
     if (data.Success) {
@@ -92,7 +93,7 @@ const ProfileForm = (props) => {
     profileDataForm.set("profile_picture", profileAvatar);
     try {
       dispatch(userProfileSaveLoading(true));
-      let result = await completeUserProfile(profileDataForm);
+      let result = await completeUserProfile(profileDataForm, userToken);
 
       dispatch(userProfileSaveLoading(false));
       dispatch(profileDialogAction(false));

@@ -74,23 +74,6 @@ let ProductDisplay = (props) => {
       <Hidden mdUp>
         <TopRowMobile data={props.shopData} />
       </Hidden>
-
-      {/* <div style={{ marginBottom: "30px" }}>
-        <FlexContainer>
-          <BrandName>Product</BrandName>
-          <div
-            style={{
-              width: "100px",
-            }}
-          >
-            <FlexContainer>
-              <BrandSlogan style={{ color: "#31BDF4" }}>All</BrandSlogan>
-              <BrandSlogan>New</BrandSlogan>
-            </FlexContainer>
-          </div>
-        </FlexContainer>
-      </div>
-      <RenderProducts products={products} /> */}
     </Container>
   );
 };

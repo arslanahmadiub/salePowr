@@ -20,10 +20,6 @@ function DeliveryTerms(props) {
     props.removeItem();
   };
 
-  let callItem = () => {
-    console.log("Item Call in delivery Term");
-  };
-
   const [deliveryData, setdeliveryData] = useState({
     location: "",
     currency: "",
@@ -69,6 +65,7 @@ function DeliveryTerms(props) {
           label="Delivery Price"
           rows={5}
           required
+          type="number"
           name="currency"
           value={currency}
           onChange={handelChange}

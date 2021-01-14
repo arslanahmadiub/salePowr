@@ -15,7 +15,8 @@ export const dashboardReducer = (state = initalState, action) => {
         ...state,
         profileDataSaveLoading: action.payload,
       };
-
+    case "RESET":
+      return initalState;
     default:
       return state;
   }

@@ -11,6 +11,7 @@ export default function TwinInputSelect({
   id,
   value,
   list,
+  type,
   ...props
 }) {
   const [data, setData] = React.useState(null);
@@ -45,6 +46,7 @@ export default function TwinInputSelect({
         placeholder={placeholder || ""}
         required={required}
         onChange={onChange}
+        type={type || "text"}
       />
     </Input.Group>
   );

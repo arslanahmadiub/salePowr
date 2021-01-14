@@ -7,6 +7,7 @@ export const TransactionsContext = React.createContext();
 
 export default function TransactionsContextProvider(props) {
   const [transactions, setTransactions] = React.useState([]);
+  let userToken = localStorage.getItem("token");
 
   function updateTransactionStatus(transaction, status) {
     let newTransactionsList = transactions;
@@ -24,7 +25,7 @@ export default function TransactionsContextProvider(props) {
   }
 
   let getTransistion = async () => {
-    let { data } = await getProgressTransistion();
+    let { data } = await getProgressTransistion(userToken);
     let transistionData = [];
     const m2 = moment();
     if (data.Success) {

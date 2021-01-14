@@ -34,6 +34,9 @@ const PaymentDetails = (props) => {
   const { countryList, currencies } = React.useContext(DataContext);
   let [loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
+  let userToken = localStorage.getItem("token");
+
+  let networkList = ["mtn", "vodafone", "airtel"];
 
   const checkOutUserDetail = useSelector(
     (state) => state.checkout.checkoutUserDetail
@@ -79,10 +82,10 @@ const PaymentDetails = (props) => {
     form_data.set("shop_id", checkOutUserDetail.shopId);
     // form_data.set("amount", checkOutShippingDetail.finalCostWithCharges);
     form_data.set("amount", "1");
-    form_data.set("momo_network", "mtn");
-    form_data.set("mobile_money_number", "0546307943");
+    form_data.set("momo_network", momoNetwork);
+    form_data.set("mobile_money_number", mobileMoneyNumber);
     setLoading(true);
-    let { data } = await checkOut(form_data);
+    let { data } = await checkOut(form_data, userToken);
     if (data.Success) {
       setLoading(false);
       history.push("/transactions");
@@ -188,9 +191,9 @@ const PaymentDetails = (props) => {
               <Grid item xs={12} sm={6}>
                 <Select
                   id="type"
-                  placeholder="Select onChange={onChange} business type"
+                  placeholder="Select Mobile Money Network"
                   label="MoMo Network"
-                  list={countryList}
+                  list={networkList}
                   required
                   value={momoNetwork}
                   name="momoNetwork"

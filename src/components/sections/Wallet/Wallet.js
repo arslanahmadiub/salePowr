@@ -17,6 +17,7 @@ import { DataContext } from "../../../contexts/DataContext";
 import { useSelector } from "react-redux";
 import { getWallet } from "../../../services/walletServices";
 import { cashOut } from "../../../services/walletServices";
+import { Spin } from "antd";
 
 const Title = Styled.div`
     font-size: 22px;
@@ -42,17 +43,34 @@ const Wallet = (props) => {
   const [type, setType] = React.useState("");
   // const walletCard = useSelector((state) => state.wallet.card);
   const [walletErrorMessage, setWalletErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [walletId, setWalletId] = useState(null);
   const [cashAmount, setCashAmount] = useState("");
   const [cashLoading, setCashLoading] = useState(false);
   const [walletCard, setWalletCard] = useState([]);
   const [escrowAmount, setEscrowAmount] = useState("");
   const [available, setAvailable] = useState("");
+  const [percentValue, setPercentValue] = useState(null);
   function advanceStage() {
     if (stage < 3) {
       setStage(stage + 1);
     }
   }
+
+  let findPercentageofCircularProgressBar = () => {
+    let escrow = parseInt(escrowAmount);
+    let avail = parseInt(available);
+
+    let sum = escrow + avail;
+
+    if (sum !== 0) {
+      let percent = avail / sum;
+
+      let percent2 = percent * 100;
+
+      setPercentValue(Math.round(percent2));
+    }
+  };
 
   function selectThis(data) {
     setSelectedCard(data);
@@ -76,6 +94,7 @@ const Wallet = (props) => {
   let walletError = (val) => {
     setWalletErrorMessage(val);
   };
+  let userToken = localStorage.getItem("token");
 
   let handelCashout = async () => {
     let form_data = new FormData();
@@ -84,11 +103,13 @@ const Wallet = (props) => {
 
     try {
       setCashLoading(true);
-      let { data } = await cashOut(form_data);
+      setErrorMessage(null);
+
+      let { data } = await cashOut(form_data, userToken);
     } catch (error) {
       setCashLoading(false);
 
-      console.log(error.response);
+      setErrorMessage(error.response.data.Message);
     }
     setCashLoading(false);
   };
@@ -96,8 +117,11 @@ const Wallet = (props) => {
     setCashAmount(e.target.value);
   };
 
+  const [walletLoading, setWalletLoading] = useState(false);
+
   let getWalletData = async () => {
-    let { data } = await getWallet();
+    setWalletLoading(true);
+    let { data } = await getWallet(userToken);
 
     let walletArray = [];
     if (data.Success) {
@@ -116,13 +140,19 @@ const Wallet = (props) => {
         setAvailable(data.Details.available);
       });
       setWalletCard(walletArray);
+      setWalletLoading(false);
     }
+    setWalletLoading(false);
   };
 
   const [walletCallData, setWalletCallData] = useState(false);
   useEffect(() => {
     getWalletData();
   }, []);
+
+  useEffect(() => {
+    findPercentageofCircularProgressBar();
+  }, [available]);
 
   useEffect(() => {
     walletError();
@@ -153,9 +183,11 @@ const Wallet = (props) => {
               primary
             />
 
-            {!isNaN(percent) && (
-              <CircularProgress thickness={10} radius={50} percent={percent} />
-            )}
+            <CircularProgress
+              thickness={10}
+              radius={50}
+              percent={isNaN(percentValue) ? 0 : percentValue}
+            />
 
             <BulletedText
               title={"Funds in escrow"}
@@ -167,6 +199,19 @@ const Wallet = (props) => {
 
       <Row gutter={[0, 24]}>
         <Col span={24}>
+          {walletLoading ? (
+            <Space
+              size="middle"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Spin size="large" />
+            </Space>
+          ) : null}
+
           <HorizontalScrollingContainer>
             {walletCard.map((card, index) => {
               return (
@@ -215,6 +260,9 @@ const Wallet = (props) => {
           <Row gutter={[0, 8]}>
             <Col span={24}>
               <Title>Withdrawal Amount</Title>
+              <span style={{ fontSize: "18px", color: "red" }}>
+                {errorMessage}
+              </span>
             </Col>
           </Row>
 
@@ -227,6 +275,7 @@ const Wallet = (props) => {
                       list={currencies}
                       placeholder="Please input the amount to withdraw"
                       onChange={changeCashAmount}
+                      type="number"
                     />
                   </Form.Item>
                 </Col>
@@ -234,13 +283,17 @@ const Wallet = (props) => {
                   <Col span={12}>
                     <Form.Item>
                       {/* <Button onClick={handelCashout}>Cashout</Button> */}
+
                       <AntButton
                         type="primary"
                         loading={cashLoading}
                         onClick={handelCashout}
+                        disabled={cashAmount.length > 0 ? false : true}
                         style={{
-                          background: "#31BDF4",
+                          background:
+                            cashAmount.length > 0 ? "#31BDF4" : "#A9A9A9",
                           height: "50px",
+                          color: "white",
                           borderRadius: "5px",
                           border: "none",
                           fontWeight: "bold",

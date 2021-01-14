@@ -160,7 +160,7 @@ export default function ProductDescription({
       <div>
         <Grid container direction="row" spacing={0}>
           <Grid item xs={4} sm={2} md={2}>
-            <Grid container direction="column" spacing={0}>
+            <Grid container direction="column" spacing={2}>
               {sideUrl !== null
                 ? sideUrl.map((item, index) => {
                     if (index === 0) {
@@ -205,11 +205,12 @@ export default function ProductDescription({
                     {userAvailability && userWithOwnShop === false ? (
                       <Button onClick={handelBuyNow}>Buy Now</Button>
                     ) : (
-                      <Button onClick={handelBuyNow} disable faded>
+                      <Button disable faded>
                         Buy Now
                       </Button>
                     )}
                   </Grid>
+                  {/* <Button onClick={handelBuyNow}>Buy Now</Button> */}
                 </Grid>
                 <br />
                 <Grid item xs={12}>

@@ -15,7 +15,8 @@ export const logoImageReducer = (state = initalState, action) => {
         ...state,
         logoFile: action.payload,
       };
-
+    case "RESET":
+      return initalState;
     default:
       return state;
   }

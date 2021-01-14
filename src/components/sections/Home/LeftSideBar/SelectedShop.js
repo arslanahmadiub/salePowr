@@ -93,7 +93,7 @@ const SelectedShop = (props) => {
               {selectedShop}
             </div>
           </div>
-          <div style={{ lineHeight: "55px", color: "#979FAA" }}>
+          <div style={{ lineHeight: "0px", color: "#979FAA" }}>
             {show ? <ExpandLess /> : <ExpandMore />}
           </div>
         </div>

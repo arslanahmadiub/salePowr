@@ -21,7 +21,8 @@ export const checkoutReducer = (state = initalState, action) => {
         ...state,
         checkoutPaymentDetail: action.payload,
       };
-
+    case "RESET":
+      return initalState;
     default:
       return state;
   }

@@ -8,37 +8,37 @@ let addWalletUrl = apiEndPoint + "add_wallet";
 let getWalletUrl = apiEndPoint + "account_money_details";
 let cashoutUrl = apiEndPoint + "cash_out";
 
-export async function addWallet(data) {
+export async function addWallet(data, token) {
   return await axios({
     method: "post",
     url: addWalletUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function getWallet() {
+export async function getWallet(token) {
   return await axios({
     method: "get",
     url: getWalletUrl,
     headers: {
       "Content-Type": "application/json",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
 
-export async function cashOut(data) {
+export async function cashOut(data, token) {
   return await axios({
     method: "post",
     url: cashoutUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }

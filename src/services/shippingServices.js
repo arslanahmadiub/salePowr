@@ -15,14 +15,14 @@ export async function shippingDetailService(data) {
   });
 }
 
-export async function checkOut(data) {
+export async function checkOut(data, token) {
   return await axios({
     method: "post",
     url: checkOutUrl,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: userToken,
+      Authorization: token,
     },
   });
 }
