@@ -50,7 +50,9 @@ export default function Shop(props) {
       setLoading(false);
     }
   }, [loadingComponent]);
-
+  const shopNameFromRedux = useSelector(
+    (state) => state.shopPreview.selectedShop
+  );
   useEffect(() => {
     shopsIdsCollections();
   }, []);
@@ -62,9 +64,17 @@ export default function Shop(props) {
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds(userToken);
     if (data.Success && data.Details.length > 0) {
+      if (shopNameFromRedux.length < 1) {
+        dispatch(shopIdsAction(data.Details));
+        dispatch(selectedShopId(data.Details[0].shop));
+        dispatch(selectedShopName(data.Details[0].shop_name));
+      }
+    }
+  };
+  let shopIdsCollectionForCreateShop = async () => {
+    let { data } = await getShopIds(userToken);
+    if (data.Success && data.Details.length > 0) {
       dispatch(shopIdsAction(data.Details));
-      dispatch(selectedShopId(data.Details[0].shop));
-      dispatch(selectedShopName(data.Details[0].shop_name));
     }
   };
 
@@ -121,7 +131,7 @@ export default function Shop(props) {
         togglePublish(true);
         setLoading(false);
         dispatch(clearFormData(true));
-        shopsIdsCollections();
+        shopIdsCollectionForCreateShop();
       }
       setLoading(false);
     }

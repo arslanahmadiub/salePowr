@@ -96,7 +96,7 @@ const TopRowDesktop = (props) => {
     }
   };
   const emailToast = () => {
-    toast.success("Your Shop Created Successfully...", {
+    toast.success("Shop Added!", {
       position: "top-right",
       autoClose: 5000,
       draggable: false,

@@ -167,7 +167,7 @@ export default function AuthenticationPage(props) {
                   justifyContent: "space-around",
                 }}
               >
-                For Login
+                Account created successfully..For Login
                 <div
                   style={{
                     color: "#1AB4B3",

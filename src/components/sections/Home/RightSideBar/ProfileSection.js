@@ -59,6 +59,8 @@ const ProfileSection = (props) => {
                 border: "solid 10px #ffffff",
                 height: "110px",
                 width: "110px",
+                marginTop: "5px",
+                marginLeft: "3px",
               }}
               alt={username}
               src={profileImage}

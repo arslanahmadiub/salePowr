@@ -107,7 +107,7 @@ export default function AddProductForm(props) {
   let userToken = localStorage.getItem("token");
 
   const emailToast = () => {
-    toast.success("Add Product Success Fully...", {
+    toast.success("Product Added!", {
       position: "top-right",
       autoClose: 5000,
       draggable: false,

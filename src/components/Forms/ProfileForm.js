@@ -86,7 +86,7 @@ const ProfileForm = (props) => {
     let profileDataForm = new FormData();
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
-    profileDataForm.set("other_names", "");
+    profileDataForm.set("other_names", other_names);
     profileDataForm.set("dob", dob);
     profileDataForm.set("email", email);
     profileDataForm.set("phone", phone);

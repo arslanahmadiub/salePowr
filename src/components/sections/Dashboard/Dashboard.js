@@ -17,7 +17,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { ImportantDevices } from "@material-ui/icons";
 import CompleteProfile from "../Profile/CompleteProfile";
 import { getDashboardData } from "../../../services/dashboardService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getFullUserDetails } from "../../../services/authServices";
 import { imageEndPoint } from "../../../config.json";
 import { setProfileImage } from "../../../action/authAction";
@@ -65,6 +65,10 @@ const Dashboard = (props) => {
 
   const [activityData, setactivityData] = useState([]);
   const [profilePercent, setProfilePercent] = useState(null);
+
+  const shopNameFromRedux = useSelector(
+    (state) => state.shopPreview.selectedShop
+  );
 
   let getProfileInfo = async () => {
     let { data } = await getFullUserDetails(userToken);
@@ -128,9 +132,11 @@ const Dashboard = (props) => {
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds(userToken);
     if (data.Success && data.Details.length > 0) {
-      dispatch(shopIdsAction(data.Details));
-      dispatch(selectedShopId(data.Details[0].shop));
-      dispatch(selectedShopName(data.Details[0].shop_name));
+      if (shopNameFromRedux.length < 1) {
+        dispatch(shopIdsAction(data.Details));
+        dispatch(selectedShopId(data.Details[0].shop));
+        dispatch(selectedShopName(data.Details[0].shop_name));
+      }
     }
   };
 
