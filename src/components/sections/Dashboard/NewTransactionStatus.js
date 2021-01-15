@@ -23,8 +23,8 @@ function NewTransactionStatus(props) {
       {
         fill: true,
         lineTension: 0.5,
-        backgroundColor: "rgba(49,189,244,1)",
-        borderColor: "rgba(49,189,244,1)",
+        backgroundColor: props.color,
+        borderColor: props.color,
         borderWidth: 1,
         data: graphData,
       },

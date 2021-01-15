@@ -4,7 +4,7 @@ import PublicShopDesktop from "./PublicShopDesktop";
 import PublicShopMobile from "./PublicShopMobile";
 import { Hidden } from "@material-ui/core";
 import RenderProducts from "../Shop/Catalog/RenderProducts";
-import { getCatalogData } from "../../../services/shopServices";
+import { publicShopDetail } from "../../../services/shopServices";
 import { imageEndPoint } from "../../../config.json";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -29,7 +29,7 @@ const PublicShop = () => {
   );
 
   let getCatalog = async () => {
-    let { data } = await getCatalogData(shopId);
+    let { data } = await publicShopDetail(shopId);
 
     let result = data.Products;
 

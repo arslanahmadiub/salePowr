@@ -85,7 +85,14 @@ export default function AddProductForm(props) {
   };
 
   let shareAbleData =
-    productName + " " + productPrice + " " + productDescription;
+    "Product Name = " +
+    productName +
+    "\n" +
+    "Product Price = " +
+    productPrice +
+    "\n" +
+    "Product Description = " +
+    productDescription;
 
   useEffect(() => {
     getLocationData();
@@ -114,8 +121,16 @@ export default function AddProductForm(props) {
     });
   };
 
+  let facebookClick = () => {
+    document.getElementById("facebookShare").click();
+  };
+  let twitterClick = () => {
+    document.getElementById("twitterShare").click();
+  };
+
   const processWidrawal = async (event) => {
     event.preventDefault();
+
     let form_data = new FormData();
     await form_data.set("shop", selectedShopId);
     await form_data.set("product_name", productName);
@@ -149,6 +164,7 @@ export default function AddProductForm(props) {
       };
       try {
         let result = await productDeliveryTerm(finalData, userToken);
+
         clearForm();
         emailToast();
         setLoading(false);
@@ -158,7 +174,16 @@ export default function AddProductForm(props) {
         }
       }
     }
+
     setLoading(false);
+    if (facebook === true && twitter === true) {
+      facebookClick();
+      twitterClick();
+    } else if (facebook === true) {
+      facebookClick();
+    } else if (twitter === true) {
+      twitterClick();
+    }
   };
 
   let getImages = (value) => {
@@ -204,7 +229,7 @@ export default function AddProductForm(props) {
   };
 
   let handelSharing = () => {
-    console.log("Done Sharing");
+    // console.log("Done Sharing");
   };
 
   let onChange = (e) => {
@@ -368,12 +393,17 @@ export default function AddProductForm(props) {
               <FacebookShareButton
                 quote={shareAbleData}
                 url={finalUrl}
-                // hashtag="#programing joke"
-                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
                 onClick={handelSharing}
               >
-                <Switch size="small" onChange={ToggleFacebook} />
+                <button
+                  id="facebookShare"
+                  onClick={facebookClick}
+                  style={{ display: "none" }}
+                >
+                  Facebook Share
+                </button>
               </FacebookShareButton>
+              <Switch size="small" onChange={ToggleFacebook} />
             </FlexContainer>
 
             <FlexContainer>
@@ -383,12 +413,16 @@ export default function AddProductForm(props) {
                 title="Here is description of Product"
                 via={shareAbleData}
                 url={finalUrl}
-                // hashtag="#programing joke"
-                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
-                onClick={handelSharing}
               >
-                <Switch size="small" onChange={ToggleTwitter} />
+                <button
+                  id="twitterShare"
+                  onClick={twitterClick}
+                  style={{ display: "none" }}
+                >
+                  Twitter Share
+                </button>
               </TwitterShareButton>
+              <Switch size="small" onChange={ToggleTwitter} />
             </FlexContainer>
           </Grid>
 

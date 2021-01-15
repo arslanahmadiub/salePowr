@@ -119,7 +119,7 @@ const Dashboard = (props) => {
         changeDataSet(newDashboardData);
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
     }
   };
 
@@ -143,15 +143,6 @@ const Dashboard = (props) => {
   useEffect(() => {
     showProfileDialog();
   }, [profilePercent]);
-
-  // React.useEffect(() => {
-  //   // Fet data from the server here
-  //   // then update the data as follows
-  //   // Please remember to combine the profile info
-  //   // with the dashboardData as below
-
-  //   changeDataSet(dashboardData);
-  // }, [dataSet]);
 
   const data = { ...dataSet, ...user };
 
@@ -205,11 +196,12 @@ const Dashboard = (props) => {
         <Grid item>
           <Grid container spacing={2} direction="row">
             <Grid xs={12} md={6} item>
-              {/* <ActivityGraph data={data && data.activityData} /> */}
-              <h3>Activity</h3>
-              <NewActivityGraph
-                data={activityData.length > 0 ? activityData : []}
-              />
+              <Card>
+                <h3>Activity</h3>
+                <NewActivityGraph
+                  data={activityData.length > 0 ? activityData : []}
+                />
+              </Card>
             </Grid>
             <Grid xs={12} md={3} item>
               <PaymentLinkVisits data={data && data.paymentLinkVisitsData} />

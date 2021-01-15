@@ -26,31 +26,26 @@ const TransactionStatus = (props) => {
       <Grid container direction="row" spacing={5}>
         <Grid xs={4} item>
           <Value>{shipped && shipped.total}</Value>
-          {/* <Trends data={shipped && shipped.data} height={80} color="#F18FC6" /> */}
+
           <NewTransactionStatus
             data={props.data ? props.data.shipped.data : []}
+            color="rgba(241,143,108,1)"
           />
         </Grid>
         <Grid xs={4} item>
           <Value>{completed && completed.total}</Value>
-          {/* <Trends
-            data={completed && completed.data}
-            height={80}
-            color="#31BDF4"
-          /> */}
+
           <NewTransactionStatus
             data={props.data ? props.data.completed.data : []}
+            color="rgba(145,220,249,1)"
           />
         </Grid>
         <Grid xs={4} item>
           <Value>{delivered && delivered.total}</Value>
-          {/* <Trends
-            data={delivered && delivered.data}
-            height={80}
-            color="#5A36CC"
-          /> */}
+
           <NewTransactionStatus
             data={props.data ? props.data.delivered.data : []}
+            color="rgba(167,148,228,1)"
           />
         </Grid>
       </Grid>

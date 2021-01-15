@@ -5,11 +5,12 @@ let createShopUrl = apiEndPoint + "create_shop";
 let addProductUrl = apiEndPoint + "add_product";
 let productDetail = apiEndPoint + "get_product_details/";
 let addProductDeliveryTermUrl = apiEndPoint + "add_product_delivery_terms";
-// let userToken = "92c6544f868181b32ad25533fc3633ec6d450d77";
+
 let userToken = localStorage.getItem("token");
 
-// let shopDetailUrl = apiEndPoint + "get_shop_details/b98vmyx4sk";
 let shopDetailUrl = apiEndPoint + "get_shop_details/";
+
+let publicShopDetailUrl = apiEndPoint + "shop_link_visit/";
 
 export async function shopCreate(data, token) {
   return await axios({
@@ -50,6 +51,12 @@ export async function getCatalogData(id) {
   return await axios({
     method: "get",
     url: shopDetailUrl + id,
+  });
+}
+export async function publicShopDetail(id) {
+  return await axios({
+    method: "get",
+    url: publicShopDetailUrl + id,
   });
 }
 
