@@ -164,9 +164,16 @@ export default function AddProductForm(props) {
       };
       try {
         let result = await productDeliveryTerm(finalData, userToken);
-
-        clearForm();
+        if (facebook === true && twitter === true) {
+          facebookClick();
+          twitterClick();
+        } else if (facebook === true) {
+          facebookClick();
+        } else if (twitter === true) {
+          twitterClick();
+        }
         emailToast();
+        clearForm();
         setLoading(false);
       } catch (ex) {
         if (ex.response) {
@@ -176,14 +183,6 @@ export default function AddProductForm(props) {
     }
 
     setLoading(false);
-    if (facebook === true && twitter === true) {
-      facebookClick();
-      twitterClick();
-    } else if (facebook === true) {
-      facebookClick();
-    } else if (twitter === true) {
-      twitterClick();
-    }
   };
 
   let getImages = (value) => {
