@@ -34,42 +34,38 @@ function NewActivityGraph(props) {
   };
 
   return (
-    <div>
-      <div>
-        <Line
-          data={state}
-          options={{
-            legend: {
+    <Line
+      data={state}
+      options={{
+        legend: {
+          display: false,
+          position: "right",
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+              scaleLabel: {
+                display: false,
+              },
+            },
+          ],
+          yAxes: [
+            {
               display: false,
-              position: "right",
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                min: graphData.length < 1 ? 0 : Math.min(...graphData),
+              },
             },
-            scales: {
-              xAxes: [
-                {
-                  gridLines: {
-                    display: false,
-                  },
-                  scaleLabel: {
-                    display: false,
-                  },
-                },
-              ],
-              yAxes: [
-                {
-                  display: false,
-                  gridLines: {
-                    display: false,
-                  },
-                  ticks: {
-                    min: graphData.length < 1 ? 0 : Math.min(...graphData),
-                  },
-                },
-              ],
-            },
-          }}
-        />
-      </div>
-    </div>
+          ],
+        },
+      }}
+    />
   );
 }
 

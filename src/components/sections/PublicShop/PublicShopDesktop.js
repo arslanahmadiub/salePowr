@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CompanyLogoImage from "../../../assets/images/company-logo.png";
 import { Facebook, Instagram, Twitter, WhatsApp } from "@material-ui/icons";
 import Styled from "styled-components";
-
+import { imageEndPoint } from "../../../config.json";
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
@@ -99,6 +99,7 @@ const PublicShopDesktop = (props) => {
     console.log("Facebook Clcik");
     console.log(props);
   };
+
   return (
     <>
       <div
@@ -110,7 +111,11 @@ const PublicShopDesktop = (props) => {
         <FlexContainer
           style={{ display: "flex", width: "90vw", overflow: "hidden" }}
         >
-          <CompanyLogo src={CompanyLogoImage} />
+          <CompanyLogo
+            src={
+              props.data !== null ? imageEndPoint + props.data.shop_logo : ""
+            }
+          />
           <div>
             <FlexContainer
               justify="space-between"
@@ -118,7 +123,9 @@ const PublicShopDesktop = (props) => {
             >
               <Brand>
                 {/* <BrandName>{name && name}</BrandName> */}
-                <BrandName>Lahore Products</BrandName>
+                <BrandName>
+                  {props.data !== null ? props.data.shop_name : ""}
+                </BrandName>
 
                 <div
                   style={{
@@ -127,13 +134,19 @@ const PublicShopDesktop = (props) => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <BrandSlogan>We sale Electornic Products</BrandSlogan>
+                  <BrandSlogan>
+                    {props.data !== null ? props.data.business_type : ""}
+                  </BrandSlogan>
                   {/* {showShopId()} */}
-                  <ShopId style={{ fontSize: "16px" }}>Shop ID: 1578899</ShopId>
+                  <ShopId style={{ fontSize: "16px" }}>
+                    Shop ID: {props.data !== null ? "#" + props.data.shop : ""}
+                  </ShopId>
                 </div>
               </Brand>
             </FlexContainer>
-            <BrandBrief>Retail Marketing Services...</BrandBrief>
+            <BrandBrief>
+              {props.data !== null ? props.data.shop_bio : ""}
+            </BrandBrief>
 
             <Grid
               container
@@ -150,20 +163,26 @@ const PublicShopDesktop = (props) => {
               <Grid item xs={6} md={3}>
                 <ContactLabel>Address</ContactLabel>
 
-                <Contact>Civic Center Lahore</Contact>
+                <Contact>
+                  {props.data !== null ? props.data.address : ""}
+                </Contact>
                 {/* <Contact>{contacts && contacts.address}</Contact> */}
               </Grid>
               <Grid item xs={6} md={3}>
                 <ContactLabel>Phone</ContactLabel>
 
-                <Contact>03023338991</Contact>
+                <Contact>
+                  {props.data !== null ? props.data.business_phone : ""}
+                </Contact>
                 {/* <Contact>{contacts && contacts.phone}</Contact> */}
               </Grid>
               <Grid item xs={6} md={3}>
                 <ContactLabel>Email</ContactLabel>
 
                 {/* <Contact>{contacts && contacts.email}</Contact> */}
-                <Contact>arslanahmadiub@gamil.com</Contact>
+                <Contact>
+                  {props.data !== null ? props.data.business_email : ""}
+                </Contact>
               </Grid>
               <Grid item xs={6} md={3}>
                 <ContactLabel>Social</ContactLabel>

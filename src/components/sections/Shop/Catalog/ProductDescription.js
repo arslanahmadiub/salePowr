@@ -124,6 +124,7 @@ export default function ProductDescription({
 
   let getDetailData = async () => {
     let result = await getProductDetail(data.productId);
+
     setproductDetail(result.data.Details);
 
     let sideImageUrl = [];

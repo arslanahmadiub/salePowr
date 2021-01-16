@@ -24,34 +24,37 @@ const PublicShop = () => {
   let shopId = id.slice(id.lastIndexOf("/") + 1, id.length);
 
   let [dumpData, setDumpData] = useState([]);
+  const [shopData, setShopData] = useState(null);
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
   );
 
   let getCatalog = async () => {
     let { data } = await publicShopDetail(shopId);
-
-    let result = data.Products;
-
-    let freshData = [];
-    result.map((item) => {
-      let newData = {
-        name: item.product_name,
-        image:
-          item.thumbnail.length > 0
-            ? imageEndPoint + item.thumbnail[0].image
-            : "",
-        description: item.description,
-        price: item.price,
-        tiles: {
-          first_tile: "",
-        },
-        delivery: "24hrs",
-        productId: item.product,
-      };
-      freshData.push(newData);
-    });
-    setDumpData(freshData);
+    if (data.Success) {
+      let result = data.Products;
+      let shopResult = data.ShopDetails;
+      setShopData(shopResult[0]);
+      let freshData = [];
+      result.map((item) => {
+        let newData = {
+          name: item.product_name,
+          image:
+            item.thumbnail.length > 0
+              ? imageEndPoint + item.thumbnail[0].image
+              : "",
+          description: item.description,
+          price: item.price,
+          tiles: {
+            first_tile: "",
+          },
+          delivery: "24hrs",
+          productId: item.product,
+        };
+        freshData.push(newData);
+      });
+      setDumpData(freshData);
+    }
   };
   useEffect(() => {
     getCatalog();
@@ -60,11 +63,11 @@ const PublicShop = () => {
   return (
     <Container>
       <Hidden smDown>
-        <PublicShopDesktop />
+        <PublicShopDesktop data={shopData} />
       </Hidden>
 
       <Hidden mdUp>
-        <PublicShopMobile />
+        <PublicShopMobile data={shopData} />
       </Hidden>
       <div style={{ padding: "30px" }}>
         <RenderProducts products={dumpData} />

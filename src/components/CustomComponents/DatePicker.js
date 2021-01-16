@@ -1,53 +1,8 @@
-// import { DateRange } from "@material-ui/icons";
-// import React from "react";
-// import Input from "./Input";
-
-// const DatePicker = (props) => {
-//   const openPicker = (event) => {
-//     // event.preventDefault();
-//     // event.stopPropagation();
-
-//     document.querySelector("input").click();
-//   };
-//   return (
-//     <div
-//       style={{
-//         position: "relative",
-//         display: "flex",
-//         flexDirection: "column",
-//       }}
-//     >
-//       <label>{props.label}</label>
-
-//       <Input
-//         type="date"
-//         style={{
-//           position: "relative",
-//           paddingRight: "75px",
-//           marginBottom: "-5px",
-//         }}
-//       />
-
-//       {/* <DateRange
-//         onClick={openPicker}
-//         style={{
-//           position: "absolute",
-//           right: "0px",
-//           top: "0%",
-//           color: "#000",
-//           background: "rgba(151,159,170, 0.4)",
-//           padding: "8px",
-//           borderRadius: "10px",
-//         }}
-//       /> */}
-//     </div>
-//   );
-// };
-
-// export default DatePicker;
-
 import React from "react";
 import Styled from "styled-components";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Asterisk = Styled.span`
     color: red;
@@ -80,7 +35,7 @@ const Input = Styled.input`
 `;
 
 export default function ({
-  value,
+  selected,
   id,
   placeholder,
   onChange,
@@ -92,7 +47,7 @@ export default function ({
   return (
     <Label htmlFor={id}>
       {label && label} <Asterisk show={!!required}>*</Asterisk>
-      <Input
+      {/* <Input
         value={value}
         required={!!required}
         placeholder={placeholder || label || ""}
@@ -100,6 +55,15 @@ export default function ({
         id={id}
         name={props.name || id || ""}
         onChange={onChange && onChange}
+      /> */}
+      <br />
+      <DatePicker
+        id={id}
+        selected={selected}
+        required={!!required}
+        name={props.name || id || ""}
+        onChange={onChange && onChange}
+        className="datePicker"
       />
     </Label>
   );

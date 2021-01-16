@@ -15,3 +15,22 @@ a {
   margin: 0 0 0 5px !important;
   line-height: 43px !important;
 }
+
+.datePicker:focus {
+  /* border: 1px solid #ccc !important;
+  outline-offset: -100000px !important;
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1); */
+  border-radius: 10px;
+  border: 2px solid lightblue;
+  outline-width: 0px;
+}
+.datePicker {
+  display: flex;
+  height: 45px;
+
+  font-size: 16px;
+  padding: 0 10px;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}

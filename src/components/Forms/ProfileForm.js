@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 //import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Input from "../CustomComponents/Input";
@@ -21,12 +21,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ProfileForm = (props) => {
   let dispatch = useDispatch();
+  const [startDate, setStartDate] = useState(new Date());
 
   let [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
     other_names: "",
-    dob: "",
+
     email: "",
     phone: "",
     newPassword: "",
@@ -36,13 +37,14 @@ const ProfileForm = (props) => {
     first_name,
     last_name,
     other_names,
-    dob,
+
     email,
     phone,
     newPassword,
     confirmPassword,
   } = profileData;
   let [profileAvatar, setProfielAvatar] = useState(props.profileImage);
+  let widthRef = useRef();
 
   const profileLoading = useSelector(
     (state) => state.dashboard.profileDataSaveLoading
@@ -65,6 +67,8 @@ const ProfileForm = (props) => {
     dispatch(shopProfileFetchLoading(false));
 
     if (data.Success) {
+      let fetchDob = new Date(data.Details[0].dob);
+      setStartDate(fetchDob);
       setProfileData(data.Details[0]);
       setUserImage(imageEndPoint + data.Details[0].profile_picture);
       dispatch(
@@ -87,7 +91,7 @@ const ProfileForm = (props) => {
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
     profileDataForm.set("other_names", other_names);
-    profileDataForm.set("dob", dob);
+    profileDataForm.set("dob", startDate);
     profileDataForm.set("email", email);
     profileDataForm.set("phone", phone);
     profileDataForm.set("profile_picture", profileAvatar);
@@ -103,11 +107,21 @@ const ProfileForm = (props) => {
       }
     }
   };
+  let selector = document.getElementById("dobSelector");
+  let containerRef = widthRef;
+  if (containerRef.current) {
+    if (selector) {
+      let width = containerRef.current.scrollWidth - 40;
+      document.getElementById("dobSelector").style.width =
+        width.toString() + "px";
+    }
+  }
+
   return (
     <>
       <form onSubmit={saveProfile}>
         <Grid container direction="row" spacing={5}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} ref={widthRef}>
             <Input
               placeholder="Enter first name"
               label="First name"
@@ -139,9 +153,22 @@ const ProfileForm = (props) => {
               placeholder="Dadte of birth"
               label="Date of Birth"
               name="dob"
-              value={dob}
-              onChange={handelProfileDataChange}
+              id="dobSelector"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              style={{ display: "flex", width: "2000px", height: "500px" }}
+              widthOfDob={
+                widthRef.current
+                  ? widthRef.current.scrollWidth.toString() + "px"
+                  : "100%"
+              }
             />
+
+            {/* <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              className="datePicker"
+            /> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Input

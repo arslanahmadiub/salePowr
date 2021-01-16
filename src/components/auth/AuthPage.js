@@ -243,7 +243,7 @@ export default function AuthenticationPage(props) {
   }
 
   let containerRef = widthRef;
-
+  console.log(containerRef);
   return (
     <Grid container spacing={0} ref={widthRef}>
       <div
