@@ -16,6 +16,7 @@ import {
 import { profileDialogAction } from "../../action/authAction";
 import { setProfileImage } from "../../action/authAction";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -67,8 +68,10 @@ const ProfileForm = (props) => {
     dispatch(shopProfileFetchLoading(false));
 
     if (data.Success) {
-      let fetchDob = new Date(data.Details[0].dob);
-      setStartDate(fetchDob);
+      if (data.Details[0].dob) {
+        let fetchDob = new Date(data.Details[0].dob);
+        setStartDate(fetchDob);
+      }
       setProfileData(data.Details[0]);
       setUserImage(imageEndPoint + data.Details[0].profile_picture);
       dispatch(
@@ -86,12 +89,13 @@ const ProfileForm = (props) => {
 
   const saveProfile = async (event) => {
     event.preventDefault();
+    let newDob = moment(startDate).format("yyyy-MM-DD");
 
     let profileDataForm = new FormData();
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
     profileDataForm.set("other_names", other_names);
-    profileDataForm.set("dob", startDate);
+    profileDataForm.set("dob", newDob.toString());
     profileDataForm.set("email", email);
     profileDataForm.set("phone", phone);
     profileDataForm.set("profile_picture", profileAvatar);
@@ -103,6 +107,7 @@ const ProfileForm = (props) => {
       dispatch(profileDialogAction(false));
     } catch (ex) {
       if (ex.response) {
+        dispatch(userProfileSaveLoading(false));
         console.log(ex.response.data);
       }
     }
@@ -116,6 +121,11 @@ const ProfileForm = (props) => {
         width.toString() + "px";
     }
   }
+
+  let handelDateChange = (e) => {
+    let dateValue = moment(e).format("yyyy-MM-DD");
+    setStartDate(new Date(dateValue));
+  };
 
   return (
     <>
@@ -155,8 +165,7 @@ const ProfileForm = (props) => {
               name="dob"
               id="dobSelector"
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              style={{ display: "flex", width: "2000px", height: "500px" }}
+              onChange={handelDateChange}
               widthOfDob={
                 widthRef.current
                   ? widthRef.current.scrollWidth.toString() + "px"
