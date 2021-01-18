@@ -9,8 +9,6 @@ function NewActivityGraph(props) {
 
   useEffect(() => {
     graphDataFromProps();
-
-    console.log("Call1");
   }, [graphChange]);
 
   let graphDataFromProps = () => {
