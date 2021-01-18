@@ -204,9 +204,8 @@ const Dashboard = (props) => {
 
         <Grid item>
           <Grid container spacing={2} direction="row">
-            <Grid xs={12} md={6} item style={{ flexGrow: "1" }}>
+            <Grid xs={12} md={6} item>
               <Card>
-                <h3>Activity</h3>
                 <NewActivityGraph
                   data={activityData.length > 0 ? activityData : []}
                 />
