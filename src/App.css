@@ -13,7 +13,7 @@ a {
 .dTtrNq {
   font-size: 22px !important;
   margin: 0 0 0 5px !important;
-  line-height: 43px !important;
+  line-height: 200% !important;
 }
 
 .datePicker:focus {
