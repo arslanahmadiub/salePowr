@@ -59,12 +59,17 @@ const Title = Styled.div`
 
 const Dashboard = (props) => {
   const [dataSet, changeDataSet] = React.useState(null);
+  const [refreshData, setRefreshData] = useState(null);
   let dispatch = useDispatch();
   const graphChange = useSelector((state) => state.dashboard.graph);
 
   useEffect(() => {
-    changeDataSet(null);
-    dashboardDataGet();
+    if (refreshData !== null) {
+      changeDataSet(null);
+      setTimeout(() => {
+        changeDataSet(refreshData);
+      }, 100);
+    }
   }, [graphChange]);
 
   const { user } = React.useContext(AuthContext);
@@ -123,6 +128,7 @@ const Dashboard = (props) => {
         };
 
         changeDataSet(newDashboardData);
+        setRefreshData(newDashboardData);
       }
     } catch (error) {
       console.log(error.response);
