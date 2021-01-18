@@ -65,10 +65,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     if (refreshData !== null) {
-      changeDataSet(null);
-      setTimeout(() => {
-        changeDataSet(refreshData);
-      }, 100);
+      changeDataSet(refreshData);
     }
   }, [graphChange]);
 

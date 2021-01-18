@@ -8,7 +8,10 @@ function NewActivityGraph(props) {
   const graphChange = useSelector((state) => state.dashboard.graph);
 
   useEffect(() => {
-    graphDataFromProps();
+    setgraphData([]);
+    setTimeout(() => {
+      graphDataFromProps();
+    }, 100);
   }, [graphChange]);
 
   let graphDataFromProps = () => {
@@ -25,7 +28,10 @@ function NewActivityGraph(props) {
   };
 
   useEffect(() => {
-    graphDataFromProps();
+    setgraphData([]);
+    setTimeout(() => {
+      graphDataFromProps();
+    }, 100);
   }, [props.data]);
   const state = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
