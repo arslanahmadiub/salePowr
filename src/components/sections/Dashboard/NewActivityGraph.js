@@ -19,6 +19,7 @@ function NewActivityGraph(props) {
         let y = item.y;
         activityData.push(y);
       });
+
       setgraphData(activityData);
     }
   };
