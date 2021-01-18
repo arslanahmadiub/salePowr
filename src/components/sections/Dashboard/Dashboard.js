@@ -63,6 +63,7 @@ const Dashboard = (props) => {
   const graphChange = useSelector((state) => state.dashboard.graph);
 
   useEffect(() => {
+    changeDataSet(null);
     dashboardDataGet();
   }, [graphChange]);
 
@@ -122,7 +123,6 @@ const Dashboard = (props) => {
         };
 
         changeDataSet(newDashboardData);
-        console.log("function Call");
       }
     } catch (error) {
       console.log(error.response);
