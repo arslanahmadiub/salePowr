@@ -9,6 +9,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { RightSideBarContext } from "../../../contexts/RightSideBarContext";
 import SideBarToggle from "../../CustomComponents/SideBarToggle";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { graphCall } from "../../../action/dashboardAction";
+import { useDispatch } from "react-redux";
 
 const DrawerContainer = Styled.div`
     -ms-overflow-style: none;  /* IE and Edge */
@@ -56,13 +58,18 @@ const Title = Styled.div`
 const Home = (props) => {
   const [drawerOpen, toggleDrawerOpen] = React.useState(false);
   const [modal, setModal] = React.useState(false);
-
+  const dispatch = useDispatch();
   let proRef = useRef();
 
   const profile = React.useContext(AuthContext);
   const { showRightSideBar, toggleRightSideBar } = React.useContext(
     RightSideBarContext
   );
+
+  let handelRightSideBar = () => {
+    toggleRightSideBar(true);
+    dispatch(graphCall());
+  };
 
   const toggleModal = (event) => {
     setModal(!modal);
@@ -150,7 +157,7 @@ const Home = (props) => {
         </Grid>
 
         <div
-          onClick={() => toggleRightSideBar(true)}
+          onClick={handelRightSideBar}
           style={{
             position: "fixed",
             right: "-25px",

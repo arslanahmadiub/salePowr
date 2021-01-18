@@ -79,8 +79,8 @@ const Product = (props) => {
           >
             <ButtonContainer onClick={toggleDialog}>
               <ArrowBackIos />
+              <Title>Back</Title>
             </ButtonContainer>
-            <Title>Back</Title>
           </div>
         </DialogTitle>
         <BreadCrumbs details={details} />

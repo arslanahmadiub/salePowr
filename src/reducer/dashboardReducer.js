@@ -1,6 +1,7 @@
 const initalState = {
   profileDataLoading: false,
   profileDataSaveLoading: false,
+  graph: false,
 };
 
 export const dashboardReducer = (state = initalState, action) => {
@@ -14,6 +15,11 @@ export const dashboardReducer = (state = initalState, action) => {
       return {
         ...state,
         profileDataSaveLoading: action.payload,
+      };
+    case "GRAPH_CALL":
+      return {
+        ...state,
+        graph: !state.graph,
       };
     case "RESET":
       return initalState;

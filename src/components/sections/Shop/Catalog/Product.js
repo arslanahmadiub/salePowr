@@ -96,9 +96,11 @@ const Product = (props) => {
             }}
           >
             <ButtonContainer onClick={toggleDialog}>
-              <ArrowBackIos />
+              <div style={{ display: "flex" }}>
+                <ArrowBackIos style={{ cursor: "pointer" }} />
+                <Title style={{ cursor: "pointer" }}>Back</Title>
+              </div>
             </ButtonContainer>
-            <Title>Back</Title>
           </div>
         </DialogTitle>
 

@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
+import { useSelector } from "react-redux";
 
 function NewActivityGraph(props) {
   const [graphData, setgraphData] = useState([]);
+  const graphChange = useSelector((state) => state.dashboard.graph);
+
+  useEffect(() => {
+    graphDataFromProps();
+
+    console.log("Call1");
+  }, [graphChange]);
 
   let graphDataFromProps = () => {
     if (props.data.length > 0) {

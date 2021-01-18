@@ -11,3 +11,8 @@ export const userProfileSaveLoading = (data) => {
     payload: data,
   };
 };
+export const graphCall = () => {
+  return {
+    type: "GRAPH_CALL",
+  };
+};

@@ -9,6 +9,7 @@ import { RightSideBarContext } from "../../../../contexts/RightSideBarContext";
 import { useDispatch } from "react-redux";
 import { profileDialogAction } from "../../../../action/authAction";
 import { useSelector } from "react-redux";
+import { graphCall } from "../../../../action/dashboardAction";
 
 const ProfileSection = (props) => {
   let dispatch = useDispatch();
@@ -25,6 +26,11 @@ const ProfileSection = (props) => {
 
   let handelEditProfile = () => {
     dispatch(profileDialogAction(true));
+  };
+
+  let handelRightSideBar = () => {
+    toggleRightSideBar(true);
+    dispatch(graphCall());
   };
 
   return (
@@ -44,7 +50,7 @@ const ProfileSection = (props) => {
             </small>
           </div>
           <div
-            onClick={() => toggleRightSideBar()}
+            onClick={handelRightSideBar}
             style={{ color: "#979FAA", fontSize: "10px", cursor: "pointer" }}
           >
             <Close />
