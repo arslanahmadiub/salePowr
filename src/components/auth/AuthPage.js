@@ -136,10 +136,11 @@ export default function AuthenticationPage(props) {
     };
     try {
       let { data } = await loginUserWithFacebook(accessToken);
-      if (data.Success) {
-        localStorage.setItem("token", data.Token);
-        history.push("/dashboard");
-      }
+      console.log(data);
+      // if (data.Success) {
+      //   localStorage.setItem("token", data.Token);
+      //   history.push("/dashboard");
+      // }
     } catch (error) {
       console.log(error);
     }
