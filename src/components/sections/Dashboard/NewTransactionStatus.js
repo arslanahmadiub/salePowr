@@ -75,6 +75,7 @@ function NewTransactionStatus(props) {
   let series = [
     {
       type: "area",
+      name: props.status,
       data: graphData,
     },
   ];

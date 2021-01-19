@@ -31,6 +31,7 @@ const TransactionStatus = (props) => {
             data={props.data ? props.data.shipped.data : []}
             lineColor="#F18F6C"
             graphColor="#F8C5B2"
+            status="Shipped Status"
           />
         </Grid>
         <Grid xs={4} item>
@@ -40,6 +41,7 @@ const TransactionStatus = (props) => {
             data={props.data ? props.data.delivered.data : []}
             lineColor="#31BDF4"
             graphColor="#91DCF9"
+            status="Delivered Status"
           />
         </Grid>
         <Grid xs={4} item>
@@ -49,6 +51,7 @@ const TransactionStatus = (props) => {
             data={props.data ? props.data.completed.data : []}
             lineColor="#1AB4B3"
             graphColor="#A794E4"
+            status="Complete Status"
           />
         </Grid>
       </Grid>

@@ -104,6 +104,7 @@ function NewActivityGraph(props) {
   let series = [
     {
       type: "area",
+      name: "Activity",
       data: graphData,
     },
   ];
