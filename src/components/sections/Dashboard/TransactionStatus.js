@@ -29,15 +29,8 @@ const TransactionStatus = (props) => {
 
           <NewTransactionStatus
             data={props.data ? props.data.shipped.data : []}
-            color="rgba(241,143,108,1)"
-          />
-        </Grid>
-        <Grid xs={4} item>
-          <Value>{completed && completed.total}</Value>
-
-          <NewTransactionStatus
-            data={props.data ? props.data.completed.data : []}
-            color="rgba(145,220,249,1)"
+            lineColor="#F18F6C"
+            graphColor="#F8C5B2"
           />
         </Grid>
         <Grid xs={4} item>
@@ -45,7 +38,17 @@ const TransactionStatus = (props) => {
 
           <NewTransactionStatus
             data={props.data ? props.data.delivered.data : []}
-            color="rgba(167,148,228,1)"
+            lineColor="#31BDF4"
+            graphColor="#91DCF9"
+          />
+        </Grid>
+        <Grid xs={4} item>
+          <Value>{completed && completed.total}</Value>
+
+          <NewTransactionStatus
+            data={props.data ? props.data.completed.data : []}
+            lineColor="#1AB4B3"
+            graphColor="#A794E4"
           />
         </Grid>
       </Grid>
@@ -55,7 +58,7 @@ const TransactionStatus = (props) => {
           justifyContent: "space-between",
           fontSize: "12px",
           color: "#979FAA",
-          marginTop: "15px",
+          marginTop: "-10%",
           padding: "10px",
         }}
       >

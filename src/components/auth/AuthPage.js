@@ -22,6 +22,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createUser } from "../../services/authServices";
 import { loginUser } from "../../services/authServices";
+import { loginUserWithGoogle } from "../../services/authServices";
+import { loginUserWithFacebook } from "../../services/authServices";
 import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import GoogleLogin from "react-google-login";
@@ -127,15 +129,35 @@ export default function AuthenticationPage(props) {
     return setData({ ...data, password2: event.target.value });
   };
 
-  let responseFacebook = (res) => {
-    console.log(res);
+  let responseFacebook = async (res) => {
+    let accessToken = {
+      email: res.email,
+    };
+    try {
+      let { data } = await loginUserWithFacebook(accessToken);
+      if (data.Success) {
+        localStorage.setItem("token", data.Token);
+        history.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  let handelFacebookLoginClcik = () => {
-    console.log("Clcik");
+  let responseGoogle = async (res) => {
+    let accessToken = {
+      token: res.accessToken,
+    };
+    try {
+      let { data } = await loginUserWithGoogle(accessToken);
+      if (data.Success) {
+        localStorage.setItem("token", data.Token);
+        history.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  let responseGoogle = (res) => {};
 
   let handelLoginClickAfterSignUp = () => {
     setWantsToSignIn(true);
@@ -221,7 +243,6 @@ export default function AuthenticationPage(props) {
         setLoadingShow(false);
 
         if (ex.response && ex.response.status === 401) {
-          console.log(ex.response.data);
           if (ex.response.data.Status === false) {
             setErrorMessage(ex.response.data.Message);
           }
@@ -243,7 +264,7 @@ export default function AuthenticationPage(props) {
   }
 
   let containerRef = widthRef;
-  console.log(containerRef);
+
   return (
     <Grid container spacing={0} ref={widthRef}>
       <div
@@ -407,7 +428,6 @@ export default function AuthenticationPage(props) {
                 fields="name,email,picture"
                 callback={responseFacebook}
                 id="facebookLoginButton"
-                onClick={handelFacebookLoginClcik}
                 cssClass="makeStyles-button-8 MuiButton-fullWidth MuiButton-outlined MuiButton-root MuiButtonBase-root"
                 icon={<FacebookIcon />}
               />

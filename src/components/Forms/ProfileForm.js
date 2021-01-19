@@ -50,7 +50,6 @@ const ProfileForm = (props) => {
   const profileLoading = useSelector(
     (state) => state.dashboard.profileDataSaveLoading
   );
-
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
@@ -72,6 +71,8 @@ const ProfileForm = (props) => {
         let fetchDob = new Date(data.Details[0].dob);
         setStartDate(fetchDob);
       }
+      data.Details[0].newPassword = "";
+      data.Details[0].confirmPassword = "";
       setProfileData(data.Details[0]);
       setUserImage(imageEndPoint + data.Details[0].profile_picture);
       dispatch(
@@ -90,7 +91,6 @@ const ProfileForm = (props) => {
   const saveProfile = async (event) => {
     event.preventDefault();
     let newDob = moment(startDate).format("yyyy-MM-DD");
-
     let profileDataForm = new FormData();
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
@@ -98,6 +98,7 @@ const ProfileForm = (props) => {
     profileDataForm.set("dob", newDob.toString());
     profileDataForm.set("email", email);
     profileDataForm.set("phone", phone);
+    profileDataForm.set("password", newPassword);
     profileDataForm.set("profile_picture", profileAvatar);
     try {
       dispatch(userProfileSaveLoading(true));
@@ -111,6 +112,8 @@ const ProfileForm = (props) => {
         console.log(ex.response.data);
       }
     }
+    dispatch(userProfileSaveLoading(false));
+    dispatch(profileDialogAction(false));
   };
   let selector = document.getElementById("dobSelector");
   let containerRef = widthRef;
@@ -257,9 +260,15 @@ const ProfileForm = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" width="100%">
-              {props.buttonText || "Submit"}
-            </Button>
+            {newPassword !== confirmPassword ? (
+              <Button type="submit" width="100%" disable faded>
+                Submit
+              </Button>
+            ) : (
+              <Button type="submit" width="100%">
+                Submit
+              </Button>
+            )}
           </Grid>
         </Grid>
       </form>

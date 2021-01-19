@@ -23,7 +23,6 @@ function NewActivityGraph(props) {
         let y = item.y;
         activityData.push(y);
       });
-      console.log(activityData);
       setgraphData(activityData);
     }
   };
@@ -48,27 +47,57 @@ function NewActivityGraph(props) {
   let options = {
     chart: {
       id: "apexchart-example",
+      background: "#345gg",
+    },
+    dataLabels: {
+      enabled: false,
     },
     grid: {
       show: false,
     },
-    xaxis: {
-      categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      axisBorder: {
-        show: false,
+    fill: {
+      colors: ["#31BDF4", "#31BDF4"],
+    },
+    stroke: {
+      show: true,
+      curve: "smooth",
+      colors: "#0800ff",
+      width: 2,
+      dashArray: 0,
+    },
+    title: {
+      text: "Activity",
+      align: "left",
+      margin: 10,
+      offsetX: 0,
+      offsetY: 0,
+      floating: true,
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        fontFamily: undefined,
+        color: "#263238",
       },
     },
+    xaxis: {
+      categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+
+      axisBorder: {
+        show: true,
+        color: "#31BDF4",
+        height: 3,
+        width: "100%",
+        offsetX: 0,
+        offsetY: 0,
+      },
+    },
+
     yaxis: {
       show: false,
     },
     chart: {
       toolbar: {
         show: false,
-      },
-    },
-    dataLabels: {
-      style: {
-        colors: ["#979FB2", "#979FB2", "#979FB2"],
       },
     },
   };

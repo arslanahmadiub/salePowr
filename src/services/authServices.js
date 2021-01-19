@@ -6,6 +6,8 @@ let createUserUrl = apiEndPoint + "create_user";
 let loginUserUrl = apiEndPoint + "login";
 let completeUserProfileUrl = apiEndPoint + "complete_profile";
 let getUserDetailUrl = apiEndPoint + "get_user_details";
+let loginUserFacebookUrl = apiEndPoint + "facebook";
+let loginUserGoogleUrl = apiEndPoint + "google";
 // let userToken = "92c6544f868181b32ad25533fc3633ec6d450d77";
 let userToken = localStorage.getItem("token");
 
@@ -50,6 +52,28 @@ export async function getFullUserDetails(token) {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: token,
+    },
+  });
+}
+
+export async function loginUserWithGoogle(data) {
+  return await axios({
+    method: "post",
+    url: loginUserGoogleUrl,
+    data: data,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export async function loginUserWithFacebook(data) {
+  return await axios({
+    method: "post",
+    url: loginUserFacebookUrl,
+    data: data,
+    headers: {
+      "Content-Type": "application/json",
     },
   });
 }
