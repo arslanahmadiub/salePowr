@@ -147,6 +147,7 @@ export default function AuthenticationPage(props) {
 
   let responseGoogle = async (res) => {
     console.log(res);
+    console.log(res);
     let accessToken = {
       token: res.accessToken,
     };
