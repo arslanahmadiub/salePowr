@@ -17,19 +17,6 @@ function NewTransactionStatus(props) {
     defectorData();
   }, [props.data]);
 
-  // const state = {
-  //   labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-  //   datasets: [
-  //     {
-  //       fill: true,
-  //       lineTension: 0.5,
-  //       backgroundColor: props.color,
-  //       borderColor: props.color,
-  //       borderWidth: 1,
-  //       data: graphData,
-  //     },
-  //   ],
-  // };
   let options = {
     chart: {
       id: "apexchart-example",
@@ -80,40 +67,6 @@ function NewTransactionStatus(props) {
     },
   ];
   return (
-    // <Line
-    //   data={state}
-    //   options={{
-    //     legend: {
-    //       display: false,
-    //       position: "right",
-    //     },
-    //     scales: {
-    //       xAxes: [
-    //         {
-    //           display: false,
-
-    //           gridLines: {
-    //             display: false,
-    //           },
-    //           scaleLabel: {
-    //             display: false,
-    //           },
-    //         },
-    //       ],
-    //       yAxes: [
-    //         {
-    //           display: false,
-    //           gridLines: {
-    //             display: false,
-    //           },
-    //           ticks: {
-    //             min: 0,
-    //           },
-    //         },
-    //       ],
-    //     },
-    //   }}
-    // />
     <Chart
       options={options}
       series={series}

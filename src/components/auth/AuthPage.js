@@ -13,8 +13,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { countryCodes } from "../../DummyData/DummyData";
 import { Email, Facebook, Phone } from "@material-ui/icons";
 import logo from "../../assets/images/logo.png";
-import Verifications from "../../Helpers/Verifications";
-import Authentication from "../../Helpers/Authentication";
+
 import GoogleLogo from "../CustomComponents/GoogleLogo";
 import { AuthContext } from "../../contexts/AuthContext";
 import snapshot from "./../../assets/images/snapshot.svg";
@@ -81,7 +80,6 @@ export default function AuthenticationPage(props) {
     password: "",
     password2: "",
   });
-  const mobileNumber = useSelector((state) => state.auth.phoneNumber);
 
   let { email, password, password2 } = data;
   const [usePhoneSignIn, setPhoneSignIn] = useState(false);
@@ -93,7 +91,6 @@ export default function AuthenticationPage(props) {
   const theme = React.useContext(ThemeContext);
   const { from } = props.location || { from: { pathname: "/" } };
 
-  // THIS IS WILL GIVE US A WAY TO SET THE USER OBJECT THROUGH THE CONTEXT.
   const { setUser } = React.useContext(AuthContext);
   const styles = useStyles(theme);
 
@@ -112,11 +109,7 @@ export default function AuthenticationPage(props) {
 
   let widthRef = useRef();
 
-  const handlePhoneInput = (phone) => {
-    // if (phone && phone.prefix != null && phone.value != null)
-    //   return setData({ ...data, phone: `${phone.prefix}${phone}` });
-    // console.log(phone);
-  };
+  const handlePhoneInput = (phone) => {};
 
   const handleEmailInput = (events) => {
     return setData({ ...data, email: events.target.value });
@@ -332,10 +325,6 @@ export default function AuthenticationPage(props) {
             )}
 
             <Grid item xs={12}>
-              {/* <div className={`${styles.text} ${styles.error}`}>
-                {errorMessage}
-              </div> */}
-
               <div
                 style={{
                   display: "flex",
@@ -413,16 +402,7 @@ export default function AuthenticationPage(props) {
               xs={12}
               style={{ display: usePhoneSignIn ? "none" : "" }}
             ></Grid>
-            {/* <Grid item xs={12}>
-              <MaterialButton
-                className={styles.button}
-                fullWidth
-                variant="outlined"
-                startIcon={<Facebook />}
-              >
-                Sign In with Facebook
-              </MaterialButton>
-            </Grid> */}
+
             <Grid item xs={12}>
               <FacebookLogin
                 appId="216041560133866"
@@ -483,10 +463,3 @@ export default function AuthenticationPage(props) {
     </Grid>
   );
 }
-
-let fbButtonStyle = {
-  color: "rgba(0, 0, 0, 0.87)",
-  padding: "6px 16px",
-  fontSize: "0.875rem",
-  minWidth: "64px",
-};

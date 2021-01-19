@@ -3,18 +3,15 @@ import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import BannerContainer from "../../CustomComponents/BannerContainer";
 import TradingVolume from "./TradingVolume";
-import ActivityGraph from "./ActivityGraph";
 import NewActivityGraph from "./NewActivityGraph";
 import PaymentLinkVisits from "./PaymentLinkVisits.js";
 import TransactionStatus from "./TransactionStatus";
 import NewOrders from "./NewOrders";
-import { dashboardData } from "../../../DummyData/DummyData";
 import Card from "../../CustomComponents/Card";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
 import ArcProgressBar from "../../CustomComponents/ArcProgressBar";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { ImportantDevices } from "@material-ui/icons";
 import CompleteProfile from "../Profile/CompleteProfile";
 import { getDashboardData } from "../../../services/dashboardService";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,12 +37,6 @@ const SubText = Styled.div`
         font-size: 12px;
     }
 `;
-// const SmallLabel = Styled.text`
-//     color: #979FAA;
-//     font-size: 12px;
-//     position: absolute;
-
-// `
 
 const Title = Styled.div`
     color: ${(props) => (props.plain ? "#FFF" : "#010101")};
@@ -59,15 +50,8 @@ const Title = Styled.div`
 
 const Dashboard = (props) => {
   const [dataSet, changeDataSet] = React.useState(null);
-  const [refreshData, setRefreshData] = useState(null);
-  let dispatch = useDispatch();
-  const graphChange = useSelector((state) => state.dashboard.graph);
 
-  useEffect(() => {
-    if (refreshData !== null) {
-      changeDataSet(refreshData);
-    }
-  }, [graphChange]);
+  let dispatch = useDispatch();
 
   const { user } = React.useContext(AuthContext);
 
@@ -125,7 +109,6 @@ const Dashboard = (props) => {
         };
 
         changeDataSet(newDashboardData);
-        setRefreshData(newDashboardData);
       }
     } catch (error) {
       console.log(error.response);
