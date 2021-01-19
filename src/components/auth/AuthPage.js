@@ -137,10 +137,9 @@ export default function AuthenticationPage(props) {
     try {
       let { data } = await loginUserWithFacebook(accessToken);
       console.log(data);
-      // if (data.Success) {
-      //   localStorage.setItem("token", data.Token);
-      //   history.push("/dashboard");
-      // }
+      if (data.Success) {
+        localStorage.setItem("token", data.Token);
+      }
     } catch (error) {
       console.log(error);
     }
