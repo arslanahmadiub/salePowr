@@ -134,15 +134,15 @@ export default function AuthenticationPage(props) {
     let accessToken = {
       email: res.email,
     };
-    // try {
-    //   let { data } = await loginUserWithFacebook(accessToken);
-    //   if (data.Success) {
-    //     localStorage.setItem("token", data.Token);
-    //     history.push("/dashboard");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      let { data } = await loginUserWithFacebook(accessToken);
+      if (data.Success) {
+        localStorage.setItem("token", data.Token);
+        history.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let responseGoogle = async (res) => {
@@ -150,15 +150,15 @@ export default function AuthenticationPage(props) {
     let accessToken = {
       token: res.accessToken,
     };
-    // try {
-    //   let { data } = await loginUserWithGoogle(accessToken);
-    //   if (data.Success) {
-    //     localStorage.setItem("token", data.Token);
-    //     history.push("/dashboard");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      let { data } = await loginUserWithGoogle(accessToken);
+      if (data.Success) {
+        localStorage.setItem("token", data.Token);
+        history.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let handelLoginClickAfterSignUp = () => {
@@ -436,7 +436,7 @@ export default function AuthenticationPage(props) {
             </Grid>
             <Grid item xs={12}>
               <GoogleLogin
-                clientId="524553788869-24pc3oem8qsoauek5vp86h31h4gm6ioi.apps.googleusercontent.com"
+                clientId="524553788869-2ee6gkqnehj1tvlilf8epfe031q2gphh.apps.googleusercontent.com"
                 render={(renderProps) => (
                   <MaterialButton
                     className={styles.button}
