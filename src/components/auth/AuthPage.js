@@ -123,15 +123,14 @@ export default function AuthenticationPage(props) {
   };
 
   let responseFacebook = async (res) => {
-    console.log(res);
     let accessToken = {
       email: res.email,
     };
     try {
       let { data } = await loginUserWithFacebook(accessToken);
-      console.log(data);
       if (data.Success) {
         localStorage.setItem("token", data.Token);
+        history.push("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -139,7 +138,6 @@ export default function AuthenticationPage(props) {
   };
 
   let responseGoogle = async (res) => {
-    console.log(res);
     let accessToken = {
       token: res.accessToken,
     };
