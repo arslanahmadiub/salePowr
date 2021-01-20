@@ -118,10 +118,10 @@ export default function Catalog(props) {
 
           {shopIds.length < 1 ? (
             <h2>
-              Sorry!!! you don’t have any shop listed yet click on the
-              <span style={{ color: "#31BDF4" }}> “Shop Profile” </span>tab to
-              create shop. Once shop is created you can start sharing your shop
-              link or product link.
+              Sorry!!! you don’t have any products listed yet click on the
+              <span style={{ color: "#31BDF4" }}> “Add Product” </span>tab to
+              add products to your catalog. Once a product is added you can
+              start sharing your shop link or product link.
             </h2>
           ) : null}
 
