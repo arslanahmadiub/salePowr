@@ -33,6 +33,7 @@ const TransactionStatus = (props) => {
             graphColor="#F8C5B2"
             status="Shipped Status"
           />
+          <div style={{ marginTop: "-20%" }}>Shipped</div>
         </Grid>
         <Grid xs={4} item>
           <Value>{delivered && delivered.total}</Value>
@@ -43,6 +44,7 @@ const TransactionStatus = (props) => {
             graphColor="#91DCF9"
             status="Delivered Status"
           />
+          <div style={{ marginTop: "-20%" }}>Delivered</div>
         </Grid>
         <Grid xs={4} item>
           <Value>{completed && completed.total}</Value>
@@ -53,22 +55,9 @@ const TransactionStatus = (props) => {
             graphColor="#A794E4"
             status="Complete Status"
           />
+          <div style={{ marginTop: "-20%" }}>Completed</div>
         </Grid>
       </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          fontSize: "12px",
-          color: "#979FAA",
-          marginTop: "-10%",
-          padding: "10px",
-        }}
-      >
-        <div>Shipped</div>
-        <div>Delivered</div>
-        <div>Completed</div>
-      </div>
     </Card>
   );
 };

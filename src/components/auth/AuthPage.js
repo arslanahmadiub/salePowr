@@ -403,7 +403,7 @@ export default function AuthenticationPage(props) {
 
             <Grid item xs={12}>
               <FacebookLogin
-                appId="216041560133866"
+                appId="417433252826469"
                 autoLoad={false}
                 fields="name,email,picture"
                 callback={responseFacebook}
@@ -414,7 +414,7 @@ export default function AuthenticationPage(props) {
             </Grid>
             <Grid item xs={12}>
               <GoogleLogin
-                clientId="524553788869-2ee6gkqnehj1tvlilf8epfe031q2gphh.apps.googleusercontent.com"
+                clientId="27367811829-gc62lq8bdl0pqn88v28ekr8r1f3uo9dp.apps.googleusercontent.com"
                 render={(renderProps) => (
                   <MaterialButton
                     className={styles.button}

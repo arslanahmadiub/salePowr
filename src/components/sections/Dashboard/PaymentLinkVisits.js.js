@@ -87,7 +87,7 @@ const PaymentLinkVisits = (props) => {
         {data[index] || 0}
       </LargeBlackBoldText>
 
-      <SmallFadedLabel>Payment link visits</SmallFadedLabel>
+      <SmallFadedLabel>Shop link visits</SmallFadedLabel>
     </Card>
   );
 };
