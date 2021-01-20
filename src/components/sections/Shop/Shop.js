@@ -18,6 +18,7 @@ import { shopCreate } from "../../../services/shopServices";
 import { selectedShopId } from "../../../action/shopAction";
 import { selectedShopName } from "../../../action/shopAction";
 import { shopIdsAction } from "../../../action/shopAction";
+import { saveShopData } from "../../../action/shopAction";
 import { getShopIds } from "../../../services/dashboardService";
 
 export default function Shop(props) {
@@ -28,6 +29,8 @@ export default function Shop(props) {
 
   const [publishData, setPublishData] = useState({});
   const createShop = useSelector((state) => state.shopPreview.shopData);
+  const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
+
   const selectedTabIndex = useSelector(
     (state) => state.shopPreview.selectedTab
   );
@@ -134,6 +137,7 @@ export default function Shop(props) {
         shopIdsCollectionForCreateShop();
       }
       setLoading(false);
+      dispatch(saveShopData({}));
     }
   };
 
@@ -142,7 +146,7 @@ export default function Shop(props) {
       return <Button onClick={handelPublishShop}>PUBLISH A SHOP</Button>;
     } else {
       return (
-        <Button onClick={handelPublishShop} disabled>
+        <Button onClick={handelPublishShop} disabled faded>
           PUBLISH A SHOP
         </Button>
       );
@@ -175,24 +179,14 @@ export default function Shop(props) {
     left: "0",
   };
 
-  // let contianerRef = shopWidthRef;
-  // if (contianerRef.current) {
-  //   console.log(contianerRef);
-  // }
+  let shopTabsWithShop = ["Shop Profile", "Catalog", "Add Product"];
+  let shopTabsWithoutShops = ["Shop Profile", "Catalog"];
 
   return (
     <div ref={shopWidthRef}>
       <DesktopHeaderRow title="Shop">
         <Grid container spacing={5}>
-          {/* <Grid item xs={6}> */}
-          {/* <Button onClick={() => togglePreview(true)}>SHOP PREVIEW</Button> */}
-          {/* <Button onClick={() => togglePreview(true)} outlined>
-              SHOP PREVIEW
-            </Button> */}
-          {/* </Grid> */}
           <Grid item xs={12}>
-            {/* <Button onClick={() => togglePublish(true)}>PUBLISH A SHOP</Button> */}
-            {/* <Button onClick={handelPublishShop}>PUBLISH A SHOP</Button> */}
             {selectedTabIndex === 0 ? publicButton() : null}
           </Grid>
         </Grid>
@@ -200,7 +194,9 @@ export default function Shop(props) {
       <div style={loading ? loadingStyle : unLoadingStyle}>
         <CircularProgress color="inherit" />
       </div>
-      <Tabs headers={["Shop Profile", "Catalog", "Add Product"]}>
+      <Tabs
+        headers={shopIds.length > 0 ? shopTabsWithShop : shopTabsWithoutShops}
+      >
         <ShopProfileForm />
         <Catalog />
         <AddProductForm />
