@@ -25,9 +25,6 @@ const PublicShop = () => {
 
   let [dumpData, setDumpData] = useState([]);
   const [shopData, setShopData] = useState(null);
-  const selectedShopId = useSelector(
-    (state) => state.shopPreview.selectedShopId
-  );
 
   let getCatalog = async () => {
     let { data } = await publicShopDetail(shopId);
@@ -58,7 +55,7 @@ const PublicShop = () => {
   };
   useEffect(() => {
     getCatalog();
-  }, [selectedShopId]);
+  }, []);
 
   return (
     <Container>
