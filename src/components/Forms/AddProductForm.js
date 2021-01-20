@@ -28,9 +28,21 @@ const ImageContainer = Styled.div`
     position: relative;
 `;
 
+const Container = Styled.div`
+padding: 50px 30px;
+border-radius: 0;
+background: #F5F8FD;
+min-height: 80%;
+@media (max-width: 960px){
+    padding: 20px 10px;
+}
+`;
+
 export default function AddProductForm(props) {
   const [state, setState] = React.useState({ delivery: "24hrs" });
   const [clearImageData, setClearImageData] = useState(false);
+  const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
+
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
   let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
@@ -282,141 +294,154 @@ export default function AddProductForm(props) {
     selectedShopId;
 
   return (
-    <div>
-      <div
-        // onSubmit={processWidrawal}
-        style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}
-      >
-        <Grid container direction="row" spacing={4}>
-          <Grid item xs={12}>
-            <MiniFilePicker
-              getFiles={(value) => getImages(value)}
-              clearImages={clearImageData}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={3} direction="row">
-              <Grid item xs={12} md={6}>
-                <Grid container spacing={2} direction="column">
-                  <Grid item xs={12}>
-                    <Input
-                      placeholder="Enter product name"
-                      label="Name of product"
-                      required
-                      name="productName"
-                      onChange={onChange}
-                      value={productName}
-                    />
+    <>
+      {shopIds.length < 1 ? (
+        <Container>
+          <h2>
+            Sorry!!! you don’t have any shop listed yet click on the
+            <span style={{ color: "#31BDF4" }}> “Shop Profile” </span>tab to
+            create shop. Once shop is created you can start sharing your shop
+            link or product link.
+          </h2>
+        </Container>
+      ) : (
+        <div>
+          <div
+            // onSubmit={processWidrawal}
+            style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}
+          >
+            <Grid container direction="row" spacing={4}>
+              <Grid item xs={12}>
+                <MiniFilePicker
+                  getFiles={(value) => getImages(value)}
+                  clearImages={clearImageData}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={3} direction="row">
+                  <Grid item xs={12} md={6}>
+                    <Grid container spacing={2} direction="column">
+                      <Grid item xs={12}>
+                        <Input
+                          placeholder="Enter product name"
+                          label="Name of product"
+                          required
+                          name="productName"
+                          onChange={onChange}
+                          value={productName}
+                        />
+                      </Grid>
+                      <div style={loading ? loadingStyle : unLoadingStyle}>
+                        <CircularProgress color="inherit" />
+                      </div>
+                      <Grid item xs={12}>
+                        <Input
+                          placeholder="Price"
+                          label="Price"
+                          required
+                          type="number"
+                          name="productPrice"
+                          onChange={onChange}
+                          value={productPrice}
+                        />
+                      </Grid>
+                    </Grid>
                   </Grid>
-                  <div style={loading ? loadingStyle : unLoadingStyle}>
-                    <CircularProgress color="inherit" />
-                  </div>
-                  <Grid item xs={12}>
-                    <Input
-                      placeholder="Price"
-                      label="Price"
+                  <Grid item xs={12} md={6}>
+                    <TextArea
+                      placeholder="Enter description"
+                      label="Description"
+                      rows={5}
                       required
-                      type="number"
-                      name="productPrice"
+                      name="productDescription"
                       onChange={onChange}
-                      value={productPrice}
+                      value={productDescription}
                     />
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <TextArea
-                  placeholder="Enter description"
-                  label="Description"
+              <Grid item xs={12}>
+                <h4>Delivery Terms</h4>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Select
+                  placeholder="Select country"
+                  list={countryList}
+                  label="Country"
                   rows={5}
                   required
-                  name="productDescription"
+                  name="productCountry"
                   onChange={onChange}
-                  value={productDescription}
+                  value={productCountry}
                 />
               </Grid>
+              <Grid item xs={12} md={8}></Grid>
+
+              {deliveryTermNumber.map((item, index) => {
+                return (
+                  <DeliveryTerms
+                    key={index}
+                    itemIndex={index}
+                    addItem={addDeliveryItem}
+                    removeItem={removeDeliveryItem}
+                    lengthOfItem={deliveryTermNumber}
+                    getData={(value, value2) => getLocationData(value, value2)}
+                    clearData={clearFormData}
+                  />
+                );
+              })}
+
+              <Grid item xs={12}>
+                <hr />
+
+                <p>Also share on social media</p>
+
+                <FlexContainer>
+                  <span>Facebook</span>
+                  <FacebookShareButton
+                    quote={shareAbleData}
+                    url={finalUrl}
+                    onClick={handelSharing}
+                  >
+                    <button
+                      id="facebookShare"
+                      onClick={facebookClick}
+                      style={{ display: "none" }}
+                    >
+                      Facebook Share
+                    </button>
+                  </FacebookShareButton>
+                  <Switch size="small" onChange={ToggleFacebook} />
+                </FlexContainer>
+
+                <FlexContainer>
+                  <span>Twitter</span>
+
+                  <TwitterShareButton
+                    title="Here is description of Product"
+                    via={shareAbleData}
+                    url={finalUrl}
+                  >
+                    <button
+                      id="twitterShare"
+                      onClick={twitterClick}
+                      style={{ display: "none" }}
+                    >
+                      Twitter Share
+                    </button>
+                  </TwitterShareButton>
+                  <Switch size="small" onChange={ToggleTwitter} />
+                </FlexContainer>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={4}>
+                <Button onClick={processWidrawal}>SEND REQUEST</Button>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <h4>Delivery Terms</h4>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              placeholder="Select country"
-              list={countryList}
-              label="Country"
-              rows={5}
-              required
-              name="productCountry"
-              onChange={onChange}
-              value={productCountry}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}></Grid>
-
-          {deliveryTermNumber.map((item, index) => {
-            return (
-              <DeliveryTerms
-                key={index}
-                itemIndex={index}
-                addItem={addDeliveryItem}
-                removeItem={removeDeliveryItem}
-                lengthOfItem={deliveryTermNumber}
-                getData={(value, value2) => getLocationData(value, value2)}
-                clearData={clearFormData}
-              />
-            );
-          })}
-
-          <Grid item xs={12}>
-            <hr />
-
-            <p>Also share on social media</p>
-
-            <FlexContainer>
-              <span>Facebook</span>
-              <FacebookShareButton
-                quote={shareAbleData}
-                url={finalUrl}
-                onClick={handelSharing}
-              >
-                <button
-                  id="facebookShare"
-                  onClick={facebookClick}
-                  style={{ display: "none" }}
-                >
-                  Facebook Share
-                </button>
-              </FacebookShareButton>
-              <Switch size="small" onChange={ToggleFacebook} />
-            </FlexContainer>
-
-            <FlexContainer>
-              <span>Twitter</span>
-
-              <TwitterShareButton
-                title="Here is description of Product"
-                via={shareAbleData}
-                url={finalUrl}
-              >
-                <button
-                  id="twitterShare"
-                  onClick={twitterClick}
-                  style={{ display: "none" }}
-                >
-                  Twitter Share
-                </button>
-              </TwitterShareButton>
-              <Switch size="small" onChange={ToggleTwitter} />
-            </FlexContainer>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Button onClick={processWidrawal}>SEND REQUEST</Button>
-          </Grid>
-        </Grid>
-      </div>
-      <ToastContainer />
-    </div>
+          </div>
+          <ToastContainer />
+        </div>
+      )}
+    </>
   );
 }

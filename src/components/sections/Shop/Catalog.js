@@ -32,6 +32,7 @@ export default function Catalog(props) {
   let [dumpData, setDumpData] = useState([]);
 
   let [showMessageNoProduct, setShowMessageNoProduct] = useState(false);
+  const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
 
   const [loadingShow, setLoadingShow] = useState(false);
 
@@ -77,7 +78,9 @@ export default function Catalog(props) {
     }
   };
   useEffect(() => {
-    getCatalog();
+    if (shopIds.length > 0) {
+      getCatalog();
+    }
   }, [selectedShopId]);
 
   return (
@@ -111,6 +114,15 @@ export default function Catalog(props) {
             >
               <Spin size="large" />
             </Space>
+          ) : null}
+
+          {shopIds.length < 1 ? (
+            <h2>
+              Sorry!!! you don’t have any shop listed yet click on the
+              <span style={{ color: "#31BDF4" }}> “Shop Profile” </span>tab to
+              create shop. Once shop is created you can start sharing your shop
+              link or product link.
+            </h2>
           ) : null}
 
           {showMessageNoProduct ? (

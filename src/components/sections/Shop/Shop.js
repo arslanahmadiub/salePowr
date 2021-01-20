@@ -179,9 +179,6 @@ export default function Shop(props) {
     left: "0",
   };
 
-  let shopTabsWithShop = ["Shop Profile", "Catalog", "Add Product"];
-  let shopTabsWithoutShops = ["Shop Profile", "Catalog"];
-
   return (
     <div ref={shopWidthRef}>
       <DesktopHeaderRow title="Shop">
@@ -194,9 +191,7 @@ export default function Shop(props) {
       <div style={loading ? loadingStyle : unLoadingStyle}>
         <CircularProgress color="inherit" />
       </div>
-      <Tabs
-        headers={shopIds.length > 0 ? shopTabsWithShop : shopTabsWithoutShops}
-      >
+      <Tabs headers={["Shop Profile", "Catalog", "Add Product"]}>
         <ShopProfileForm />
         <Catalog />
         <AddProductForm />
