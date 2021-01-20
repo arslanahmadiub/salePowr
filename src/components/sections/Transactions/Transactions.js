@@ -4,6 +4,7 @@ import Styled from "styled-components";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
 import RenderTransactions from "./RenderTransactions";
+
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;

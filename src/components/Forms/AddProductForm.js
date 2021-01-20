@@ -67,6 +67,18 @@ export default function AddProductForm(props) {
     twitter,
   } = data;
 
+  useEffect(() => {
+    if (facebook) {
+      facebookClick();
+    }
+  }, [facebook]);
+
+  useEffect(() => {
+    if (twitter) {
+      twitterClick();
+    }
+  }, [twitter]);
+
   let clearForm = () => {
     setData({
       productName: "",
@@ -82,6 +94,7 @@ export default function AddProductForm(props) {
     setClearImageData(true);
     setDeliveryTermNumber([1]);
     setClearFormData(true);
+    setClearFormData(false);
   };
 
   let shareAbleData =
@@ -136,9 +149,11 @@ export default function AddProductForm(props) {
     await form_data.set("product_name", productName);
     await form_data.set("description", productDescription);
     await form_data.set("price", productPrice);
-    imagesData.forEach((item, index) => {
-      form_data.append(index, item);
-    });
+    if (imagesData) {
+      imagesData.forEach((item, index) => {
+        form_data.append(index, item);
+      });
+    }
 
     cityLocationData.splice(0, 1);
     let newDeliveryTerm = [];
@@ -164,14 +179,14 @@ export default function AddProductForm(props) {
       };
       try {
         let result = await productDeliveryTerm(finalData, userToken);
-        if (facebook === true && twitter === true) {
-          facebookClick();
-          twitterClick();
-        } else if (facebook === true) {
-          facebookClick();
-        } else if (twitter === true) {
-          twitterClick();
-        }
+        // if (facebook === true && twitter === true) {
+        //   facebookClick();
+        //   twitterClick();
+        // } else if (facebook === true) {
+        //   facebookClick();
+        // } else if (twitter === true) {
+        //   twitterClick();
+        // }
         emailToast();
         clearForm();
         setLoading(false);
@@ -268,8 +283,8 @@ export default function AddProductForm(props) {
 
   return (
     <div>
-      <form
-        onSubmit={processWidrawal}
+      <div
+        // onSubmit={processWidrawal}
         style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}
       >
         <Grid container direction="row" spacing={4}>
@@ -353,40 +368,11 @@ export default function AddProductForm(props) {
             );
           })}
 
-          {/* here is delivery Terms */}
-
           <Grid item xs={12}>
-            {/* <FlexContainer>
-              <div>Note: Powrsale service charge is 5%</div>
-              <div style={{ fontWeight: "600", fontSize: "22px" }}>
-                {`${currency} 0`}
-              </div>
-            </FlexContainer> */}
-
-            {/* <FlexContainer>
-              <div style={{ fontWeight: 600, fontSize: "24px" }}>
-                Total amount payable
-              </div>
-              <div style={{ fontWeight: "600", fontSize: "24px" }}>
-                {`${currency} 0`}
-              </div>
-            </FlexContainer> */}
             <hr />
 
             <p>Also share on social media</p>
-            {/* <FlexContainer>
-              <span>Instagram</span>
-              <InstapaperShareButton
-                title="Hello Here is Power sale"
-                via="I am admin arslan"
-                url="http://www.supersecure.site/"
-                // hashtag="#programing joke"
-                // imageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png"
-                onClick={handelSharing}
-              >
-                <Switch size="small" onChange={ToggleTwitter} />
-              </InstapaperShareButton>
-            </FlexContainer> */}
+
             <FlexContainer>
               <span>Facebook</span>
               <FacebookShareButton
@@ -426,10 +412,10 @@ export default function AddProductForm(props) {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <Button type="submit">SEND REQUEST</Button>
+            <Button onClick={processWidrawal}>SEND REQUEST</Button>
           </Grid>
         </Grid>
-      </form>
+      </div>
       <ToastContainer />
     </div>
   );
