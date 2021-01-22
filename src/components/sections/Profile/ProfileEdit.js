@@ -1,6 +1,6 @@
 import { Avatar, Badge, Hidden, IconButton } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileForm from "../../Forms/ProfileForm";
 import { profileInfo } from "../../../DummyData/DummyData";
 import profilePhoto from "../../../assets/images/photo.jpg";
@@ -30,6 +30,10 @@ const ProfileEdit = (props) => {
   let setProfileImageFromServer = (value) => {
     setProfileAvatar(value);
   };
+
+  useEffect(() => {
+    setProfileImageFromServer();
+  }, [props.setProfileAvatar]);
 
   return (
     <div style={{ background: "#F5F8FD", borderRadius: "25px" }}>

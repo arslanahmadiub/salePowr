@@ -6,8 +6,19 @@ import { Hidden } from "@material-ui/core";
 import RenderProducts from "../Shop/Catalog/RenderProducts";
 import { publicShopDetail } from "../../../services/shopServices";
 import { imageEndPoint } from "../../../config.json";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+
+import { useHistory, useParams, Redirect } from "react-router-dom";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
+
 const Container = Styled.div`
 padding: 50px 30px;
 border-radius: 0;
@@ -20,6 +31,8 @@ min-height: 80%;
 
 const PublicShop = () => {
   let id = window.location.href;
+  const history = useHistory();
+  const classes = useStyles();
 
   let shopId = id.slice(id.lastIndexOf("/") + 1, id.length);
 
@@ -27,30 +40,34 @@ const PublicShop = () => {
   const [shopData, setShopData] = useState(null);
 
   let getCatalog = async () => {
-    let { data } = await publicShopDetail(shopId);
-    if (data.Success) {
-      let result = data.Products;
-      let shopResult = data.ShopDetails;
-      setShopData(shopResult[0]);
-      let freshData = [];
-      result.map((item) => {
-        let newData = {
-          name: item.product_name,
-          image:
-            item.thumbnail.length > 0
-              ? imageEndPoint + item.thumbnail[0].image
-              : "",
-          description: item.description,
-          price: item.price,
-          tiles: {
-            first_tile: "",
-          },
-          delivery: "24hrs",
-          productId: item.product,
-        };
-        freshData.push(newData);
-      });
-      setDumpData(freshData);
+    try {
+      let { data } = await publicShopDetail(shopId);
+      if (data.Success) {
+        let result = data.Products;
+        let shopResult = data.ShopDetails;
+        setShopData(shopResult[0]);
+        let freshData = [];
+        result.map((item) => {
+          let newData = {
+            name: item.product_name,
+            image:
+              item.thumbnail.length > 0
+                ? imageEndPoint + item.thumbnail[0].image
+                : "",
+            description: item.description,
+            price: item.price,
+            tiles: {
+              first_tile: "",
+            },
+            delivery: "24hrs",
+            productId: item.product,
+          };
+          freshData.push(newData);
+        });
+        setDumpData(freshData);
+      }
+    } catch (error) {
+      history.push("/page-not-found");
     }
   };
   useEffect(() => {
@@ -63,6 +80,9 @@ const PublicShop = () => {
         <PublicShopDesktop data={shopData} />
       </Hidden>
 
+      <Backdrop className={classes.backdrop} open={true}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Hidden mdUp>
         <PublicShopMobile data={shopData} />
       </Hidden>

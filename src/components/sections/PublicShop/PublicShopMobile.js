@@ -3,6 +3,7 @@ import Styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import { Facebook, Instagram, Twitter, WhatsApp } from "@material-ui/icons";
 import CompanyLogoImage from "../../../assets/images/company-logo.png";
+import { imageEndPoint } from "../../../config.json";
 
 const Container = Styled.div`
 padding: 50px 30px;
@@ -66,7 +67,7 @@ const CompanyLogo = Styled.img`
     margin: auto;  
 `;
 
-const PublicShopMobile = () => {
+const PublicShopMobile = (props) => {
   // const { logo, name, brief, social, contacts, description, shopId } = props.data;
   return (
     <div
@@ -76,39 +77,40 @@ const PublicShopMobile = () => {
         borderBottom: "solid #979FAA .5px",
       }}
     >
-      {/* <CompanyLogo src={logo && logo} /> */}
-      <CompanyLogo src={CompanyLogoImage} />
+      <CompanyLogo
+        src={props.data !== null ? imageEndPoint + props.data.shop_logo : ""}
+      />
 
-      {/* <BrandName>{name && name}</BrandName> */}
-      <BrandName>Lahore Products</BrandName>
+      <BrandName>{props.data !== null ? props.data.shop_name : ""}</BrandName>
 
-      {/* <BrandSlogan>{description && description}</BrandSlogan> */}
-      <BrandSlogan>We sale Electornic Products</BrandSlogan>
+      <BrandSlogan>
+        {props.data !== null ? props.data.business_type : ""}
+      </BrandSlogan>
 
-      {/* <ShopId>Shop ID: {shopId && shopId}</ShopId> */}
-      <ShopId style={{ fontSize: "16px" }}>Shop ID: 1578899</ShopId>
+      <ShopId style={{ fontSize: "16px" }}>
+        Shop ID: {props.data !== null ? "#" + props.data.shop : ""}
+      </ShopId>
 
-      {/* <BrandBrief>{brief && brief}</BrandBrief> */}
-      <BrandBrief>Retail Marketing Services...</BrandBrief>
+      <BrandBrief>{props.data !== null ? props.data.shop_bio : ""}</BrandBrief>
 
       <Grid container direction="row" spacing={3}>
         <Grid item xs={6}>
           <ContactLabel>Address</ContactLabel>
 
-          {/* <Contact>{contacts && contacts.address}</Contact> */}
-          <Contact>Civic Center Lahore</Contact>
+          <Contact>{props.data !== null ? props.data.address : ""}</Contact>
         </Grid>
         <Grid item xs={6} md={3}>
           <ContactLabel>Phone</ContactLabel>
 
-          {/* <Contact>{contacts && contacts.phone}</Contact> */}
-          <Contact>03023338991</Contact>
+          <Contact>
+            {props.data !== null ? props.data.business_phone : ""}
+          </Contact>
         </Grid>
         <Grid item xs={12} md={3}>
           <ContactLabel>Email</ContactLabel>
-
-          {/* <Contact>{contacts && contacts.email}</Contact> */}
-          <Contact>arslanahmadiub@gamil.com</Contact>
+          <Contact>
+            {props.data !== null ? props.data.business_email : ""}
+          </Contact>
         </Grid>
         <Grid item xs={12} md={3} style={{ marginTop: "0px" }}>
           <ContactLabel>Social</ContactLabel>

@@ -91,7 +91,7 @@ const IntersectingCircle = Styled.div`
 `;
 
 const CreditCard = ({ data, selected, ...props }) => {
-  const { name, type, country, number, date } = data || {};
+  const { name, type, country, number, date, network } = data || {};
 
   const styles = selected && { boxShadow: "3px 3px 5px 3px #000" };
 
@@ -99,11 +99,12 @@ const CreditCard = ({ data, selected, ...props }) => {
     <Container style={styles || {}}>
       <HeaderRow>
         <Name>{name && name}</Name>
-        <Type>{type && type.toUpperCase()}</Type>
+        <Country>{country && country}</Country>
       </HeaderRow>
-      <Country>{country && country}</Country>
+      <Type>{network && network.toUpperCase() + " MoMo"}</Type>
+
       <Number>{number && number}</Number>
-      <Date>{date && date}</Date>
+      {/* <Date>{date && date}</Date> */}
       <IntersectingCircle>
         <Circle1 />
         <Circle />

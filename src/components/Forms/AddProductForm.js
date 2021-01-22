@@ -435,7 +435,7 @@ export default function AddProductForm(props) {
               </Grid>
 
               <Grid item xs={12} sm={6} md={4}>
-                <Button onClick={processWidrawal}>SEND REQUEST</Button>
+                <Button onClick={processWidrawal}>Add Product</Button>
               </Grid>
             </Grid>
           </div>

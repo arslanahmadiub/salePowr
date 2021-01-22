@@ -22,12 +22,12 @@ const RigthSideBar = (props) => {
         <Grid item>
           <ProfileSection />
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <ChatNotifierPanel />
         </Grid>
         <Grid item>
           <Messages messages={messages} />
-        </Grid>
+        </Grid> */}
 
         <LogoutButton />
       </Grid>

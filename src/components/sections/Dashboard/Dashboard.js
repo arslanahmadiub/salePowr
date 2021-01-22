@@ -71,6 +71,7 @@ const Dashboard = (props) => {
       );
     }
   };
+
   let userToken = localStorage.getItem("token");
 
   let dashboardDataGet = async () => {
@@ -96,9 +97,9 @@ const Dashboard = (props) => {
           dayVolume: 23,
           newOrders: data.newOrders,
           paymentLinkVisitsData: {
-            day: 54,
+            day: 0,
             week: data.shopLinkVisitData.week,
-            month: 2024,
+            month: 0,
           },
           shipped: 89,
           delivered: 90,
@@ -147,7 +148,6 @@ const Dashboard = (props) => {
       }
     }
   };
-
   return (
     <>
       <CompleteProfile />
@@ -156,10 +156,13 @@ const Dashboard = (props) => {
         <Hidden smDown>
           <Grid item>
             <TopRow>
-              <Title>
-                {profilePercent !== null ? profilePercent : 0}% completed
-              </Title>
-              <FlatSelect
+              {profilePercent !== null && profilePercent < 100 ? (
+                <Title>
+                  {profilePercent !== null ? profilePercent : 0}% completed
+                </Title>
+              ) : null}
+
+              {/* <FlatSelect
                 list={[
                   "Jan - Feb, 2020",
                   "Mar - Apr, 2020",
@@ -168,7 +171,7 @@ const Dashboard = (props) => {
                   "Sep - Oct, 2020",
                 ]}
                 bg
-              />
+              /> */}
             </TopRow>
           </Grid>
         </Hidden>

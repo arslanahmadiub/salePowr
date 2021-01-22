@@ -52,6 +52,8 @@ const Wallet = (props) => {
   const [available, setAvailable] = useState("");
   const [percentValue, setPercentValue] = useState(null);
   function advanceStage() {
+    setSelectedCard(null);
+
     if (stage < 3) {
       setStage(stage + 1);
     }
@@ -74,7 +76,7 @@ const Wallet = (props) => {
 
   function selectThis(data) {
     setSelectedCard(data);
-
+    setStage(0);
     setWalletId(data.id);
   }
   const { balance, cards } = React.useContext(WalletContext);
@@ -169,6 +171,7 @@ const Wallet = (props) => {
   useEffect(() => {
     walletCall();
   }, [props.walletFunctionCall]);
+
   return (
     <>
       <Row gutter={[0, 8]}>
@@ -182,16 +185,14 @@ const Wallet = (props) => {
               value={`GHS ${available}`}
               primary
             />
-
+            <BulletedText
+              title={"Funds in escrow"}
+              value={`GHS ${escrowAmount}`}
+            />
             <CircularProgress
               thickness={10}
               radius={50}
               percent={isNaN(percentValue) ? 0 : percentValue}
-            />
-
-            <BulletedText
-              title={"Funds in escrow"}
-              value={`GHS ${escrowAmount}`}
             />
           </BannerContainer>
         </Col>
@@ -216,7 +217,7 @@ const Wallet = (props) => {
             {walletCard.map((card, index) => {
               return (
                 <React.Fragment key={index}>
-                  {card.type === "momo" && (
+                  {card.type === "bank" && (
                     <span
                       onClick={() => selectThis(card)}
                       key={card.number + index + card.number}
@@ -229,7 +230,7 @@ const Wallet = (props) => {
                       />
                     </span>
                   )}
-                  {card.type === "bank" && (
+                  {card.type === "momo" && (
                     <span
                       onClick={() => selectThis(card)}
                       key={card.number + index + card.number}
@@ -248,7 +249,7 @@ const Wallet = (props) => {
 
             <NewCardButton key="nmsi8923nv-2092309" onClick={advanceStage}>
               <div style={{ top: "40%", position: "relative" }}>
-                Add new payment Card
+                Add new payout wallet
               </div>
             </NewCardButton>
           </HorizontalScrollingContainer>

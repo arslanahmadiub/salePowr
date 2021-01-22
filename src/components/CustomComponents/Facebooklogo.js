@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "../../assets/images/glogo.svg";
+import logo from "../../assets/images/facebook.svg";
 
-export default function GoogleLogo(props) {
+export default function Facebooklogo(props) {
   const { height, width, color } = props;
   if (color);
 

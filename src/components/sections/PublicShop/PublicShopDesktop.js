@@ -122,7 +122,6 @@ const PublicShopDesktop = (props) => {
               style={{ display: "flex", width: "50%", overFlow: "hidden" }}
             >
               <Brand>
-                {/* <BrandName>{name && name}</BrandName> */}
                 <BrandName>
                   {props.data !== null ? props.data.shop_name : ""}
                 </BrandName>
@@ -137,7 +136,7 @@ const PublicShopDesktop = (props) => {
                   <BrandSlogan>
                     {props.data !== null ? props.data.business_type : ""}
                   </BrandSlogan>
-                  {/* {showShopId()} */}
+
                   <ShopId style={{ fontSize: "16px" }}>
                     Shop ID: {props.data !== null ? "#" + props.data.shop : ""}
                   </ShopId>
@@ -166,7 +165,6 @@ const PublicShopDesktop = (props) => {
                 <Contact>
                   {props.data !== null ? props.data.address : ""}
                 </Contact>
-                {/* <Contact>{contacts && contacts.address}</Contact> */}
               </Grid>
               <Grid item xs={6} md={3}>
                 <ContactLabel>Phone</ContactLabel>
@@ -174,12 +172,10 @@ const PublicShopDesktop = (props) => {
                 <Contact>
                   {props.data !== null ? props.data.business_phone : ""}
                 </Contact>
-                {/* <Contact>{contacts && contacts.phone}</Contact> */}
               </Grid>
               <Grid item xs={6} md={3}>
                 <ContactLabel>Email</ContactLabel>
 
-                {/* <Contact>{contacts && contacts.email}</Contact> */}
                 <Contact>
                   {props.data !== null ? props.data.business_email : ""}
                 </Contact>

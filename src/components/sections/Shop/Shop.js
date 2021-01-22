@@ -5,6 +5,7 @@ import AddProductForm from "../../Forms/AddProductForm";
 import Tabs from "../../CustomComponents/Tabs";
 import Catalog from "./Catalog";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
 
 import DesktopHeaderRow from "../../CustomComponents/DesktopHeaderRow";
 import Grid from "@material-ui/core/Grid";
@@ -20,17 +21,38 @@ import { selectedShopName } from "../../../action/shopAction";
 import { shopIdsAction } from "../../../action/shopAction";
 import { saveShopData } from "../../../action/shopAction";
 import { getShopIds } from "../../../services/dashboardService";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { makeStyles } from "@material-ui/core/styles";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
 
 export default function Shop(props) {
   // const [preview, togglePreview] = React.useState(false);
   const [publish, togglePublish] = React.useState(false);
   const [enable, setEnable] = useState(false);
   let [loading, setLoading] = useState(false);
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [publishData, setPublishData] = useState({});
   const createShop = useSelector((state) => state.shopPreview.shopData);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
-
+  const selectedShop = useSelector((state) => state.shopPreview.selectedShopId);
   const selectedTabIndex = useSelector(
     (state) => state.shopPreview.selectedTab
   );
@@ -56,9 +78,15 @@ export default function Shop(props) {
   const shopNameFromRedux = useSelector(
     (state) => state.shopPreview.selectedShop
   );
+  const shopIdsFromRedux = useSelector(
+    (state) => state.shopPreview.shopIdCollections
+  );
+
   useEffect(() => {
     shopsIdsCollections();
   }, []);
+
+  const [copyShopStyle, setCopyShopStyle] = useState(false);
 
   let togglePreview = () => {
     dispatch(shopPreviewDialog(false));
@@ -131,10 +159,10 @@ export default function Shop(props) {
           shopId: data.ID,
         };
         setPublishData(shopPreview);
-        togglePublish(true);
         setLoading(false);
         dispatch(clearFormData(true));
         shopIdsCollectionForCreateShop();
+        togglePublish(true);
       }
       setLoading(false);
       dispatch(saveShopData({}));
@@ -146,7 +174,7 @@ export default function Shop(props) {
       return <Button onClick={handelPublishShop}>PUBLISH A SHOP</Button>;
     } else {
       return (
-        <Button onClick={handelPublishShop} disabled faded>
+        <Button disable faded>
           PUBLISH A SHOP
         </Button>
       );
@@ -179,18 +207,95 @@ export default function Shop(props) {
     left: "0",
   };
 
+  let handelCopyShopLink = () => {
+    setCopyShopStyle(true);
+    setTimeout(() => {
+      setCopyShopStyle(false);
+    }, 3000);
+  };
+  let siteAddress = window.location.href;
+  let copyAddress =
+    siteAddress.slice(0, siteAddress.lastIndexOf("/") + 1) +
+    "shopPreview/" +
+    selectedShop;
   return (
     <div ref={shopWidthRef}>
       <DesktopHeaderRow title="Shop">
-        <Grid container spacing={5}>
-          <Grid item xs={12}>
+        <Grid container>
+          {shopIdsFromRedux.length > 0 ? (
+            <Grid
+              item
+              xs={selectedTabIndex > 0 ? 6 : 4}
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                width: "100%",
+
+                justifyContent:
+                  selectedTabIndex > 0 ? "space-around" : "flex-end",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <FileCopyIcon
+                  style={{
+                    color: copyShopStyle ? "#979FAA" : "#31BDF4",
+                    cursor: "pointer",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                />
+
+                <CopyToClipboard text={copyAddress}>
+                  <h4
+                    style={{
+                      color: copyShopStyle ? "#979FAA" : "#31BDF4",
+                      cursor: "pointer",
+                    }}
+                    onClick={handelCopyShopLink}
+                  >
+                    Copy Shop Link
+                  </h4>
+                </CopyToClipboard>
+              </div>
+            </Grid>
+          ) : null}
+
+          {shopIdsFromRedux.length > 0 ? (
+            <Grid
+              item
+              xs={selectedTabIndex > 0 ? 6 : 4}
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                width: "100%",
+
+                justifyContent:
+                  selectedTabIndex > 0 ? "flex-start" : "flex-end",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <h4 style={{ color: "#31BDF4" }}>Shop Id: #{selectedShop} </h4>
+              </div>
+            </Grid>
+          ) : null}
+          <Grid
+            item
+            xs={shopIdsFromRedux.length > 0 ? 4 : 12}
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
             {selectedTabIndex === 0 ? publicButton() : null}
           </Grid>
         </Grid>
       </DesktopHeaderRow>
-      <div style={loading ? loadingStyle : unLoadingStyle}>
+
+      <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
-      </div>
+      </Backdrop>
+
       <Tabs headers={["Shop Profile", "Catalog", "Add Product"]}>
         <ShopProfileForm />
         <Catalog />

@@ -76,7 +76,7 @@ const TopRowDesktop = (props) => {
     description,
     shopId,
   } = props.data;
-
+  console.log(shopId);
   let handelFacebook = () => {
     console.log("Facebook Clcik");
     console.log(props);
@@ -104,14 +104,7 @@ const TopRowDesktop = (props) => {
   };
   let showSucceessTag = () => {
     if (props.data.shopId.length > 0) {
-      return (
-        // <div
-        //   style={{ display: "flex", width: "100%", justifyContent: "center" }}
-        // >
-        //   <h1 style={{ color: "#28A745" }}>Shop Created Successfully...</h1>
-        // </div>
-        emailToast()
-      );
+      return emailToast();
     }
   };
 
@@ -143,7 +136,11 @@ const TopRowDesktop = (props) => {
                   }}
                 >
                   <BrandSlogan>{description && description}</BrandSlogan>
-                  {showShopId()}
+                  {shopId ? (
+                    <ShopId style={{ fontSize: "16px" }}>
+                      Shop ID: {shopId && shopId}
+                    </ShopId>
+                  ) : null}
                 </div>
               </Brand>
             </FlexContainer>

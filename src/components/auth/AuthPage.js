@@ -9,12 +9,16 @@ import PasswordInput from "../CustomComponents/PasswordInput";
 import Input from "../CustomComponents/Input";
 import { Redirect } from "react-router-dom";
 import TwinInputSelect from "../CustomComponents/TwinInputSelect";
+import MaterialUIButton from "../CustomComponents/MaterialUIButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { countryCodes } from "../../DummyData/DummyData";
 import { Email, Facebook, Phone } from "@material-ui/icons";
 import logo from "../../assets/images/logo.png";
+import Alert from "@material-ui/lab/Alert";
 
 import GoogleLogo from "../CustomComponents/GoogleLogo";
+import Facebooklogo from "../CustomComponents/Facebooklogo";
+import PhoneLogo from "../CustomComponents/PhoneLogo";
 import { AuthContext } from "../../contexts/AuthContext";
 import snapshot from "./../../assets/images/snapshot.svg";
 import { Link } from "react-router-dom";
@@ -164,9 +168,17 @@ export default function AuthenticationPage(props) {
 
     if (!wantsToSignIn) {
       if (email === null || password === null || password2 === null) {
-        setErrorMessage("Please fill all fields...");
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Please fill all fields...
+          </Alert>
+        );
       } else if (password !== password2) {
-        setErrorMessage("Password doesn't match");
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Password doesn't match...
+          </Alert>
+        );
       } else {
         setErrorMessage("");
         try {
@@ -208,11 +220,23 @@ export default function AuthenticationPage(props) {
             let error = ex.response.data.Errors;
 
             if ("email" in error) {
-              setErrorMessage(error.email[0]);
+              setErrorMessage(
+                <Alert variant="filled" severity="error">
+                  {error.email[0]}
+                </Alert>
+              );
             } else if ("password2" in error) {
-              setErrorMessage(error.password2[0]);
+              setErrorMessage(
+                <Alert variant="filled" severity="error">
+                  {error.password2[0]}
+                </Alert>
+              );
             } else if ("__all__" in error) {
-              setErrorMessage(error.__all__[0]);
+              setErrorMessage(
+                <Alert variant="filled" severity="error">
+                  {error.__all__[0]}
+                </Alert>
+              );
             } else {
             }
           }
@@ -237,7 +261,11 @@ export default function AuthenticationPage(props) {
 
         if (ex.response && ex.response.status === 401) {
           if (ex.response.data.Status === false) {
-            setErrorMessage(ex.response.data.Message);
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                {ex.response.data.Message}
+              </Alert>
+            );
           }
         }
       }
@@ -366,7 +394,7 @@ export default function AuthenticationPage(props) {
               xs={12}
               style={{ display: usePhoneSignIn ? "" : "none" }}
             >
-              <MaterialButton
+              {/* <MaterialButton
                 onClick={toggleAuthMethod}
                 className={styles.button}
                 fullWidth
@@ -376,24 +404,35 @@ export default function AuthenticationPage(props) {
                 {wantsToSignIn
                   ? "Sign In with Email"
                   : "Create Account With Email"}
-              </MaterialButton>
+              </MaterialButton> */}
+              <MaterialUIButton
+                onClick={toggleAuthMethod}
+                iconImage={<Email />}
+                buttonText={
+                  wantsToSignIn
+                    ? "Sign In with Email"
+                    : "Create Account With Email"
+                }
+              />
             </Grid>
             <Grid
               item
               xs={12}
               style={{ display: usePhoneSignIn ? "none" : "" }}
             >
-              <MaterialButton
+              <MaterialUIButton
                 onClick={toggleAuthMethod}
-                className={styles.button}
-                fullWidth
-                variant="outlined"
-                startIcon={<Phone />}
-              >
-                {wantsToSignIn
-                  ? "Sign In With Phone"
-                  : "Create Account With Phone"}
-              </MaterialButton>
+                iconImage={
+                  <PhoneLogo
+                    style={{ color: "#039BE5", width: "50px", height: "50px" }}
+                  />
+                }
+                buttonText={
+                  wantsToSignIn
+                    ? "Sign In With Phone"
+                    : "Create Account With Phone"
+                }
+              />
             </Grid>
             <Grid
               item
@@ -402,32 +441,36 @@ export default function AuthenticationPage(props) {
             ></Grid>
 
             <Grid item xs={12}>
+              <div
+                style={{
+                  display: "flex",
+                  position: "absolute",
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                }}
+              >
+                <Facebooklogo />
+              </div>
               <FacebookLogin
                 appId="417433252826469"
                 autoLoad={false}
                 fields="name,email,picture"
                 callback={responseFacebook}
                 id="facebookLoginButton"
-                cssClass="makeStyles-button-8 MuiButton-fullWidth MuiButton-outlined MuiButton-root MuiButtonBase-root"
-                icon={<FacebookIcon />}
+                cssClass="materialButton"
               />
             </Grid>
             <Grid item xs={12}>
               <GoogleLogin
                 clientId="27367811829-gc62lq8bdl0pqn88v28ekr8r1f3uo9dp.apps.googleusercontent.com"
                 render={(renderProps) => (
-                  <MaterialButton
-                    className={styles.button}
-                    fullWidth
-                    variant="outlined"
+                  <MaterialUIButton
+                    iconImage={<GoogleLogo />}
+                    buttonText="Sign in with Google"
                     onClick={renderProps.onClick}
                     disabled={renderProps.disabled}
-                    startIcon={<GoogleLogo />}
-                  >
-                    Sign In With Google
-                  </MaterialButton>
+                  />
                 )}
-                buttonText="Login With Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={"single_host_origin"}
@@ -435,8 +478,14 @@ export default function AuthenticationPage(props) {
             </Grid>
 
             <Grid item xs={12}>
-              <DialogContentText className={styles.text}>
-                * By signing up, I agree to Powrsale{" "}
+              <DialogContentText
+                style={{
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                  textAlign: "center",
+                }}
+              >
+                * By signing up I agree to Powrsale{" "}
                 <Link to="/terms">Terms</Link> and{" "}
                 <Link to="/privacy-policy">Privacy Policy</Link>
               </DialogContentText>

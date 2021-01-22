@@ -10,6 +10,7 @@ import { Hidden } from "@material-ui/core";
 import CustomLink from "../../../CustomComponents/CustomLink";
 import { getProductDetail } from "../../../../services/shopServices";
 import { imageEndPoint } from "../../../../config.json";
+import move from "lodash-move";
 
 import { useSelector } from "react-redux";
 
@@ -156,6 +157,14 @@ export default function ProductDescription({
   useEffect(() => {
     verifyUser();
   }, []);
+
+  let handelTiledImage = (item, index) => {
+    let newArray = [...sideUrl];
+
+    let arr = move(newArray, index, 0);
+    setsideUrl(arr);
+  };
+
   return (
     <Container>
       <div>
@@ -169,7 +178,11 @@ export default function ProductDescription({
                     } else {
                       return (
                         <Grid item key={index}>
-                          <TiledImage src={item} />
+                          <TiledImage
+                            src={item}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handelTiledImage(item, index)}
+                          />
                         </Grid>
                       );
                     }
@@ -178,9 +191,10 @@ export default function ProductDescription({
             </Grid>
           </Grid>
           <Grid item xs={8} md={4}>
-            {productDetail !== null && productDetail[0].Images.length > 0 ? (
+            {sideUrl !== null && sideUrl.length > 0 ? (
               <CoverImage
-                src={imageEndPoint + productDetail[0].Images[0].image}
+                // src={imageEndPoint + productDetail[0].Images[0].image}
+                src={sideUrl[0]}
                 alt="First tile"
               />
             ) : null}

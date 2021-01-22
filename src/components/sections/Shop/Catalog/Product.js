@@ -72,7 +72,16 @@ const Product = (props) => {
     <>
       <Container onClick={toggleDialog}>
         <ImageContainer>
-          <Img src={details.image} alt="apple" />
+          <Img
+            src={details.image}
+            alt="apple"
+            style={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "10px",
+              objectFit: "fill",
+            }}
+          />
         </ImageContainer>
 
         <h4>{details.name}</h4>

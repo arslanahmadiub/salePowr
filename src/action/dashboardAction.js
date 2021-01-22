@@ -16,3 +16,9 @@ export const graphCall = () => {
     type: "GRAPH_CALL",
   };
 };
+
+export const reCallProfileApi = () => {
+  return {
+    type: "RECALL_PROFILE_API",
+  };
+};

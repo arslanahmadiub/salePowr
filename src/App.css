@@ -28,3 +28,20 @@ a {
   border: 1px solid #ccc;
   border-radius: 10px;
 }
+
+.materialButton {
+  display: block;
+  height: 45px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+}
+.materialButton:focus {
+  border-radius: 10px;
+  border: 3px solid lightblue;
+  outline-width: 0px;
+}

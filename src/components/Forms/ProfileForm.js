@@ -14,8 +14,10 @@ import {
   userProfileSaveLoading,
 } from "../../action/dashboardAction";
 import { profileDialogAction } from "../../action/authAction";
+import { reCallProfileApi } from "../../action/dashboardAction";
 import { setProfileImage } from "../../action/authAction";
 import { useSelector, useDispatch } from "react-redux";
+
 import moment from "moment";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -44,7 +46,7 @@ const ProfileForm = (props) => {
     newPassword,
     confirmPassword,
   } = profileData;
-  let [profileAvatar, setProfielAvatar] = useState(props.profileImage);
+  let [profileAvatar, setProfielAvatar] = useState(null);
   let widthRef = useRef();
 
   const profileLoading = useSelector(
@@ -106,14 +108,15 @@ const ProfileForm = (props) => {
 
       dispatch(userProfileSaveLoading(false));
       dispatch(profileDialogAction(false));
+      getProfileImageInfo();
     } catch (ex) {
       if (ex.response) {
-        dispatch(userProfileSaveLoading(false));
+        // dispatch(userProfileSaveLoading(false));
         console.log(ex.response.data);
       }
     }
-    dispatch(userProfileSaveLoading(false));
-    dispatch(profileDialogAction(false));
+    // dispatch(userProfileSaveLoading(false));
+    // dispatch(profileDialogAction(false));
   };
   let selector = document.getElementById("dobSelector");
   let containerRef = widthRef;
@@ -124,6 +127,16 @@ const ProfileForm = (props) => {
         width.toString() + "px";
     }
   }
+
+  let getProfileImageInfo = async () => {
+    let { data } = await getFullUserDetails(userToken);
+
+    if (data.Success) {
+      dispatch(
+        setProfileImage(imageEndPoint + data.Details[0].profile_picture)
+      );
+    }
+  };
 
   let handelDateChange = (e) => {
     let dateValue = moment(e).format("yyyy-MM-DD");
