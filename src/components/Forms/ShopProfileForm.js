@@ -422,7 +422,7 @@ const ShopProfileForm = (props) => {
               paddingBottom: "3%",
             }}
           >
-            <Button type="submit">{slectedShop ? "Update" : "Create"}</Button>
+            <Button type="submit">{slectedShop ? "Save" : "Create"}</Button>
             <br />
           </Grid>
         </Grid>
