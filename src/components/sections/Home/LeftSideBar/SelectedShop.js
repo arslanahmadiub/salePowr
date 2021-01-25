@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import Avatar from "@material-ui/core/Avatar";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -50,6 +52,7 @@ const SelectedShop = (props) => {
   const selectedShop = useSelector((state) => state.shopPreview.selectedShop);
   let dispatch = useDispatch();
   const [logoImage, setLogoImage] = useState(null);
+  const history = useHistory();
 
   let setFirstImage = () => {
     if (shops.length > 0) {
@@ -63,6 +66,8 @@ const SelectedShop = (props) => {
 
   function onChange(shop) {
     if (shop === "Create") {
+      history.push("/shop");
+
       setLogoImage(null);
       dispatch(selectedShopId(""));
       dispatch(selectedShopName(""));

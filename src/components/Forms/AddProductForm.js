@@ -308,7 +308,7 @@ export default function AddProductForm(props) {
 
   return (
     <>
-      {shopIds.length < 1 ? (
+      {shopIds.length < 1 || selectedShopId.length < 1 ? (
         <Container>
           <h2>
             Sorry!!! you don’t have any shop listed yet click on the

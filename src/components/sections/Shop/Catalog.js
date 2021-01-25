@@ -3,9 +3,9 @@ import Styled from "styled-components";
 import RenderProducts from "./Catalog/RenderProducts";
 import { products } from "../../../DummyData/DummyData";
 import { getCatalogData } from "../../../services/shopServices";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Spin, Space } from "antd";
-
+import { setShopInfo } from "../../../action/shopAction";
 import { imageEndPoint } from "../../../config.json";
 const Container = Styled.div`
 padding: 50px 30px;
@@ -31,6 +31,8 @@ const BrandSlogan = Styled.div`
 export default function Catalog(props) {
   let [dumpData, setDumpData] = useState([]);
 
+  const dispatch = useDispatch();
+
   let [showMessageNoProduct, setShowMessageNoProduct] = useState(false);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
 
@@ -42,6 +44,10 @@ export default function Catalog(props) {
   let getCatalog = async () => {
     setLoadingShow(true);
     let { data } = await getCatalogData(selectedShopId);
+
+    if (data.Success) {
+      dispatch(setShopInfo(data.ShopDetails[0]));
+    }
     let result = data.Products;
     let shopResult = data.ShopDetails;
     let freshData = [];
@@ -78,8 +84,10 @@ export default function Catalog(props) {
     }
   };
   useEffect(() => {
-    if (shopIds.length > 0) {
+    if (selectedShopId) {
       getCatalog();
+    } else {
+      setShowMessageNoProduct(true);
     }
   }, [selectedShopId]);
 

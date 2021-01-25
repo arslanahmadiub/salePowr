@@ -85,10 +85,6 @@ export default function Shop(props) {
     (state) => state.shopPreview.shopIdCollections
   );
 
-  useEffect(() => {
-    shopsIdsCollections();
-  }, []);
-
   const [copyShopStyle, setCopyShopStyle] = useState(false);
 
   let togglePreview = () => {
@@ -96,16 +92,6 @@ export default function Shop(props) {
   };
   let userToken = localStorage.getItem("token");
 
-  let shopsIdsCollections = async () => {
-    let { data } = await getShopIds(userToken);
-    if (data.Success && data.Details.length > 0) {
-      if (shopNameFromRedux.length < 1) {
-        dispatch(shopIdsAction(data.Details));
-        dispatch(selectedShopId(data.Details[0].shop));
-        dispatch(selectedShopName(data.Details[0].shop_name));
-      }
-    }
-  };
   let shopIdsCollectionForCreateShop = async () => {
     let { data } = await getShopIds(userToken);
 

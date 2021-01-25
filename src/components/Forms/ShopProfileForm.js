@@ -86,14 +86,12 @@ const ShopProfileForm = (props) => {
   };
 
   const [open, setOpen] = React.useState(false);
-  const slectedShopId = useSelector(
-    (state) => state.shopPreview.selectedShopId
-  );
+  const slectedShop = useSelector((state) => state.shopPreview.selectedShopId);
 
   let getShopDetailsOnly = async () => {
     try {
       setLoading(true);
-      let { data } = await getOnlyShopDetail(slectedShopId);
+      let { data } = await getOnlyShopDetail(slectedShop);
       setLoading(false);
 
       if (data.Success) {
@@ -135,8 +133,10 @@ const ShopProfileForm = (props) => {
   };
 
   useEffect(() => {
-    getShopDetailsOnly();
-  }, [slectedShopId]);
+    if (slectedShop) {
+      getShopDetailsOnly();
+    }
+  }, [slectedShop]);
 
   const handleClose = () => {
     setOpen(false);
@@ -158,7 +158,7 @@ const ShopProfileForm = (props) => {
   const saveShopProfile = async (event) => {
     event.preventDefault();
 
-    if (slectedShopId.length > 0) {
+    if (slectedShop.length > 0) {
       let {
         address,
         bio,
@@ -191,11 +191,7 @@ const ShopProfileForm = (props) => {
 
       try {
         setLoading(true);
-        let { data } = await editShopDetail(
-          slectedShopId,
-          form_data,
-          userToken
-        );
+        let { data } = await editShopDetail(slectedShop, form_data, userToken);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -426,7 +422,7 @@ const ShopProfileForm = (props) => {
               paddingBottom: "3%",
             }}
           >
-            <Button type="submit">{slectedShopId ? "Update" : "Create"}</Button>
+            <Button type="submit">{slectedShop ? "Update" : "Create"}</Button>
             <br />
           </Grid>
         </Grid>

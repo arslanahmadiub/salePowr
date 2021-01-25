@@ -59,3 +59,9 @@ export const selectedTabIndex = (data) => {
     payload: data,
   };
 };
+export const setShopInfo = (data) => {
+  return {
+    type: "SHOP_PROFILE_INFO",
+    payload: data,
+  };
+};

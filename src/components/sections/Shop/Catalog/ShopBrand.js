@@ -1,6 +1,8 @@
 import { Facebook, Instagram, Twitter, WhatsApp } from "@material-ui/icons";
 import React from "react";
 import Styled from "styled-components";
+import { useSelector } from "react-redux";
+import { imageEndPoint } from "../../../../config.json";
 
 const Container = Styled.div`
 padding: 50px 30px;
@@ -74,22 +76,40 @@ const CompanyLogo = Styled.img`
 
 const ShopBrandMobile = (props) => {
   const { logo, name, slogan, shopid } = props;
+  const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
 
   return (
     <Container>
-      <CompanyLogo src={logo && logo} />
+      <CompanyLogo src={shopProfile && imageEndPoint + shopProfile.shop_logo} />
       <div style={{ margin: "25px 15px" }}>
-        <BrandName>{name && name}</BrandName>
-        <BrandSlogan>{slogan && slogan}</BrandSlogan>
-        <ShopId>shop Id: {shopid}</ShopId>
+        <BrandName>{shopProfile && shopProfile.shop_name}</BrandName>
+        <BrandSlogan>{shopProfile && shopProfile.shop_bio}</BrandSlogan>
+        <ShopId>Shop Id: {shopProfile && shopProfile.shop}</ShopId>
 
         <div style={{ width: "100px", marginTop: "50px" }}>
           <ContactLabel>Social Media</ContactLabel>
           <FlexContainer>
-            <Facebook />
-            <Instagram />
-            <Twitter />
-            <WhatsApp />
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={shopProfile && shopProfile.facebook_link}
+            >
+              <Facebook />
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={shopProfile && shopProfile.instagram_link}
+            >
+              <Instagram />
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={shopProfile && shopProfile.twitter_link}
+            >
+              <Twitter />
+            </a>
           </FlexContainer>
         </div>
       </div>
@@ -98,26 +118,45 @@ const ShopBrandMobile = (props) => {
 };
 const ShopBrand = (props) => {
   const { logo, name, slogan, shopid } = props;
-  console.log(logo);
-  console.log(name);
-  console.log(slogan);
-  console.log(shopid);
+  const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
+  console.log(shopProfile);
   return (
     <Container>
       <div style={{ display: "flex" }}>
-        <CompanyLogo src={logo && logo} />
+        <CompanyLogo
+          src={shopProfile && imageEndPoint + shopProfile.shop_logo}
+        />
         <div style={{ marginTop: "-10px", marginLeft: "25px" }}>
-          <BrandName>{name && name}</BrandName>
-          <BrandSlogan>{slogan && slogan}</BrandSlogan>
-          <ShopId>Shop Id: {shopid}</ShopId>
+          <BrandName>{shopProfile && shopProfile.shop_name}</BrandName>
+          <BrandSlogan>{shopProfile && shopProfile.shop_bio}</BrandSlogan>
+          <ShopId>Shop Id: {shopProfile && shopProfile.shop}</ShopId>
 
           <div style={{ width: "100px" }}>
             <ContactLabel>Social Media</ContactLabel>
             <FlexContainer>
-              <Facebook />
-              <Instagram />
-              <Twitter />
-              <WhatsApp />
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={shopProfile && shopProfile.facebook_link}
+              >
+                <Facebook />
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={shopProfile && shopProfile.instagram_link}
+              >
+                <Instagram />
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={shopProfile && shopProfile.twitter_link}
+              >
+                <Twitter />
+              </a>
+
+              {/* <WhatsApp /> */}
             </FlexContainer>
           </div>
         </div>

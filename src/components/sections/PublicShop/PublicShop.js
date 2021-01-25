@@ -6,7 +6,8 @@ import { Hidden } from "@material-ui/core";
 import RenderProducts from "../Shop/Catalog/RenderProducts";
 import { publicShopDetail } from "../../../services/shopServices";
 import { imageEndPoint } from "../../../config.json";
-
+import { setShopInfo } from "../../../action/shopAction";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams, Redirect } from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -36,6 +37,8 @@ const PublicShop = () => {
   const [loading, setLoading] = useState(false);
   let shopId = id.slice(id.lastIndexOf("/") + 1, id.length);
 
+  const dispatch = useDispatch();
+
   let [dumpData, setDumpData] = useState([]);
   const [shopData, setShopData] = useState(null);
 
@@ -43,6 +46,9 @@ const PublicShop = () => {
     try {
       setLoading(true);
       let { data } = await publicShopDetail(shopId);
+      if (data.Success) {
+        dispatch(setShopInfo(data.ShopDetails[0]));
+      }
       setLoading(false);
       if (data.Success) {
         let result = data.Products;

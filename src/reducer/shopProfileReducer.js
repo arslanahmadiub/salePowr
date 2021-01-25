@@ -23,6 +23,7 @@ const initalState = {
   selectedShop: "",
   selectedShopId: "",
   selectedTab: 0,
+  shopProfile: {},
 };
 
 export const shopProfileReducer = (state = initalState, action) => {
@@ -76,6 +77,11 @@ export const shopProfileReducer = (state = initalState, action) => {
       return {
         ...state,
         selectedTab: action.payload,
+      };
+    case "SHOP_PROFILE_INFO":
+      return {
+        ...state,
+        shopProfile: action.payload,
       };
     case "RESET":
       return initalState;
