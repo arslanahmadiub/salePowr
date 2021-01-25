@@ -7,6 +7,10 @@ import Button from "../CustomComponents/Button";
 import MiniFilePicker from "../CustomComponents/MiniFilePicker";
 import Select from "../CustomComponents/Select";
 import FlexContainer from "../CustomComponents/FlexContainer";
+
+import Backdrop from "@material-ui/core/Backdrop";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { Switch } from "antd";
 import { DataContext } from "../../contexts/DataContext";
 import { WalletContext } from "../../contexts/WalletContext";
@@ -20,6 +24,13 @@ import "react-toastify/dist/ReactToastify.css";
 import DeliveryTerms from "./DeliveryTerms";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { LastIndexContext } from "antd/lib/space";
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
 
 const ImageContainer = Styled.div`
     height: 100px;
@@ -42,6 +53,8 @@ export default function AddProductForm(props) {
   const [state, setState] = React.useState({ delivery: "24hrs" });
   const [clearImageData, setClearImageData] = useState(false);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
+
+  const classes = useStyles();
 
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
@@ -331,9 +344,11 @@ export default function AddProductForm(props) {
                           value={productName}
                         />
                       </Grid>
-                      <div style={loading ? loadingStyle : unLoadingStyle}>
+
+                      <Backdrop className={classes.backdrop} open={loading}>
                         <CircularProgress color="inherit" />
-                      </div>
+                      </Backdrop>
+
                       <Grid item xs={12}>
                         <Input
                           placeholder="Price"

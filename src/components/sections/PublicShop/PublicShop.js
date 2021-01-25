@@ -33,7 +33,7 @@ const PublicShop = () => {
   let id = window.location.href;
   const history = useHistory();
   const classes = useStyles();
-
+  const [loading, setLoading] = useState(false);
   let shopId = id.slice(id.lastIndexOf("/") + 1, id.length);
 
   let [dumpData, setDumpData] = useState([]);
@@ -41,7 +41,9 @@ const PublicShop = () => {
 
   let getCatalog = async () => {
     try {
+      setLoading(true);
       let { data } = await publicShopDetail(shopId);
+      setLoading(false);
       if (data.Success) {
         let result = data.Products;
         let shopResult = data.ShopDetails;
@@ -67,6 +69,8 @@ const PublicShop = () => {
         setDumpData(freshData);
       }
     } catch (error) {
+      setLoading(false);
+
       history.push("/page-not-found");
     }
   };
@@ -80,7 +84,7 @@ const PublicShop = () => {
         <PublicShopDesktop data={shopData} />
       </Hidden>
 
-      <Backdrop className={classes.backdrop} open={true}>
+      <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <Hidden mdUp>

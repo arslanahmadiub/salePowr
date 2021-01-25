@@ -17,6 +17,7 @@ import { profileDialogAction } from "../../action/authAction";
 import { reCallProfileApi } from "../../action/dashboardAction";
 import { setProfileImage } from "../../action/authAction";
 import { useSelector, useDispatch } from "react-redux";
+import Alert from "@material-ui/lab/Alert";
 
 import moment from "moment";
 
@@ -48,6 +49,8 @@ const ProfileForm = (props) => {
   } = profileData;
   let [profileAvatar, setProfielAvatar] = useState(null);
   let widthRef = useRef();
+
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const profileLoading = useSelector(
     (state) => state.dashboard.profileDataSaveLoading
@@ -93,7 +96,9 @@ const ProfileForm = (props) => {
   const saveProfile = async (event) => {
     event.preventDefault();
     let newDob = moment(startDate).format("yyyy-MM-DD");
+
     let profileDataForm = new FormData();
+
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
     profileDataForm.set("other_names", other_names);
@@ -102,21 +107,28 @@ const ProfileForm = (props) => {
     profileDataForm.set("phone", phone);
     profileDataForm.set("password", newPassword);
     profileDataForm.set("profile_picture", profileAvatar);
+
     try {
       dispatch(userProfileSaveLoading(true));
       let result = await completeUserProfile(profileDataForm, userToken);
-
       dispatch(userProfileSaveLoading(false));
-      dispatch(profileDialogAction(false));
-      getProfileImageInfo();
+
+      setErrorMessage(
+        <Alert variant="filled" severity="success">
+          {result.data.Message}
+        </Alert>
+      );
+      setTimeout(() => {
+        dispatch(profileDialogAction(false));
+        getProfileImageInfo();
+        setErrorMessage(null);
+      }, 3000);
     } catch (ex) {
       if (ex.response) {
-        // dispatch(userProfileSaveLoading(false));
+        dispatch(userProfileSaveLoading(false));
         console.log(ex.response.data);
       }
     }
-    // dispatch(userProfileSaveLoading(false));
-    // dispatch(profileDialogAction(false));
   };
   let selector = document.getElementById("dobSelector");
   let containerRef = widthRef;
@@ -271,6 +283,9 @@ const ProfileForm = (props) => {
             >
               <CircularProgress />
             </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            {errorMessage && errorMessage}
           </Grid>
           <Grid item xs={12}>
             {newPassword !== confirmPassword ? (

@@ -76,7 +76,6 @@ const TopRowDesktop = (props) => {
     description,
     shopId,
   } = props.data;
-  console.log(shopId);
   let handelFacebook = () => {
     console.log("Facebook Clcik");
     console.log(props);

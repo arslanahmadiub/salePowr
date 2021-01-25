@@ -105,7 +105,7 @@ const ShopBrand = (props) => {
         <div style={{ margin: "25px 15px" }}>
           <BrandName>{name && name}</BrandName>
           <BrandSlogan>{slogan && slogan}</BrandSlogan>
-          <ShopId>shop Id: {shopid}</ShopId>
+          <ShopId>Shop Id: {shopid}</ShopId>
 
           <div style={{ width: "100px" }}>
             <ContactLabel>Social Media</ContactLabel>

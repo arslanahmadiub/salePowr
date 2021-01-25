@@ -22,8 +22,11 @@ import { shopIdsAction } from "../../../action/shopAction";
 import { saveShopData } from "../../../action/shopAction";
 import { getShopIds } from "../../../services/dashboardService";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import { makeStyles } from "@material-ui/core/styles";
+
 import FileCopyIcon from "@material-ui/icons/FileCopy";
+import move from "lodash-move";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -92,6 +95,7 @@ export default function Shop(props) {
     dispatch(shopPreviewDialog(false));
   };
   let userToken = localStorage.getItem("token");
+
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds(userToken);
     if (data.Success && data.Details.length > 0) {
@@ -104,8 +108,12 @@ export default function Shop(props) {
   };
   let shopIdsCollectionForCreateShop = async () => {
     let { data } = await getShopIds(userToken);
+
     if (data.Success && data.Details.length > 0) {
-      dispatch(shopIdsAction(data.Details));
+      let arr = move(data.Details, data.Details.length - 1, 0);
+      dispatch(selectedShopId(arr[0].shop));
+      dispatch(selectedShopName(arr[0].shop_name));
+      dispatch(shopIdsAction(arr));
     }
   };
 
