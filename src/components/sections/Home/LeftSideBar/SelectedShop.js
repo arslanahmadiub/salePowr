@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { selectedShopId } from "../../../../action/shopAction";
 import { selectedShopName } from "../../../../action/shopAction";
+
+import { imageEndPoint } from "../../../../config.json";
 
 const List = Styled.ul`
     padding: 18px 8px;
@@ -47,14 +49,27 @@ const SelectedShop = (props) => {
   const shops = useSelector((state) => state.shopPreview.shopIdCollections);
   const selectedShop = useSelector((state) => state.shopPreview.selectedShop);
   let dispatch = useDispatch();
+  const [logoImage, setLogoImage] = useState(null);
+
+  let setFirstImage = () => {
+    if (shops.length > 0) {
+      setLogoImage(imageEndPoint + shops[0].shop_logo);
+    }
+  };
+
+  useEffect(() => {
+    setFirstImage();
+  }, [shops]);
 
   function onChange(shop) {
     if (shop === "Create") {
+      setLogoImage(null);
       dispatch(selectedShopId(""));
       dispatch(selectedShopName(""));
     } else {
       dispatch(selectedShopId(shop.shop));
       dispatch(selectedShopName(shop.shop_name));
+      setLogoImage(imageEndPoint + shop.shop_logo);
     }
   }
 
@@ -101,9 +116,7 @@ const SelectedShop = (props) => {
               }}
             >
               <div style={{ marginRight: "10px" }}>
-                <Avatar>
-                  {selectedShop.length > 0 ? selectedShop.charAt(0) : ""}
-                </Avatar>
+                <Avatar alt="L" src={logoImage && logoImage} />
               </div>
               <div>
                 {selectedShop.length > 0 ? selectedShop : "Create Shop"}
