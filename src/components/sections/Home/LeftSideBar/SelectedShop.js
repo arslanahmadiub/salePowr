@@ -49,8 +49,13 @@ const SelectedShop = (props) => {
   let dispatch = useDispatch();
 
   function onChange(shop) {
-    dispatch(selectedShopId(shop.shop));
-    dispatch(selectedShopName(shop.shop_name));
+    if (shop === "Create") {
+      dispatch(selectedShopId(""));
+      dispatch(selectedShopName(""));
+    } else {
+      dispatch(selectedShopId(shop.shop));
+      dispatch(selectedShopName(shop.shop_name));
+    }
   }
 
   return (
@@ -88,9 +93,21 @@ const SelectedShop = (props) => {
           <div
             style={{ display: "flex", justifyContent: "normal", heigth: "" }}
           >
-            <div>
-              {/* <Avatar>Lahore</Avatar> */}
-              {selectedShop}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <div style={{ marginRight: "10px" }}>
+                <Avatar>
+                  {selectedShop.length > 0 ? selectedShop.charAt(0) : ""}
+                </Avatar>
+              </div>
+              <div>
+                {selectedShop.length > 0 ? selectedShop : "Create Shop"}
+              </div>
             </div>
           </div>
           <div style={{ lineHeight: "0px", color: "#979FAA" }}>
@@ -98,6 +115,7 @@ const SelectedShop = (props) => {
           </div>
         </div>
         <List onClick={() => setShow(!!shops && !show)} show={shops && show}>
+          <ListItem onClick={() => onChange("Create")}>Create Shop</ListItem>
           {shops != null &&
             shops.map((shop) => {
               return (

@@ -120,6 +120,7 @@ const Product = (props) => {
             updateDialog={(value) => payDialogUpdate(value)}
             updateValue={(data) => paymentData(data)}
             data={details}
+            shopNameData={props.shopNameData}
           />
         )}
       </Dialog>

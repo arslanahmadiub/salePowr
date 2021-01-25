@@ -11,6 +11,8 @@ let userToken = localStorage.getItem("token");
 let shopDetailUrl = apiEndPoint + "get_shop_details/";
 
 let publicShopDetailUrl = apiEndPoint + "shop_link_visit/";
+let getShopDetailUrl = apiEndPoint + "get_only_shop_details/";
+let editShopDetialUrl = apiEndPoint + "edit_shop/";
 
 export async function shopCreate(data, token) {
   return await axios({
@@ -64,5 +66,24 @@ export async function getProductDetail(id) {
   return await axios({
     method: "get",
     url: productDetail + id,
+  });
+}
+export async function getOnlyShopDetail(id) {
+  return await axios({
+    method: "get",
+    url: getShopDetailUrl + id,
+  });
+}
+
+export async function editShopDetail(id, data, token) {
+  return await axios({
+    method: "post",
+    url: editShopDetialUrl + id,
+
+    data: data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: token,
+    },
   });
 }

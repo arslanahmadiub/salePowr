@@ -17,6 +17,7 @@ const RenderProducts = (props) => {
               <Product
                 key={product.name + index.toString()}
                 details={product}
+                shopNameData={props.shopNameData}
               />
             </Grid>
           );

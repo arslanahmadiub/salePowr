@@ -165,6 +165,10 @@ export default function ProductDescription({
     setsideUrl(arr);
   };
 
+  if (productDetail !== null) {
+    console.log(props.data);
+  }
+
   return (
     <Container>
       <div>
@@ -259,8 +263,12 @@ export default function ProductDescription({
       <div style={{ borderTop: "0.5px solid #979FAA" }}>
         <Hidden smDown>
           <ShopBrand
-            logo={imageEndPoint + data.shopLogo}
-            name={data.shopName}
+            logo={
+              productDetail !== null
+                ? imageEndPoint + productDetail[0].Images[0].image
+                : ""
+            }
+            name={props.shopNameData && props.shopNameData}
             slogan={data.shopBio}
             shopid={
               productDetail !== null ? "#" + productDetail[0].shop_id : ""

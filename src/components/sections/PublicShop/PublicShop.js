@@ -77,7 +77,6 @@ const PublicShop = () => {
   useEffect(() => {
     getCatalog();
   }, []);
-
   return (
     <Container>
       <Hidden smDown>
@@ -91,7 +90,10 @@ const PublicShop = () => {
         <PublicShopMobile data={shopData} />
       </Hidden>
       <div style={{ padding: "30px" }}>
-        <RenderProducts products={dumpData} />
+        <RenderProducts
+          products={dumpData}
+          shopNameData={shopData && shopData.shop_name}
+        />
       </div>
     </Container>
   );

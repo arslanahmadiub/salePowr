@@ -98,11 +98,15 @@ const ShopBrandMobile = (props) => {
 };
 const ShopBrand = (props) => {
   const { logo, name, slogan, shopid } = props;
+  console.log(logo);
+  console.log(name);
+  console.log(slogan);
+  console.log(shopid);
   return (
     <Container>
       <div style={{ display: "flex" }}>
         <CompanyLogo src={logo && logo} />
-        <div style={{ margin: "25px 15px" }}>
+        <div style={{ marginTop: "-10px", marginLeft: "25px" }}>
           <BrandName>{name && name}</BrandName>
           <BrandSlogan>{slogan && slogan}</BrandSlogan>
           <ShopId>Shop Id: {shopid}</ShopId>

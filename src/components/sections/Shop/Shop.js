@@ -226,27 +226,28 @@ export default function Shop(props) {
     siteAddress.slice(0, siteAddress.lastIndexOf("/") + 1) +
     "shopPreview/" +
     selectedShop;
+
   return (
     <div ref={shopWidthRef}>
       <DesktopHeaderRow title="Shop">
         <Grid container>
-          {shopIdsFromRedux.length > 0 ? (
-            <Grid
-              item
-              xs={selectedTabIndex > 0 ? 6 : 4}
-              style={{
-                marginTop: "10px",
-                display: "flex",
-                width: "100%",
+          <Grid
+            item
+            xs={4}
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              width: "100%",
+              height: "50px",
 
-                justifyContent:
-                  selectedTabIndex > 0 ? "space-around" : "flex-end",
-              }}
-            >
+              justifyContent: "flex-end",
+            }}
+          >
+            {selectedShop.length > 0 ? (
               <div style={{ display: "flex" }}>
                 <FileCopyIcon
                   style={{
-                    color: copyShopStyle ? "#979FAA" : "#31BDF4",
+                    color: copyShopStyle ? "#979FAA" : "black",
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "flex-end",
@@ -256,7 +257,7 @@ export default function Shop(props) {
                 <CopyToClipboard text={copyAddress}>
                   <h4
                     style={{
-                      color: copyShopStyle ? "#979FAA" : "#31BDF4",
+                      color: copyShopStyle ? "#979FAA" : "black",
                       cursor: "pointer",
                     }}
                     onClick={handelCopyShopLink}
@@ -265,30 +266,30 @@ export default function Shop(props) {
                   </h4>
                 </CopyToClipboard>
               </div>
-            </Grid>
-          ) : null}
+            ) : null}
+          </Grid>
 
-          {shopIdsFromRedux.length > 0 ? (
-            <Grid
-              item
-              xs={selectedTabIndex > 0 ? 6 : 4}
-              style={{
-                marginTop: "10px",
-                display: "flex",
-                width: "100%",
+          <Grid
+            item
+            xs={4}
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              width: "100%",
 
-                justifyContent:
-                  selectedTabIndex > 0 ? "flex-start" : "flex-end",
-              }}
-            >
+              justifyContent: "flex-end",
+            }}
+          >
+            {selectedShop.length > 0 ? (
               <div style={{ display: "flex" }}>
                 <h4 style={{ color: "#31BDF4" }}>Shop Id: #{selectedShop} </h4>
               </div>
-            </Grid>
-          ) : null}
+            ) : null}
+          </Grid>
+
           <Grid
             item
-            xs={shopIdsFromRedux.length > 0 ? 4 : 12}
+            xs={4}
             style={{
               display: "flex",
               width: "100%",

@@ -8,22 +8,35 @@ import { DataContext } from "../../contexts/DataContext";
 import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { apiEndPoint } from "../../config.json";
-import { shopPreview } from "../../action/shopAction";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
+import { selectedShopId, shopPreview } from "../../action/shopAction";
 import { saveShopData } from "../../action/shopAction";
 import { shopPreviewDialog } from "../../action/shopAction";
 import { clearFormData } from "../../action/shopAction";
 import { clearFilePicker } from "../../action/shopAction";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { getOnlyShopDetail } from "../../services/shopServices";
+import { editShopDetail } from "../../services/shopServices";
 
-let createShopEndpoint = apiEndPoint + "create_shop";
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
 
 const ShopProfileForm = (props) => {
+  let userToken = localStorage.getItem("token");
+
+  const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     name: "",
     type: "",
@@ -73,10 +86,57 @@ const ShopProfileForm = (props) => {
   };
 
   const [open, setOpen] = React.useState(false);
+  const slectedShopId = useSelector(
+    (state) => state.shopPreview.selectedShopId
+  );
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  let getShopDetailsOnly = async () => {
+    try {
+      setLoading(true);
+      let { data } = await getOnlyShopDetail(slectedShopId);
+      setLoading(false);
+
+      if (data.Success) {
+        let newObject = data.ShopDetails[0];
+
+        let dataObject = {
+          name: newObject.shop_name,
+          type: newObject.business_type,
+          address: newObject.address,
+          phone: newObject.business_phone,
+          email: newObject.business_email,
+          twitter: newObject.twitter_link,
+          facebook: newObject.facebook_link,
+          instagram: newObject.instagram_link,
+          bio: newObject.shop_bio,
+          city: newObject.city,
+          country: newObject.country,
+          whatsapp: newObject.whatsapp_number,
+        };
+        setState(dataObject);
+      }
+    } catch (error) {
+      setLoading(false);
+      setState({
+        name: "",
+        type: "",
+        address: "",
+        phone: "",
+        email: "",
+        twitter: "",
+        facebook: "",
+        instagram: "",
+        bio: "",
+        city: "",
+        country: "",
+        whatsapp: "",
+      });
+    }
   };
+
+  useEffect(() => {
+    getShopDetailsOnly();
+  }, [slectedShopId]);
 
   const handleClose = () => {
     setOpen(false);
@@ -98,7 +158,52 @@ const ShopProfileForm = (props) => {
   const saveShopProfile = async (event) => {
     event.preventDefault();
 
-    setOpen(true);
+    if (slectedShopId.length > 0) {
+      let {
+        address,
+        bio,
+        city,
+        country,
+        email,
+        facebook,
+        instagram,
+        name,
+        phone,
+        twitter,
+        type,
+        whatsapp,
+      } = state;
+
+      let form_data = new FormData();
+      form_data.append("shop_name", name);
+      form_data.append("business_type", type);
+      form_data.append("country", country);
+      form_data.append("city", city);
+      form_data.append("address", address);
+      form_data.append("business_phone", phone);
+      form_data.append("business_email", email);
+      form_data.append("shop_bio", bio);
+      // form_data.append("shop_logo", logoFile);
+      form_data.append("instagram_link", instagram);
+      form_data.append("facebook_link", facebook);
+      form_data.append("twitter_link", twitter);
+      form_data.append("whatsapp_number", whatsapp);
+
+      try {
+        setLoading(true);
+        let { data } = await editShopDetail(
+          slectedShopId,
+          form_data,
+          userToken
+        );
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    } else {
+      setOpen(true);
+    }
   };
 
   let agreeWithShopProfile = () => {
@@ -148,6 +253,9 @@ const ShopProfileForm = (props) => {
   };
   return (
     <>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <form onSubmit={saveShopProfile}>
         <Grid container direction="row" spacing={5}>
           <Grid item xs={12}>
@@ -318,7 +426,7 @@ const ShopProfileForm = (props) => {
               paddingBottom: "3%",
             }}
           >
-            <Button type="submit">Create</Button>
+            <Button type="submit">{slectedShopId ? "Update" : "Create"}</Button>
             <br />
           </Grid>
         </Grid>
