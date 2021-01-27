@@ -16,6 +16,11 @@ import { shopPreviewDialog } from "../../action/shopAction";
 import { clearFormData } from "../../action/shopAction";
 import { clearFilePicker } from "../../action/shopAction";
 import { makeStyles } from "@material-ui/core/styles";
+import { getShopIds } from "../../services/dashboardService";
+import Alert from "@material-ui/lab/Alert";
+
+import { selectedShopName } from "../../action/shopAction";
+import { shopIdsAction } from "../../action/shopAction";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -87,6 +92,7 @@ const ShopProfileForm = (props) => {
 
   const [open, setOpen] = React.useState(false);
   const slectedShop = useSelector((state) => state.shopPreview.selectedShopId);
+  const logoFile = useSelector((state) => state.logoImage.logoFile);
 
   let getShopDetailsOnly = async () => {
     try {
@@ -129,6 +135,18 @@ const ShopProfileForm = (props) => {
         country: "",
         whatsapp: "",
       });
+    }
+  };
+
+  let shopsIdsCollections = async () => {
+    let { data } = await getShopIds(userToken);
+    if (data.Success && data.Details.length > 0) {
+      const found = data.Details.find(
+        (element) => element.shop === slectedShop
+      );
+      dispatch(shopIdsAction(data.Details));
+      dispatch(selectedShopId(found.shop));
+      dispatch(selectedShopName(found.shop_name));
     }
   };
 
@@ -183,24 +201,35 @@ const ShopProfileForm = (props) => {
       form_data.append("business_phone", phone);
       form_data.append("business_email", email);
       form_data.append("shop_bio", bio);
-      // form_data.append("shop_logo", logoFile);
+      form_data.append("shop_logo", logoFile);
       form_data.append("instagram_link", instagram);
       form_data.append("facebook_link", facebook);
       form_data.append("twitter_link", twitter);
       form_data.append("whatsapp_number", whatsapp);
 
       try {
+        setErrorMessage(null);
         setLoading(true);
         let { data } = await editShopDetail(slectedShop, form_data, userToken);
         setLoading(false);
+        setcleanImage(false);
+        setcleanImage(true);
+        shopsIdsCollections();
       } catch (error) {
         setLoading(false);
         console.log(error);
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Some thing went wrong or Network Problem...Try again later...
+          </Alert>
+        );
       }
     } else {
       setOpen(true);
     }
   };
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [cleanImage, setcleanImage] = useState(false);
 
   let agreeWithShopProfile = () => {
     setOpen(false);
@@ -359,7 +388,7 @@ const ShopProfileForm = (props) => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <FilePicker id="file" />
+                <FilePicker id="file" cleanFile={cleanImage} />
               </Grid>
             </Grid>
           </Grid>
@@ -413,6 +442,7 @@ const ShopProfileForm = (props) => {
               </Grid>
             </Grid>
           </Grid>
+          <Grid>{errorMessage && errorMessage}</Grid>
           <Grid
             style={{
               display: "flex",

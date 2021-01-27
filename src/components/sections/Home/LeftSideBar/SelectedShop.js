@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { selectedShopId } from "../../../../action/shopAction";
 import { selectedShopName } from "../../../../action/shopAction";
+import { logoImageFile } from "../../../../action/fileSaveAction";
 
 import { imageEndPoint } from "../../../../config.json";
 
@@ -67,11 +68,14 @@ const SelectedShop = (props) => {
   function onChange(shop) {
     if (shop === "Create") {
       history.push("/shop");
+      dispatch(logoImageFile([]));
 
       setLogoImage(null);
       dispatch(selectedShopId(""));
       dispatch(selectedShopName(""));
     } else {
+      dispatch(logoImageFile([]));
+
       dispatch(selectedShopId(shop.shop));
       dispatch(selectedShopName(shop.shop_name));
       setLogoImage(imageEndPoint + shop.shop_logo);

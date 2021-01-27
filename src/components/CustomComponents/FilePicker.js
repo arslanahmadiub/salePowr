@@ -18,8 +18,12 @@ const Container = Styled.div`
 const FilePicker = (props) => {
   const dispatch = useDispatch();
   const filePickerData = useSelector((state) => state.shopPreview.filePicker);
-
   const [file, setFile] = React.useState(null);
+  useEffect(() => {
+    if (props.cleanFile) {
+      setFile(null);
+    }
+  }, [props.cleanFile]);
 
   const pickFile = (event) => {
     document.querySelector("#filepicker").click();

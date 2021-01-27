@@ -29,7 +29,7 @@ const Transactions = (props) => {
       <Hidden smDown>
         <TopRow>
           <div>Transactions</div>
-          <RenderButtons>
+          {/* <RenderButtons>
             <FlatSelect
               list={[
                 "Jan - Feb, 2020",
@@ -40,7 +40,7 @@ const Transactions = (props) => {
               ]}
               bg
             />
-          </RenderButtons>
+          </RenderButtons> */}
         </TopRow>
       </Hidden>
 
