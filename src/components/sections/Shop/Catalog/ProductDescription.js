@@ -107,7 +107,7 @@ export default function ProductDescription({
   }, [productDetail]);
 
   // if (productDetail !== null && productDetail.length > 0) {
-  //   console.log(productDetail[0].shop_id);
+  //
   // }
 
   let findShopId = () => {
@@ -164,10 +164,6 @@ export default function ProductDescription({
     let arr = move(newArray, index, 0);
     setsideUrl(arr);
   };
-
-  if (productDetail !== null) {
-    console.log(props.data);
-  }
 
   return (
     <Container>

@@ -83,9 +83,7 @@ const Wallet = (props) => {
 
   const { main, escrow } = balance || {};
 
-  function cashoutSomeMoney(values) {
-    console.log(values);
-  }
+  function cashoutSomeMoney(values) {}
 
   const percent = Math.round(
     (100 * Number(main)) / (Number(main) + Number(escrow))

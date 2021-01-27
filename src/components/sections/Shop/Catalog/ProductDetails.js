@@ -10,6 +10,8 @@ import { detailAction } from "../../../../action/checkoutAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
+import { getFullUserDetails } from "../../../../services/authServices";
+
 const Quatnity = Styled.div`
     font-size: 30px;
     font-weight: 600;
@@ -23,6 +25,7 @@ const ChangeButton = Styled.div`
 
 const ProductDetails = (props) => {
   const dispatch = useDispatch();
+  let userToken = localStorage.getItem("token");
 
   const [checkoutDetails, setCheckoutDetails] = useState({
     firstName: "",
@@ -34,6 +37,26 @@ const ProductDetails = (props) => {
   const [state, setState] = React.useState({ quantity: 1 });
   let [productPrice, setProductPrice] = useState(null);
   let { delivery, description, image, name, price } = props.details;
+
+  let getDetail = async () => {
+    try {
+      let { data } = await getFullUserDetails(userToken);
+      if (data.Success) {
+        let { first_name, last_name, email, phone } = data.Details[0];
+        let profileObject = {
+          firstName: first_name,
+          lastName: last_name,
+          email: email,
+          phone: phone,
+        };
+        setCheckoutDetails(profileObject);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getDetail();
+  }, []);
   const processPayment = (event) => {
     event.preventDefault();
     let userDetail = {
@@ -146,7 +169,7 @@ const ProductDetails = (props) => {
             item: name,
             itemCost: price,
             totalCost: productPrice,
-            deliveryCharge: "Depend Upon Shipping Details",
+            deliveryCharge: "0",
           }}
         />
       </Grid>

@@ -1,10 +1,11 @@
 import Tabs from "../../CustomComponents/Tabs";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
 import RenderTransactions from "./RenderTransactions";
-
+import { getProgressTransistion } from "../../../services/transistionServices";
+import moment from "moment";
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -24,6 +25,68 @@ const Body = Styled.div`
 `;
 
 const Transactions = (props) => {
+  let userToken = localStorage.getItem("token");
+  const [transisction, setTransiscton] = useState(null);
+  const [transisctionHistory, setTransisctonHistory] = useState(null);
+
+  let getTransistion = async () => {
+    let { data } = await getProgressTransistion(userToken, "inprogress");
+
+    if (data.Success) {
+      let transistionData = [];
+      data.Details.map((item) => {
+        const m2 = moment(item.created_at);
+        let time = m2.format("h:mm");
+        let date = m2.format("YYYY MM DD");
+
+        let newTransistion = {
+          id: item.txID,
+          title: item.shop_name,
+          description: item.shop_description,
+          amount: item.amount,
+          date: date,
+          time: time,
+          status: item.delivery_status,
+        };
+        transistionData.push(newTransistion);
+      });
+      setTransiscton(transistionData);
+    }
+  };
+
+  let getTransistionWithHistory = async () => {
+    try {
+      let { data } = await getProgressTransistion(userToken, "history");
+
+      if (data.Success) {
+        let transistionData = [];
+        data.Details.map((item) => {
+          const m2 = moment(item.created_at);
+          let time = m2.format("h:mm");
+          let date = m2.format("YYYY MM DD");
+
+          let newTransistion = {
+            id: item.txID,
+            title: item.shop_name,
+            description: item.shop_description,
+            amount: item.amount,
+            date: date,
+            time: time,
+            status: item.delivery_status,
+          };
+          transistionData.push(newTransistion);
+        });
+        setTransisctonHistory(transistionData);
+      }
+    } catch (error) {
+      setTransisctonHistory([]);
+    }
+  };
+
+  useEffect(() => {
+    getTransistion();
+    getTransistionWithHistory();
+  }, []);
   return (
     <div>
       <Hidden smDown>
@@ -46,8 +109,8 @@ const Transactions = (props) => {
 
       <Body>
         <Tabs headers={["In Progress", "History"]}>
-          <RenderTransactions />
-          <RenderTransactions history />
+          <RenderTransactions transactions={transisction} />
+          <RenderTransactions history transactions={transisctionHistory} />
         </Tabs>
       </Body>
     </div>

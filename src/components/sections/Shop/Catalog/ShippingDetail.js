@@ -171,9 +171,7 @@ const ShippingDetail = (props) => {
             itemCost: priceDetail.itemCost,
             totalCost: isNaN(finalCost) ? 0 : finalCost,
             deliveryCharge:
-              finalDeliveryCharges !== null
-                ? finalDeliveryCharges
-                : "Delivery Charges Depends Upon Delivery Location",
+              finalDeliveryCharges !== null ? finalDeliveryCharges : "0",
           }}
         />
       </Grid>

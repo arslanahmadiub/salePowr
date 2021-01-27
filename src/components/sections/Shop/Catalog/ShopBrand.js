@@ -119,7 +119,7 @@ const ShopBrandMobile = (props) => {
 const ShopBrand = (props) => {
   const { logo, name, slogan, shopid } = props;
   const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
-  console.log(shopProfile);
+
   return (
     <Container>
       <div style={{ display: "flex" }}>

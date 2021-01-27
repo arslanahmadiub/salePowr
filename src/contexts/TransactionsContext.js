@@ -24,41 +24,6 @@ export default function TransactionsContextProvider(props) {
     // then update the local
   }
 
-  let getTransistion = async () => {
-    let { data } = await getProgressTransistion(userToken);
-    let transistionData = [];
-    const m2 = moment();
-    if (data.Success) {
-      data.Details.map((item) => {
-        const m2 = moment(item.created_at);
-        let time = m2.format("h:mm");
-        let date = m2.format("YYYY MM DD");
-
-        let newTransistion = {
-          id: item.txID,
-          title: item.shop_name,
-          description: item.shop_description,
-          amount: item.amount,
-          date: date,
-          time: time,
-          status: item.payment_status,
-        };
-        transistionData.push(newTransistion);
-      });
-      setTransactions(transistionData);
-    }
-  };
-
-  useEffect(() => {
-    getTransistion();
-  }, []);
-
-  // useEffect(() => {
-  //   /* Load transactions here then update the status like so... */
-
-  //   setTransactions(transactionsData);
-  // }, []);
-
   return (
     <TransactionsContext.Provider
       value={{

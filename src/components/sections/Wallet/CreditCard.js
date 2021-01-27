@@ -91,7 +91,7 @@ const IntersectingCircle = Styled.div`
 `;
 
 const CreditCard = ({ data, selected, ...props }) => {
-  const { name, type, country, number, date, network } = data || {};
+  const { name, country, number, network } = data || {};
 
   const styles = selected && { boxShadow: "3px 3px 5px 3px #000" };
 
@@ -114,7 +114,7 @@ const CreditCard = ({ data, selected, ...props }) => {
 };
 
 const MoMoCard = ({ data, selected, ...props }) => {
-  const { name, country, number, date, type, network } = data;
+  const { name, country, number, date, network } = data;
   const styles = selected && { boxShadow: "3px 3px 5px 3px #a73737" };
   return (
     <MomoContainer style={styles || {}}>

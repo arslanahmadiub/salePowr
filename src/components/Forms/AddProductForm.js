@@ -217,7 +217,6 @@ export default function AddProductForm(props) {
         setLoading(false);
       } catch (ex) {
         if (ex.response) {
-          console.log(ex.response.data);
         }
       }
     }
@@ -267,9 +266,7 @@ export default function AddProductForm(props) {
     setData({ ...data, twitter: e });
   };
 
-  let handelSharing = () => {
-    // console.log("Done Sharing");
-  };
+  let handelSharing = () => {};
 
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

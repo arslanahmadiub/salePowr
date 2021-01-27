@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Hidden } from "@material-ui/core";
 import { ExpandLess, ExpandMore, FileCopy } from "@material-ui/icons";
 import { Button as AntButton, Modal, Space, Typography } from "antd";
 import Styled from "styled-components";
 import Button from "../../CustomComponents/Button";
-import { TransactionsContext } from "../../../contexts/TransactionsContext";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+import Input from "../../CustomComponents/Input";
+
+import Alert from "@material-ui/lab/Alert";
+
+import { updateDeliveryStatus } from "../../../services/transistionServices";
 
 const FlexContainer = Styled.div`
     display: flex;
@@ -72,15 +70,73 @@ const TransactionStatus = Styled.div`
 export default function TranstionItem(props) {
   const [show, toggleShow] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
+  const [customerCode, setCustomerCode] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [buttonVisiblity, setButtonVisiblity] = useState(false);
+
   function primaryAction() {
     if (props.history) {
     } else {
       setShowModal(!showModal);
     }
   }
-  function secondaryAction() {}
+
+  useEffect(() => {
+    if (customerCode.length > 0) {
+      if (!buttonVisiblity) {
+        setButtonVisiblity(true);
+      }
+    } else {
+      setButtonVisiblity(false);
+    }
+  }, [customerCode]);
+
+  let handelCustomerCode = (e) => {
+    setCustomerCode(e.target.value);
+  };
+
+  let userToken = localStorage.getItem("token");
+
+  let updateStatusService = async () => {
+    let dataObject = {
+      txID: data.id,
+      status: "completed",
+      customer_code: customerCode,
+    };
+    setErrorMessage(null);
+    try {
+      let result = await updateDeliveryStatus(dataObject, userToken);
+
+      setErrorMessage(
+        <Alert variant="filled" severity="success">
+          Status update successfully...
+        </Alert>
+      );
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+    } catch (error) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong..or server error...
+        </Alert>
+      );
+    }
+  };
+
+  let handelCompleteOrder = () => {
+    updateStatusService();
+  };
+
   const data = props.data;
 
+  let handelExpand = () => {
+    if (data && data.amount.toString().charAt(0) === "+") {
+      setButtonVisiblity(false);
+    } else {
+      setButtonVisiblity(true);
+    }
+  };
   return !data ? (
     <></>
   ) : (
@@ -109,6 +165,7 @@ export default function TranstionItem(props) {
                   marginLeft: "10px",
                   color: "#979FAA",
                 }}
+                onClick={handelExpand}
               />
             ) : (
               <ExpandMore
@@ -118,6 +175,7 @@ export default function TranstionItem(props) {
                   marginLeft: "10px",
                   color: "#979FAA",
                 }}
+                onClick={handelExpand}
               />
             )}
           </div>
@@ -146,11 +204,33 @@ export default function TranstionItem(props) {
           >
             {props && props.primaryButtonText}
           </Button>
-          {/* <Button slim onClick={secondaryAction} size="large" type="secondary">
+          <Button slim size="large" type="secondary">
             {props && props.secondaryButtonText}
-          </Button> */}
+          </Button>
+          <div style={{ marginLeft: "50px", marginTop: "10px" }}>
+            <Input
+              type="text"
+              placeholder="Enter Code from customer"
+              onChange={handelCustomerCode}
+            />
+          </div>
+          {buttonVisiblity ? (
+            <Button
+              slim
+              size="large"
+              type="secondary"
+              onClick={handelCompleteOrder}
+            >
+              Complete Order
+            </Button>
+          ) : (
+            <Button slim size="large" type="secondary" disabled faded>
+              Complete Order
+            </Button>
+          )}
         </Space>
-
+        <br />
+        {errorMessage}
         <UpdateTransaction
           data={data}
           showModal={showModal}
@@ -162,62 +242,37 @@ export default function TranstionItem(props) {
 }
 
 export function UpdateTransaction({ data, showModal, setShowModal }) {
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  const [selected, setSelected] = React.useState(false);
-  const [status, setStatus] = React.useState("");
-  const [customerCode, setcustomerCode] = useState("");
-  const [customerCodeShow, setcustomerCodeShow] = useState(false);
-  const { updateTransactionStatus } = React.useContext(TransactionsContext);
 
-  function toggleSelected(idx) {
-    setSelected(idx);
-    setErrorMessage("");
-    switch (idx) {
-      case 0:
-        return setStatus("shipped");
-      case 1:
-        return setStatus("delivered");
-      case 2:
-        return setStatus("completed");
-      case 3:
-        return setStatus("cancelled");
-      default:
-        return;
-    }
-  }
+  let userToken = localStorage.getItem("token");
 
-  let handelCustomerCodeChange = (e) => {
-    setcustomerCode(e.target.value);
-  };
+  let updateStatusService = async (status) => {
+    let dataObject = {
+      txID: data.id,
+      status: status,
+      customer_code: "249156",
+    };
+    setErrorMessage(null);
+    try {
+      let result = await updateDeliveryStatus(dataObject, userToken);
 
-  let handelConfirm = () => {
-    console.log(customerCode);
-  };
-
-  let handleClose = () => {
-    setcustomerCodeShow(false);
-  };
-
-  function updateStatus() {
-    console.log(status);
-    if (status !== "") {
-      if (status === "completed") {
-        setcustomerCodeShow(true);
-        setShowModal(false);
-      }
-      setLoading(true);
-
-      const state = updateTransactionStatus(data, status);
-
+      setErrorMessage(
+        <Alert variant="filled" severity="success">
+          Status update successfully...
+        </Alert>
+      );
       setTimeout(() => {
-        if (state) setLoading(false);
-        setShowModal(false);
-      }, 2500);
-    } else {
-      setErrorMessage("Please select applicable status");
+        setErrorMessage(null);
+      }, 3000);
+    } catch (error) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong..or server error...
+        </Alert>
+      );
     }
-  }
+  };
 
   const { Title } = Typography;
 
@@ -231,74 +286,65 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
         destroyOnClose={true}
         onCancel={() => setShowModal(false)}
         confirmLoading={loading}
-        onOk={updateStatus}
+        footer={null}
       >
-        <Space size="large" align="center">
+        <Space
+          size="large"
+          align="center"
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <AntButton
-            onClick={() => toggleSelected(0)}
-            type={selected === 0 ? "primary" : "default"}
+            onClick={() => updateStatusService("shipped")}
+            style={{
+              background: "#F18F6C",
+              width: "260px",
+              height: "40px",
+              color: "white",
+              fontSize: "18px",
+              marginBottom: "25px",
+            }}
           >
             Shipped
           </AntButton>
           <AntButton
-            onClick={() => toggleSelected(1)}
-            type={selected === 1 ? "primary" : "default"}
+            onClick={() => updateStatusService("delivered")}
+            style={{
+              background: "#31BDF4",
+              width: "260px",
+              height: "40px",
+              color: "white",
+              fontSize: "18px",
+              marginBottom: "25px",
+            }}
           >
             Delivered
           </AntButton>
           <AntButton
-            onClick={() => toggleSelected(2)}
-            type={selected === 2 ? "primary" : "default"}
+            onClick={() => updateStatusService("cancelled")}
+            style={{
+              background: "#D26665",
+              width: "260px",
+              height: "40px",
+              color: "white",
+              fontSize: "18px",
+              marginBottom: "25px",
+            }}
           >
-            Completed
+            Cancel Order
           </AntButton>
           <AntButton
-            onClick={() => toggleSelected(3)}
-            type={selected === 3 ? "primary" : "default"}
+            style={{
+              display: "none",
+            }}
           >
-            Cancelled
+            Cancel Order
           </AntButton>
         </Space>
-        <br />
+
         <Title level={4} type="danger">
           {errorMessage}
         </Title>
       </Modal>
-
-      <Dialog
-        open={customerCodeShow}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Customer Code Here</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Enter customer code for completed this order...
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Enter Customer Code"
-            type="text"
-            fullWidth
-            onChange={handelCustomerCodeChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            style={{ backgroundColor: "red", color: "white" }}
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            style={{ backgroundColor: "green", color: "white" }}
-            onClick={handelConfirm}
-          >
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
     </React.Fragment>
   );
 }

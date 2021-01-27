@@ -4,13 +4,13 @@ import { apiEndPoint } from "../config.json";
 // let userToken = "92c6544f868181b32ad25533fc3633ec6d450d77";
 let userToken = localStorage.getItem("token");
 
-let transistionProgressUrl = apiEndPoint + "get_transactions/inprogress";
+let transistionProgressUrl = apiEndPoint + "get_transactions/";
 let updateDeliveryStatusUrl = apiEndPoint + "update_delivery_status";
 
-export async function getProgressTransistion(token) {
+export async function getProgressTransistion(token, url) {
   return await axios({
     method: "get",
-    url: transistionProgressUrl,
+    url: transistionProgressUrl + url,
     headers: {
       Authorization: token,
     },

@@ -6,8 +6,6 @@ let addProductUrl = apiEndPoint + "add_product";
 let productDetail = apiEndPoint + "get_product_details/";
 let addProductDeliveryTermUrl = apiEndPoint + "add_product_delivery_terms";
 
-let userToken = localStorage.getItem("token");
-
 let shopDetailUrl = apiEndPoint + "get_shop_details/";
 
 let publicShopDetailUrl = apiEndPoint + "shop_link_visit/";

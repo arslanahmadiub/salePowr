@@ -21,7 +21,6 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
   const walletCard = useSelector((state) => state.wallet.card);
 
   const processWidrawal = (values) => {
-    console.log(values);
     alert("");
     //externalFunction(0)
   };

@@ -136,9 +136,7 @@ export default function AuthenticationPage(props) {
         localStorage.setItem("token", data.Token);
         history.push("/dashboard");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   let responseGoogle = async (res) => {
@@ -151,9 +149,7 @@ export default function AuthenticationPage(props) {
         localStorage.setItem("token", data.Token);
         history.push("/dashboard");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   let handelLoginClickAfterSignUp = () => {

@@ -111,9 +111,7 @@ const Dashboard = (props) => {
 
         changeDataSet(newDashboardData);
       }
-    } catch (error) {
-      console.log(error.response);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -1,27 +1,28 @@
-import React, { useEffect, ueseState } from "react";
+import React, { useEffect, useState } from "react";
 import TransactionGroup from "./TransactionGroup";
 import NoTransactionInProgressNote from "./NoTransactionInProgressNote";
-import { TransactionsContext } from "../../../contexts/TransactionsContext";
+
 import { Space, Spin } from "antd";
 
 const RenderTransactions = (props) => {
-  const [data, setData] = React.useState(null);
-  const [dates, setDates] = React.useState(null);
-  const [groups, setGroups] = React.useState(null);
+  const [data, setData] = useState(null);
+  const [dates, setDates] = useState(null);
+  const [groups, setGroups] = useState(null);
 
-  const { transactions } = React.useContext(TransactionsContext);
-
-  React.useEffect(() => {
+  useEffect(() => {
+    setData(null);
+    setDates(null);
+    setGroups(null);
     setTimeout(() => {
-      if (transactions.length === 0) {
+      if (props.transactions && props.transactions.length === 0) {
         setData(false);
       } else {
-        setData(transactions);
+        setData(props.transactions);
       }
     }, 2000);
-  }, [transactions]);
+  }, [props.transactions]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) {
       var list = [];
       data.forEach((transaction) => {
@@ -34,14 +35,16 @@ const RenderTransactions = (props) => {
     }
   }, [data]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let list = [];
-    dates &&
-      dates.forEach((date) => {
-        list.push(data.filter((i) => i.date === date));
-      });
+    if (data) {
+      dates &&
+        dates.forEach((date) => {
+          list.push(data.filter((i) => i.date === date));
+        });
 
-    setGroups(list);
+      setGroups(list);
+    }
   }, [dates, data]);
 
   return (

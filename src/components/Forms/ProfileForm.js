@@ -126,7 +126,6 @@ const ProfileForm = (props) => {
     } catch (ex) {
       if (ex.response) {
         dispatch(userProfileSaveLoading(false));
-        console.log(ex.response.data);
       }
     }
   };
