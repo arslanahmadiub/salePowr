@@ -51,13 +51,21 @@ const SelectedShop = (props) => {
   //   const { shops, currentShop, changeShop } = React.useContext(ShopContext);
   const shops = useSelector((state) => state.shopPreview.shopIdCollections);
   const selectedShop = useSelector((state) => state.shopPreview.selectedShop);
+  const slectedShop = useSelector((state) => state.shopPreview.selectedShopId);
+
   let dispatch = useDispatch();
   const [logoImage, setLogoImage] = useState(null);
   const history = useHistory();
 
   let setFirstImage = () => {
     if (shops.length > 0) {
-      setLogoImage(imageEndPoint + shops[0].shop_logo);
+      const found = shops.find((element) => element.shop === slectedShop);
+
+      if (found) {
+        setLogoImage(imageEndPoint + found.shop_logo);
+      } else {
+        setLogoImage(imageEndPoint + shops[0].shop_logo);
+      }
     }
   };
 

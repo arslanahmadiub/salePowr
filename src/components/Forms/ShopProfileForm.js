@@ -95,6 +95,8 @@ const ShopProfileForm = (props) => {
   const logoFile = useSelector((state) => state.logoImage.logoFile);
 
   let getShopDetailsOnly = async () => {
+    clearForm();
+    setErrorMessage(null);
     try {
       setLoading(true);
       let { data } = await getOnlyShopDetail(slectedShop);
@@ -120,6 +122,11 @@ const ShopProfileForm = (props) => {
         setState(dataObject);
       }
     } catch (error) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong or Network Problem...Try again later...
+        </Alert>
+      );
       setLoading(false);
       setState({
         name: "",
@@ -144,6 +151,7 @@ const ShopProfileForm = (props) => {
       const found = data.Details.find(
         (element) => element.shop === slectedShop
       );
+
       dispatch(shopIdsAction(data.Details));
       dispatch(selectedShopId(found.shop));
       dispatch(selectedShopName(found.shop_name));
@@ -153,6 +161,8 @@ const ShopProfileForm = (props) => {
   useEffect(() => {
     if (slectedShop) {
       getShopDetailsOnly();
+    } else {
+      clearForm();
     }
   }, [slectedShop]);
 
@@ -211,13 +221,22 @@ const ShopProfileForm = (props) => {
         setErrorMessage(null);
         setLoading(true);
         let { data } = await editShopDetail(slectedShop, form_data, userToken);
+
         setLoading(false);
         setcleanImage(false);
         setcleanImage(true);
         shopsIdsCollections();
+        setErrorMessage(
+          <Alert variant="filled" severity="success">
+            Shop Updated Successfully...
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       } catch (error) {
         setLoading(false);
-        console.log(error);
+
         setErrorMessage(
           <Alert variant="filled" severity="error">
             Some thing went wrong or Network Problem...Try again later...
@@ -256,28 +275,10 @@ const ShopProfileForm = (props) => {
     setState({ ...state, [e.target.id]: e.target.value });
   };
 
-  let handelLogoChange = (event) => {
-    console.log(event);
-  };
-
-  let handelCheck = () => {
-    console.log(props.fileName);
-  };
-
-  let handelImageUrl = () => {
-    console.log(fileData);
-    // var reader = new FileReader();
-    // var url = reader.readAsDataURL(fileData);
-    // reader.onloadend = function (e) {
-    //   console.log(reader.result);
-    // }.bind(this);
-    // console.log(url); // Would see a path?
-    // // TODO: concat files
-    let newUrl = URL.createObjectURL(fileData);
-    console.log(newUrl);
-  };
   return (
     <>
+      <Grid>{errorMessage && errorMessage}</Grid>
+      <br></br>
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -442,7 +443,6 @@ const ShopProfileForm = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid>{errorMessage && errorMessage}</Grid>
           <Grid
             style={{
               display: "flex",
@@ -469,7 +469,7 @@ const ShopProfileForm = (props) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure to create a shop with this information.....
+              Are you sure you want to create shop with this information?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
