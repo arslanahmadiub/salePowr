@@ -55,7 +55,7 @@ const ArcProgressBar = (props) => {
   const label = props.label;
   return (
     <SVG width={111} height={80}>
-      <Circle1 cx="55" cy="55" r="50" />
+      <Circle1 cx="55" cy="54" r="50" />
       <Circle
         cx="55"
         cy="55"
