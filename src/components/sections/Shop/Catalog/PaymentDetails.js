@@ -17,6 +17,16 @@ import Alert from "@material-ui/lab/Alert";
 import Collapse from "@material-ui/core/Collapse";
 import { useHistory } from "react-router";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
+
 const Quatnity = Styled.div`
     font-size: 30px;
     font-weight: 600;
@@ -35,6 +45,8 @@ const PaymentDetails = (props) => {
   let [loading, setLoading] = useState(false);
   const [error, seterror] = useState(false);
   let userToken = localStorage.getItem("token");
+  const classes = useStyles();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   let networkList = ["mtn", "vodafone", "airtel"];
 
@@ -84,14 +96,26 @@ const PaymentDetails = (props) => {
     form_data.set("amount", "1");
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", mobileMoneyNumber);
-    setLoading(true);
-    let { data } = await checkOut(form_data, userToken);
-    if (data.Success) {
+
+    setErrorMessage(null);
+    try {
+      setLoading(true);
+      let { data } = await checkOut(form_data, userToken);
+      if (data.Success) {
+        setLoading(false);
+        history.push("/transactions");
+      } else {
+        setLoading(false);
+        seterror(true);
+      }
+    } catch (error) {
       setLoading(false);
-      history.push("/transactions");
-    } else {
-      setLoading(false);
-      seterror(true);
+
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong. try again letter....
+        </Alert>
+      );
     }
   };
 
@@ -119,34 +143,12 @@ const PaymentDetails = (props) => {
   let handelCardChange = (e) => {
     setCardData({ ...cardData, [e.target.name]: e.target.value });
   };
-  const loadingStyle = {
-    zIndex: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    minHeight: "100%",
-    overflowY: "scroll",
-    position: "absolute",
-    top: "0",
-    left: "0",
-  };
 
-  const unLoadingStyle = {
-    zIndex: -50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-  };
   return (
     <Grid container direction="column" spacing={3}>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid item>
         <h1>Payout Options</h1>
       </Grid>
@@ -157,9 +159,7 @@ const PaymentDetails = (props) => {
           </Alert>
         </Collapse>
       </Grid>
-      <div style={loading ? loadingStyle : unLoadingStyle}>
-        <CircularProgress color="inherit" />
-      </div>
+
       <Grid container direction="row" spacing={3}>
         <Grid item style={{ marginLeft: "1%" }}>
           {selectedButton ? (
@@ -266,6 +266,15 @@ const PaymentDetails = (props) => {
                   onChange={handelCardChange}
                 />
               </Grid>
+
+              <Grid
+                item
+                xs={12}
+                style={{ marginBottom: "10px", marginTop: "10px" }}
+              >
+                {errorMessage && errorMessage}
+              </Grid>
+
               <Grid item xs={12} sm={6}>
                 <Button type="submit">Pay</Button>
               </Grid>

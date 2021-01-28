@@ -10,6 +10,7 @@ import FlexContainer from "../CustomComponents/FlexContainer";
 
 import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { Switch } from "antd";
 import { DataContext } from "../../contexts/DataContext";
@@ -18,7 +19,6 @@ import { productDeliveryTerm } from "../../services/shopServices";
 import { addProduct } from "../../services/shopServices";
 import { showLoading } from "../../action/shopAction";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeliveryTerms from "./DeliveryTerms";

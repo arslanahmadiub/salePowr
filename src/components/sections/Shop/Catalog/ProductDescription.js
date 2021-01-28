@@ -148,7 +148,7 @@ export default function ProductDescription({
 
   let verifyUser = () => {
     let user = localStorage.getItem("token");
-    if (user.length > 0) {
+    if (user !== null && user.length > 0) {
       setUserAvailability(true);
     } else {
       setUserAvailability(false);

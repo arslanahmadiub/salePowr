@@ -16,8 +16,7 @@ const Label = Styled.label`
 
 const Input = Styled.input`
     display: block;
-    height: 45px;
-    width: 100%;
+    
     font-size: 16px;
     padding: 0 10px;
     font-weight: 400;
@@ -39,6 +38,9 @@ export default function ({
   label,
   required,
   type,
+  width,
+  height,
+
   ...props
 }) {
   return (
@@ -52,6 +54,10 @@ export default function ({
         id={id}
         name={props.name || id || ""}
         onChange={onChange && onChange}
+        style={{
+          width: width ? width : "100%",
+          height: height ? height : "45px",
+        }}
       />
     </Label>
   );

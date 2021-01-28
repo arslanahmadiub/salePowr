@@ -10,6 +10,7 @@ export default function ({
   slim,
   disable,
   faded,
+  background,
   ...props
 }) {
   const theme = React.useContext(ThemeContext);
@@ -19,6 +20,7 @@ export default function ({
     borderRadius: "5px",
     background:
       theme[color] ||
+      background ||
       (faded && "rgba(49, 189, 244, 0.1)") ||
       (outlined && "#A9A9A9") ||
       theme.primaryBlue,

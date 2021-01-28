@@ -4,3 +4,15 @@ export const addCard = (data) => {
     payload: data,
   };
 };
+export const reCallTransisation = (data) => {
+  return {
+    type: "TRANSACTION_GET",
+    payload: data,
+  };
+};
+export const showCodeBox = (data) => {
+  return {
+    type: "CODE_BOX_SHOW",
+    payload: data,
+  };
+};

@@ -5,7 +5,8 @@ import { Button as AntButton, Modal, Space, Typography } from "antd";
 import Styled from "styled-components";
 import Button from "../../CustomComponents/Button";
 import Input from "../../CustomComponents/Input";
-
+import { useSelector, useDispatch } from "react-redux";
+import { reCallTransisation, showCodeBox } from "../../../action/walletAction";
 import Alert from "@material-ui/lab/Alert";
 
 import { updateDeliveryStatus } from "../../../services/transistionServices";
@@ -73,7 +74,9 @@ export default function TranstionItem(props) {
   const [customerCode, setCustomerCode] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [buttonVisiblity, setButtonVisiblity] = useState(false);
+  const functionRecall = useSelector((state) => state.wallet.transaction);
 
+  const dispatch = useDispatch();
   function primaryAction() {
     if (props.history) {
     } else {
@@ -81,15 +84,15 @@ export default function TranstionItem(props) {
     }
   }
 
-  useEffect(() => {
-    if (customerCode.length > 0) {
-      if (!buttonVisiblity) {
-        setButtonVisiblity(true);
-      }
-    } else {
-      setButtonVisiblity(false);
-    }
-  }, [customerCode]);
+  // useEffect(() => {
+  //   if (customerCode.length > 0) {
+  //     if (!buttonVisiblity) {
+  //       setButtonVisiblity(true);
+  //     }
+  //   } else {
+  //     setButtonVisiblity(false);
+  //   }
+  // }, [customerCode]);
 
   let handelCustomerCode = (e) => {
     setCustomerCode(e.target.value);
@@ -114,6 +117,9 @@ export default function TranstionItem(props) {
       );
       setTimeout(() => {
         setErrorMessage(null);
+        dispatch(showCodeBox(false));
+
+        dispatch(reCallTransisation(!functionRecall));
       }, 3000);
     } catch (error) {
       setErrorMessage(
@@ -137,14 +143,17 @@ export default function TranstionItem(props) {
       setButtonVisiblity(true);
     }
   };
+
+  let toggleShowFunction = () => {
+    toggleShow(!show);
+    handelExpand();
+  };
+  const showCodeBoxValue = useSelector((state) => state.wallet.codeBoxShow);
   return !data ? (
     <></>
   ) : (
     <Container>
-      <FlexContainer
-        onClick={() => toggleShow(!show)}
-        style={{ cursor: "pointer" }}
-      >
+      <FlexContainer onClick={toggleShowFunction} style={{ cursor: "pointer" }}>
         <FlexContainer>
           <FileCopy
             style={{ height: "20px", width: "20px", marginRight: "10px" }}
@@ -196,7 +205,6 @@ export default function TranstionItem(props) {
 
         <Space>
           <Button
-            slim
             onClick={primaryAction}
             size="large"
             outlined={data.status === "Pending" ? true : false}
@@ -204,30 +212,38 @@ export default function TranstionItem(props) {
           >
             {props && props.primaryButtonText}
           </Button>
-          <Button slim size="large" type="secondary">
-            {props && props.secondaryButtonText}
-          </Button>
-          <div style={{ marginLeft: "50px", marginTop: "10px" }}>
-            <Input
-              type="text"
-              placeholder="Enter Code from customer"
-              onChange={handelCustomerCode}
-            />
+          <div
+            style={{
+              display:
+                props.history ||
+                data.status === "Pending" ||
+                showCodeBoxValue === false
+                  ? "none"
+                  : "flex",
+
+              alignItems: "center",
+            }}
+          >
+            <div style={{ marginLeft: "50px", marginTop: "10px" }}>
+              <Input
+                type="text"
+                placeholder="Enter Code from customer"
+                onChange={handelCustomerCode}
+                height="52px"
+                width="125%"
+              />
+            </div>
+            <div style={{ marginLeft: "70px" }}>
+              <Button
+                size="large"
+                type="secondary"
+                onClick={handelCompleteOrder}
+                background="#1AB4B3"
+              >
+                Submit
+              </Button>
+            </div>
           </div>
-          {buttonVisiblity ? (
-            <Button
-              slim
-              size="large"
-              type="secondary"
-              onClick={handelCompleteOrder}
-            >
-              Complete Order
-            </Button>
-          ) : (
-            <Button slim size="large" type="secondary" disabled faded>
-              Complete Order
-            </Button>
-          )}
         </Space>
         <br />
         {errorMessage}
@@ -235,17 +251,51 @@ export default function TranstionItem(props) {
           data={data}
           showModal={showModal}
           setShowModal={setShowModal}
+          closeModel={() => setShowModal(false)}
+          buyer={buttonVisiblity}
         />
       </div>
     </Container>
   );
 }
 
-export function UpdateTransaction({ data, showModal, setShowModal }) {
+export function UpdateTransaction({
+  data,
+  showModal,
+  setShowModal,
+  closeModel,
+  buyer,
+}) {
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  const functionRecall = useSelector((state) => state.wallet.transaction);
+
+  const dispatch = useDispatch();
 
   let userToken = localStorage.getItem("token");
+
+  let disPatchAction = () => {
+    dispatch(reCallTransisation(!functionRecall));
+  };
+
+  let changeOrderState = async (transStatus) => {
+    await updateStatusService(transStatus);
+
+    setTimeout(() => {
+      dispatch(reCallTransisation(!functionRecall));
+    }, 3000);
+  };
+
+  let completedOrderFunction = async () => {
+    if (buyer) {
+      await updateStatusService("completed");
+
+      closeModel();
+    } else {
+      dispatch(showCodeBox(true));
+      closeModel();
+    }
+  };
 
   let updateStatusService = async (status) => {
     let dataObject = {
@@ -264,6 +314,7 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
       );
       setTimeout(() => {
         setErrorMessage(null);
+        closeModel();
       }, 3000);
     } catch (error) {
       setErrorMessage(
@@ -294,7 +345,7 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <AntButton
-            onClick={() => updateStatusService("shipped")}
+            onClick={() => changeOrderState("shipped")}
             style={{
               background: "#F18F6C",
               width: "260px",
@@ -307,7 +358,7 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
             Shipped
           </AntButton>
           <AntButton
-            onClick={() => updateStatusService("delivered")}
+            onClick={() => changeOrderState("delivered")}
             style={{
               background: "#31BDF4",
               width: "260px",
@@ -320,7 +371,7 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
             Delivered
           </AntButton>
           <AntButton
-            onClick={() => updateStatusService("cancelled")}
+            onClick={() => changeOrderState("cancelled")}
             style={{
               background: "#D26665",
               width: "260px",
@@ -331,6 +382,19 @@ export function UpdateTransaction({ data, showModal, setShowModal }) {
             }}
           >
             Cancel Order
+          </AntButton>
+          <AntButton
+            onClick={completedOrderFunction}
+            style={{
+              background: "#008b00",
+              width: "260px",
+              height: "40px",
+              color: "white",
+              fontSize: "18px",
+              marginBottom: "25px",
+            }}
+          >
+            Complete Order
           </AntButton>
           <AntButton
             style={{

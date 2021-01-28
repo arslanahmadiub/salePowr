@@ -4,6 +4,7 @@ import Styled from "styled-components";
 import FlatSelect from "../../CustomComponents/FlatSelect";
 import { Hidden } from "@material-ui/core";
 import RenderTransactions from "./RenderTransactions";
+import { useSelector, useDispatch } from "react-redux";
 import { getProgressTransistion } from "../../../services/transistionServices";
 import moment from "moment";
 const TopRow = Styled.div`
@@ -29,6 +30,12 @@ const Transactions = (props) => {
   const [transisction, setTransiscton] = useState(null);
   const [transisctionHistory, setTransisctonHistory] = useState(null);
 
+  const functionRecall = useSelector((state) => state.wallet.transaction);
+
+  useEffect(() => {
+    getTransistion();
+  }, [functionRecall]);
+
   let getTransistion = async () => {
     let { data } = await getProgressTransistion(userToken, "inprogress");
 
@@ -46,7 +53,9 @@ const Transactions = (props) => {
           amount: item.amount,
           date: date,
           time: time,
-          status: item.delivery_status,
+          status: item.delivery_status
+            ? item.delivery_status
+            : item.payment_status,
         };
         transistionData.push(newTransistion);
       });
@@ -57,7 +66,6 @@ const Transactions = (props) => {
   let getTransistionWithHistory = async () => {
     try {
       let { data } = await getProgressTransistion(userToken, "history");
-
       if (data.Success) {
         let transistionData = [];
         data.Details.map((item) => {

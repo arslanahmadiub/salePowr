@@ -12,6 +12,11 @@ import { shipingAction } from "../../../../action/checkoutAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+
 const Quatnity = Styled.div`
     font-size: 30px;
     font-weight: 600;
@@ -22,11 +27,20 @@ const ChangeButton = Styled.div`
     height: 60px;
     width: 60px;
 `;
-
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
 const ShippingDetail = (props) => {
   const [state, setState] = React.useState({ quantity: 1 });
   const { countryList, currencies } = React.useContext(DataContext);
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   let productId = props.productIdDetail.productId;
   const [deliveryCountry, setDeliveryCountry] = useState(null);
   const [deliveryCountryLocation, setdeliveryCountryLocation] = useState(null);
@@ -42,16 +56,31 @@ const ShippingDetail = (props) => {
   }, [finalDeliveryCharges]);
 
   let getShippingDetails = async () => {
-    let { data } = await shippingDetailService(productId);
-    setfullData(data.Details);
-    let countries = [data.Details[0].delivery_country];
-    let countriesLocation = [];
-    data.Details.map((item, index) => {
-      countriesLocation.push(item.delivery_location);
-    });
+    setErrorMessage(null);
+    try {
+      setLoading(true);
+      let { data } = await shippingDetailService(productId);
+      setLoading(false);
+      if (data.Success) {
+        setfullData(data.Details);
+        let countries = [data.Details[0].delivery_country];
+        let countriesLocation = [];
+        data.Details.map((item, index) => {
+          countriesLocation.push(item.delivery_location);
+        });
 
-    setshippingCountry(countries);
-    setshippingLocation(countriesLocation);
+        setshippingCountry(countries);
+        setshippingLocation(countriesLocation);
+      }
+    } catch (error) {
+      setLoading(false);
+
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong. try again letter....
+        </Alert>
+      );
+    }
   };
 
   useEffect(() => {
@@ -108,6 +137,9 @@ const ShippingDetail = (props) => {
 
   return (
     <Grid container direction="column" spacing={3}>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid item>
         <form
           onSubmit={processPayment}
@@ -157,6 +189,13 @@ const ShippingDetail = (props) => {
                 value={additionalNotes}
                 onChange={handelShipingChange}
               />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+            >
+              {errorMessage && errorMessage}
             </Grid>
             <Grid item xs={12} sm={3} md={2}>
               <Button type="submit">Continue</Button>

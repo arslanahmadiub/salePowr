@@ -13,11 +13,12 @@ const RenderTransactions = (props) => {
     setData(null);
     setDates(null);
     setGroups(null);
+
     setTimeout(() => {
-      if (props.transactions && props.transactions.length === 0) {
-        setData(false);
-      } else {
+      if (props.transactions && props.transactions.length > 0) {
         setData(props.transactions);
+      } else {
+        setData(false);
       }
     }, 2000);
   }, [props.transactions]);

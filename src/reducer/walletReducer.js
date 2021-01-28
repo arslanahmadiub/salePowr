@@ -1,5 +1,7 @@
 const initalState = {
   card: [],
+  transaction: true,
+  codeBoxShow: false,
 };
 
 export const walletReducer = (state = initalState, action) => {
@@ -13,6 +15,16 @@ export const walletReducer = (state = initalState, action) => {
       return {
         ...state,
         card: action.payload,
+      };
+    case "TRANSACTION_GET":
+      return {
+        ...state,
+        transaction: action.payload,
+      };
+    case "CODE_BOX_SHOW":
+      return {
+        ...state,
+        codeBoxShow: action.payload,
       };
     case "RESET":
       return initalState;
