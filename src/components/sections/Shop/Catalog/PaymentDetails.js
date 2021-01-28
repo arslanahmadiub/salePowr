@@ -92,8 +92,8 @@ const PaymentDetails = (props) => {
     form_data.set("payment_option", "mobile_money");
     form_data.set("product_id", checkOutUserDetail.productId);
     form_data.set("shop_id", checkOutUserDetail.shopId);
-    // form_data.set("amount", checkOutShippingDetail.finalCostWithCharges);
-    form_data.set("amount", "1");
+    form_data.set("amount", checkOutShippingDetail.finalCostWithCharges);
+    // form_data.set("amount", "1");
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", mobileMoneyNumber);
 

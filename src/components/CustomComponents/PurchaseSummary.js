@@ -31,8 +31,7 @@ const DeliveryDescription = Styled.div`
 `;
 const DeliveryPrice = Styled.div`
     font-size: 20px;
-    border: 0.5px solid black;
-    border-radius: 5px;
+   
     min-width: 50px
     text-align: center;
     padding: 5px;

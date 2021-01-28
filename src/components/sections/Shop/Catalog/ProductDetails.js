@@ -107,7 +107,7 @@ const ProductDetails = (props) => {
     setProductPrice(price);
   }, []);
   useEffect(() => {
-    let newPrice = parseInt(price) * state.quantity;
+    let newPrice = parseFloat(price) * state.quantity;
     setProductPrice(newPrice);
   }, [state]);
 
