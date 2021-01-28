@@ -101,7 +101,11 @@ const ShippingDetail = (props) => {
         (item) => item.delivery_location === e.target.value
       );
 
-      setDeliveryCharges(result[0].delivery_price);
+      if (result.length > 0) {
+        setDeliveryCharges(result[0].delivery_price);
+      } else {
+        setDeliveryCharges(null);
+      }
     }
   };
 

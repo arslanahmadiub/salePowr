@@ -60,15 +60,22 @@ const TiledImage = Styled.img`
 `;
 
 const CoverImage = Styled.img`
-    height: 330px;
-    width: 300px;
+ 
+    max-width:300px;
+    max-height:300px;
+    min-width:300px;
+    min-height:300px;
+    width: auto;
+  height: auto;
     background: #FFFFFF;
     border-radius: 15px;
     //margin: 0 0 0 5px;
     padding: 15px;
     @media (max-width: 960px){
-        height: 250px;
-        width: 220px;
+      max-width:300px;
+      max-height:300px;
+      width: auto;
+    height: auto;
     }
 `;
 

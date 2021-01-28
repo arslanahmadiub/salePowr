@@ -56,6 +56,7 @@ const PaymentDetails = (props) => {
   const checkOutShippingDetail = useSelector(
     (state) => state.checkout.checkoutShipingDetail
   );
+
   const history = useHistory();
 
   const [mobileMoneyData, setMobileMoneyData] = useState({
@@ -93,6 +94,7 @@ const PaymentDetails = (props) => {
     form_data.set("product_id", checkOutUserDetail.productId);
     form_data.set("shop_id", checkOutUserDetail.shopId);
     form_data.set("amount", checkOutShippingDetail.finalCostWithCharges);
+    form_data.set("delivery_amount", checkOutShippingDetail.deliveryCharges);
     // form_data.set("amount", "1");
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", mobileMoneyNumber);
@@ -109,6 +111,7 @@ const PaymentDetails = (props) => {
         seterror(true);
       }
     } catch (error) {
+      console.log(error);
       setLoading(false);
 
       setErrorMessage(
