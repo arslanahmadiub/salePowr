@@ -78,12 +78,27 @@ const useStyles = makeStyles((theme) => ({
 export default function AuthenticationPage(props) {
   const history = useHistory();
 
+  let shopLink = localStorage.getItem("shopLink");
+  let method = localStorage.getItem("forLogin");
+
   const [wantsToSignIn, setWantsToSignIn] = useState(true);
   const [data, setData] = useState({
     email: "",
     password: "",
     password2: "",
   });
+
+  useEffect(() => {
+    if (method !== null) {
+      if (method === true && wantsToSignIn === false) {
+        setWantsToSignIn(true);
+        console.log(method);
+      } else {
+        setWantsToSignIn(false);
+        console.log(method);
+      }
+    }
+  }, []);
 
   let { email, password, password2 } = data;
   const [usePhoneSignIn, setPhoneSignIn] = useState(false);
@@ -250,7 +265,18 @@ export default function AuthenticationPage(props) {
 
         if (data.Status) {
           await localStorage.setItem("token", data.Token);
-          history.push("/dashboard");
+          if (shopLink !== null) {
+            let index = shopLink.lastIndexOf("/");
+            history.push(
+              "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
+            );
+            localStorage.removeItem("shopLink");
+            localStorage.removeItem("forLogin");
+          } else {
+            history.push("/dashboard");
+            localStorage.removeItem("shopLink");
+            localStorage.removeItem("forLogin");
+          }
         }
       } catch (ex) {
         setLoadingShow(false);

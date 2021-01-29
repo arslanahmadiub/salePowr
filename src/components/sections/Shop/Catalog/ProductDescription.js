@@ -11,6 +11,7 @@ import CustomLink from "../../../CustomComponents/CustomLink";
 import { getProductDetail } from "../../../../services/shopServices";
 import { imageEndPoint } from "../../../../config.json";
 import move from "lodash-move";
+import { useHistory } from "react-router";
 
 import { useSelector } from "react-redux";
 
@@ -104,6 +105,7 @@ export default function ProductDescription({
   const [sideUrl, setsideUrl] = useState(null);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
   const [userWithOwnShop, setUserWithOwnShop] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     getDetailData();
@@ -172,6 +174,19 @@ export default function ProductDescription({
     setsideUrl(arr);
   };
 
+  let handelSignUp = () => {
+    let url = window.location.href;
+    localStorage.setItem("shopLink", url);
+    localStorage.setItem("forLogin", false);
+    history.push("/");
+  };
+  let handelLogin = () => {
+    let url = window.location.href;
+    localStorage.setItem("shopLink", url);
+    localStorage.setItem("forLogin", true);
+    history.push("/");
+  };
+
   return (
     <Container>
       <div>
@@ -238,8 +253,22 @@ export default function ProductDescription({
                 <Grid item xs={12}>
                   {userAvailability ? null : (
                     <p style={{ fontSize: "15px" }}>
-                      Please <a href="/"> Login</a> Or{" "}
-                      <a href="/">Create Account</a> To Buy This Product
+                      Please{" "}
+                      <span
+                        style={{ color: "#31BDF4", cursor: "pointer" }}
+                        onClick={handelLogin}
+                      >
+                        {" "}
+                        Login
+                      </span>{" "}
+                      Or{" "}
+                      <span
+                        style={{ color: "#31BDF4", cursor: "pointer" }}
+                        onClick={handelSignUp}
+                      >
+                        Create Account
+                      </span>{" "}
+                      To Buy This Product
                     </p>
                   )}
                 </Grid>
