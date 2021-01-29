@@ -22,20 +22,26 @@ import PhoneLogo from "../CustomComponents/PhoneLogo";
 import { AuthContext } from "../../contexts/AuthContext";
 import snapshot from "./../../assets/images/snapshot.svg";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 import { createUser } from "../../services/authServices";
 import { loginUser } from "../../services/authServices";
 import { loginUserWithGoogle } from "../../services/authServices";
 import { loginUserWithFacebook } from "../../services/authServices";
 import FacebookLogin from "react-facebook-login";
-import FacebookIcon from "@material-ui/icons/Facebook";
+
 import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: "25px",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
   },
   emptyContainer: {
     color: "#553560",
@@ -77,9 +83,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AuthenticationPage(props) {
   const history = useHistory();
+  const classes = useStyles();
 
   let shopLink = localStorage.getItem("shopLink");
-  let method = localStorage.getItem("forLogin");
 
   const [wantsToSignIn, setWantsToSignIn] = useState(true);
   const [data, setData] = useState({
@@ -89,14 +95,10 @@ export default function AuthenticationPage(props) {
   });
 
   useEffect(() => {
-    if (method !== null) {
-      if (method === true && wantsToSignIn === false) {
-        setWantsToSignIn(true);
-        console.log(method);
-      } else {
-        setWantsToSignIn(false);
-        console.log(method);
-      }
+    if (window.location.search.includes("true")) {
+      setWantsToSignIn(true);
+    } else if (window.location.search.includes("false")) {
+      setWantsToSignIn(false);
     }
   }, []);
 
@@ -271,11 +273,9 @@ export default function AuthenticationPage(props) {
               "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
             );
             localStorage.removeItem("shopLink");
-            localStorage.removeItem("forLogin");
           } else {
             history.push("/dashboard");
             localStorage.removeItem("shopLink");
-            localStorage.removeItem("forLogin");
           }
         }
       } catch (ex) {
@@ -310,20 +310,6 @@ export default function AuthenticationPage(props) {
 
   return (
     <Grid container spacing={0} ref={widthRef}>
-      <div
-        style={{
-          display: loadingShow ? "flex" : "none",
-          background: "rgba(26, 180, 178, 0.32)",
-          minWidth: containerRef.current
-            ? containerRef.current.scrollWidth.toString() + "px"
-            : "",
-          minHeight: containerRef.current
-            ? containerRef.current.scrollHeight.toString() + "px"
-            : "",
-          position: "absolute",
-          zIndex: "10",
-        }}
-      ></div>
       <Grid item sm={12} md={4}>
         <div className={styles.container}>
           <div style={styles.logo}>
@@ -386,18 +372,9 @@ export default function AuthenticationPage(props) {
               </div>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              style={{
-                display: loadingShow ? "flex" : "none",
-                width: "100%",
-                height: "100%",
-                justifyContent: "center",
-              }}
-            >
-              <CircularProgress style={{ color: "#1ab4b3" }} />
-            </Grid>
+            <Backdrop className={classes.backdrop} open={loadingShow}>
+              <CircularProgress color="inherit" />
+            </Backdrop>
 
             <Grid item xs={12}>
               <MaterialButton

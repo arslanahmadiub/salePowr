@@ -333,7 +333,7 @@ const Wallet = (props) => {
               >
                 Mobile Money
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => {
                   setType("bank");
                   advanceStage();
@@ -341,7 +341,7 @@ const Wallet = (props) => {
                 faded={type !== "bank"}
               >
                 Bank
-              </Button>
+              </Button> */}
             </Space>
           </Row>
         </>

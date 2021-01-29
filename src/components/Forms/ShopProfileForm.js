@@ -222,27 +222,37 @@ const ShopProfileForm = (props) => {
         setErrorMessage(null);
         setLoading(true);
         let { data } = await editShopDetail(slectedShop, form_data, userToken);
-
-        setLoading(false);
-        setcleanImage(false);
-        setcleanImage(true);
-        shopsIdsCollections();
-        setErrorMessage(
-          <Alert variant="filled" severity="success">
-            Shop Updated Successfully...
-          </Alert>
-        );
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 3000);
+        if (data.Success) {
+          setLoading(false);
+          setcleanImage(false);
+          setcleanImage(true);
+          shopsIdsCollections();
+          setErrorMessage(
+            <Alert variant="filled" severity="success">
+              {data.Message}
+            </Alert>
+          );
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 2000);
+        }
       } catch (error) {
         setLoading(false);
 
-        setErrorMessage(
-          <Alert variant="filled" severity="error">
-            Some thing went wrong or Network Problem...Try again later...
-          </Alert>
-        );
+        if (error.response && error.response.data.Message.business_phone) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              {"Business Phone Error:  " +
+                error.response.data.Message.business_phone[0]}
+            </Alert>
+          );
+        } else {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Some thing went wrong or server error...
+            </Alert>
+          );
+        }
       }
     } else {
       setOpen(true);

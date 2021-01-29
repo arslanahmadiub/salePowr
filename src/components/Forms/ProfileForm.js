@@ -122,7 +122,7 @@ const ProfileForm = (props) => {
         dispatch(profileDialogAction(false));
         getProfileImageInfo();
         setErrorMessage(null);
-      }, 3000);
+      }, 2000);
     } catch (ex) {
       if (ex.response) {
         dispatch(userProfileSaveLoading(false));

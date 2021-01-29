@@ -206,7 +206,7 @@ export default function Shop(props) {
     setCopyShopStyle(true);
     setTimeout(() => {
       setCopyShopStyle(false);
-    }, 3000);
+    }, 2000);
   };
   let siteAddress = window.location.href;
   let copyAddress =
@@ -288,7 +288,7 @@ export default function Shop(props) {
         </Grid>
       </DesktopHeaderRow>
 
-      <Backdrop className={classes.backdrop} open={false}>
+      <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
 

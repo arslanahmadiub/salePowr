@@ -177,14 +177,20 @@ export default function ProductDescription({
   let handelSignUp = () => {
     let url = window.location.href;
     localStorage.setItem("shopLink", url);
-    localStorage.setItem("forLogin", false);
-    history.push("/");
+
+    history.push({
+      pathname: "/",
+      search: "false",
+    });
   };
   let handelLogin = () => {
     let url = window.location.href;
     localStorage.setItem("shopLink", url);
-    localStorage.setItem("forLogin", true);
-    history.push("/");
+
+    history.push({
+      pathname: "/",
+      search: "true",
+    });
   };
 
   return (

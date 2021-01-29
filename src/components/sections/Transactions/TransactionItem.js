@@ -84,6 +84,10 @@ export default function TranstionItem(props) {
     }
   }
 
+  useEffect(() => {
+    dispatch(showCodeBox(false));
+  }, []);
+
   let handelCustomerCode = (e) => {
     setCustomerCode(e.target.value);
   };
@@ -111,7 +115,7 @@ export default function TranstionItem(props) {
           setErrorMessage(null);
 
           dispatch(reCallTransisation(!functionRecall));
-        }, 3000);
+        }, 2000);
       }
     } catch (error) {
       if (error.response) {
@@ -122,7 +126,7 @@ export default function TranstionItem(props) {
         );
         setTimeout(() => {
           setErrorMessage(null);
-        }, 3000);
+        }, 2000);
       }
     }
   };
@@ -139,6 +143,7 @@ export default function TranstionItem(props) {
     } else {
       setButtonVisiblity(true);
     }
+    dispatch(showCodeBox(false));
   };
 
   let toggleShowFunction = () => {
@@ -272,6 +277,7 @@ export function UpdateTransaction({
   let userToken = localStorage.getItem("token");
 
   let changeOrderState = async (transStatus) => {
+    dispatch(showCodeBox(false));
     updateStatusService(transStatus);
   };
 
@@ -304,7 +310,7 @@ export function UpdateTransaction({
           setErrorMessage(null);
           closeModel();
           dispatch(reCallTransisation(!functionRecall));
-        }, 3000);
+        }, 2000);
       }
     } catch (error) {
       if (error.response) {
