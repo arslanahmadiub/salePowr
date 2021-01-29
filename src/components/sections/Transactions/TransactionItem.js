@@ -101,6 +101,7 @@ export default function TranstionItem(props) {
       let { data } = await updateDeliveryStatus(dataObject, userToken);
 
       if (data.Success) {
+        dispatch(showCodeBox(false));
         setErrorMessage(
           <Alert variant="filled" severity="success">
             {data.Message}
