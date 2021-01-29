@@ -31,7 +31,8 @@ import move from "lodash-move";
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
   },
 }));
 
@@ -175,31 +176,31 @@ export default function Shop(props) {
     }
   };
 
-  const loadingStyle = {
-    zIndex: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-  };
+  // const loadingStyle = {
+  //   zIndex: 50,
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   background: "rgba(46, 5, 5, 0.44)",
+  //   width: "100%",
+  //   height: "100%",
+  //   position: "absolute",
+  //   bottom: "0",
+  //   left: "0",
+  // };
 
-  const unLoadingStyle = {
-    zIndex: -50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-  };
+  // const unLoadingStyle = {
+  //   zIndex: -50,
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   background: "rgba(46, 5, 5, 0.44)",
+  //   width: "100%",
+  //   height: "100%",
+  //   position: "absolute",
+  //   bottom: "0",
+  //   left: "0",
+  // };
 
   let handelCopyShopLink = () => {
     setCopyShopStyle(true);
@@ -287,7 +288,7 @@ export default function Shop(props) {
         </Grid>
       </DesktopHeaderRow>
 
-      <Backdrop className={classes.backdrop} open={loading}>
+      <Backdrop className={classes.backdrop} open={false}>
         <CircularProgress color="inherit" />
       </Backdrop>
 

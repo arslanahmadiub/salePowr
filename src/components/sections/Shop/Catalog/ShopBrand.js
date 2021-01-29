@@ -132,29 +132,39 @@ const ShopBrand = (props) => {
           <ShopId>Shop Id: {shopProfile && shopProfile.shop}</ShopId>
 
           <div style={{ width: "100px" }}>
-            <ContactLabel>Social Media</ContactLabel>
+            {(shopProfile && shopProfile.facebook_link) ||
+            shopProfile.instagram_link ||
+            shopProfile.twitter_link ? (
+              <ContactLabel>Social Media</ContactLabel>
+            ) : null}
             <FlexContainer>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={shopProfile && shopProfile.facebook_link}
-              >
-                <Facebook />
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={shopProfile && shopProfile.instagram_link}
-              >
-                <Instagram />
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={shopProfile && shopProfile.twitter_link}
-              >
-                <Twitter />
-              </a>
+              {shopProfile && shopProfile.facebook_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={shopProfile && shopProfile.facebook_link}
+                >
+                  <Facebook />
+                </a>
+              ) : null}
+              {shopProfile && shopProfile.instagram_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={shopProfile && shopProfile.instagram_link}
+                >
+                  <Instagram />
+                </a>
+              ) : null}
+              {shopProfile && shopProfile.twitter_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={shopProfile && shopProfile.twitter_link}
+                >
+                  <Twitter />
+                </a>
+              ) : null}
 
               {/* <WhatsApp /> */}
             </FlexContainer>

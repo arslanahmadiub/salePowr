@@ -28,7 +28,8 @@ import { LastIndexContext } from "antd/lib/space";
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
   },
 }));
 
@@ -271,31 +272,31 @@ export default function AddProductForm(props) {
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const loadingStyle = {
-    zIndex: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-  };
+  // const loadingStyle = {
+  //   zIndex: 50,
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   background: "rgba(46, 5, 5, 0.44)",
+  //   width: "100%",
+  //   height: "100%",
+  //   position: "absolute",
+  //   bottom: "0",
+  //   left: "0",
+  // };
 
-  const unLoadingStyle = {
-    zIndex: -50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(46, 5, 5, 0.44)",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-  };
+  // const unLoadingStyle = {
+  //   zIndex: -50,
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   background: "rgba(46, 5, 5, 0.44)",
+  //   width: "100%",
+  //   height: "100%",
+  //   position: "absolute",
+  //   bottom: "0",
+  //   left: "0",
+  // };
   let siteAddress = window.location.href;
 
   let finalUrl =

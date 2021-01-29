@@ -84,16 +84,6 @@ export default function TranstionItem(props) {
     }
   }
 
-  // useEffect(() => {
-  //   if (customerCode.length > 0) {
-  //     if (!buttonVisiblity) {
-  //       setButtonVisiblity(true);
-  //     }
-  //   } else {
-  //     setButtonVisiblity(false);
-  //   }
-  // }, [customerCode]);
-
   let handelCustomerCode = (e) => {
     setCustomerCode(e.target.value);
   };
@@ -108,25 +98,31 @@ export default function TranstionItem(props) {
     };
     setErrorMessage(null);
     try {
-      let result = await updateDeliveryStatus(dataObject, userToken);
+      let { data } = await updateDeliveryStatus(dataObject, userToken);
 
-      setErrorMessage(
-        <Alert variant="filled" severity="success">
-          Status update successfully...
-        </Alert>
-      );
-      setTimeout(() => {
-        setErrorMessage(null);
-        dispatch(showCodeBox(false));
+      if (data.Success) {
+        setErrorMessage(
+          <Alert variant="filled" severity="success">
+            {data.Message}
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
 
-        dispatch(reCallTransisation(!functionRecall));
-      }, 3000);
+          dispatch(reCallTransisation(!functionRecall));
+        }, 3000);
+      }
     } catch (error) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Some thing went wrong..or server error...
-        </Alert>
-      );
+      if (error.response) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            {error.response.data.Message}
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      }
     }
   };
 
@@ -274,23 +270,13 @@ export function UpdateTransaction({
 
   let userToken = localStorage.getItem("token");
 
-  let disPatchAction = () => {
-    dispatch(reCallTransisation(!functionRecall));
-  };
-
   let changeOrderState = async (transStatus) => {
-    await updateStatusService(transStatus);
-
-    setTimeout(() => {
-      dispatch(reCallTransisation(!functionRecall));
-    }, 3000);
+    updateStatusService(transStatus);
   };
 
   let completedOrderFunction = async () => {
     if (buyer) {
       await updateStatusService("completed");
-
-      closeModel();
     } else {
       dispatch(showCodeBox(true));
       closeModel();
@@ -305,23 +291,28 @@ export function UpdateTransaction({
     };
     setErrorMessage(null);
     try {
-      let result = await updateDeliveryStatus(dataObject, userToken);
+      let { data } = await updateDeliveryStatus(dataObject, userToken);
 
-      setErrorMessage(
-        <Alert variant="filled" severity="success">
-          Status update successfully...
-        </Alert>
-      );
-      setTimeout(() => {
-        setErrorMessage(null);
-        closeModel();
-      }, 3000);
+      if (data.Success) {
+        setErrorMessage(
+          <Alert variant="filled" severity="success">
+            {data.Message}
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+          closeModel();
+          dispatch(reCallTransisation(!functionRecall));
+        }, 3000);
+      }
     } catch (error) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Some thing went wrong..or server error...
-        </Alert>
-      );
+      if (error.response) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            {error.response.data.Message}
+          </Alert>
+        );
+      }
     }
   };
 

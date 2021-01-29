@@ -30,7 +30,8 @@ const ChangeButton = Styled.div`
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
   },
 }));
 const ShippingDetail = (props) => {
