@@ -119,7 +119,7 @@ const ShopBrandMobile = (props) => {
 const ShopBrand = (props) => {
   const { logo, name, slogan, shopid } = props;
   const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
-
+  console.log(shopProfile);
   return (
     <Container>
       <div style={{ display: "flex" }}>
@@ -142,7 +142,10 @@ const ShopBrand = (props) => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={shopProfile && shopProfile.facebook_link}
+                  href={
+                    shopProfile &&
+                    "https://www.facebook.com/" + shopProfile.facebook_link
+                  }
                 >
                   <Facebook />
                 </a>
@@ -151,7 +154,10 @@ const ShopBrand = (props) => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={shopProfile && shopProfile.instagram_link}
+                  href={
+                    shopProfile &&
+                    "https://www.instagram.com/" + shopProfile.instagram_link
+                  }
                 >
                   <Instagram />
                 </a>
@@ -160,7 +166,10 @@ const ShopBrand = (props) => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={shopProfile && shopProfile.twitter_link}
+                  href={
+                    shopProfile &&
+                    "https://twitter.com/" + shopProfile.twitter_link
+                  }
                 >
                   <Twitter />
                 </a>
