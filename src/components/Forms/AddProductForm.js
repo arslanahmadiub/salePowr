@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DeliveryTerms from "./DeliveryTerms";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { LastIndexContext } from "antd/lib/space";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -54,6 +55,7 @@ export default function AddProductForm(props) {
   const [state, setState] = React.useState({ delivery: "24hrs" });
   const [clearImageData, setClearImageData] = useState(false);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const classes = useStyles();
 
@@ -193,36 +195,40 @@ export default function AddProductForm(props) {
       newDeliveryTerm.push(newData);
     });
 
+    setErrorMessage(null);
     setLoading(true);
+    try {
+      let { data } = await addProduct(form_data, userToken);
 
-    let { data } = await addProduct(form_data, userToken);
-    if (data.Success) {
-      let productId = data.ID;
+      if (data.Success) {
+        let productId = data.ID;
 
-      let finalData = {
-        product_id: productId,
-        delivery_terms: newDeliveryTerm,
-      };
-      try {
-        let result = await productDeliveryTerm(finalData, userToken);
-        // if (facebook === true && twitter === true) {
-        //   facebookClick();
-        //   twitterClick();
-        // } else if (facebook === true) {
-        //   facebookClick();
-        // } else if (twitter === true) {
-        //   twitterClick();
-        // }
-        emailToast();
-        clearForm();
-        setLoading(false);
-      } catch (ex) {
-        if (ex.response) {
+        let finalData = {
+          product_id: productId,
+          delivery_terms: newDeliveryTerm,
+        };
+        try {
+          let result = await productDeliveryTerm(finalData, userToken);
+          emailToast();
+          clearForm();
+          setLoading(false);
+        } catch (ex) {
+          setLoading(false);
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Some thing went wrong or server error...
+            </Alert>
+          );
         }
       }
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong or server error...
+        </Alert>
+      );
     }
-
-    setLoading(false);
   };
 
   let getImages = (value) => {
@@ -322,6 +328,10 @@ export default function AddProductForm(props) {
             style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}
           >
             <Grid container direction="row" spacing={4}>
+              <Grid item xs={12}>
+                {errorMessage && errorMessage}
+              </Grid>
+
               <Grid item xs={12}>
                 <MiniFilePicker
                   getFiles={(value) => getImages(value)}
