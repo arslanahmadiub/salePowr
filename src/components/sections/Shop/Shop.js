@@ -22,6 +22,7 @@ import { shopIdsAction } from "../../../action/shopAction";
 import { saveShopData } from "../../../action/shopAction";
 import { getShopIds } from "../../../services/dashboardService";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import CompleteProfile from "../Profile/CompleteProfile";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -176,32 +177,6 @@ export default function Shop(props) {
     }
   };
 
-  // const loadingStyle = {
-  //   zIndex: 50,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   background: "rgba(46, 5, 5, 0.44)",
-  //   width: "100%",
-  //   height: "100%",
-  //   position: "absolute",
-  //   bottom: "0",
-  //   left: "0",
-  // };
-
-  // const unLoadingStyle = {
-  //   zIndex: -50,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   background: "rgba(46, 5, 5, 0.44)",
-  //   width: "100%",
-  //   height: "100%",
-  //   position: "absolute",
-  //   bottom: "0",
-  //   left: "0",
-  // };
-
   let handelCopyShopLink = () => {
     setCopyShopStyle(true);
     setTimeout(() => {
@@ -216,6 +191,7 @@ export default function Shop(props) {
 
   return (
     <div ref={shopWidthRef}>
+      <CompleteProfile />
       <DesktopHeaderRow title="Shop">
         <Grid container>
           <Grid

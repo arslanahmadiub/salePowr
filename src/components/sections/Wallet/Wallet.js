@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { getWallet } from "../../../services/walletServices";
 import { cashOut } from "../../../services/walletServices";
 import { Spin } from "antd";
+import CompleteProfile from "../Profile/CompleteProfile";
 
 const Title = Styled.div`
     font-size: 22px;
@@ -172,6 +173,7 @@ const Wallet = (props) => {
 
   return (
     <>
+      <CompleteProfile />
       <Row gutter={[0, 8]}>
         <DesktopHeaderRow title="Wallet" />
       </Row>

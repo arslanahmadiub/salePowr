@@ -209,8 +209,16 @@ export default function TranstionItem(props) {
           <Button
             onClick={primaryAction}
             size="large"
-            outlined={data.status === "Pending" ? true : false}
-            disable={data.status === "Pending" ? true : false}
+            outlined={
+              data.status === "Pending" || data.status === "Cancelled"
+                ? true
+                : false
+            }
+            disable={
+              data.status === "Pending" || data.status === "Cancelled"
+                ? true
+                : false
+            }
           >
             {props && props.primaryButtonText}
           </Button>
@@ -319,6 +327,11 @@ export function UpdateTransaction({
             {error.response.data.Message}
           </Alert>
         );
+        setTimeout(() => {
+          setErrorMessage(null);
+          closeModel();
+          dispatch(reCallTransisation(!functionRecall));
+        }, 2000);
       }
     }
   };

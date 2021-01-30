@@ -7,6 +7,8 @@ import RenderTransactions from "./RenderTransactions";
 import { useSelector, useDispatch } from "react-redux";
 import { getProgressTransistion } from "../../../services/transistionServices";
 import moment from "moment";
+import CompleteProfile from "../Profile/CompleteProfile";
+
 const TopRow = Styled.div`
     display: flex;
     justify-content: space-between;
@@ -97,6 +99,7 @@ const Transactions = (props) => {
   }, []);
   return (
     <div>
+      <CompleteProfile />
       <Hidden smDown>
         <TopRow>
           <div>Transactions</div>

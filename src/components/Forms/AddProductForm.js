@@ -65,6 +65,7 @@ export default function AddProductForm(props) {
   const [cityLocationData, setCityLocationData] = useState([]);
   const [imagesData, setImagesData] = useState([]);
   const [clearFormData, setClearFormData] = useState(false);
+  const [serviceFee, setServiceFee] = useState(0);
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
   );
@@ -277,32 +278,12 @@ export default function AddProductForm(props) {
 
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    if (e.target.name === "productPrice") {
+      let value = parseFloat(e.target.value) * 0.05;
+      setServiceFee(value);
+    }
   };
-  // const loadingStyle = {
-  //   zIndex: 50,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   background: "rgba(46, 5, 5, 0.44)",
-  //   width: "100%",
-  //   height: "100%",
-  //   position: "absolute",
-  //   bottom: "0",
-  //   left: "0",
-  // };
 
-  // const unLoadingStyle = {
-  //   zIndex: -50,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   background: "rgba(46, 5, 5, 0.44)",
-  //   width: "100%",
-  //   height: "100%",
-  //   position: "absolute",
-  //   bottom: "0",
-  //   left: "0",
-  // };
   let siteAddress = window.location.href;
 
   let finalUrl =
@@ -413,7 +394,20 @@ export default function AddProductForm(props) {
                   />
                 );
               })}
-
+              <Grid item xs={12}>
+                <FlexContainer>
+                  <div>Note: Powrsale service charge is 5%</div>
+                  <div
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "22px",
+                      marginRight: "5%",
+                    }}
+                  >
+                    GHS {isNaN(serviceFee) ? "0" : serviceFee}
+                  </div>
+                </FlexContainer>
+              </Grid>
               <Grid item xs={12}>
                 <hr />
 

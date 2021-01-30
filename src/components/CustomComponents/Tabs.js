@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
 import { selectedTabIndex } from "../../action/shopAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { reCallTransisation } from "../../action/walletAction";
 
 const TabHeader = Styled.div`
     display: flex;
@@ -38,6 +40,11 @@ const Tabs = (props) => {
     setSelectedTab(index);
     dispatch(selectedTabIndex(index));
   };
+  const functionRecall = useSelector((state) => state.wallet.transaction);
+
+  useEffect(() => {
+    dispatch(reCallTransisation(!functionRecall));
+  }, [selectedTab]);
 
   return (
     <div>
