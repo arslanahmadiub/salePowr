@@ -31,14 +31,15 @@ const RenderTransactions = (props) => {
           list.push(transaction.date);
         }
       });
-
-      setDates(list);
+      if (list.length > 0) {
+        setDates(list);
+      }
     }
   }, [data]);
 
   useEffect(() => {
     let list = [];
-    if (data) {
+    if (data !== null && data.length > 0) {
       dates &&
         dates.forEach((date) => {
           list.push(data.filter((i) => i.date === date));
@@ -59,12 +60,17 @@ const RenderTransactions = (props) => {
 
       {data &&
         data.length > 0 &&
-        groups &&
+        groups !== null &&
+        groups.length > 0 &&
         groups.map((group, index) => {
           return (
             <TransactionGroup
-              key={group[0].date.toString() + index.toString()}
-              title={group[0].date}
+              key={
+                group && group[0]
+                  ? group[0].date.toString() + index.toString()
+                  : null
+              }
+              title={group && group[0] ? group[0].date : null}
               transactions={group}
               primaryButtonText={
                 props.history ? "Open Dispute" : "Update status"

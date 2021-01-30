@@ -137,8 +137,12 @@ export default function AuthenticationPage(props) {
 
   let widthRef = useRef();
 
-  const handlePhoneInput = (events) => {
-    return setData({ ...data, mobile: events.target.value });
+  const handlePhoneInput = (e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.value === "" || re.test(e.target.value)) {
+      return setData({ ...data, mobile: e.target.value });
+    }
   };
 
   const handleEmailInput = (events) => {
@@ -455,7 +459,6 @@ export default function AuthenticationPage(props) {
               /> */}
               <Input
                 placeholder="Mobile Number"
-                type="number"
                 value={mobile}
                 onChange={handlePhoneInput}
               />

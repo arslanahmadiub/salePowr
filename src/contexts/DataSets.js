@@ -272,4 +272,4 @@ export const mobileOperators = [
 
 export const businessTypes = ["Online Only", "Online Plus Physical"];
 
-export const currencies = ["USD", "GHS", "NGN", "CFA"];
+export const currencies = ["GHS"];

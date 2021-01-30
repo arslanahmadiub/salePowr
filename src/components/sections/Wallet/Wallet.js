@@ -19,6 +19,7 @@ import { getWallet } from "../../../services/walletServices";
 import { cashOut } from "../../../services/walletServices";
 import { Spin } from "antd";
 import CompleteProfile from "../Profile/CompleteProfile";
+import Alert from "@material-ui/lab/Alert";
 
 const Title = Styled.div`
     font-size: 22px;
@@ -107,15 +108,33 @@ const Wallet = (props) => {
       setErrorMessage(null);
 
       let { data } = await cashOut(form_data, userToken);
+      setErrorMessage(
+        <Alert variant="filled" severity="success">
+          Cash Withdrawl Successfully...
+        </Alert>
+      );
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
     } catch (error) {
       setCashLoading(false);
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          {error.response.data.Message}
+        </Alert>
+      );
 
-      setErrorMessage(error.response.data.Message);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
     }
-    setCashLoading(false);
   };
   let changeCashAmount = (e) => {
-    setCashAmount(e.target.value);
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.value === "" || re.test(e.target.value)) {
+      setCashAmount(e.target.value);
+    }
   };
 
   const [walletLoading, setWalletLoading] = useState(false);
@@ -276,7 +295,8 @@ const Wallet = (props) => {
                       list={currencies}
                       placeholder="Please input the amount to withdraw"
                       onChange={changeCashAmount}
-                      type="number"
+                      type="text"
+                      value={cashAmount}
                     />
                   </Form.Item>
                 </Col>
@@ -305,7 +325,7 @@ const Wallet = (props) => {
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Button onClick={() => setSelectedCard(null)} outlined>
+                    <Button onClick={() => setSelectedCard(null)}>
                       Cancel
                     </Button>
                   </Col>
