@@ -15,7 +15,6 @@ import { countryCodes } from "../../DummyData/DummyData";
 import { Email, Facebook, Phone } from "@material-ui/icons";
 import logo from "../../assets/images/logo.png";
 import Alert from "@material-ui/lab/Alert";
-
 import GoogleLogo from "../CustomComponents/GoogleLogo";
 import Facebooklogo from "../CustomComponents/Facebooklogo";
 import PhoneLogo from "../CustomComponents/PhoneLogo";
@@ -92,6 +91,7 @@ export default function AuthenticationPage(props) {
     email: "",
     password: "",
     password2: "",
+    mobile: "",
   });
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function AuthenticationPage(props) {
     }
   }, []);
 
-  let { email, password, password2 } = data;
+  let { email, password, password2, mobile } = data;
   const [usePhoneSignIn, setPhoneSignIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("Hello Message");
   const [RedirectToReferrer, setRedirectToReferrer] = useState(false);
@@ -121,16 +121,25 @@ export default function AuthenticationPage(props) {
       email: "",
       password: "",
       password2: "",
+      mobile: "",
     });
   };
 
   const toggleAuthMethod = () => {
     setPhoneSignIn(!usePhoneSignIn);
+    setData({
+      email: "",
+      password: "",
+      password2: "",
+      mobile: "",
+    });
   };
 
   let widthRef = useRef();
 
-  const handlePhoneInput = (phone) => {};
+  const handlePhoneInput = (events) => {
+    return setData({ ...data, mobile: events.target.value });
+  };
 
   const handleEmailInput = (events) => {
     return setData({ ...data, email: events.target.value });
@@ -179,78 +188,155 @@ export default function AuthenticationPage(props) {
     form_data.append("password1", password);
     form_data.append("password2", password2);
 
-    if (!wantsToSignIn) {
-      if (email === null || password === null || password2 === null) {
-        setErrorMessage(
-          <Alert variant="filled" severity="error">
-            Please fill all fields...
-          </Alert>
-        );
-      } else if (password !== password2) {
-        setErrorMessage(
-          <Alert variant="filled" severity="error">
-            Password doesn't match...
-          </Alert>
-        );
-      } else {
-        setErrorMessage("");
-        try {
-          setLoadingShow(true);
-          let { data } = await createUser(form_data);
-          setLoadingShow(false);
+    let form_data_phone = new FormData();
+    form_data_phone.append("phone", mobile);
+    form_data_phone.append("password1", password);
+    form_data_phone.append("password2", password2);
 
-          if (data.Success) {
-            setErrorMessage(
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                }}
-              >
-                Account created successfully..For Login
-                <div
-                  style={{
-                    color: "#1AB4B3",
-                    cursor: "pointer",
-                    marginLeft: "10px",
-                  }}
-                  onClick={handelLoginClickAfterSignUp}
-                >
-                  Click Here
-                </div>
-              </div>
-            );
-            setData({
-              email: "",
-              password: "",
-              password2: "",
-            });
-          }
-        } catch (ex) {
-          if (ex.response && ex.response.status === 500) {
+    if (!wantsToSignIn) {
+      if (usePhoneSignIn === false) {
+        if (email === null || password === null || password2 === null) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Please fill all fields...
+            </Alert>
+          );
+        } else if (password !== password2) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Password doesn't match...
+            </Alert>
+          );
+        } else {
+          setErrorMessage("");
+          try {
+            setLoadingShow(true);
+            let { data } = await createUser(form_data);
             setLoadingShow(false);
 
-            let error = ex.response.data.Errors;
+            if (data.Success) {
+              setErrorMessage(
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  Account created successfully..For Login
+                  <div
+                    style={{
+                      color: "#1AB4B3",
+                      cursor: "pointer",
+                      marginLeft: "10px",
+                    }}
+                    onClick={handelLoginClickAfterSignUp}
+                  >
+                    Click Here
+                  </div>
+                </div>
+              );
+              setData({
+                email: "",
+                password: "",
+                password2: "",
+              });
+            }
+          } catch (ex) {
+            if (ex.response && ex.response.status === 500) {
+              setLoadingShow(false);
 
-            if ("email" in error) {
+              let error = ex.response.data.Errors;
+
+              if ("email" in error) {
+                setErrorMessage(
+                  <Alert variant="filled" severity="error">
+                    {error.email[0]}
+                  </Alert>
+                );
+              } else if ("password2" in error) {
+                setErrorMessage(
+                  <Alert variant="filled" severity="error">
+                    {error.password2[0]}
+                  </Alert>
+                );
+              } else if ("__all__" in error) {
+                setErrorMessage(
+                  <Alert variant="filled" severity="error">
+                    {error.__all__[0]}
+                  </Alert>
+                );
+              } else {
+              }
+            }
+          }
+        }
+      } else {
+        if (mobile === null || password === null || password2 === null) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Please fill all fields...
+            </Alert>
+          );
+        } else if (password !== password2) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Password doesn't match...
+            </Alert>
+          );
+        } else {
+          setErrorMessage("");
+          try {
+            setLoadingShow(true);
+            let { data } = await createUser(form_data_phone);
+
+            setLoadingShow(false);
+
+            if (data.Success) {
               setErrorMessage(
-                <Alert variant="filled" severity="error">
-                  {error.email[0]}
-                </Alert>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  Account created successfully..For Login
+                  <div
+                    style={{
+                      color: "#1AB4B3",
+                      cursor: "pointer",
+                      marginLeft: "10px",
+                    }}
+                    onClick={handelLoginClickAfterSignUp}
+                  >
+                    Click Here
+                  </div>
+                </div>
               );
-            } else if ("password2" in error) {
-              setErrorMessage(
-                <Alert variant="filled" severity="error">
-                  {error.password2[0]}
-                </Alert>
-              );
-            } else if ("__all__" in error) {
-              setErrorMessage(
-                <Alert variant="filled" severity="error">
-                  {error.__all__[0]}
-                </Alert>
-              );
-            } else {
+              setData({
+                email: "",
+                password: "",
+                password2: "",
+                mobile: "",
+              });
+            }
+          } catch (ex) {
+            if (ex.response && ex.response.status === 500) {
+              setLoadingShow(false);
+              if (ex.response.data.Success === false) {
+                if (ex.response.data.Errors) {
+                  setErrorMessage(
+                    <Alert variant="filled" severity="error">
+                      {ex.response.data.Errors.__all__[0]}
+                    </Alert>
+                  );
+                }
+              } else {
+                setErrorMessage(
+                  <Alert variant="filled" severity="error">
+                    Some thing went wrong or server error...
+                  </Alert>
+                );
+              }
             }
           }
         }
@@ -259,35 +345,74 @@ export default function AuthenticationPage(props) {
       let loginData = new FormData();
       loginData.append("email", email);
       loginData.append("password", password);
-      try {
-        setLoadingShow(true);
 
-        let { data } = await loginUser(loginData);
-        setLoadingShow(false);
+      let loginDataForMobile = new FormData();
+      loginDataForMobile.append("phone", mobile);
+      loginDataForMobile.append("password", password);
+      if (usePhoneSignIn === false) {
+        try {
+          setLoadingShow(true);
+          let { data } = await loginUser(loginData);
+          setLoadingShow(false);
 
-        if (data.Status) {
-          await localStorage.setItem("token", data.Token);
-          if (shopLink !== null) {
-            let index = shopLink.lastIndexOf("/");
-            history.push(
-              "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
-            );
-            localStorage.removeItem("shopLink");
-          } else {
-            history.push("/dashboard");
-            localStorage.removeItem("shopLink");
+          if (data.Success) {
+            await localStorage.setItem("token", data.Token);
+            if (shopLink !== null) {
+              let index = shopLink.lastIndexOf("/");
+              history.push(
+                "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
+              );
+              localStorage.removeItem("shopLink");
+            } else {
+              history.push("/dashboard");
+              localStorage.removeItem("shopLink");
+            }
+          }
+        } catch (ex) {
+          setLoadingShow(false);
+
+          if (ex.response && ex.response.status === 401) {
+            if (ex.response.data.Status === false) {
+              setErrorMessage(
+                <Alert variant="filled" severity="error">
+                  {ex.response.data.Message}
+                </Alert>
+              );
+            }
           }
         }
-      } catch (ex) {
-        setLoadingShow(false);
+      } else {
+        try {
+          setLoadingShow(true);
+          let { data } = await loginUser(loginDataForMobile);
+          setLoadingShow(false);
 
-        if (ex.response && ex.response.status === 401) {
-          if (ex.response.data.Status === false) {
-            setErrorMessage(
-              <Alert variant="filled" severity="error">
-                {ex.response.data.Message}
-              </Alert>
-            );
+          if (data.Success) {
+            await localStorage.setItem("token", data.Token);
+
+            if (shopLink !== null) {
+              let index = shopLink.lastIndexOf("/");
+              history.push(
+                "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
+              );
+              localStorage.removeItem("shopLink");
+            } else {
+              history.push("/dashboard");
+
+              localStorage.removeItem("shopLink");
+            }
+          }
+        } catch (ex) {
+          setLoadingShow(false);
+
+          if (ex.response && ex.response.status === 401) {
+            if (ex.response.data.Status === false) {
+              setErrorMessage(
+                <Alert variant="filled" severity="error">
+                  {ex.response.data.Message}
+                </Alert>
+              );
+            }
           }
         }
       }
@@ -323,9 +448,15 @@ export default function AuthenticationPage(props) {
               xs={12}
               style={{ display: usePhoneSignIn ? "" : "none" }}
             >
-              <TwinInputSelect
+              {/* <TwinInputSelect
                 list={countryCodes}
                 placeholder="Phone Number"
+                onChange={handlePhoneInput}
+              /> */}
+              <Input
+                placeholder="Mobile Number"
+                type="number"
+                value={mobile}
                 onChange={handlePhoneInput}
               />
             </Grid>

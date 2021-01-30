@@ -182,6 +182,7 @@ const ShippingDetail = (props) => {
                 label="Address"
                 name="address"
                 value={address}
+                required
                 onChange={handelShipingChange}
               />
             </Grid>
@@ -192,6 +193,7 @@ const ShippingDetail = (props) => {
                 label="Additional Notes"
                 name="additionalNotes"
                 value={additionalNotes}
+                required
                 onChange={handelShipingChange}
               />
             </Grid>

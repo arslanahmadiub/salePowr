@@ -84,6 +84,7 @@ const ProductDetails = (props) => {
   }, []);
   const processPayment = (event) => {
     event.preventDefault();
+
     let userDetail = {
       firstName,
       lastName,
