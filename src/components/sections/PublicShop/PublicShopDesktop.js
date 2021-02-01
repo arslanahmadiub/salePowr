@@ -69,8 +69,6 @@ const CompanyLogo = Styled.img`
 `;
 
 const PublicShopDesktop = (props) => {
-  let handelFacebook = () => {};
-
   return (
     <>
       <div
@@ -152,17 +150,51 @@ const PublicShopDesktop = (props) => {
                 </Contact>
               </Grid>
               <Grid item xs={6} md={3}>
-                <ContactLabel>Social</ContactLabel>
-
+                {props.data &&
+                (props.data.facebook_link ||
+                  props.data.instagram_link ||
+                  props.data.twitter_link) ? (
+                  <ContactLabel>Social</ContactLabel>
+                ) : null}
                 <Contact>
                   <FlexContainer style={{ width: "80px" }}>
-                    <Facebook
-                      style={{ width: "20px" }}
-                      onClick={handelFacebook}
-                    />
-                    <Twitter style={{ width: "20px" }} />
-                    <Instagram style={{ width: "20px" }} />
-                    <WhatsApp style={{ width: "20px" }} />
+                    {props.data && props.data.facebook_link ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={
+                          props.data &&
+                          "https://www.facebook.com/" + props.data.facebook_link
+                        }
+                      >
+                        <Facebook style={{ width: "20px" }} />
+                      </a>
+                    ) : null}
+                    {props.data && props.data.instagram_link ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={
+                          props.data &&
+                          "https://www.instagram.com/" +
+                            props.data.instagram_link
+                        }
+                      >
+                        <Instagram />
+                      </a>
+                    ) : null}
+                    {props.data && props.data.twitter_link ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={
+                          props.data &&
+                          "https://twitter.com/" + props.data.twitter_link
+                        }
+                      >
+                        <Twitter />
+                      </a>
+                    ) : null}
                   </FlexContainer>
                 </Contact>
               </Grid>

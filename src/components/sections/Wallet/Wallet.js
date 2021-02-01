@@ -142,7 +142,7 @@ const Wallet = (props) => {
   let getWalletData = async () => {
     setWalletLoading(true);
     let { data } = await getWallet(userToken);
-    console.log(data);
+
     let walletArray = [];
     if (data.Success) {
       data.Details.Wallets.map((item) => {

@@ -276,11 +276,6 @@ export default function AddProductForm(props) {
 
   let handelSharing = () => {};
 
-  let closeShare = (e) => {
-    console.log("Done");
-    console.log(e);
-  };
-
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
     if (e.target.name === "productPrice") {
@@ -424,7 +419,6 @@ export default function AddProductForm(props) {
                     quote={shareAbleData}
                     url={finalUrl}
                     onClick={handelSharing}
-                    onShareWindowClose={(e) => closeShare(e)}
                   >
                     <button
                       id="facebookShare"
