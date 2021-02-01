@@ -376,7 +376,7 @@ export default function AuthenticationPage(props) {
           setLoadingShow(false);
 
           if (ex.response && ex.response.status === 401) {
-            if (ex.response.data.Status === false) {
+            if (ex.response.data.Success === false) {
               setErrorMessage(
                 <Alert variant="filled" severity="error">
                   {ex.response.data.Message}
@@ -408,9 +408,8 @@ export default function AuthenticationPage(props) {
           }
         } catch (ex) {
           setLoadingShow(false);
-
           if (ex.response && ex.response.status === 401) {
-            if (ex.response.data.Status === false) {
+            if (ex.response.data.Success === false) {
               setErrorMessage(
                 <Alert variant="filled" severity="error">
                   {ex.response.data.Message}
