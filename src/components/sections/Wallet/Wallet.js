@@ -156,9 +156,9 @@ const Wallet = (props) => {
           network: item.momo_network,
         };
         walletArray.push(newWalletData);
-        setEscrowAmount(data.Details.escrow);
-        setAvailable(data.Details.available);
       });
+      setEscrowAmount(data.Details.escrow);
+      setAvailable(data.Details.available);
       setWalletCard(walletArray);
       setWalletLoading(false);
     }
