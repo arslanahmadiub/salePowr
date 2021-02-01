@@ -62,39 +62,13 @@ const Contact = Styled.div`
 
 const CompanyLogo = Styled.img`
     display: block;
-    height: 180px;
-    width: 200px;
+    max-width:200px;
+    max-height:200px;
+   
     margin: 0 15px 0 0;    
 `;
 
-// const useStyles = makeStyles({
-//   root: {
-//     minWidth: 275,
-//   },
-//   bullet: {
-//     display: "inline-block",
-//     margin: "0 2px",
-//     transform: "scale(0.8)",
-//   },
-//   title: {
-//     fontSize: 14,
-//   },
-//   pos: {
-//     marginBottom: 12,
-//   },
-// });
-
 const PublicShopDesktop = (props) => {
-  // const classes = useStyles();
-  // const {
-  //   logo,
-  //   name,
-  //   brief,
-  //   social,
-  //   contacts,
-  //   description,
-  //   shopId,
-  // } = props.data;
   let handelFacebook = () => {};
 
   return (

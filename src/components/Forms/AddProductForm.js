@@ -17,7 +17,7 @@ import { DataContext } from "../../contexts/DataContext";
 import { WalletContext } from "../../contexts/WalletContext";
 import { productDeliveryTerm } from "../../services/shopServices";
 import { addProduct } from "../../services/shopServices";
-import { showLoading } from "../../action/shopAction";
+
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -276,11 +276,16 @@ export default function AddProductForm(props) {
 
   let handelSharing = () => {};
 
+  let closeShare = (e) => {
+    console.log("Done");
+    console.log(e);
+  };
+
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
     if (e.target.name === "productPrice") {
       let value = parseFloat(e.target.value) * 0.05;
-      setServiceFee(value);
+      setServiceFee(value.toFixed(3));
     }
   };
 
@@ -419,6 +424,7 @@ export default function AddProductForm(props) {
                     quote={shareAbleData}
                     url={finalUrl}
                     onClick={handelSharing}
+                    onShareWindowClose={(e) => closeShare(e)}
                   >
                     <button
                       id="facebookShare"

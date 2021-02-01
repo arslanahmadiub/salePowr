@@ -142,7 +142,7 @@ const Wallet = (props) => {
   let getWalletData = async () => {
     setWalletLoading(true);
     let { data } = await getWallet(userToken);
-
+    console.log(data);
     let walletArray = [];
     if (data.Success) {
       data.Details.Wallets.map((item) => {
@@ -201,12 +201,12 @@ const Wallet = (props) => {
           <BannerContainer>
             <BulletedText
               title={"Available"}
-              value={`GHS ${available}`}
+              value={`GHS ${available ? available : "0"}`}
               primary
             />
             <BulletedText
               title={"Funds in escrow"}
-              value={`GHS ${escrowAmount}`}
+              value={`GHS ${escrowAmount ? escrowAmount : "0"}`}
             />
             <CircularProgress
               thickness={10}
