@@ -108,6 +108,8 @@ const Wallet = (props) => {
       setErrorMessage(null);
 
       let { data } = await cashOut(form_data, userToken);
+      setCashLoading(false);
+      setCashAmount("");
       setErrorMessage(
         <Alert variant="filled" severity="success">
           Cash Withdrawl Successfully...
@@ -115,22 +117,23 @@ const Wallet = (props) => {
       );
       setTimeout(() => {
         setErrorMessage(null);
-      }, 2000);
+        getWalletData();
+      }, 3000);
     } catch (error) {
       setCashLoading(false);
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          {error.response.data.Message}
+          Some thing went wrong...
         </Alert>
       );
 
       setTimeout(() => {
         setErrorMessage(null);
-      }, 2000);
+      }, 3000);
     }
   };
   let changeCashAmount = (e) => {
-    const re = /^[0-9\b]+$/;
+    const re = /^[0-9.\b]+$/;
 
     if (e.target.value === "" || re.test(e.target.value)) {
       setCashAmount(e.target.value);

@@ -142,7 +142,9 @@ const Dashboard = (props) => {
       if (profilePercent === 100) {
         dispatch(profileDialogAction(false));
       } else {
-        dispatch(profileDialogAction(true));
+        if (window.location.href.includes("dashboard")) {
+          dispatch(profileDialogAction(true));
+        }
       }
     }
   };

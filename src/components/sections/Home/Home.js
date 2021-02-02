@@ -134,20 +134,16 @@ const Home = (props) => {
                 </ButtonContainer>
               </FlexContainer>
               <FlexContainer>
-                <ButtonContainer>
-                  <Button>
-                    <EventNote style={{ color: "#5A36CC" }} />
-                  </Button>
-                </ButtonContainer>
                 <ButtonContainer onClick={toggleModal}>
-                  <Button>
-                    <img
-                      width="100%"
-                      height="100%"
-                      src={profile.profilePhoto}
-                      alt={profile.username}
-                    />
-                  </Button>
+                  <div
+                    style={{
+                      position: "fixed",
+                      right: "-25px",
+                      top: "6vh",
+                    }}
+                  >
+                    <SideBarToggle />
+                  </div>
                 </ButtonContainer>
               </FlexContainer>
             </FlexContainer>
@@ -155,19 +151,18 @@ const Home = (props) => {
 
           {props.children}
         </Grid>
-
-        <div
-          onClick={handelRightSideBar}
-          style={{
-            position: "fixed",
-            right: "-25px",
-            top: "10vh",
-            display: showRightSideBar ? "none" : "",
-          }}
-        >
-          <SideBarToggle />
-        </div>
-
+        <Hidden smDown>
+          <div
+            onClick={handelRightSideBar}
+            style={{
+              position: "fixed",
+              right: "-25px",
+              top: "10vh",
+            }}
+          >
+            <SideBarToggle />
+          </div>
+        </Hidden>
         <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
           <DialogTitle>
             <div style={{ display: "flex", lineHeight: "50px" }}>
@@ -181,6 +176,7 @@ const Home = (props) => {
         </Dialog>
 
         {/* THE RIGHT HAND MESSAGE AND PROFILE BAR */}
+
         <Hidden smDown>
           <Grid
             item

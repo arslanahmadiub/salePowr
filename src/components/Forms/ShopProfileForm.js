@@ -255,7 +255,15 @@ const ShopProfileForm = (props) => {
         }
       }
     } else {
-      setOpen(true);
+      if (logoFile.length > 0) {
+        setOpen(true);
+      } else {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Select Logo Image...
+          </Alert>
+        );
+      }
     }
   };
   const [errorMessage, setErrorMessage] = useState(null);

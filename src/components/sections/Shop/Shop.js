@@ -23,6 +23,7 @@ import { saveShopData } from "../../../action/shopAction";
 import { getShopIds } from "../../../services/dashboardService";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import CompleteProfile from "../Profile/CompleteProfile";
+import { Hidden } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -191,19 +192,16 @@ export default function Shop(props) {
 
   return (
     <div ref={shopWidthRef}>
-      <CompleteProfile />
-      <DesktopHeaderRow title="Shop">
+      <Hidden mdUp>
         <Grid container>
           <Grid
             item
-            xs={4}
+            xs={6}
             style={{
               marginTop: "10px",
               display: "flex",
               width: "100%",
               height: "50px",
-
-              justifyContent: "flex-end",
             }}
           >
             {selectedShop.length > 0 ? (
@@ -231,10 +229,9 @@ export default function Shop(props) {
               </div>
             ) : null}
           </Grid>
-
           <Grid
             item
-            xs={4}
+            xs={6}
             style={{
               marginTop: "10px",
               display: "flex",
@@ -249,19 +246,98 @@ export default function Shop(props) {
               </div>
             ) : null}
           </Grid>
-
-          <Grid
-            item
-            xs={4}
-            style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "flex-end",
-            }}
-          >
-            {selectedTabIndex === 0 ? publicButton() : null}
-          </Grid>
         </Grid>
+      </Hidden>
+      <CompleteProfile />
+      <DesktopHeaderRow title="Shop">
+        <Hidden smDown>
+          <Grid container>
+            <Grid
+              item
+              xs={4}
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                width: "100%",
+                height: "50px",
+
+                justifyContent: "flex-end",
+              }}
+            >
+              {selectedShop.length > 0 ? (
+                <div style={{ display: "flex" }}>
+                  <FileCopyIcon
+                    style={{
+                      color: copyShopStyle ? "#979FAA" : "black",
+                      cursor: "pointer",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  />
+
+                  <CopyToClipboard text={copyAddress}>
+                    <h4
+                      style={{
+                        color: copyShopStyle ? "#979FAA" : "black",
+                        cursor: "pointer",
+                      }}
+                      onClick={handelCopyShopLink}
+                    >
+                      Copy Shop Link
+                    </h4>
+                  </CopyToClipboard>
+                </div>
+              ) : null}
+            </Grid>
+
+            <Grid
+              item
+              xs={4}
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                width: "100%",
+
+                justifyContent: "flex-end",
+              }}
+            >
+              {selectedShop.length > 0 ? (
+                <div style={{ display: "flex" }}>
+                  <h4 style={{ color: "#31BDF4" }}>
+                    Shop Id: #{selectedShop}{" "}
+                  </h4>
+                </div>
+              ) : null}
+            </Grid>
+
+            <Grid
+              item
+              xs={4}
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              {selectedTabIndex === 0 ? publicButton() : null}
+            </Grid>
+          </Grid>
+        </Hidden>
+        <Hidden mdUp>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              {selectedTabIndex === 0 ? publicButton() : null}
+            </Grid>
+          </Grid>
+        </Hidden>
       </DesktopHeaderRow>
 
       <Backdrop className={classes.backdrop} open={loading}>
