@@ -89,27 +89,42 @@ const ShopBrandMobile = (props) => {
         <div style={{ width: "100px", marginTop: "50px" }}>
           <ContactLabel>Social Media</ContactLabel>
           <FlexContainer>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={shopProfile && shopProfile.facebook_link}
-            >
-              <Facebook />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={shopProfile && shopProfile.instagram_link}
-            >
-              <Instagram />
-            </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={shopProfile && shopProfile.twitter_link}
-            >
-              <Twitter />
-            </a>
+            {shopProfile && shopProfile.facebook_link ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  shopProfile &&
+                  "https://www.facebook.com/" + shopProfile.facebook_link
+                }
+              >
+                <Facebook style={{ color: "black" }} />
+              </a>
+            ) : null}
+            {shopProfile && shopProfile.instagram_link ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  shopProfile &&
+                  "https://www.instagram.com/" + shopProfile.instagram_link
+                }
+              >
+                <Instagram style={{ color: "black" }} />
+              </a>
+            ) : null}
+            {shopProfile && shopProfile.twitter_link ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  shopProfile &&
+                  "https://twitter.com/" + shopProfile.twitter_link
+                }
+              >
+                <Twitter style={{ color: "black" }} />
+              </a>
+            ) : null}
           </FlexContainer>
         </div>
       </div>
@@ -147,7 +162,7 @@ const ShopBrand = (props) => {
                     "https://www.facebook.com/" + shopProfile.facebook_link
                   }
                 >
-                  <Facebook />
+                  <Facebook style={{ color: "black" }} />
                 </a>
               ) : null}
               {shopProfile && shopProfile.instagram_link ? (
@@ -159,7 +174,7 @@ const ShopBrand = (props) => {
                     "https://www.instagram.com/" + shopProfile.instagram_link
                   }
                 >
-                  <Instagram />
+                  <Instagram style={{ color: "black" }} />
                 </a>
               ) : null}
               {shopProfile && shopProfile.twitter_link ? (
@@ -171,7 +186,7 @@ const ShopBrand = (props) => {
                     "https://twitter.com/" + shopProfile.twitter_link
                   }
                 >
-                  <Twitter />
+                  <Twitter style={{ color: "black" }} />
                 </a>
               ) : null}
 

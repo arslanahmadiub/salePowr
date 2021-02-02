@@ -167,7 +167,7 @@ const PublicShopDesktop = (props) => {
                           "https://www.facebook.com/" + props.data.facebook_link
                         }
                       >
-                        <Facebook style={{ width: "20px" }} />
+                        <Facebook style={{ color: "black" }} />
                       </a>
                     ) : null}
                     {props.data && props.data.instagram_link ? (
@@ -180,7 +180,7 @@ const PublicShopDesktop = (props) => {
                             props.data.instagram_link
                         }
                       >
-                        <Instagram />
+                        <Instagram style={{ color: "black" }} />
                       </a>
                     ) : null}
                     {props.data && props.data.twitter_link ? (
@@ -192,7 +192,7 @@ const PublicShopDesktop = (props) => {
                           "https://twitter.com/" + props.data.twitter_link
                         }
                       >
-                        <Twitter />
+                        <Twitter style={{ color: "black" }} />
                       </a>
                     ) : null}
                   </FlexContainer>
