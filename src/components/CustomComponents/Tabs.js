@@ -22,7 +22,7 @@ const TabLabelItem = Styled.div`
     padding: 0px 20px;
     border-bottom: ${(props) => (props.selected ? "2px solid #31BDF4" : 0)};
     @media (max-width: 960px){
-        font-size: 16px;
+        font-size: 12px;
     }
 `;
 

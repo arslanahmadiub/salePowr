@@ -75,7 +75,6 @@ const CompanyLogo = Styled.img`
 `;
 
 const ShopBrandMobile = (props) => {
-  const { logo, name, slogan, shopid } = props;
   const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
 
   return (
@@ -86,53 +85,54 @@ const ShopBrandMobile = (props) => {
         <BrandSlogan>{shopProfile && shopProfile.shop_bio}</BrandSlogan>
         <ShopId>Shop Id: {shopProfile && shopProfile.shop}</ShopId>
 
-        <div style={{ width: "100px", marginTop: "50px" }}>
+        <div>
           <ContactLabel>Social Media</ContactLabel>
-          <FlexContainer>
-            {shopProfile && shopProfile.facebook_link ? (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={
-                  shopProfile &&
-                  "https://www.facebook.com/" + shopProfile.facebook_link
-                }
-              >
-                <Facebook style={{ color: "black" }} />
-              </a>
-            ) : null}
-            {shopProfile && shopProfile.instagram_link ? (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={
-                  shopProfile &&
-                  "https://www.instagram.com/" + shopProfile.instagram_link
-                }
-              >
-                <Instagram style={{ color: "black" }} />
-              </a>
-            ) : null}
-            {shopProfile && shopProfile.twitter_link ? (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={
-                  shopProfile &&
-                  "https://twitter.com/" + shopProfile.twitter_link
-                }
-              >
-                <Twitter style={{ color: "black" }} />
-              </a>
-            ) : null}
-          </FlexContainer>
+          <div style={{ display: "flex" }}>
+            <FlexContainer>
+              {shopProfile && shopProfile.facebook_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={
+                    shopProfile &&
+                    "https://www.facebook.com/" + shopProfile.facebook_link
+                  }
+                >
+                  <Facebook style={{ color: "black" }} />
+                </a>
+              ) : null}
+              {shopProfile && shopProfile.instagram_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={
+                    shopProfile &&
+                    "https://www.instagram.com/" + shopProfile.instagram_link
+                  }
+                >
+                  <Instagram style={{ color: "black" }} />
+                </a>
+              ) : null}
+              {shopProfile && shopProfile.twitter_link ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={
+                    shopProfile &&
+                    "https://twitter.com/" + shopProfile.twitter_link
+                  }
+                >
+                  <Twitter style={{ color: "black" }} />
+                </a>
+              ) : null}
+            </FlexContainer>
+          </div>
         </div>
       </div>
     </Container>
   );
 };
 const ShopBrand = (props) => {
-  const { logo, name, slogan, shopid } = props;
   const shopProfile = useSelector((state) => state.shopPreview.shopProfile);
 
   return (

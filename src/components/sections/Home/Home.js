@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import RightSideBar from "./RightSideBar/RightSideBar";
 import { Dialog, Grid, DialogTitle, Drawer, Hidden } from "@material-ui/core";
 import Styled from "styled-components";
@@ -10,7 +10,7 @@ import { RightSideBarContext } from "../../../contexts/RightSideBarContext";
 import SideBarToggle from "../../CustomComponents/SideBarToggle";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { graphCall } from "../../../action/dashboardAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const DrawerContainer = Styled.div`
     -ms-overflow-style: none;  /* IE and Edge */
@@ -20,6 +20,7 @@ const DrawerContainer = Styled.div`
     };
     overflow-x: hidden;
     overflow-y: scroll;
+    width:250px;
 `;
 
 const CloseDrawer = Styled(Close)`
@@ -60,11 +61,18 @@ const Home = (props) => {
   const [modal, setModal] = React.useState(false);
   const dispatch = useDispatch();
   let proRef = useRef();
+  const closeDialog = useSelector((state) => state.auth.profileDialog);
 
   const profile = React.useContext(AuthContext);
   const { showRightSideBar, toggleRightSideBar } = React.useContext(
     RightSideBarContext
   );
+
+  useEffect(() => {
+    if (closeDialog) {
+      setModal(false);
+    }
+  }, [closeDialog]);
 
   let handelRightSideBar = () => {
     toggleRightSideBar(true);
@@ -105,7 +113,7 @@ const Home = (props) => {
               //toggleDrawerOpen(!drawerOpen)
             }}
           >
-            <CloseDrawer />
+            {/* <CloseDrawer /> */}
             {drawer}
           </DrawerContainer>
         </Drawer>
@@ -165,11 +173,17 @@ const Home = (props) => {
         </Hidden>
         <Dialog open={modal} fullScreen fullWidth onClose={toggleModal}>
           <DialogTitle>
-            <div style={{ display: "flex", lineHeight: "50px" }}>
-              <ButtonContainer onClick={toggleModal}>
-                <ArrowBack />
-              </ButtonContainer>
-              <Title>Profile</Title>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+              }}
+            >
+              <ArrowBack onClick={toggleModal} />
+
+              <Title style={{ marginLeft: "5%" }}>Profile</Title>
             </div>
           </DialogTitle>
           <RightSideBar />

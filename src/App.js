@@ -5,15 +5,17 @@ import PageNotFound from "./Utilities/PageNotFound";
 import Home from "./components/sections/Home/Home";
 import Routes from "./Utilities/Routes";
 import ProtectedRoute from "./Utilities/ProtectedRoute";
-import AdminRoute from "./Utilities/AdminRoute";
+
 import AuthenticationPage from "./components/auth/AuthPage";
 import PublicShop from "./components/sections/PublicShop/PublicShop";
+import ForgtopassEmail from "./components/sections/ForgotPassword/ForgtopassEmail";
 import { useDispatch } from "react-redux";
 import { selectedShopId } from "./action/shopAction";
 import { selectedShopName } from "./action/shopAction";
 import { shopIdsAction } from "./action/shopAction";
 
 import { getShopIds } from "./services/dashboardService";
+import Forgotpass from "./components/sections/ForgotPassword/Forgotpass";
 
 function App() {
   let userToken = localStorage.getItem("token");
@@ -54,6 +56,12 @@ function App() {
         </Route>
         <Route path="/shopPreview">
           <PublicShop />
+        </Route>
+        <Route path="/forgotPass">
+          <ForgtopassEmail />
+        </Route>
+        <Route path="/resetPass">
+          <Forgotpass />
         </Route>
         <Home>
           <Switch>

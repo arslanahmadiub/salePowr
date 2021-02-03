@@ -186,6 +186,10 @@ export default function AuthenticationPage(props) {
     setWantsToSignIn(true);
   };
 
+  let handelForgotPass = () => {
+    history.push("/forgotPass");
+  };
+
   let handelSignin = async () => {
     let form_data = new FormData();
     form_data.append("email", email);
@@ -481,6 +485,26 @@ export default function AuthenticationPage(props) {
                 value={password}
               />
             </Grid>
+            {wantsToSignIn ? (
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: "100%",
+                  marginTop: "-10px",
+                }}
+              >
+                <h3
+                  style={{ color: "#1AB4B3", cursor: "pointer" }}
+                  onClick={handelForgotPass}
+                >
+                  Forgot Password?
+                </h3>
+              </Grid>
+            ) : null}
+
             {wantsToSignIn ? null : (
               <Grid item xs={12}>
                 <PasswordInput

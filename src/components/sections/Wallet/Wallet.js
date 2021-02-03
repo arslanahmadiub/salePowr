@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { Button as AntButton } from "antd";
+import { Grid, Hidden } from "@material-ui/core";
 
 import Button from "../../CustomComponents/Button";
 import BannerContainer from "../../CustomComponents/BannerContainer";
@@ -14,7 +15,7 @@ import { WalletContext } from "../../../contexts/WalletContext";
 import DesktopHeaderRow from "../../CustomComponents/DesktopHeaderRow";
 import TwinInputSelect from "../../CustomComponents/TwinInputSelect";
 import { DataContext } from "../../../contexts/DataContext";
-import { useSelector } from "react-redux";
+
 import { getWallet } from "../../../services/walletServices";
 import { cashOut } from "../../../services/walletServices";
 import { Spin } from "antd";
@@ -202,20 +203,54 @@ const Wallet = (props) => {
       <Row gutter={[0, 24]}>
         <Col span={24}>
           <BannerContainer>
-            <BulletedText
-              title={"Available"}
-              value={`GHS ${available ? available : "0"}`}
-              primary
-            />
-            <BulletedText
-              title={"Funds in escrow"}
-              value={`GHS ${escrowAmount ? escrowAmount : "0"}`}
-            />
-            <CircularProgress
-              thickness={10}
-              radius={50}
-              percent={isNaN(percentValue) ? 0 : percentValue}
-            />
+            <Hidden only={["md", "lg", "xl"]}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={6}>
+                  <Grid container direction="column">
+                    <BulletedText
+                      title={"Available"}
+                      value={`GHS ${available ? available : "0"}`}
+                      primary
+                    />
+
+                    <BulletedText
+                      title={"Funds in escrow"}
+                      value={`GHS ${escrowAmount ? escrowAmount : "0"}`}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                  <CircularProgress
+                    thickness={10}
+                    radius={50}
+                    percent={isNaN(percentValue) ? 0 : percentValue}
+                  />
+                </Grid>
+              </Grid>
+            </Hidden>
+            <Hidden only={["xs", "sm"]}>
+              <BulletedText
+                title={"Available"}
+                value={`GHS ${available ? available : "0"}`}
+                primary
+              />
+
+              <BulletedText
+                title={"Funds in escrow"}
+                value={`GHS ${escrowAmount ? escrowAmount : "0"}`}
+              />
+
+              <CircularProgress
+                thickness={10}
+                radius={50}
+                percent={isNaN(percentValue) ? 0 : percentValue}
+              />
+            </Hidden>
           </BannerContainer>
         </Col>
       </Row>
