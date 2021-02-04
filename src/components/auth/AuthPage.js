@@ -8,11 +8,11 @@ import {
 import PasswordInput from "../CustomComponents/PasswordInput";
 import Input from "../CustomComponents/Input";
 import { Redirect } from "react-router-dom";
-import TwinInputSelect from "../CustomComponents/TwinInputSelect";
+
 import MaterialUIButton from "../CustomComponents/MaterialUIButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { countryCodes } from "../../DummyData/DummyData";
-import { Email, Facebook, Phone } from "@material-ui/icons";
+
+import { Email } from "@material-ui/icons";
 import logo from "../../assets/images/logo.png";
 import Alert from "@material-ui/lab/Alert";
 import GoogleLogo from "../CustomComponents/GoogleLogo";
@@ -550,17 +550,6 @@ export default function AuthenticationPage(props) {
               xs={12}
               style={{ display: usePhoneSignIn ? "" : "none" }}
             >
-              {/* <MaterialButton
-                onClick={toggleAuthMethod}
-                className={styles.button}
-                fullWidth
-                variant="outlined"
-                startIcon={<Email />}
-              >
-                {wantsToSignIn
-                  ? "Sign In with Email"
-                  : "Create Account With Email"}
-              </MaterialButton> */}
               <MaterialUIButton
                 onClick={toggleAuthMethod}
                 iconImage={<Email />}

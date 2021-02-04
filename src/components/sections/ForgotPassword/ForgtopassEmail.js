@@ -1,86 +1,172 @@
-import React from "react";
-import {
-  makeStyles,
-  Button as MaterialButton,
-  Hidden,
-} from "@material-ui/core";
+import React, { useState } from "react";
+import { Grid, makeStyles, Button as MaterialButton } from "@material-ui/core";
+import { resetPasswordService } from "../../../services/authServices";
+
 import Input from "../../CustomComponents/Input";
 
-const ForgtopassEmail = () => {
+import { ThemeContext } from "../../../contexts/ThemeContext";
+
+import logo from "../../../assets/images/logo.png";
+import Alert from "@material-ui/lab/Alert";
+
+import snapshot from "../../../assets/images/snapshot.svg";
+
+import { useHistory } from "react-router";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: "25px",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
+  },
+  emptyContainer: {
+    color: "#553560",
+    backgroundImage: `url(${snapshot})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    height: "100vh",
+    width: "100%",
+  },
+  text: {
+    textAlign: "center",
+  },
+  error: {
+    color: "red",
+  },
+  heading: {
+    textAlign: "center",
+  },
+  signInButton: {
+    color: (props) => props.white,
+    background: (props) => props.primaryGreen,
+    textTransform: "capitalize",
+    "&:hover": {
+      background: (props) => props.primaryGreen,
+    },
+  },
+  authToggle: {
+    color: (props) => props.primaryBlue,
+    textTransform: "capitalize",
+    "&:hover": {
+      background: "none",
+    },
+  },
+  button: {
+    textTransform: "capitalize",
+  },
+}));
+
+export default function ForgtopassEmail(props) {
+  const history = useHistory();
+  const classes = useStyles();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [email, setEmail] = useState("");
+
+  let handelSendEmail = async () => {
+    let emailData = {
+      email,
+    };
+    try {
+      setErrorMessage(null);
+      setLoadingShow(true);
+      let { data } = await resetPasswordService(emailData);
+      if (data.Success) {
+        setLoadingShow(false);
+        setErrorMessage(
+          <Alert variant="filled" severity="success">
+            An email sent to your email address... Check it...
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+          history.push("/");
+        }, 3000);
+      }
+    } catch (error) {
+      setLoadingShow(false);
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Some thing went wrong...Try Again latter...
+        </Alert>
+      );
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+    }
+  };
+  const [loadingShow, setLoadingShow] = useState(false);
+
+  const theme = React.useContext(ThemeContext);
+
+  const styles = useStyles(theme);
+
+  let handelLoginPress = () => {
+    history.push("/");
+  };
+
   return (
-    <>
-      <Hidden smDown>
-        <div
-          style={{
-            display: "flex",
-            width: "100vw",
-            height: "100vh",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ marginBottom: "5%" }}>
-            <h1>Enter Email addres to reset your password...</h1>
-          </div>
-          <div style={{ widht: "40vw" }}>
-            <Input placeholder="Enter Email Address" width="40vw" />
-          </div>
-          <div>
-            <MaterialButton
-              fullWidth
-              style={{
-                background: "#1AB4B3",
-                width: "40vw",
-                color: "white",
-                marginTop: "20px",
-                height: "45px",
-              }}
-            >
-              Send
-            </MaterialButton>
-          </div>
-        </div>
-      </Hidden>
+    <Grid container spacing={0}>
+      <Backdrop className={classes.backdrop} open={loadingShow}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
-      <Hidden mdUp>
-        <div
-          style={{
-            display: "flex",
-            width: "100vw",
-            height: "100vh",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "10%",
-          }}
-        >
-          <div style={{ marginBottom: "5%" }}>
-            <h1 style={{ textAlign: "center" }}>
-              Enter Email addres to reset your password...
-            </h1>
+      <Grid item sm={12} md={4}>
+        <div className={styles.container}>
+          <div style={styles.logo}>
+            <img src={logo} alt="google logo" />
           </div>
-          <div>
-            <Input placeholder="Enter Email Address" width="90vw" />
-          </div>
-          <div>
-            <MaterialButton
-              fullWidth
+          <br />
+          <h1 className={styles.heading}>Enter email to reset password</h1>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} style={{ marginTop: "10%" }}>
+              <Input
+                placeholder="Enter email address"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <MaterialButton
+                className={styles.signInButton}
+                fullWidth
+                onClick={handelSendEmail}
+              >
+                Send
+              </MaterialButton>
+            </Grid>
+            <Grid item xs={12}>
+              {errorMessage && errorMessage}
+            </Grid>
+            <Grid
+              item
+              xs={12}
               style={{
-                background: "#1AB4B3",
-                width: "90vw",
-                color: "white",
-                marginTop: "20px",
-                height: "45px",
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                marginTop: "-10px",
               }}
             >
-              Send
-            </MaterialButton>
-          </div>
+              <h3
+                style={{ color: "#1AB4B3", cursor: "pointer" }}
+                onClick={handelLoginPress}
+              >
+                For Login Click Here...
+              </h3>
+            </Grid>
+          </Grid>
         </div>
-      </Hidden>
-    </>
+      </Grid>
+      <Grid item sm={false} md={8}>
+        <div className={styles.emptyContainer} />
+      </Grid>
+    </Grid>
   );
-};
-
-export default ForgtopassEmail;
+}

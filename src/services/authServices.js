@@ -8,8 +8,7 @@ let completeUserProfileUrl = apiEndPoint + "complete_profile";
 let getUserDetailUrl = apiEndPoint + "get_user_details";
 let loginUserFacebookUrl = apiEndPoint + "facebook";
 let loginUserGoogleUrl = apiEndPoint + "google";
-// let userToken = "92c6544f868181b32ad25533fc3633ec6d450d77";
-let userToken = localStorage.getItem("token");
+let resetPasswordUrl = apiEndPoint + "reset_password_mail";
 
 export async function createUser(data) {
   return await axios({
@@ -71,6 +70,17 @@ export async function loginUserWithFacebook(data) {
   return await axios({
     method: "post",
     url: loginUserFacebookUrl,
+    data: data,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export async function resetPasswordService(data) {
+  return await axios({
+    method: "post",
+    url: resetPasswordUrl,
     data: data,
     headers: {
       "Content-Type": "application/json",
