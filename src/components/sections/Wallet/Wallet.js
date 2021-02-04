@@ -109,6 +109,7 @@ const Wallet = (props) => {
       setErrorMessage(null);
 
       let { data } = await cashOut(form_data, userToken);
+      console.log(data);
       setCashLoading(false);
       setCashAmount("");
       setErrorMessage(
@@ -121,12 +122,21 @@ const Wallet = (props) => {
         getWalletData();
       }, 3000);
     } catch (error) {
+      console.log(error.response.data);
       setCashLoading(false);
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Some thing went wrong...
-        </Alert>
-      );
+      if (error.response.data.Message) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            {error.response.data.Message}
+          </Alert>
+        );
+      } else {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Transisation failed...
+          </Alert>
+        );
+      }
 
       setTimeout(() => {
         setErrorMessage(null);
