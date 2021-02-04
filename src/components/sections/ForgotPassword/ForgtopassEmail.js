@@ -80,7 +80,7 @@ export default function ForgtopassEmail(props) {
         setLoadingShow(false);
         setErrorMessage(
           <Alert variant="filled" severity="success">
-            An email sent to your email address... Check it...
+            Reset email is successfully sent to your email...
           </Alert>
         );
         setTimeout(() => {
@@ -92,7 +92,7 @@ export default function ForgtopassEmail(props) {
       setLoadingShow(false);
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Some thing went wrong...Try Again latter...
+          {error.response.data.Message}
         </Alert>
       );
       setTimeout(() => {
@@ -149,16 +149,20 @@ export default function ForgtopassEmail(props) {
               xs={12}
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-end",
                 width: "100%",
                 marginTop: "-10px",
               }}
             >
-              <h3
-                style={{ color: "#1AB4B3", cursor: "pointer" }}
-                onClick={handelLoginPress}
-              >
-                For Login Click Here...
+              <h3>
+                Please{" "}
+                <span
+                  style={{ color: "#1AB4B3", cursor: "pointer" }}
+                  onClick={handelLoginPress}
+                >
+                  click here
+                </span>{" "}
+                to login
               </h3>
             </Grid>
           </Grid>
