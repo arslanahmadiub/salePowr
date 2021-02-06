@@ -32,6 +32,7 @@ import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
+import { Hidden } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -649,9 +650,11 @@ export default function AuthenticationPage(props) {
           </Grid>
         </div>
       </Grid>
-      <Grid item sm={false} md={8}>
-        <div className={styles.emptyContainer} />
-      </Grid>
+      <Hidden only={["xs", "sm"]}>
+        <Grid item sm={false} md={8}>
+          <div className={styles.emptyContainer} />
+        </Grid>
+      </Hidden>
     </Grid>
   );
 }
