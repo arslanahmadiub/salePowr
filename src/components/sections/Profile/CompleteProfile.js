@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import React, { useState, useEffect } from "react";
+
 import "./Profile.css";
 import ProfileEdit from "./ProfileEdit";
 import { Modal } from "antd";
@@ -7,16 +7,20 @@ import { Modal } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { profileDialogAction } from "../../../action/authAction";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const CompleteProfile = (props) => {
-  // const { user } = React.useContext(AuthContext);
-
-  // React.useEffect(() => {
-  //   // Check if user has completed their profile
-  //   //setOpen(user && user.profilePercent && user.profilePercent !== 1000)
-  // }, [user]);
   const profileDialogValue = useSelector((state) => state.auth.profileDialog);
+
+  let element = document.getElementById("documentBody");
+
+  useEffect(() => {
+    if (profileDialogValue === false) {
+      setTimeout(() => {
+        element.style.overflow = "scroll";
+      }, 500);
+    }
+  }, [profileDialogValue]);
+
   const dispatch = useDispatch();
 
   let handelCancel = () => {
@@ -24,9 +28,7 @@ const CompleteProfile = (props) => {
   };
   return (
     <Modal
-      //   visible={!!!(user && user.profilePercent && user.profilePercent !== 100)}
       visible={profileDialogValue}
-      //   onOk={() => null}
       onCancel={handelCancel}
       width={1000}
       footer={null}

@@ -109,7 +109,7 @@ const Wallet = (props) => {
       setErrorMessage(null);
 
       let { data } = await cashOut(form_data, userToken);
-      console.log(data);
+
       setCashLoading(false);
       setCashAmount("");
       setErrorMessage(
@@ -133,7 +133,7 @@ const Wallet = (props) => {
       } else {
         setErrorMessage(
           <Alert variant="filled" severity="error">
-            Transisation failed...
+            Transaction failed...
           </Alert>
         );
       }

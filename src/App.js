@@ -38,9 +38,6 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        {/* <Route exact path="/">
-          <AuthenticationPage />
-        </Route> */}
         <Route
           exact
           path="/"
@@ -65,13 +62,6 @@ function App() {
         </Route>
         <Home>
           <Switch>
-            {/* {routes.map((route) => {
-              return (
-                <ProtectedRoute exact path={route.path} key={route.path}>
-                  <route.component />
-                </ProtectedRoute>
-              );
-            })} */}
             {routes.map((route) => {
               return (
                 <ProtectedRoute
@@ -93,19 +83,3 @@ function App() {
 }
 
 export default App;
-
-// import React from "react";
-// import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
-// // import Dashboard from "../components/sections/Dashboard/Dashboard";
-// import Dashboard from "./components/sections/Dashboard/Dashboard";
-// import "./App.css";
-
-// function App() {
-//   return (
-//     <Switch>
-//       <Route exact path="/" component={Dashboard} />
-//     </Switch>
-//   );
-// }
-
-// export default App;

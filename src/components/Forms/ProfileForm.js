@@ -124,8 +124,24 @@ const ProfileForm = (props) => {
         setErrorMessage(null);
       }, 2000);
     } catch (ex) {
+      dispatch(userProfileSaveLoading(false));
       if (ex.response) {
-        dispatch(userProfileSaveLoading(false));
+        if (ex.response.data.Errors.phone) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Enter a valid mobile number...
+            </Alert>
+          );
+        } else {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Something went wrong or server error...
+            </Alert>
+          );
+        }
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       }
     }
   };
