@@ -259,7 +259,7 @@ const ShopProfileForm = (props) => {
       } else {
         setErrorMessage(
           <Alert variant="filled" severity="error">
-            Select Logo Image...
+            Select logo image...
           </Alert>
         );
       }

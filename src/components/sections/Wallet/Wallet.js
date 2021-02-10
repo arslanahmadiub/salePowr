@@ -114,7 +114,7 @@ const Wallet = (props) => {
       setCashAmount("");
       setErrorMessage(
         <Alert variant="filled" severity="success">
-          Cash Withdrawl Successfully...
+          Cash out successfull...
         </Alert>
       );
       setTimeout(() => {
@@ -122,7 +122,6 @@ const Wallet = (props) => {
         getWalletData();
       }, 3000);
     } catch (error) {
-      console.log(error.response.data);
       setCashLoading(false);
       if (error.response.data.Message) {
         setErrorMessage(

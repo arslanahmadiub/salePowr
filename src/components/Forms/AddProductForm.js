@@ -199,31 +199,31 @@ export default function AddProductForm(props) {
     if (productName.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Enter Product Name..
+          Enter product name..
         </Alert>
       );
     } else if (productDescription.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Enter Product Description...
+          Enter product description...
         </Alert>
       );
     } else if (productPrice.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Enter Product Price...
+          Enter product price...
         </Alert>
       );
     } else if (newDeliveryTerm.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Add Delivery Terms...
+          Add delivery terms...
         </Alert>
       );
     } else if (imagesData.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Add Product Images...
+          Add product images...
         </Alert>
       );
     } else {
