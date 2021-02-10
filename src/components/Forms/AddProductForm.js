@@ -245,6 +245,7 @@ export default function AddProductForm(props) {
             clearForm();
             setLoading(false);
           } catch (ex) {
+            console.log(ex.response.data);
             setLoading(false);
             setErrorMessage(
               <Alert variant="filled" severity="error">
@@ -254,12 +255,23 @@ export default function AddProductForm(props) {
           }
         }
       } catch (error) {
-        setLoading(false);
-        setErrorMessage(
-          <Alert variant="filled" severity="error">
-            Some thing went wrong or server error...
-          </Alert>
-        );
+        if (error.response.data.Errors) {
+          if (error.response.data.Errors.description) {
+            setLoading(false);
+
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                {error.response.data.Errors.description[0]}
+              </Alert>
+            );
+          } else {
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                Some thing went wrong or server error...
+              </Alert>
+            );
+          }
+        }
       }
     }
   };
