@@ -12,10 +12,11 @@ const NoTransactionInProgressNote = (props) => {
 
         <li>
           <p>
-            if you are a Seller/Merchant <Link to="/shop">Click Here</Link> or
-            head over to "Shop" to set up your storefront site. You will be able
-            to add products and generate payment links you can add to your
-            product posting on social media.
+            if you are a Seller/Merchant{" "}
+            <Link to="/shopPreview">Click Here</Link> or head over to "Shop" to
+            set up your storefront site. You will be able to add products and
+            generate payment links you can add to your product posting on social
+            media.
           </p>
         </li>
       </ol>

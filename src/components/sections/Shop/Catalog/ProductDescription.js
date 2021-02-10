@@ -479,8 +479,10 @@ export default function ProductDescription({
             <Grid item xs={12} md={7}>
               <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This
               purchase is protected by{" "}
-              <a href="https://powrsale.com">Powrsale.com.</a> Your funds are
-              escrow protected
+              <a href="https://app.powrsale.com/" target="_blank">
+                Powrsale.com.
+              </a>{" "}
+              Your funds are escrow protected
             </Grid>
             <Grid item xs={6} md={3}>
               <CustomLink>Create your Profile</CustomLink>
@@ -497,8 +499,10 @@ export default function ProductDescription({
             <Grid item xs={12} md={7}>
               <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This
               purchase is protected by
-              <a href="https://powrsale.com">Powrsale.com.</a> Your funds are
-              escrow protected
+              <a href="https://app.powrsale.com/" target="_blank">
+                Powrsale.com.
+              </a>{" "}
+              Your funds are escrow protected
             </Grid>
 
             <Grid item xs={6} md={2}>

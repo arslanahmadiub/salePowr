@@ -51,7 +51,7 @@ export default function () {
     },
     {
       name: "Shop",
-      path: "/shop",
+      path: "/shopPreview",
       component: Shop,
     },
   ];

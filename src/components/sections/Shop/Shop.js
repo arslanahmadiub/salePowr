@@ -187,7 +187,7 @@ export default function Shop(props) {
   let siteAddress = window.location.href;
   let copyAddress =
     siteAddress.slice(0, siteAddress.lastIndexOf("/") + 1) +
-    "shopPreview/" +
+    "shop/" +
     selectedShop;
 
   return (

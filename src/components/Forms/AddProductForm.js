@@ -196,39 +196,71 @@ export default function AddProductForm(props) {
       newDeliveryTerm.push(newData);
     });
 
-    setErrorMessage(null);
-    setLoading(true);
-    try {
-      let { data } = await addProduct(form_data, userToken);
-
-      if (data.Success) {
-        let productId = data.ID;
-
-        let finalData = {
-          product_id: productId,
-          delivery_terms: newDeliveryTerm,
-        };
-        try {
-          let result = await productDeliveryTerm(finalData, userToken);
-          emailToast();
-          clearForm();
-          setLoading(false);
-        } catch (ex) {
-          setLoading(false);
-          setErrorMessage(
-            <Alert variant="filled" severity="error">
-              Some thing went wrong or server error...
-            </Alert>
-          );
-        }
-      }
-    } catch (error) {
-      setLoading(false);
+    if (productName.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Some thing went wrong or server error...
+          Enter Product Name..
         </Alert>
       );
+    } else if (productDescription.length < 1) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Enter Product Description...
+        </Alert>
+      );
+    } else if (productPrice.length < 1) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Enter Product Price...
+        </Alert>
+      );
+    } else if (newDeliveryTerm.length < 1) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Add Delivery Terms...
+        </Alert>
+      );
+    } else if (imagesData.length < 1) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Add Product Images...
+        </Alert>
+      );
+    } else {
+      setErrorMessage(null);
+      setLoading(true);
+      try {
+        let { data } = await addProduct(form_data, userToken);
+
+        if (data.Success) {
+          let productId = data.ID;
+
+          let finalData = {
+            product_id: productId,
+            delivery_terms: newDeliveryTerm,
+          };
+          try {
+            let result = await productDeliveryTerm(finalData, userToken);
+            emailToast();
+            clearForm();
+            setLoading(false);
+          } catch (ex) {
+            setLoading(false);
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                Some thing went wrong or server error...
+              </Alert>
+            );
+          }
+        }
+      } catch (error) {
+        setLoading(false);
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Some thing went wrong or server error...
+          </Alert>
+        );
+      }
     }
   };
 
@@ -288,7 +320,7 @@ export default function AddProductForm(props) {
 
   let finalUrl =
     siteAddress.slice(0, siteAddress.lastIndexOf("/") + 1) +
-    "/shopPreview/" +
+    "shop/" +
     selectedShopId;
 
   return (

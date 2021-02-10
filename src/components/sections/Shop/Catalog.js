@@ -44,6 +44,7 @@ export default function Catalog(props) {
   let getCatalog = async () => {
     setLoadingShow(true);
     let { data } = await getCatalogData(selectedShopId);
+    console.log(data);
 
     if (data.Success) {
       dispatch(setShopInfo(data.ShopDetails[0]));

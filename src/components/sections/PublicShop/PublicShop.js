@@ -47,6 +47,7 @@ const PublicShop = () => {
     try {
       setLoading(true);
       let { data } = await publicShopDetail(shopId);
+      console.log(data);
       if (data.Success) {
         dispatch(setShopInfo(data.ShopDetails[0]));
       }

@@ -369,7 +369,7 @@ export default function AuthenticationPage(props) {
             if (shopLink !== null) {
               let index = shopLink.lastIndexOf("/");
               history.push(
-                "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
+                "shop/" + shopLink.substring(index + 1, shopLink.length)
               );
               localStorage.removeItem("shopLink");
             } else {
@@ -402,7 +402,7 @@ export default function AuthenticationPage(props) {
             if (shopLink !== null) {
               let index = shopLink.lastIndexOf("/");
               history.push(
-                "shopPreview/" + shopLink.substring(index + 1, shopLink.length)
+                "shop/" + shopLink.substring(index + 1, shopLink.length)
               );
               localStorage.removeItem("shopLink");
             } else {

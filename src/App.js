@@ -51,7 +51,7 @@ function App() {
         <Route exact path="/page-not-found">
           <PageNotFound />
         </Route>
-        <Route path="/shopPreview">
+        <Route path="/shop">
           <PublicShop />
         </Route>
         <Route path="/forgotPass">

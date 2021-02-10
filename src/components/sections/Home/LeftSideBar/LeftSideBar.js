@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import NavItem from "./NavItem";
@@ -10,10 +10,34 @@ import { navItems } from "../../../../DummyData/DummyData";
 export default function LeftSideBar(props) {
   const history = useHistory();
 
-  const changeSelected = (item) => (event) => {
+  let url = window.location.href.split("/").pop();
+  const changeSelected = (item, index) => (event) => {
     var cleaned = item.text.toLowerCase().trim().replace(" ", "-");
-    history.push(`/${cleaned}`);
+
+    if (cleaned === "shop") {
+      history.push("/shopPreview");
+    } else {
+      history.push(`/${cleaned}`);
+    }
   };
+
+  useEffect(() => {
+    changeIndex();
+  }, [url]);
+
+  let changeIndex = () => {
+    if (url === "dashboard" || url === "overview") {
+      setItemIndex(0);
+    } else if (url === "shopPreview") {
+      setItemIndex(1);
+    } else if (url === "transactions") {
+      setItemIndex(2);
+    } else if (url === "wallet") {
+      setItemIndex(3);
+    }
+  };
+
+  const [itemIndex, setItemIndex] = useState(0);
 
   return (
     <div
@@ -35,8 +59,13 @@ export default function LeftSideBar(props) {
           {navItems &&
             navItems.map((item, index) => {
               return (
-                <div onClick={changeSelected(item)} key={item.text}>
-                  <NavItem key={item.text} text={item.text} icon={item.icon} />
+                <div onClick={changeSelected(item, index)} key={index}>
+                  <NavItem
+                    key={item.text}
+                    text={item.text}
+                    icon={item.icon}
+                    selected={itemIndex === index ? true : false}
+                  />
                 </div>
               );
             })}

@@ -1,6 +1,6 @@
 const initalState = {
-  logo: [],
-  logoFile: [],
+  logo: null,
+  logoFile: null,
 };
 
 export const logoImageReducer = (state = initalState, action) => {

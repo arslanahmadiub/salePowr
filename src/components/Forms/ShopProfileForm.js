@@ -186,7 +186,6 @@ const ShopProfileForm = (props) => {
 
   const saveShopProfile = async (event) => {
     event.preventDefault();
-
     if (slectedShop.length > 0) {
       let {
         address,
@@ -255,7 +254,7 @@ const ShopProfileForm = (props) => {
         }
       }
     } else {
-      if (logoFile.length > 0) {
+      if (logoFile) {
         setOpen(true);
       } else {
         setErrorMessage(

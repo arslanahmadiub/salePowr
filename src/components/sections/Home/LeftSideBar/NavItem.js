@@ -19,12 +19,12 @@ const NavItem = (props) => {
         cursor: "pointer",
       }}
     >
-      <div style={{ color }}>
+      <div style={{ color: props.selected ? "#31BDF4" : color }}>
         <Icon />
       </div>
       <div
         style={{
-          color,
+          color: props.selected ? "#31BDF4" : color,
           fontWeight: "500",
           fontSize: "16px",
           paddingLeft: "15px",

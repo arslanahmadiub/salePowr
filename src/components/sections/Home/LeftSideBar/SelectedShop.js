@@ -75,8 +75,8 @@ const SelectedShop = (props) => {
 
   function onChange(shop) {
     if (shop === "Create") {
-      history.push("/shop");
-      dispatch(logoImageFile([]));
+      history.push("/shopPreview");
+      dispatch(logoImageFile(null));
 
       setLogoImage(null);
       dispatch(selectedShopId(""));
