@@ -358,10 +358,6 @@ export default function AddProductForm(props) {
     }
   };
 
-  let checkFunction = () => {
-    console.log(cityLocationData);
-  };
-
   let siteAddress = window.location.href;
 
   let finalUrl =
@@ -532,10 +528,6 @@ export default function AddProductForm(props) {
 
               <Grid item xs={12} sm={6} md={4}>
                 <Button onClick={processWidrawal}>Add Product</Button>
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={4}>
-                <Button onClick={checkFunction}>Check</Button>
               </Grid>
             </Grid>
           </div>
