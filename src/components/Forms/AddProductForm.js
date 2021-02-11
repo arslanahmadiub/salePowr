@@ -202,16 +202,34 @@ export default function AddProductForm(props) {
           Enter product name..
         </Alert>
       );
+    } else if (productName.length > 30) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Maximum of 30 characters allowed in product name...
+        </Alert>
+      );
     } else if (productDescription.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
           Enter product description...
         </Alert>
       );
+    } else if (productDescription.length > 500) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Maximum of 500 characters allowed in product description...
+        </Alert>
+      );
     } else if (productPrice.length < 1) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
           Enter product price...
+        </Alert>
+      );
+    } else if (productPrice.length > 5) {
+      setErrorMessage(
+        <Alert variant="filled" severity="error">
+          Maximum of 5 characters allowed in product description...
         </Alert>
       );
     } else if (newDeliveryTerm.length < 1) {

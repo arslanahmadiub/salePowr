@@ -254,17 +254,30 @@ const ShopProfileForm = (props) => {
         }
       }
     } else {
-      if (logoFile) {
-        setOpen(true);
-      } else {
+      if (name.length > 30) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Maximum of 30 characters allowed in shop name...
+          </Alert>
+        );
+      } else if (bio.length > 300) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Maximum of 300 characters allowed in shop bio...
+          </Alert>
+        );
+      } else if (!logoFile) {
         setErrorMessage(
           <Alert variant="filled" severity="error">
             Select logo image...
           </Alert>
         );
+      } else {
+        setOpen(true);
       }
     }
   };
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [cleanImage, setcleanImage] = useState(false);
 
