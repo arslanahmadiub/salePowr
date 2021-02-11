@@ -217,40 +217,58 @@ const ShopProfileForm = (props) => {
       form_data.append("twitter_link", twitter);
       form_data.append("whatsapp_number", whatsapp);
 
-      try {
-        setErrorMessage(null);
-        setLoading(true);
-        let { data } = await editShopDetail(slectedShop, form_data, userToken);
-        if (data.Success) {
+      if (name.length > 30) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Maximum of 30 characters are allowed in shop name...
+          </Alert>
+        );
+      } else if (bio.length > 300) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Maximum of 300 characters are allowed in shop bio...
+          </Alert>
+        );
+      } else {
+        try {
+          setErrorMessage(null);
+          setLoading(true);
+          let { data } = await editShopDetail(
+            slectedShop,
+            form_data,
+            userToken
+          );
+          if (data.Success) {
+            setLoading(false);
+            setcleanImage(false);
+            setcleanImage(true);
+            shopsIdsCollections();
+            setErrorMessage(
+              <Alert variant="filled" severity="success">
+                {data.Message}
+              </Alert>
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 2000);
+          }
+        } catch (error) {
           setLoading(false);
-          setcleanImage(false);
-          setcleanImage(true);
-          shopsIdsCollections();
-          setErrorMessage(
-            <Alert variant="filled" severity="success">
-              {data.Message}
-            </Alert>
-          );
-          setTimeout(() => {
-            setErrorMessage(null);
-          }, 2000);
-        }
-      } catch (error) {
-        setLoading(false);
 
-        if (error.response && error.response.data.Message.business_phone) {
-          setErrorMessage(
-            <Alert variant="filled" severity="error">
-              {"Business Phone Error:  " +
-                error.response.data.Message.business_phone[0]}
-            </Alert>
-          );
-        } else {
-          setErrorMessage(
-            <Alert variant="filled" severity="error">
-              Some thing went wrong or server error...
-            </Alert>
-          );
+          if (error.response && error.response.data.Message.business_phone) {
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                {"Business Phone Error:  " +
+                  error.response.data.Message.business_phone[0]}
+              </Alert>
+            );
+          } else {
+            setErrorMessage(
+              <Alert variant="filled" severity="error">
+                Some thing went wrong or server error...
+              </Alert>
+            );
+          }
         }
       }
     } else {

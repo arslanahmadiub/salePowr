@@ -25,6 +25,7 @@ import DeliveryTerms from "./DeliveryTerms";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { LastIndexContext } from "antd/lib/space";
 import Alert from "@material-ui/lab/Alert";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -61,7 +62,9 @@ export default function AddProductForm(props) {
 
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
+
   let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
+
   const [cityLocationData, setCityLocationData] = useState([]);
   const [imagesData, setImagesData] = useState([]);
   const [clearFormData, setClearFormData] = useState(false);
@@ -141,17 +144,22 @@ export default function AddProductForm(props) {
   }, [props.getData]);
 
   let addDeliveryItem = () => {
-    let index = deliveryTermNumber.length;
-    let newDeliveryTerm = [...deliveryTermNumber];
-    newDeliveryTerm.push(index + 1);
-    setDeliveryTermNumber(newDeliveryTerm);
+    let arrayValue = [...deliveryTermNumber];
+    let value = _.last(deliveryTermNumber);
+    let newValue = value + 1;
+    arrayValue.push(newValue);
+    setDeliveryTermNumber(arrayValue);
   };
-  let removeDeliveryItem = () => {
-    let index = deliveryTermNumber.length;
-    let newDeliveryTerm = [...deliveryTermNumber];
-    newDeliveryTerm.splice(-1, 1);
 
-    setDeliveryTermNumber(newDeliveryTerm);
+  let removeDeliveryItem = (value) => {
+    let arrayValue = [...deliveryTermNumber];
+    arrayValue.splice(value, 1);
+    setDeliveryTermNumber(arrayValue);
+    let locationData = [...cityLocationData];
+    _.remove(locationData, function (e) {
+      return e.id === value;
+    });
+    setCityLocationData(locationData);
   };
   let userToken = localStorage.getItem("token");
 
@@ -184,14 +192,13 @@ export default function AddProductForm(props) {
       });
     }
 
-    cityLocationData.splice(0, 1);
     let newDeliveryTerm = [];
 
     cityLocationData.map((item, index) => {
       let newData = {
         delivery_country: productCountry,
-        delivery_location: item.locationCurrency.location,
-        delivery_price: item.locationCurrency.currency,
+        delivery_location: item.value.location,
+        delivery_price: item.value.currency,
       };
       newDeliveryTerm.push(newData);
     });
@@ -217,7 +224,7 @@ export default function AddProductForm(props) {
     } else if (productDescription.length > 500) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Maximum of 500 characters allowed in product description...
+          Maximum of 500 characters are allowed in product description...
         </Alert>
       );
     } else if (productPrice.length < 1) {
@@ -229,7 +236,7 @@ export default function AddProductForm(props) {
     } else if (productPrice.length > 5) {
       setErrorMessage(
         <Alert variant="filled" severity="error">
-          Maximum of 5 characters allowed in product description...
+          Maximum of 5 characters are allowed in product price...
         </Alert>
       );
     } else if (newDeliveryTerm.length < 1) {
@@ -263,7 +270,6 @@ export default function AddProductForm(props) {
             clearForm();
             setLoading(false);
           } catch (ex) {
-            console.log(ex.response.data);
             setLoading(false);
             setErrorMessage(
               <Alert variant="filled" severity="error">
@@ -302,27 +308,33 @@ export default function AddProductForm(props) {
   }, [props.getFiles]);
 
   let getLocationData = (event, id) => {
-    let data = cityLocationData;
+    let data = [...cityLocationData];
 
     if (data.length > 0) {
-      let newArray = data.filter(function (obj) {
-        return obj.id !== id;
+      _.remove(data, function (e) {
+        return e.id === id;
       });
+      if (event && id) {
+        let dataObject = {
+          id: id,
+          value: event,
+        };
+        data.push(dataObject);
 
-      let newObject = {
-        id: id,
-        locationCurrency: event,
-      };
-      newArray.push(newObject);
-      setCityLocationData(newArray);
+        setCityLocationData(data);
+      }
     } else {
-      let newData = [];
-      let newObject = {
-        id: id,
-        locationCurrency: event,
-      };
-      newData.push(newObject);
-      setCityLocationData(newData);
+      if (event && id) {
+        if (event.location.length > 0 || event.currency.length > 0) {
+          let dataObject = {
+            id: id,
+            value: event,
+          };
+          data.push(dataObject);
+
+          setCityLocationData(data);
+        }
+      }
     }
   };
 
@@ -344,6 +356,10 @@ export default function AddProductForm(props) {
       let value = parseFloat(e.target.value) * 0.05;
       setServiceFee(value.toFixed(3));
     }
+  };
+
+  let checkFunction = () => {
+    console.log(cityLocationData);
   };
 
   let siteAddress = window.location.href;
@@ -447,10 +463,11 @@ export default function AddProductForm(props) {
                 return (
                   <DeliveryTerms
                     key={index}
-                    itemIndex={index}
+                    itemIndex={item}
                     addItem={addDeliveryItem}
-                    removeItem={removeDeliveryItem}
-                    lengthOfItem={deliveryTermNumber}
+                    removeItem={(value) => removeDeliveryItem(value)}
+                    lengthOfItem={deliveryTermNumber.length}
+                    fullArray={deliveryTermNumber}
                     getData={(value, value2) => getLocationData(value, value2)}
                     clearData={clearFormData}
                   />
@@ -515,6 +532,10 @@ export default function AddProductForm(props) {
 
               <Grid item xs={12} sm={6} md={4}>
                 <Button onClick={processWidrawal}>Add Product</Button>
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={4}>
+                <Button onClick={checkFunction}>Check</Button>
               </Grid>
             </Grid>
           </div>

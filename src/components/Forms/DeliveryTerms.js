@@ -6,6 +6,7 @@ import Select from "../CustomComponents/Select";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
+
 function DeliveryTerms(props) {
   let countryList = ["Pakistan"];
   let currencies = ["Pakistan"];
@@ -17,7 +18,11 @@ function DeliveryTerms(props) {
     props.addItem();
   };
   let handelClickRemove = () => {
-    props.removeItem();
+    props.removeItem(props.itemIndex);
+    setdeliveryData({
+      location: "",
+      currency: "",
+    });
   };
 
   const [deliveryData, setdeliveryData] = useState({
@@ -46,6 +51,15 @@ function DeliveryTerms(props) {
   };
 
   let { location, currency } = deliveryData;
+
+  let addValuesFunction = () => {
+    let newId = props.values.find((item) => (item.id = props.itemIndex));
+    console.log(newId);
+  };
+
+  useEffect(() => {
+    // addValuesFunction();
+  }, [props.values]);
   return (
     <React.Fragment>
       <Grid item xs={12} md={5}>
@@ -72,7 +86,7 @@ function DeliveryTerms(props) {
         />
       </Grid>
       <Grid item xs={12} md={2} style={{ marginTop: "2%" }}>
-        {props.itemIndex === lastNumber - 1 ? (
+        {props.fullArray[props.fullArray.length - 1] === props.itemIndex ? (
           <IconButton
             color="primary"
             aria-label="upload picture"
