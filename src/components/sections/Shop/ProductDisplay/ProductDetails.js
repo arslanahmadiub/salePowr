@@ -170,7 +170,9 @@ const ProductDetails = (props) => {
               Your funds are escrow protected
             </Grid>
             <Grid item xs={6} md={3}>
-              <CustomLink>Create your Profile</CustomLink>
+              <a href="https://app.powrsale.com" target="_blank">
+                Create your Profile
+              </a>
             </Grid>
 
             <Grid item xs={12} md={4}></Grid>
@@ -196,7 +198,9 @@ const ProductDetails = (props) => {
             </Grid>
 
             <Grid item xs={6} md={3}>
-              <CustomLink>Create your Profile</CustomLink>
+              <a href="https://app.powrsale.com" target="_blank">
+                Create your Profile
+              </a>
             </Grid>
 
             <Grid item xs={12} md={4}></Grid>

@@ -14,11 +14,13 @@ const ImageContainer = Styled.div`
     width: 150px;
     background: #FFFFFF;
     border-radius: 15px;
+    object-fit: contain;
 `;
 const Img = Styled.img`
     height: 130px;
     width: 130px;
     margin: auto;
+    object-fit: contain;
 `;
 const Price = Styled.div`
     font-size: 20px;
@@ -79,7 +81,7 @@ const Product = (props) => {
               width: "150px",
               height: "150px",
               borderRadius: "10px",
-              objectFit: "fill",
+              objectFit: "cover",
             }}
           />
         </ImageContainer>

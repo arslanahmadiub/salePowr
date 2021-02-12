@@ -108,7 +108,6 @@ export default function Shop(props) {
 
   let handelPublishShop = async () => {
     if (Object.keys(createShop).length > 0) {
-      setLoading(true);
       let {
         address,
         bio,
@@ -123,7 +122,6 @@ export default function Shop(props) {
         type,
         whatsapp,
       } = createShop;
-
       let form_data = new FormData();
       form_data.append("shop_name", name);
       form_data.append("business_type", type);
@@ -139,30 +137,40 @@ export default function Shop(props) {
       form_data.append("twitter_link", twitter);
       form_data.append("whatsapp_number", whatsapp);
 
-      let { data } = await shopCreate(form_data, userToken);
+      console.log(logoFile);
 
-      if (data.Success) {
-        let shopPreview = {
-          logo: logoUrl,
-          name: name,
-          brief: bio,
-          social: { fb: facebook, ig: instagram, wp: whatsapp, tt: twitter },
-          contacts: {
-            phone: phone,
-            email: email,
-            address: address,
-          },
-          description: type,
-          shopId: data.ID,
-        };
-        setPublishData(shopPreview);
+      try {
+        setLoading(true);
+
+        let { data } = await shopCreate(form_data, userToken);
+
+        if (data.Success) {
+          setLoading(false);
+
+          let shopPreview = {
+            logo: logoUrl,
+            name: name,
+            brief: bio,
+            social: { fb: facebook, ig: instagram, wp: whatsapp, tt: twitter },
+            contacts: {
+              phone: phone,
+              email: email,
+              address: address,
+            },
+            description: type,
+            shopId: data.ID,
+          };
+          setPublishData(shopPreview);
+          setLoading(false);
+          dispatch(clearFormData(true));
+          shopIdsCollectionForCreateShop();
+          togglePublish(true);
+          dispatch(saveShopData({}));
+        }
+      } catch (error) {
+        console.log(error.response.data);
         setLoading(false);
-        dispatch(clearFormData(true));
-        shopIdsCollectionForCreateShop();
-        togglePublish(true);
       }
-      setLoading(false);
-      dispatch(saveShopData({}));
     }
   };
 

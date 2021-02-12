@@ -47,14 +47,16 @@ const Delivery = Styled.div`
 `;
 
 const TiledImage = Styled.img`
-    height: 100px;
+   
     width: 100px;
-    background: #FFFFFF;
+    height:100px;
+   object-fit: contain;
+   background: #FFFFFF;
     border-radius: 15px;
     margin: auto;
     padding: 10px;
     @media (max-width: 960px){
-        height: 80px;
+        
         width: 80px;
         padding: 5px;
     }
@@ -62,21 +64,16 @@ const TiledImage = Styled.img`
 
 const CoverImage = Styled.img`
  
-    max-width:300px;
-    max-height:300px;
-    min-width:300px;
-    min-height:300px;
-    width: auto;
-  height: auto;
-    background: #FFFFFF;
+    width:300px;
+   height:300px;
+   object-fit: contain;
+   background: #FFFFFF;
     border-radius: 15px;
     //margin: 0 0 0 5px;
     padding: 15px;
     @media (max-width: 960px){
-      max-width:300px;
-      max-height:300px;
-      width: auto;
-    height: auto;
+      width:300px;
+      height:300px;
     }
 `;
 
@@ -485,7 +482,9 @@ export default function ProductDescription({
               Your funds are escrow protected
             </Grid>
             <Grid item xs={6} md={3}>
-              <CustomLink>Create your Profile</CustomLink>
+              <a href="https://app.powrsale.com" target="_blank">
+                Create your Profile
+              </a>
             </Grid>
 
             <Grid item xs={12} md={4}></Grid>
@@ -511,7 +510,9 @@ export default function ProductDescription({
             </Grid>
 
             <Grid item xs={6} md={3}>
-              <CustomLink>Create your Profile</CustomLink>
+              <a href="https://app.powrsale.com" target="_blank">
+                Create your Profile
+              </a>
             </Grid>
 
             <Grid item xs={12} md={4}></Grid>

@@ -1,65 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Styled from "styled-components";
+import React from "react";
+
 import Grid from "@material-ui/core/Grid";
 import Input from "../CustomComponents/Input";
-import Select from "../CustomComponents/Select";
+
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
 
 function DeliveryTerms(props) {
-  let countryList = ["Pakistan"];
-  let currencies = ["Pakistan"];
-  const [addButton, setaddButton] = useState(false);
-  let index = props.lengthOfItem.length;
-  let lastNumber = props.lengthOfItem[index - 1];
-
-  let handelClick = () => {
-    props.addItem();
-  };
-  let handelClickRemove = () => {
-    props.removeItem(props.itemIndex);
-    setdeliveryData({
-      location: "",
-      currency: "",
-    });
-  };
-
-  const [deliveryData, setdeliveryData] = useState({
-    location: "",
-    currency: "",
-  });
-  let clearData = () => {
-    setdeliveryData({
-      location: "",
-      currency: "",
-    });
-  };
-
-  useEffect(() => {
-    if (props.clearData === true) {
-      clearData();
-    }
-  }, [props.clearData]);
-
-  useEffect(() => {
-    props.getData(deliveryData, props.itemIndex);
-  }, [deliveryData]);
-
-  let handelChange = async (e) => {
-    await setdeliveryData({ ...deliveryData, [e.target.name]: e.target.value });
-  };
-
-  let { location, currency } = deliveryData;
-
-  let addValuesFunction = () => {
-    let newId = props.values.find((item) => (item.id = props.itemIndex));
-    console.log(newId);
-  };
-
-  useEffect(() => {
-    // addValuesFunction();
-  }, [props.values]);
   return (
     <React.Fragment>
       <Grid item xs={12} md={5}>
@@ -68,9 +16,9 @@ function DeliveryTerms(props) {
           label="City/Location"
           rows={5}
           required
-          name="location"
-          value={location}
-          onChange={handelChange}
+          name="city"
+          value={props.values.city}
+          onChange={props.handelChange}
         />
       </Grid>
       <Grid item xs={12} md={5}>
@@ -80,18 +28,19 @@ function DeliveryTerms(props) {
           rows={5}
           required
           type="number"
-          name="currency"
-          value={currency}
-          onChange={handelChange}
+          name="price"
+          maxlength="4"
+          value={props.values.price}
+          onChange={props.handelChange}
         />
       </Grid>
       <Grid item xs={12} md={2} style={{ marginTop: "2%" }}>
-        {props.fullArray[props.fullArray.length - 1] === props.itemIndex ? (
+        {props.lastIndex === props.index ? (
           <IconButton
             color="primary"
             aria-label="upload picture"
             component="span"
-            onClick={handelClick}
+            onClick={() => props.add()}
           >
             <AddIcon />
           </IconButton>
@@ -100,7 +49,7 @@ function DeliveryTerms(props) {
             color="primary"
             aria-label="upload picture"
             component="span"
-            onClick={handelClickRemove}
+            onClick={() => props.remove()}
           >
             <RemoveIcon />
           </IconButton>

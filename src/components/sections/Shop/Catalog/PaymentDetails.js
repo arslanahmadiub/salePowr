@@ -100,7 +100,6 @@ const PaymentDetails = (props) => {
     form_data.set("momo_network", momoNetwork);
     form_data.set("mobile_money_number", mobileMoneyNumber);
 
-    setErrorMessage(null);
     try {
       setLoading(true);
       let { data } = await checkOut(form_data, userToken);
@@ -114,11 +113,35 @@ const PaymentDetails = (props) => {
     } catch (error) {
       setLoading(false);
 
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Some thing went wrong. try again letter....
-        </Alert>
-      );
+      if (error.response.data.Errors.mobile_money_number) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Enter a valid value in mobile money number...
+          </Alert>
+        );
+
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      } else if (error.response.data.Errors.status === "failed") {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            {error.response.data.Errors.message}
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      } else {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Some thing went wrong. try again letter....
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      }
     }
   };
 
@@ -225,6 +248,13 @@ const PaymentDetails = (props) => {
               </Grid>
 
               <Grid item xs={12} sm={6}></Grid>
+              <Grid
+                item
+                xs={12}
+                style={{ marginBottom: "10px", marginTop: "10px" }}
+              >
+                {errorMessage && errorMessage}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <Button type="submit">Pay</Button>
               </Grid>

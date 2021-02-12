@@ -53,21 +53,24 @@ min-height: 80%;
 `;
 
 export default function AddProductForm(props) {
-  const [state, setState] = React.useState({ delivery: "24hrs" });
   const [clearImageData, setClearImageData] = useState(false);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const classes = useStyles();
 
   let dispatch = useDispatch();
   let [loading, setLoading] = useState(false);
 
-  let [deliveryTermNumber, setDeliveryTermNumber] = useState([1]);
+  const [inputList, setInputList] = useState([
+    {
+      city: "",
+      price: "",
+    },
+  ]);
 
   const [cityLocationData, setCityLocationData] = useState([]);
   const [imagesData, setImagesData] = useState([]);
-  const [clearFormData, setClearFormData] = useState(false);
+
   const [serviceFee, setServiceFee] = useState(0);
   const selectedShopId = useSelector(
     (state) => state.shopPreview.selectedShopId
@@ -124,10 +127,20 @@ export default function AddProductForm(props) {
       twitter: false,
     });
     setClearImageData(true);
-    setDeliveryTermNumber([1]);
-    setClearFormData(true);
-    setClearFormData(false);
+
+    setTimeout(() => {
+      setClearImageData(false);
+    }, 3000);
+
+    setInputList([
+      {
+        city: "",
+        price: "",
+      },
+    ]);
   };
+
+  const [error, setError] = useState(null);
 
   let shareAbleData =
     "Product Name = " +
@@ -139,28 +152,6 @@ export default function AddProductForm(props) {
     "Product Description = " +
     productDescription;
 
-  useEffect(() => {
-    getLocationData();
-  }, [props.getData]);
-
-  let addDeliveryItem = () => {
-    let arrayValue = [...deliveryTermNumber];
-    let value = _.last(deliveryTermNumber);
-    let newValue = value + 1;
-    arrayValue.push(newValue);
-    setDeliveryTermNumber(arrayValue);
-  };
-
-  let removeDeliveryItem = (value) => {
-    let arrayValue = [...deliveryTermNumber];
-    arrayValue.splice(value, 1);
-    setDeliveryTermNumber(arrayValue);
-    let locationData = [...cityLocationData];
-    _.remove(locationData, function (e) {
-      return e.id === value;
-    });
-    setCityLocationData(locationData);
-  };
   let userToken = localStorage.getItem("token");
 
   const emailToast = () => {
@@ -180,7 +171,7 @@ export default function AddProductForm(props) {
 
   const processWidrawal = async (event) => {
     event.preventDefault();
-
+    setError(null);
     let form_data = new FormData();
     await form_data.set("shop", selectedShopId);
     await form_data.set("product_name", productName);
@@ -191,75 +182,47 @@ export default function AddProductForm(props) {
         form_data.append(index, item);
       });
     }
-
     let newDeliveryTerm = [];
-
-    cityLocationData.map((item, index) => {
+    inputList.map((item, index) => {
       let newData = {
         delivery_country: productCountry,
-        delivery_location: item.value.location,
-        delivery_price: item.value.currency,
+        delivery_location: item.city,
+        delivery_price: item.price,
       };
-      newDeliveryTerm.push(newData);
+      if (
+        newData.delivery_location.length > 0 &&
+        newData.delivery_price.length > 0
+      ) {
+        newDeliveryTerm.push(newData);
+      }
     });
 
     if (productName.length < 1) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Enter product name..
-        </Alert>
-      );
+      setError("Enter product name..");
     } else if (productName.length > 30) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Maximum of 30 characters allowed in product name...
-        </Alert>
-      );
-    } else if (productDescription.length < 1) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Enter product description...
-        </Alert>
-      );
-    } else if (productDescription.length > 500) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Maximum of 500 characters are allowed in product description...
-        </Alert>
-      );
+      setError("Maximum of 30 characters allowed in product name...");
     } else if (productPrice.length < 1) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Enter product price...
-        </Alert>
-      );
+      setError("Enter product price..");
     } else if (productPrice.length > 5) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Maximum of 5 characters are allowed in product price...
-        </Alert>
-      );
-    } else if (newDeliveryTerm.length < 1) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Add delivery terms...
-        </Alert>
-      );
-    } else if (imagesData.length < 1) {
-      setErrorMessage(
-        <Alert variant="filled" severity="error">
-          Add product images...
-        </Alert>
-      );
+      setError("Maximum of 5 characters allowed in product price...");
+    } else if (productDescription.length < 1) {
+      setError("Enter product description...");
+    } else if (productDescription.length > 300) {
+      setError("Maximum of 300 characters allowed in product description...");
+    } else if (productCountry.length < 1) {
+      setError("Select product country...");
+    } else if (inputList[0].city.length < 1) {
+      setError("Enter product city...");
+    } else if (inputList[0].price.length < 1) {
+      setError("Enter product delivery price...");
+    } else if (!imagesData) {
+      setError("Select Product Images...");
     } else {
-      setErrorMessage(null);
-      setLoading(true);
       try {
+        setLoading(true);
         let { data } = await addProduct(form_data, userToken);
-
         if (data.Success) {
           let productId = data.ID;
-
           let finalData = {
             product_id: productId,
             delivery_terms: newDeliveryTerm,
@@ -271,31 +234,21 @@ export default function AddProductForm(props) {
             setLoading(false);
           } catch (ex) {
             setLoading(false);
-            setErrorMessage(
-              <Alert variant="filled" severity="error">
-                Some thing went wrong or server error...
-              </Alert>
-            );
+
+            setError(" Some thing went wrong or server error...");
+
+            setTimeout(() => {
+              setError(null);
+            }, 3000);
           }
         }
       } catch (error) {
-        if (error.response.data.Errors) {
-          if (error.response.data.Errors.description) {
-            setLoading(false);
+        setError(" Some thing went wrong or server error...");
+        setLoading(false);
 
-            setErrorMessage(
-              <Alert variant="filled" severity="error">
-                {error.response.data.Errors.description[0]}
-              </Alert>
-            );
-          } else {
-            setErrorMessage(
-              <Alert variant="filled" severity="error">
-                Some thing went wrong or server error...
-              </Alert>
-            );
-          }
-        }
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
       }
     }
   };
@@ -307,40 +260,6 @@ export default function AddProductForm(props) {
     getImages();
   }, [props.getFiles]);
 
-  let getLocationData = (event, id) => {
-    let data = [...cityLocationData];
-
-    if (data.length > 0) {
-      _.remove(data, function (e) {
-        return e.id === id;
-      });
-      if (event && id) {
-        let dataObject = {
-          id: id,
-          value: event,
-        };
-        data.push(dataObject);
-
-        setCityLocationData(data);
-      }
-    } else {
-      if (event && id) {
-        if (event.location.length > 0 || event.currency.length > 0) {
-          let dataObject = {
-            id: id,
-            value: event,
-          };
-          data.push(dataObject);
-
-          setCityLocationData(data);
-        }
-      }
-    }
-  };
-
-  let ToggleInstagram = (e) => {
-    setData({ ...data, instaGram: e });
-  };
   let ToggleFacebook = (e) => {
     setData({ ...data, facebook: e });
   };
@@ -365,6 +284,29 @@ export default function AddProductForm(props) {
     "shop/" +
     selectedShopId;
 
+  let onHandelChange = (e, i) => {
+    let { name, value } = e.target;
+    let list = [...inputList];
+    list[i][name] = value;
+    setInputList(list);
+  };
+
+  let addInput = () => {
+    setInputList([
+      ...inputList,
+      {
+        city: "",
+        price: "",
+      },
+    ]);
+  };
+
+  let removeInput = (index) => {
+    let list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
   return (
     <>
       {shopIds.length < 1 || selectedShopId.length < 1 ? (
@@ -379,12 +321,15 @@ export default function AddProductForm(props) {
       ) : (
         <div>
           <div
-            // onSubmit={processWidrawal}
             style={{ paddingBottom: "60px", borderBottom: "0.5 solid grey" }}
           >
             <Grid container direction="row" spacing={4}>
               <Grid item xs={12}>
-                {errorMessage && errorMessage}
+                {error && (
+                  <Alert variant="filled" severity="error">
+                    {error}
+                  </Alert>
+                )}
               </Grid>
 
               <Grid item xs={12}>
@@ -455,17 +400,18 @@ export default function AddProductForm(props) {
               </Grid>
               <Grid item xs={12} md={8}></Grid>
 
-              {deliveryTermNumber.map((item, index) => {
+              {inputList.map((item, index) => {
                 return (
                   <DeliveryTerms
+                    handelChange={(e) => onHandelChange(e, index)}
                     key={index}
-                    itemIndex={item}
-                    addItem={addDeliveryItem}
-                    removeItem={(value) => removeDeliveryItem(value)}
-                    lengthOfItem={deliveryTermNumber.length}
-                    fullArray={deliveryTermNumber}
-                    getData={(value, value2) => getLocationData(value, value2)}
-                    clearData={clearFormData}
+                    values={item}
+                    index={index}
+                    add={addInput}
+                    remove={() => {
+                      removeInput(index);
+                    }}
+                    lastIndex={inputList.length - 1}
                   />
                 );
               })}

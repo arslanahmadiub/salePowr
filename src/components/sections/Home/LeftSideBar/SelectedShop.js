@@ -76,13 +76,13 @@ const SelectedShop = (props) => {
   function onChange(shop) {
     if (shop === "Create") {
       history.push("/shopPreview");
-      dispatch(logoImageFile(null));
+      // dispatch(logoImageFile(null));
 
       setLogoImage(null);
       dispatch(selectedShopId(""));
       dispatch(selectedShopName(""));
     } else {
-      dispatch(logoImageFile([]));
+      // dispatch(logoImageFile([]));
 
       dispatch(selectedShopId(shop.shop));
       dispatch(selectedShopName(shop.shop_name));
