@@ -1,4 +1,10 @@
-import { Avatar, Badge, Hidden, IconButton } from "@material-ui/core";
+import {
+  Avatar,
+  Badge,
+  Hidden,
+  IconButton,
+  makeStyles,
+} from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 import ProfileForm from "../../Forms/ProfileForm";
@@ -7,9 +13,19 @@ import profilePhoto from "../../../assets/images/photo.jpg";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "@material-ui/core/Backdrop";
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#31BDF4",
+    background: "rgba(182,172,162,0.2)",
+  },
+}));
 
 const ProfileEdit = (props) => {
   const profile = props.profile || profileInfo;
+  const classes = useStyles();
 
   const profileLoading = useSelector(
     (state) => state.dashboard.profileDataLoading
@@ -86,9 +102,13 @@ const ProfileEdit = (props) => {
               />
             </Badge>
             <Grid item>
-              <div style={{ display: profileLoading ? "flex" : "none" }}>
+              {/* <div style={{ display: profileLoading ? "flex" : "none" }}>
                 <CircularProgress />
-              </div>
+              </div> */}
+
+              <Backdrop className={classes.backdrop} open={profileLoading}>
+                <CircularProgress color="inherit" />
+              </Backdrop>
             </Grid>
           </div>
           {/* <div

@@ -68,6 +68,7 @@ const ProfileForm = (props) => {
 
   let getProfileInfo = async () => {
     dispatch(shopProfileFetchLoading(true));
+
     let { data } = await getFullUserDetails(userToken);
     dispatch(shopProfileFetchLoading(false));
 
@@ -207,7 +208,12 @@ const ProfileForm = (props) => {
               label="Date of Birth"
               name="dob"
               id="dobSelector"
-              selected={startDate}
+              selected={
+                moment(startDate).format("yyyy-MM-DD") ===
+                moment().format("yyyy-MM-DD")
+                  ? ""
+                  : startDate
+              }
               onChange={handelDateChange}
               widthOfDob={
                 widthRef.current

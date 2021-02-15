@@ -67,9 +67,15 @@ const CompanyLogo = Styled.img`
     display: block;
     height: 150px;
     width: 150px;
+    border-radius: 15px;
+    object-fit:fill;
+
     @media (max-width: 960px){
         text-align: center;
         margin: auto;  
+    border-radius: 15px;
+    object-fit:fill;
+
     }
     
 `;

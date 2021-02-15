@@ -114,7 +114,7 @@ const ShippingDetail = (props) => {
     let finalAmount =
       parseFloat(priceDetail.totalCost) + parseFloat(finalDeliveryCharges);
 
-    setfinalCost(finalAmount);
+    setfinalCost(finalAmount.toFixed(2));
   };
 
   let {

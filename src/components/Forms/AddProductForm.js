@@ -421,8 +421,10 @@ export default function AddProductForm(props) {
                   <div
                     style={{
                       fontWeight: "600",
-                      fontSize: "22px",
-                      marginRight: "5%",
+                      fontSize: "18px",
+                      marginRight: "2%",
+                      marginLeft: "2%",
+                      marginTop: "-0.5%",
                     }}
                   >
                     GHS {isNaN(serviceFee) ? "0" : serviceFee}

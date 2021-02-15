@@ -50,15 +50,17 @@ const TiledImage = Styled.img`
    
     width: 100px;
     height:100px;
-   object-fit: contain;
+object-fit:fill;
+  
    background: #FFFFFF;
     border-radius: 15px;
     margin: auto;
-    padding: 10px;
+  
     @media (max-width: 960px){
         
         width: 80px;
-        padding: 5px;
+        height:80px;
+        object-fit:fill;
     }
 `;
 
@@ -66,14 +68,16 @@ const CoverImage = Styled.img`
  
     width:300px;
    height:300px;
-   object-fit: contain;
+object-fit:fill;
    background: #FFFFFF;
     border-radius: 15px;
     //margin: 0 0 0 5px;
-    padding: 15px;
+
     @media (max-width: 960px){
       width:300px;
       height:300px;
+object-fit:fill;
+
     }
 `;
 
@@ -91,13 +95,13 @@ export default function ProductDescription({
   delivery,
   name,
   data,
-
   ...props
 }) {
   let handelBuyNow = () => {
     props.updateDialog(true);
     props.updateValue(newData);
   };
+
   const [productDetail, setproductDetail] = useState(null);
   const [sideUrl, setsideUrl] = useState(null);
   const shopIds = useSelector((state) => state.shopPreview.shopIdCollections);

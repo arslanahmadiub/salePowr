@@ -42,6 +42,7 @@ export default function ({
   label,
   required,
   type,
+
   ...props
 }) {
   return (
@@ -64,7 +65,13 @@ export default function ({
         name={props.name || id || ""}
         onChange={onChange && onChange}
         className="datePicker"
+        placeholder={placeholder || label || ""}
       />
+      {selected !== "" ? null : (
+        <p style={{ position: "absolute", top: 33, left: 15 }}>
+          Select your date of birth
+        </p>
+      )}
     </Label>
   );
 }
