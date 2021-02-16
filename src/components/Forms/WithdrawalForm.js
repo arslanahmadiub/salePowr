@@ -80,7 +80,10 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
       });
       setLoadingButton(false);
     } catch (error) {
-      if (error.response.data.Success === false) {
+      if (
+        error.response.data.Success === false &&
+        error.response.data.Message
+      ) {
         setLoadingButton(false);
 
         setErrorMessage(
@@ -93,16 +96,18 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
         }, 3000);
       } else if (
         error.response.data.Success === false &&
-        error.response.data.Errors.mobile_money_number
+        error.response.data.Errors
       ) {
-        setErrorMessage(
-          <Alert variant="filled" severity="error">
-            Enter a valid value in mobile money number...
-          </Alert>
-        );
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 3000);
+        if (error.response.data.Errors.mobile_money_number) {
+          setErrorMessage(
+            <Alert variant="filled" severity="error">
+              Enter a valid mobile money number...
+            </Alert>
+          );
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 3000);
+        }
       } else {
         setErrorMessage(
           <Alert variant="filled" severity="error">
