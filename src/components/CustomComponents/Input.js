@@ -40,7 +40,7 @@ export default function ({
   type,
   width,
   height,
-
+  onKeyDown,
   ...props
 }) {
   return (
@@ -54,6 +54,7 @@ export default function ({
         id={id}
         name={props.name || id || ""}
         onChange={onChange && onChange}
+        onKeyDown={onKeyDown && onKeyDown}
         style={{
           width: width ? width : "100%",
           height: height ? height : "45px",

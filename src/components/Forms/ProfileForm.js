@@ -94,6 +94,14 @@ const ProfileForm = (props) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
   };
 
+  let handelDateKeyDown = (e) => {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+    } else {
+      setStartDate(new Date());
+    }
+  };
+
   const saveProfile = async (event) => {
     event.preventDefault();
     let newDob = moment(startDate).format("yyyy-MM-DD");
@@ -208,6 +216,7 @@ const ProfileForm = (props) => {
               label="Date of Birth"
               name="dob"
               id="dobSelector"
+              onKeyDown={handelDateKeyDown}
               selected={
                 moment(startDate).format("yyyy-MM-DD") ===
                 moment().format("yyyy-MM-DD")

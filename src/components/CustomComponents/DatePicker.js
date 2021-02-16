@@ -42,7 +42,7 @@ export default function ({
   label,
   required,
   type,
-
+  onKeyDown,
   ...props
 }) {
   return (
@@ -66,6 +66,7 @@ export default function ({
         onChange={onChange && onChange}
         className="datePicker"
         placeholder={placeholder || label || ""}
+        onKeyDown={onKeyDown && onKeyDown}
       />
       {selected !== "" ? null : (
         <p style={{ position: "absolute", top: 33, left: 15 }}>
