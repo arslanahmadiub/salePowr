@@ -100,6 +100,18 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
             Enter a valid value in mobile money number...
           </Alert>
         );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      } else {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Some thing went wrong or server error...
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       }
     }
     setLoadingButton(false);
