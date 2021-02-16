@@ -20,7 +20,7 @@ width: 100%;
 justify-content:${(p) => (p.justify ? p.justify : "space-between")};
 `;
 const Brand = Styled.div`
-    padding: 15px 0;
+    margin-top : -7px;
 `;
 
 const BrandName = Styled.div`
@@ -64,8 +64,9 @@ const CompanyLogo = Styled.img`
     display: block;
     max-width:200px;
     max-height:200px;
-   
-    margin: 0 15px 0 0;    
+    object-fit: fill;
+    margin: 0 15px 0 0;  
+    border-radius: 15px;  
 `;
 
 const PublicShopDesktop = (props) => {
@@ -73,7 +74,6 @@ const PublicShopDesktop = (props) => {
     <>
       <div
         style={{
-          padding: "30px",
           borderBottom: "0.5px solid #979FAA",
         }}
       >

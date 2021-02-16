@@ -5,6 +5,7 @@ import Select from "../CustomComponents/Select";
 import Input from "../CustomComponents/Input";
 // import Button from "../CustomComponents/Button";
 import { Button } from "antd";
+import Alert from "@material-ui/lab/Alert";
 
 import { Form } from "antd";
 import { DataContext } from "../../contexts/DataContext";
@@ -69,6 +70,7 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
       setLoadingButton(true);
 
       let { data } = await addWallet(form_data, userToken);
+
       props.walletFunctionCall(true);
       setMobileMoneyData({
         country: "",
@@ -81,7 +83,23 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
       if (error.response.data.Success === false) {
         setLoadingButton(false);
 
-        setErrorMessage(error.response.data.Errors.mobile_money_number[0]);
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            {error.response.data.Message}
+          </Alert>
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      } else if (
+        error.response.data.Success === false &&
+        error.response.data.Errors.mobile_money_number
+      ) {
+        setErrorMessage(
+          <Alert variant="filled" severity="error">
+            Enter a valid value in mobile money number...
+          </Alert>
+        );
       }
     }
     setLoadingButton(false);

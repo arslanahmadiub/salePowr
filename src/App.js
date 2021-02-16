@@ -23,11 +23,14 @@ function App() {
   const routes = Routes();
   let dispatch = useDispatch();
   useEffect(() => {
-    shopsIdsCollections();
+    if (userToken) {
+      shopsIdsCollections();
+    }
   }, []);
 
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds(userToken);
+
     if (data.Success && data.Details.length > 0) {
       dispatch(shopIdsAction(data.Details));
       dispatch(selectedShopId(data.Details[0].shop));

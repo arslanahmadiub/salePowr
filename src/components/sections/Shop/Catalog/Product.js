@@ -14,13 +14,13 @@ const ImageContainer = Styled.div`
     width: 150px;
     background: #FFFFFF;
     border-radius: 15px;
-    object-fit: contain;
+    object-fit: fill;
 `;
 const Img = Styled.img`
     height: 130px;
     width: 130px;
     margin: auto;
-    object-fit: contain;
+    object-fit: fill;
 `;
 const Price = Styled.div`
     font-size: 20px;

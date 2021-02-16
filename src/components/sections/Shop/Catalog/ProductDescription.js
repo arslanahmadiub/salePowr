@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 
 const Container = Styled.div`
     background: #F5F8FD;
-    padding: 0 15px 0px 15px;
+   
     min-height: 100vh;
 `;
 const DetailsContainer = Styled.div`
@@ -82,7 +82,7 @@ object-fit:fill;
 `;
 
 const CopyRight = Styled.div`
-    padding: 15px 0;
+    
     border-top: 0.5px solid #979FAA;
     text-align: center;
 `;
@@ -198,7 +198,12 @@ export default function ProductDescription({
     <Container>
       <Hidden only={["xs", "sm"]}>
         <div>
-          <Grid container direction="row" spacing={0}>
+          <Grid
+            container
+            direction="row"
+            spacing={0}
+            style={{ padding: "15px" }}
+          >
             <Grid item xs={4} sm={2} md={2}>
               <Grid container direction="column" spacing={2}>
                 {sideUrl !== null
@@ -222,26 +227,19 @@ export default function ProductDescription({
             </Grid>
             <Grid item xs={8} md={4}>
               {sideUrl !== null && sideUrl.length > 0 ? (
-                <CoverImage
-                  // src={imageEndPoint + productDetail[0].Images[0].image}
-                  src={sideUrl[0]}
-                  alt="First tile"
-                />
+                <CoverImage src={sideUrl[0]} alt="First tile" />
               ) : null}
             </Grid>
             <Grid item xs={12} md={5}>
-              <DetailsContainer>
+              <DetailsContainer style={{ marginTop: "-6%" }}>
                 <Grid container direction="column" spacing={0}>
                   <Grid item xs={12}>
-                    {/* <ProductName>{name && name}</ProductName> */}
                     <ProductName>{data.name}</ProductName>
                   </Grid>
                   <Grid item xs={12}>
-                    {/* <Description>{description && description}</Description> */}
                     <Description>{data.description}</Description>
                   </Grid>
                   <Grid item xs={12}>
-                    {/* <Price>GHS {price && price}</Price> */}
                     <Price>GHS {data.price}</Price>
                   </Grid>
                   <Grid item xs={12} sm={2}></Grid>
@@ -280,13 +278,6 @@ export default function ProductDescription({
                       </p>
                     )}
                   </Grid>
-                  {/* <Grid item xs={12}>
-                  {userWithOwnShop ? (
-                    <p style={{ fontSize: "15px", color: "red" }}>
-                      You are not able to purchase from your own shop...
-                    </p>
-                  ) : null}
-                </Grid> */}
                 </Grid>
                 <Grid item xs={12}>
                   <Delivery>Delivery Applicable</Delivery>
@@ -315,11 +306,7 @@ export default function ProductDescription({
               }}
             >
               {sideUrl !== null && sideUrl.length > 0 ? (
-                <CoverImage
-                  // src={imageEndPoint + productDetail[0].Images[0].image}
-                  src={sideUrl[0]}
-                  alt="First tile"
-                />
+                <CoverImage src={sideUrl[0]} alt="First tile" />
               ) : null}
             </Grid>
             <Grid
@@ -327,7 +314,12 @@ export default function ProductDescription({
               xs={12}
               sm={12}
               md={2}
-              style={{ display: "flex", width: "100%", marginTop: "10px" }}
+              style={{
+                display: "flex",
+                width: "100%",
+                marginTop: "10px",
+                marginLeft: "10px",
+              }}
             >
               {sideUrl !== null
                 ? sideUrl.map((item, index) => {
@@ -356,6 +348,7 @@ export default function ProductDescription({
                 width: "100%",
                 justifyContent: "center",
                 alignItems: "center",
+                background: "#F5F8FD",
               }}
             >
               <DetailsContainer>
@@ -450,7 +443,7 @@ export default function ProductDescription({
         </div>
       </Hidden>
 
-      <div style={{ borderTop: "0.5px solid #979FAA" }}>
+      <div style={{ borderTop: "0.5px solid #979FAA", background: "#F5F8FD" }}>
         <Hidden only={["xs", "sm"]}>
           <ShopBrand
             logo={
@@ -471,57 +464,131 @@ export default function ProductDescription({
       </div>
 
       <Hidden smDown>
-        <CopyRight>
-          <Grid container direction="row" spacing={5}>
-            <Grid item xs={6} md={2}>
-              <CustomLink>Terms {"&"} </CustomLink>
-              <CustomLink>Conditions</CustomLink>
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This
-              purchase is protected by{" "}
-              <a href="https://app.powrsale.com/" target="_blank">
-                Powrsale.com.
+        <div
+          style={{
+            background: "#F5F8FD",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            padding: "2%",
+            borderTop: "0.5px solid #979FAA",
+          }}
+        >
+          <div>
+            <p
+              style={{
+                color: "#31BDF4",
+                fontSize: "16px",
+                fontWeight: "500px",
+                cursor: "pointer",
+              }}
+            >
+              Terms & Conditions
+            </p>
+          </div>
+          <div style={{ display: "flex" }}>
+            <Security style={{ color: "#31BDF4" }} />
+            <p style={{ marginTop: "-2px", marginLeft: "10px" }}>
+              This shop is powered by{" "}
+              <a
+                target="_blank"
+                href="https://app.powrsale.com/"
+                style={{
+                  color: "#31BDF4",
+                  fontSize: "16px",
+                  fontWeight: "500px",
+                  cursor: "pointer",
+                }}
+              >
+                Powrsale.com
               </a>{" "}
               Your funds are escrow protected
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <a href="https://app.powrsale.com" target="_blank">
-                Create your Profile
-              </a>
-            </Grid>
-
-            <Grid item xs={12} md={4}></Grid>
-          </Grid>
-        </CopyRight>
+            </p>
+          </div>
+          <div>
+            <a
+              target="_blank"
+              href="https://app.powrsale.com/"
+              style={{
+                color: "#31BDF4",
+                fontSize: "16px",
+                fontWeight: "500px",
+                cursor: "pointer",
+              }}
+            >
+              Create your shop
+            </a>
+          </div>
+        </div>
       </Hidden>
 
       <Hidden mdUp>
-        <CopyRight>
-          <Grid container direction="row" spacing={5}>
-            <Grid item xs={12} md={7}>
-              <Security style={{ color: "#31BDF4", lineHeight: "16px" }} /> This
-              purchase is protected by
-              <a href="https://app.powrsale.com/" target="_blank">
-                Powrsale.com.
+        <div
+          style={{
+            background: "#F5F8FD",
+            display: "flex",
+
+            width: "100%",
+            padding: "2%",
+            borderTop: "0.5px solid #979FAA",
+          }}
+        >
+          <div style={{ display: "flex" }}>
+            <Security style={{ color: "#31BDF4" }} />
+            <p style={{ marginTop: "-2px", marginLeft: "10px" }}>
+              This shop is powered by{" "}
+              <a
+                target="_blank"
+                href="https://app.powrsale.com/"
+                style={{
+                  color: "#31BDF4",
+                  fontSize: "16px",
+                  fontWeight: "500px",
+                  cursor: "pointer",
+                }}
+              >
+                Powrsale.com
               </a>{" "}
               Your funds are escrow protected
-            </Grid>
-
-            <Grid item xs={6} md={2}>
-              <CustomLink>Terms {"&"} </CustomLink>
-              <CustomLink>Conditions</CustomLink>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <a href="https://app.powrsale.com" target="_blank">
-                Create your Profile
-              </a>
-            </Grid>
-
-            <Grid item xs={12} md={4}></Grid>
-          </Grid>
-        </CopyRight>
+            </p>
+          </div>
+        </div>
+        <div
+          style={{
+            background: "#F5F8FD",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            padding: "2%",
+          }}
+        >
+          <div>
+            <p
+              style={{
+                color: "#31BDF4",
+                fontSize: "16px",
+                fontWeight: "500px",
+                cursor: "pointer",
+              }}
+            >
+              Terms & Conditions
+            </p>
+          </div>
+          <div>
+            <a
+              target="_blank"
+              href="https://app.powrsale.com/"
+              style={{
+                color: "#31BDF4",
+                fontSize: "16px",
+                fontWeight: "500px",
+                cursor: "pointer",
+              }}
+            >
+              Create your shop
+            </a>
+          </div>
+        </div>
       </Hidden>
     </Container>
   );

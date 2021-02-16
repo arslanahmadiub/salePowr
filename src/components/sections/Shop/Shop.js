@@ -137,8 +137,6 @@ export default function Shop(props) {
       form_data.append("twitter_link", twitter);
       form_data.append("whatsapp_number", whatsapp);
 
-      console.log(logoFile);
-
       try {
         setLoading(true);
 
@@ -168,7 +166,6 @@ export default function Shop(props) {
           dispatch(saveShopData({}));
         }
       } catch (error) {
-        console.log(error.response.data);
         setLoading(false);
       }
     }
@@ -360,7 +357,7 @@ export default function Shop(props) {
 
       {/* Preveiw version */}
       <Dialog open={preview} fullScreen>
-        <DialogActions>
+        <DialogActions style={{ background: "#f5f8fd" }}>
           <Button onClick={togglePreview}>Exit PREVIEW</Button>
         </DialogActions>
         <ProductDisplay shopData={createShopData.shopPreview} />

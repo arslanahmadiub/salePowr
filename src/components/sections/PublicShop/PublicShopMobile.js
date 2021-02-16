@@ -65,6 +65,8 @@ const CompanyLogo = Styled.img`
     height: 150px;
     width: 150px;
     margin: auto;  
+    object-fit:fill;
+    border-radius:15px;
 `;
 
 const PublicShopMobile = (props) => {

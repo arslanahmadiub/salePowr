@@ -60,10 +60,13 @@ const Contact = Styled.div`
 `;
 
 const CompanyLogo = Styled.img`
-    display: block;
-    height: 180px;
-    width: 200px;
-    margin: 0 15px 0 0;    
+display: block;
+height: 200px;
+width: 200px;
+    margin: auto;  
+    object-fit:fill;
+    border-radius:15px; 
+    margin-right:20px;
 `;
 
 const TopRowDesktop = (props) => {
@@ -169,7 +172,7 @@ const TopRowDesktop = (props) => {
 
                 <Contact>{contacts && contacts.email}</Contact>
               </Grid>
-              <Grid item xs={6} md={3}>
+              {/* <Grid item xs={6} md={3}>
                 <ContactLabel>Social</ContactLabel>
 
                 <Contact>
@@ -183,7 +186,7 @@ const TopRowDesktop = (props) => {
                     <WhatsApp style={{ width: "20px" }} />
                   </FlexContainer>
                 </Contact>
-              </Grid>
+              </Grid> */}
             </Grid>
           </div>
         </FlexContainer>
