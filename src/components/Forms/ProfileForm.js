@@ -18,14 +18,14 @@ import { reCallProfileApi } from "../../action/dashboardAction";
 import { setProfileImage } from "../../action/authAction";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
-
+import CustomDatePicker from "../CustomComponents/CustomDatePicker";
 import moment from "moment";
-
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ProfileForm = (props) => {
   let dispatch = useDispatch();
-  const [startDate, setStartDate] = useState(new Date());
+
+  const [dateOfBirth, setDateOfBirth] = useState("");
 
   let [profileData, setProfileData] = useState({
     first_name: "",
@@ -74,8 +74,7 @@ const ProfileForm = (props) => {
 
     if (data.Success) {
       if (data.Details[0].dob) {
-        let fetchDob = new Date(data.Details[0].dob);
-        setStartDate(fetchDob);
+        setDateOfBirth(data.Details[0].dob);
       }
       data.Details[0].newPassword = "";
       data.Details[0].confirmPassword = "";
@@ -94,29 +93,17 @@ const ProfileForm = (props) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
   };
 
-  let handelDateKeyDown = (e) => {
-    if (e.key === "Backspace") {
-      e.preventDefault();
-    } else {
-      setStartDate(new Date());
-    }
-  };
-
   const saveProfile = async (event) => {
     event.preventDefault();
-    let newDob = moment(startDate).format("yyyy-MM-DD");
-
     let profileDataForm = new FormData();
-
     profileDataForm.set("first_name", first_name);
     profileDataForm.set("last_name", last_name);
     profileDataForm.set("other_names", other_names);
-    profileDataForm.set("dob", newDob.toString());
+    profileDataForm.set("dob", dateOfBirth);
     profileDataForm.set("email", email);
     profileDataForm.set("phone", phone);
     profileDataForm.set("password", newPassword);
     profileDataForm.set("profile_picture", profileAvatar);
-
     try {
       dispatch(userProfileSaveLoading(true));
       let result = await completeUserProfile(profileDataForm, userToken);
@@ -174,9 +161,11 @@ const ProfileForm = (props) => {
     }
   };
 
-  let handelDateChange = (e) => {
+  const [calander, setCalander] = useState(false);
+  let handelDayClick = (e) => {
     let dateValue = moment(e).format("yyyy-MM-DD");
-    setStartDate(new Date(dateValue));
+    setDateOfBirth(dateValue);
+    setCalander(!calander);
   };
 
   return (
@@ -192,6 +181,7 @@ const ProfileForm = (props) => {
               onChange={handelProfileDataChange}
             />
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Input
               placeholder="Enter last name"
@@ -211,31 +201,16 @@ const ProfileForm = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <DatePicker
-              placeholder="Dadte of birth"
-              label="Date of Birth"
+            <CustomDatePicker
+              placeholder="Enter your date of birth"
+              label="DOB"
               name="dob"
-              id="dobSelector"
-              onKeyDown={handelDateKeyDown}
-              selected={
-                moment(startDate).format("yyyy-MM-DD") ===
-                moment().format("yyyy-MM-DD")
-                  ? ""
-                  : startDate
+              value={
+                dateOfBirth.length > 0 ? dateOfBirth : "Enter Date of Birth"
               }
-              onChange={handelDateChange}
-              widthOfDob={
-                widthRef.current
-                  ? widthRef.current.scrollWidth.toString() + "px"
-                  : "100%"
-              }
+              onClickDay={handelDayClick}
+              hideCalander={calander}
             />
-
-            {/* <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              className="datePicker"
-            /> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Input
