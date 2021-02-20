@@ -64,7 +64,8 @@ display: block;
 height: 200px;
 width: 200px;
     margin: auto;  
-    object-fit:fill;
+    object-fit: cover;
+
     border-radius:15px; 
     margin-right:20px;
 `;
