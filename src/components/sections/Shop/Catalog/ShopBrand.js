@@ -68,13 +68,13 @@ const CompanyLogo = Styled.img`
     height: 150px;
     width: 150px;
     border-radius: 15px;
-    object-fit:fill;
+    object-fit: cover;
 
     @media (max-width: 960px){
         text-align: center;
         margin: auto;  
     border-radius: 15px;
-    object-fit:fill;
+    object-fit: cover;
 
     }
     

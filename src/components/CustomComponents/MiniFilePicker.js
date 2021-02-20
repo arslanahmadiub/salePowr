@@ -122,9 +122,6 @@ const Container = Styled.div`
 
 const ImageContainer = Styled.div`
     height: 100px;
-
- 
-    
 `;
 const Img = Styled.img`
     height: 100px;

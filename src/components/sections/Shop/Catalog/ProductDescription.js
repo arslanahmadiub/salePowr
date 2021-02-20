@@ -50,7 +50,7 @@ const TiledImage = Styled.img`
    
     width: 100px;
     height:100px;
-object-fit:fill;
+    object-fit: cover;
   
    background: #FFFFFF;
     border-radius: 15px;
@@ -60,7 +60,7 @@ object-fit:fill;
         
         width: 80px;
         height:80px;
-        object-fit:fill;
+    object-fit: cover;
     }
 `;
 
@@ -68,7 +68,7 @@ const CoverImage = Styled.img`
  
     width:300px;
    height:300px;
-object-fit:fill;
+   object-fit: cover;
    background: #FFFFFF;
     border-radius: 15px;
     //margin: 0 0 0 5px;
@@ -76,7 +76,7 @@ object-fit:fill;
     @media (max-width: 960px){
       width:300px;
       height:300px;
-object-fit:fill;
+      object-fit: cover;
 
     }
 `;

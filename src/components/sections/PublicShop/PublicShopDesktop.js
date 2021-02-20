@@ -64,7 +64,11 @@ const CompanyLogo = Styled.img`
     display: block;
     max-width:200px;
     max-height:200px;
-    object-fit: fill;
+    min-width:200px;
+    min-height:200px;
+
+margin-right:20px;
+object-fit: cover;
     margin: 0 15px 0 0;  
     border-radius: 15px;  
 `;
