@@ -6,13 +6,19 @@ import NewTransactionPanel from "./NewTransationPanel";
 import logo from "../../../../assets/images/logo.png";
 import SelectedShop from "./SelectedShop";
 import { navItems } from "../../../../DummyData/DummyData";
+import { useSelector, useDispatch } from "react-redux";
+import { closeSideBar } from "../../../../action/dashboardAction";
 
 export default function LeftSideBar(props) {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const closeDrawer = useSelector((state) => state.dashboard.closeSide);
 
   let url = window.location.href.split("/").pop();
   const changeSelected = (item, index) => (event) => {
     var cleaned = item.text.toLowerCase().trim().replace(" ", "-");
+    dispatch(closeSideBar(!closeDrawer));
 
     if (cleaned === "shop") {
       history.push("/shopPreview");

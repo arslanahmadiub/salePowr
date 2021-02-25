@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 const NavItem = (props) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname;
 

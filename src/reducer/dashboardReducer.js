@@ -3,6 +3,7 @@ const initalState = {
   profileDataSaveLoading: false,
   graph: false,
   recall: true,
+  closeSide: false,
 };
 
 export const dashboardReducer = (state = initalState, action) => {
@@ -26,6 +27,11 @@ export const dashboardReducer = (state = initalState, action) => {
       return {
         ...state,
         reCall: !state.recall,
+      };
+    case "CLOSE_SIDE_BAR":
+      return {
+        ...state,
+        closeSide: action.payload,
       };
     case "RESET":
       return initalState;

@@ -58,15 +58,20 @@ const Title = Styled.div`
 
 const Home = (props) => {
   const [drawerOpen, toggleDrawerOpen] = React.useState(false);
+
   const [modal, setModal] = React.useState(false);
   const dispatch = useDispatch();
   let proRef = useRef();
   const closeDialog = useSelector((state) => state.auth.profileDialog);
-
+  const closeDrawer = useSelector((state) => state.dashboard.closeSide);
   const profile = React.useContext(AuthContext);
   const { showRightSideBar, toggleRightSideBar } = React.useContext(
     RightSideBarContext
   );
+
+  useEffect(() => {
+    toggleDrawerOpen(false);
+  }, [closeDrawer]);
 
   useEffect(() => {
     if (closeDialog) {

@@ -147,7 +147,7 @@ const MiniFilePicker = (props) => {
 
   const getFile = (event) => {
     let eventFile = [...file];
-
+    console.log(event.target.files);
     eventFile.push(event.target.files[0]);
 
     setFile(eventFile);

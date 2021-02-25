@@ -22,3 +22,10 @@ export const reCallProfileApi = () => {
     type: "RECALL_PROFILE_API",
   };
 };
+
+export const closeSideBar = (data) => {
+  return {
+    type: "CLOSE_SIDE_BAR",
+    payload: data,
+  };
+};
