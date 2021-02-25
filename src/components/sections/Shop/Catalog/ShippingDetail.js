@@ -193,7 +193,6 @@ const ShippingDetail = (props) => {
                 label="Additional Notes"
                 name="additionalNotes"
                 value={additionalNotes}
-                required
                 onChange={handelShipingChange}
               />
             </Grid>
