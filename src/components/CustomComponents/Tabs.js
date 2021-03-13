@@ -23,6 +23,10 @@ const TabLabelItem = Styled.div`
     border-bottom: ${(props) => (props.selected ? "2px solid #31BDF4" : 0)};
     @media (max-width: 960px){
         font-size: 12px;
+    font-weight: 400;
+    padding: 0px 10px;
+
+
     }
 `;
 
@@ -36,11 +40,17 @@ const Tabs = (props) => {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const headers = props.headers;
+  const changeTabIndex = useSelector((state) => state.shopPreview.selectedTab);
+
   const changeTab = (index) => (event) => {
     setSelectedTab(index);
     dispatch(selectedTabIndex(index));
   };
   const functionRecall = useSelector((state) => state.wallet.transaction);
+
+  useEffect(() => {
+    setSelectedTab(changeTabIndex);
+  }, [changeTabIndex]);
 
   useEffect(() => {
     dispatch(reCallTransisation(!functionRecall));

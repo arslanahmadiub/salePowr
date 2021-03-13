@@ -1,5 +1,8 @@
 import React from "react";
 import Styled from "styled-components";
+import DoneIcon from "@material-ui/icons/Done";
+import CloseIcon from "@material-ui/icons/Close";
+import { useHistory } from "react-router";
 
 const Asterisk = Styled.span`
     color: red;
@@ -39,10 +42,23 @@ export default function ({
   required,
   type,
   width,
+  name,
   height,
+
   onKeyDown,
   ...props
 }) {
+  const history = useHistory();
+  let userToken = localStorage.getItem("token");
+
+  let handelVerification = () => {
+    if (name === "phone") {
+      props.showInput("phone");
+    } else {
+      props.showInput("email");
+    }
+  };
+
   return (
     <Label htmlFor={id}>
       {label && label} <Asterisk show={!!required}>*</Asterisk>
@@ -60,6 +76,35 @@ export default function ({
           height: height ? height : "45px",
         }}
       />
+      {props.verification && (
+        <div style={{ display: "flex" }}>
+          {props.verification.status ? (
+            <DoneIcon style={{ color: "#4CAF50" }} />
+          ) : (
+            <CloseIcon style={{ color: "#FF3D00" }} />
+          )}
+          {props.verification.status ? (
+            <p
+              style={{ fontSize: "14px", color: "#4CAF50", marginLeft: "6px" }}
+            >
+              Verified
+            </p>
+          ) : (
+            <p
+              style={{ fontSize: "14px", color: "#FF3D00", marginLeft: "6px" }}
+            >
+              Not verified,{" "}
+              <span
+                style={{ color: "#31BDF4", cursor: "pointer" }}
+                onClick={handelVerification}
+              >
+                click here
+              </span>{" "}
+              to verify now
+            </p>
+          )}
+        </div>
+      )}
     </Label>
   );
 }

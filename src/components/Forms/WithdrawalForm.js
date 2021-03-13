@@ -71,7 +71,7 @@ export default function WithdrawalForm({ type, externalFunction, ...props }) {
 
       let { data } = await addWallet(form_data, userToken);
 
-      props.walletFunctionCall(true);
+      props.walletFunctionCall(!props.walletFunctionCallData);
       setMobileMoneyData({
         country: "",
         momoNetwork: "",

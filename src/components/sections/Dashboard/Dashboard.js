@@ -122,6 +122,7 @@ const Dashboard = (props) => {
 
   let shopsIdsCollections = async () => {
     let { data } = await getShopIds(userToken);
+
     if (data.Success && data.Details.length > 0) {
       if (shopNameFromRedux.length < 1) {
         dispatch(shopIdsAction(data.Details));

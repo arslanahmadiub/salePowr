@@ -24,6 +24,9 @@ const initalState = {
   selectedShopId: "",
   selectedTab: 0,
   shopProfile: {},
+  refreshCatalog: false,
+  productId: "",
+  shopLoading: false,
 };
 
 export const shopProfileReducer = (state = initalState, action) => {
@@ -78,11 +81,28 @@ export const shopProfileReducer = (state = initalState, action) => {
         ...state,
         selectedTab: action.payload,
       };
+    case "REFRESH_CATALOG":
+      return {
+        ...state,
+        refreshCatalog: !state.refreshCatalog,
+      };
     case "SHOP_PROFILE_INFO":
       return {
         ...state,
         shopProfile: action.payload,
       };
+    case "SET_PRODUCT_ID":
+      return {
+        ...state,
+        productId: action.payload,
+      };
+
+    case "SHOP_CREATE_LOADING":
+      return {
+        ...state,
+        shopLoading: action.payload,
+      };
+
     case "RESET":
       return initalState;
     default:

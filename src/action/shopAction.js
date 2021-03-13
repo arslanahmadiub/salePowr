@@ -65,3 +65,21 @@ export const setShopInfo = (data) => {
     payload: data,
   };
 };
+export const setProductId = (data) => {
+  return {
+    type: "SET_PRODUCT_ID",
+    payload: data,
+  };
+};
+export const shopCreateLoading = (data) => {
+  return {
+    type: "SHOP_CREATE_LOADING",
+    payload: data,
+  };
+};
+
+export const refreshCatalog = () => {
+  return {
+    type: "REFRESH_CATALOG",
+  };
+};

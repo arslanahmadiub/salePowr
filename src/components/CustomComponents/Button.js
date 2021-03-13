@@ -16,7 +16,7 @@ export default function ({
   const theme = React.useContext(ThemeContext);
 
   const styles = {
-    color: faded ? "#31BDF4" : "#fff",
+    color: faded ? color || "#31BDF4" : "#fff",
     borderRadius: "5px",
     background:
       theme[color] ||
@@ -25,8 +25,10 @@ export default function ({
       (outlined && "#A9A9A9") ||
       theme.primaryBlue,
     height: !slim && "50px",
+
     border: !outlined && "none",
     width: props.width || "",
+    marginRight: props.MarginRight || "20px",
   };
 
   return (
